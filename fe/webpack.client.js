@@ -52,6 +52,16 @@ const getConfig = target => ({
         test: /\.(scss|css)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        use:[
+          'file-loader'
+        ]
+      },
+      {
+        test: /\.svg$/,
+        use:['@svgr/webpack']
+      }
     ],
   },
 

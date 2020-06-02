@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import * as Styled from './style';
-
+import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
 const { 
     Header,
     Nav,
@@ -8,19 +8,19 @@ const {
     RightItemContainer,
     LeftItemContainer,
     ItemList,
-    Item     
+    Item,
+    ItemBox     
 } = Styled;
-
 export const Gnb:FC = () => {
     return (
         <Header>
             <Nav>
                 <ItemContainer>
                     <LeftItemContainer>
-                        <ItemList>
-                            <Item>Logo</Item>
-                            <Item>Topic</Item>
-                        </ItemList>
+                            <ItemBox>
+                                <HanmoaLogo/>
+                            </ItemBox>
+                            <ItemBox>Topic</ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>

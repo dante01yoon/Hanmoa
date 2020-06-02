@@ -1,6 +1,7 @@
 import React , { FC } from 'react';
 import * as Styled from './style';
 import { Gnb } from './gnb';
+
 const { 
     Main,
     Dummy,
