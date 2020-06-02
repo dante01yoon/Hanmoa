@@ -11,9 +11,7 @@ loadableReady(() => {
   hydrate(
     // <Provider store={}>
       <BrowserRouter>
-        <>
-          <App/>
-        </>
+        <App/>
       </BrowserRouter>
     // </Provider>,
     ,

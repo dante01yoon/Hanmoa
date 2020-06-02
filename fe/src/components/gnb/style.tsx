@@ -1,29 +1,50 @@
 import styled from 'styled-components';
 
 export const Main = styled.main`
-    min-height: 100vh;
+    both: clear;
+`;
+export const Dummy = styled.div`
+    height: 88px;
 `;
 export const Header = styled.header`
+    z-index: 500; 
     position: fixed;
     top: 0;
-    z-index: 999; 
+    width:100%;
+    background-color: ${p=> p.theme.colors.white};
+    ${p=>p.theme.typography._16Bold};
 `
 export const Nav = styled.nav`
+    width:100%;
     line-height: 64px;
     height: 64px;
 `;
+export const Item = styled.li`
+    padding: 0 8px;
+    text-transform: uppercase;
+    cursor:pointer; 
+`;
+export const ItemList= styled.ul`
+    & > ${Item} {
+        display: inline-block;          
+    }
+`;
 
 export const ItemContainer = styled.div`
-    width: 900px;
+    max-width: 1280px;
     margin: 0 auto;
 `;
 export const LeftItemContainer = styled.div`
-    
+    display:inline-block;
+    margin-left: 64px;
 `
 export const RightItemContainer = styled.div`
+    margin-right: 64px; 
     float:right;
 `
-export const ItemList= styled.ul`
-`;
-export const Item = styled.li`
+export const MainContainer = styled.div`
+    max-width: 1280px;
+    height:100vh;
+    margin: 0 auto;
+    position:relative;
 `;

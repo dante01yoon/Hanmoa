@@ -17,10 +17,16 @@ export const Gnb:FC = () => {
             <Nav>
                 <ItemContainer>
                     <LeftItemContainer>
-
+                        <ItemList>
+                            <Item>Logo</Item>
+                            <Item>Topic</Item>
+                        </ItemList>
                     </LeftItemContainer>
                     <RightItemContainer>
-                        
+                        <ItemList>
+                            <Item>로그인</Item>
+                            <Item>회원가입</Item>
+                        </ItemList>
                     </RightItemContainer>
                 </ItemContainer>
             </Nav>

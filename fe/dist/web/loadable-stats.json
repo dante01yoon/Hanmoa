@@ -2,16 +2,42 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "97f1896836637dc0c6c4",
+  "hash": "8275cef2b16e6fe9259d",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\web",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\web",
   "assetsByChunkName": {
+    "ErrorPage": "ErrorPage.js",
+    "HomePage": "HomePage.js",
     "main": "main.js"
   },
   "assets": [
     {
+      "name": "ErrorPage.js",
+      "size": 1088,
+      "chunks": [
+        "ErrorPage"
+      ],
+      "chunkNames": [
+        "ErrorPage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "HomePage.js",
+      "size": 3936,
+      "chunks": [
+        "HomePage"
+      ],
+      "chunkNames": [
+        "HomePage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
       "name": "main.js",
-      "size": 1404644,
+      "size": 1483213,
       "chunks": [
         "main"
       ],
@@ -45,12 +71,32 @@
       ],
       "children": {},
       "childAssets": {}
+    },
+    "HomePage": {
+      "chunks": [
+        "HomePage"
+      ],
+      "assets": [
+        "HomePage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "ErrorPage": {
+      "chunks": [
+        "ErrorPage"
+      ],
+      "assets": [
+        "ErrorPage.js"
+      ],
+      "children": {},
+      "childAssets": {}
     }
   },
   "logging": {
     "webpack.buildChunkGraph.visitModules": {
       "entries": [],
-      "filteredEntries": 2,
+      "filteredEntries": 5,
       "debug": false
     }
   },
