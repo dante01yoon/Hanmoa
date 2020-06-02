@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import * as Styled from './style';
+import { SmartLink } from '@components/smartlink';
 import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
 const { 
     Header,
@@ -17,15 +18,29 @@ export const Gnb:FC = () => {
             <Nav>
                 <ItemContainer>
                     <LeftItemContainer>
-                            <ItemBox>
-                                <HanmoaLogo/>
-                            </ItemBox>
-                            <ItemBox>Topic</ItemBox>
+                            <SmartLink href={"/"}>
+                                <ItemBox>
+                                    <HanmoaLogo/>
+                                </ItemBox>
+                            </SmartLink>
+                            <SmartLink >
+                                <ItemBox>
+                                    Topic
+                                </ItemBox>
+                            </SmartLink>
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>
-                            <Item>로그인</Item>
-                            <Item>회원가입</Item>
+                            <Item>
+                                <SmartLink href={'login'}>
+                                    로그인
+                                </SmartLink>
+                            </Item>
+                            <Item>
+                                <SmartLink href={'signup'}>
+                                회원가입
+                                </SmartLink>    
+                            </Item>
                         </ItemList>
                     </RightItemContainer>
                 </ItemContainer>

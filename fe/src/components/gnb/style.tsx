@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
 export const Main = styled.main`
     both: clear;
 `;
@@ -41,6 +40,7 @@ export const ItemContainer = styled.div`
 export const LeftItemContainer = styled.div`
     display: inline-flex;
     margin-left: 64px;
+    margin-right:0;
 
 `
 export const RightItemContainer = styled.div`

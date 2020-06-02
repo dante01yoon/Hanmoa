@@ -2,7 +2,7 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "c84d4393d0e4472dc120",
+  "hash": "071d443ab4f625179002",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
@@ -37,7 +37,7 @@
     },
     {
       "name": "main.js",
-      "size": 1489369,
+      "size": 1491590,
       "chunks": [
         "main"
       ],

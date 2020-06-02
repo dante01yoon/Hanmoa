@@ -50,7 +50,10 @@ const GlobalStyle = createGlobalStyle`
         vertical-align: baseline;
 
     }
-
+    a, u  {
+        text-decoration: none;
+        color: inherit;
+    }
     /* HTML5 display-role reset for older browsers */
 
     article, aside, details, figcaption, figure, 
