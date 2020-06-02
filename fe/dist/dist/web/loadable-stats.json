@@ -2,16 +2,71 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "1af3dc6e2247cf4ec677",
+  "hash": "3e2f71e6c334978a92c2",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
-    "main": "main.js"
+    "ErrorPage": "ErrorPage.js",
+    "HomePage": "HomePage.js",
+    "main": [
+      "main.js",
+      "main.985e8d7892af4998fc50.hot-update.js"
+    ]
   },
   "assets": [
     {
+      "name": "985e8d7892af4998fc50.hot-update.json",
+      "size": 46,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
+      "name": "ErrorPage.js",
+      "size": 1088,
+      "chunks": [
+        "ErrorPage"
+      ],
+      "chunkNames": [
+        "ErrorPage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "HomePage.js",
+      "size": 3936,
+      "chunks": [
+        "HomePage"
+      ],
+      "chunkNames": [
+        "HomePage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "main.985e8d7892af4998fc50.hot-update.js",
+      "size": 3525,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
       "name": "main.js",
-      "size": 1404644,
+      "size": 1478128,
       "chunks": [
         "main"
       ],
@@ -29,7 +84,8 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.985e8d7892af4998fc50.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -41,7 +97,28 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.985e8d7892af4998fc50.hot-update.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "HomePage": {
+      "chunks": [
+        "HomePage"
+      ],
+      "assets": [
+        "HomePage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "ErrorPage": {
+      "chunks": [
+        "ErrorPage"
+      ],
+      "assets": [
+        "ErrorPage.js"
       ],
       "children": {},
       "childAssets": {}
@@ -50,7 +127,7 @@
   "logging": {
     "webpack.buildChunkGraph.visitModules": {
       "entries": [],
-      "filteredEntries": 2,
+      "filteredEntries": 5,
       "debug": false
     }
   },

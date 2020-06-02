@@ -24,6 +24,29 @@ module.exports = api => {
       ],
       '@babel/preset-typescript',
     ],
-    plugins: ['@loadable/babel-plugin'],
+    plugins: [
+      '@loadable/babel-plugin',
+      [ 
+        'module-resolver',
+        {
+          root: ['.'],
+          extensions: ['.ts','.tsx'],
+          alias:{
+            'src': './src',
+            '@redux': './src/redux',
+            '@components': './src/components',
+            '@pages': './src/pages',
+            '@store': './src/store',
+            '@reducers': './src/store/reducers',
+            '@theme': './src/theme',
+            '@util': './src/util',
+            '@modules': './src/modules',
+            '@apis': './src/apis',
+            '@models': './src/models'
+          }
+        }
+      ], // end of module-resolver 
+      //end of plugins 
+    ],
   };
 };

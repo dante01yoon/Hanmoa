@@ -14,6 +14,19 @@
     /* Module Resolution Options */
     "moduleResolution": "node",
     "baseUrl": "./",
+    "paths": {
+      "src/*": ["src/*"],
+      "@redux/*": ["./src/redux/*"], 
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@store/*": ["./src/store/*"],
+      "@reducers/*": ["./src/store/reducers/*"],
+      "@theme/*": ["./src/theme/*"],
+      "@util/*": ["./src/util/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@apis/*": ["./src/apis/*"],
+      "@models/*": ["./src/models/*"],
+    },
     "esModuleInterop": true,
   },
   "exclude": [
