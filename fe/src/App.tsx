@@ -1,10 +1,10 @@
 import React , { FC } from 'react';
-
+import { HanmoaTheme } from './theme/Provider';
 export const App:FC = () => {
   return (
-    <div>
+    <HanmoaTheme>
       Hello App
-    </div>
+    </HanmoaTheme>
   )
 }
 export default App;
