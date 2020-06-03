@@ -35,7 +35,12 @@ const getConfig = target => ({
         test: /\.tsx?$/,
         use: [
           'babel-loader',
-          {
+          { 
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              plugins:['react-hot-loader/babel']
+            },
             loader: 'ts-loader',
             options: {
               getCustomTransformers: () => ({before: [styledComponetnsTransformer]}),
@@ -47,6 +52,16 @@ const getConfig = target => ({
         test: /\.(scss|css)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        use:[
+          'file-loader'
+        ]
+      },
+      {
+        test: /\.svg$/,
+        use:['@svgr/webpack']
+      }
     ],
   },
 

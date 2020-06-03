@@ -1,8 +1,11 @@
 import React , { FC } from 'react';
 import * as Styled from './style';
 import { Gnb } from './gnb';
+
 const { 
-    Main 
+    Main,
+    Dummy,
+    MainContainer
 } = Styled;
 
 export const GlobalLayout:FC = ({
@@ -11,8 +14,11 @@ export const GlobalLayout:FC = ({
     return(
         <>
             <Gnb/>
+            <Dummy/>
             <Main>
-                {children}            
+                <MainContainer>
+                    {children}
+                </MainContainer>            
             </Main>
         </>
     )

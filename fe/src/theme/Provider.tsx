@@ -1,5 +1,5 @@
 import React, {FC } from 'react';
-import { reset} from 'styled-reset';
+import reset from 'styled-reset';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { theme } from './theme';
 const GlobalStyle = createGlobalStyle`
@@ -9,28 +9,98 @@ const GlobalStyle = createGlobalStyle`
     }
     body{
         background-color: #ffffff;
-        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        font-family: Lato, system-ui, -apple-system, BlinkMacSystemFont;
     }
-    a {
-        color: inherit;
+    html, body, div, span, applet, object, iframe,
+
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+
+    a, abbr, acronym, address, big, cite, code,
+
+    del, dfn, em, img, ins, kbd, q, s, samp,
+
+    small, strike, strong, sub, sup, tt, var,
+
+    b, u, i, center,
+
+    dl, dt, dd, ol, ul, li,
+
+    fieldset, form, label, legend,
+
+    table, caption, tbody, tfoot, thead, tr, th, td,
+
+    article, aside, canvas, details, embed, 
+
+    figure, figcaption, footer, header, hgroup, 
+
+    menu, nav, output, ruby, section, summary,
+
+    time, mark, audio, video {
+
+        margin: 0;
+
+        padding: 0;
+
+        border: 0;
+
+        font-size: 100%;
+
+        font: inherit;
+
+        vertical-align: baseline;
+
+    }
+    a, u  {
         text-decoration: none;
+        color: inherit;
     }
-    input, button {
-        background-color: transparent;
-        border: none;
-        outline: none;
-    }
-    h1, h2, h3, h4, h5, h6{
-        font-family:'Maven Pro', sans-serif;
-    }
-    ol, ul, li {
-        list-style: none;
-    }
-    img {
+    /* HTML5 display-role reset for older browsers */
+
+    article, aside, details, figcaption, figure, 
+
+    footer, header, hgroup, menu, nav, section {
+
         display: block;
-        width: 100%;
-        height: 100%;
+
     }
+
+    body {
+
+        line-height: 1;
+
+    }
+
+    ol, ul {
+
+        list-style: none;
+
+    }
+
+    blockquote, q {
+
+        quotes: none;
+
+    }
+
+    blockquote:before, blockquote:after,
+
+    q:before, q:after {
+
+        content: '';
+
+        content: none;
+
+    }
+
+    table {
+
+        border-collapse: collapse;
+
+        border-spacing: 0;
+
+    }
+
+ 
 `
 
 export const HanmoaTheme:FC = ({
