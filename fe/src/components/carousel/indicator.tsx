@@ -1,6 +1,5 @@
-import React, { FC, useRef, createRef } from 'react';
+import React, { FC, createRef } from 'react';
 import styled, { css } from 'styled-components';
-import resizeWindow from '@utils/carousel/windowResize';
 
 const Container = styled.div`
   display: inline-block; 

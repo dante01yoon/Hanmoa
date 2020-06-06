@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const Img = styled.div<{
   url: string 
 }>`
-  border: 1px solid black;
   width: 100%;
   height: 60vh;
   max-height: 400px;
