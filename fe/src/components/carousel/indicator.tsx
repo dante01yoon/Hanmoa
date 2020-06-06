@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useRef, createRef } from 'react';
 import styled, { css } from 'styled-components';
+import resizeWindow from '@utils/carousel/windowResize';
 
 const Container = styled.div`
   display: inline-block; 
@@ -30,14 +31,15 @@ export const Indicator: FC<{
   total,
   now = 1
 }) =>{
+  const ContainerRef = createRef<HTMLDivElement>();
   const dotMax = max < total ? max : total; 
   const dotArray= new Array();
   for(let i = 1; i <= dotMax; i++){
     if(i===now) dotArray.push(<Dot key={i} fill={true} />)
-    else dotArray.push(<Dot key={i} fill={false}/>)
+    else dotArray.push(<Dot key={i} />)
   }
   return(
-    <Container>
+    <Container ref={ContainerRef}>
       <DotList>
         {dotArray}
       </DotList> 

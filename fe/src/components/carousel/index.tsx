@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState, createRef, useRef } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Indicator } from './indicator'; 
-import { resizeWindow } from '@utils/carousel/windowResize';
+import useResize from '@utils/carousel/windowResize';
 /***
  * @component
  *  carousel slides are in these structures
@@ -9,6 +9,7 @@ import { resizeWindow } from '@utils/carousel/windowResize';
  * <Slider /> <- As name quoted, when next and prev button clicked, this component's state changes and give animiation effect
  * <Slide /> <- actual content component. div box contain images as background-image css.  
  */
+
 const Button = styled.button`
   position:absolute;
   top: 0;
@@ -40,27 +41,18 @@ const SliderContainer = styled.div`
   margin: 0 auto;
 `;
 
-
-// <{
-//   transition: number,  
-//   parentWidth: number
-//   translate: number,
-// }>
-
-// actual moving Slider
 const Slider = styled.div<{
   parentWidth: number 
   transition: number
   translation: number 
 }>` 
   display: flex;
-  width: 1280px;
+  width: ${p => p.parentWidth}px; 
   transform: translateX(-${p => p.translation}px);
   transition: transform ease-out ${p => p.transition}s;
   overflow:hidden;
 `;
 
-// width: ${p => p.parentWidth}px; 
 
 type StateProps = {
   activeIndex: number; 
@@ -75,18 +67,16 @@ export const Carousel: FC = ({
   const [state, setState ] = useState<StateProps>({
     activeIndex: 0,
     translate: 0,
-    transition: 0.25
+    transition: 0.5
 })
-  const [parentWidth, setParentWidth] = resizeWindow(parentRef); 
-
+  const parentWidth = useResize(parentRef);
   const { activeIndex, translate, transition } = state;
   const total = React.Children.count(children); 
-  // 4 carousel slides  ... 0  1  2  3 
   const nextSlide = () => {
     if( activeIndex < total -1 ){ 
       setState({ 
         ...state,
-        translate: (activeIndex + 1) * parentWidth,
+        translate: (activeIndex + 1) * parentWidth ,
         activeIndex: activeIndex +1 
        });
     } else if( activeIndex === total-1 ){
@@ -96,8 +86,6 @@ export const Carousel: FC = ({
         activeIndex: 0
       })
     }
-    console.log(state);
-
   }
   
   const prevSlide = () => {
@@ -114,11 +102,11 @@ export const Carousel: FC = ({
         activeIndex: total-1 
       })
     }
-    console.log(state);
   }
   useEffect(()=> {
+    console.log('parentWidth: ',parentWidth);
      if(parentRef.current){
-      // resizeWindow(parentRef);
+       console.log(parentRef.current.offsetWidth);
     }
   },[activeIndex]); 
   return(

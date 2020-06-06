@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, RefObject } from 'react'
+import React, { useLayoutEffect, useState, RefObject } from 'react'
 
 /***
  * @function resizeWindow
@@ -6,20 +6,29 @@ import { useLayoutEffect, useState, RefObject } from 'react'
  * 
  * 
  */
-export const resizeWindow: (ref: RefObject<HTMLElement>) => number[]  = (ref) => {
-  const [ elementWidth, elementHeight ] = ref.current ?  
-    [ref.current.offsetWidth, ref.current.offsetHeight ] :
-    [0,0];
-  const [size, setSize] = useState([elementWidth, elementHeight]);
+
+const useResize: (ref: RefObject<HTMLElement>) => number  = (
+  ref
+) => {
+  const [size, setSize] = useState<number[]>(
+    (() => {
+      const [ elementWidth, elementHeight ] = ref.current ?  
+      [ref.current.offsetWidth, ref.current.offsetHeight ] :
+      [0,0];
+      return [elementWidth, elementHeight]; 
+    })()
+  );
   useLayoutEffect(() => {
     const updateSize = () => {
-      setSize([elementWidth, elementHeight]);
-      console.log(`elementWidth: ${elementWidth}px`);
+      console.log('ref: ', [ref.current!.offsetWidth, ref.current!.offsetHeight]);
+      setSize([ref.current!.offsetWidth, ref.current!.offsetHeight]);
     };
     updateSize(); 
     window.addEventListener('resize', updateSize);
     
     return () => window.removeEventListener('resize', updateSize);
   },[]);
-  return size;    
+  return size[0];    
 };
+
+export default useResize;
