@@ -1,16 +1,33 @@
 {
-  "errors": [],
+  "errors": [
+    "./src/asset/logo/hanmoa_horizontal.svg 1:0\nModule parse failed: Unexpected token (1:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n> <?xml version=\"1.0\" standalone=\"no\"?>\n| <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n| <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"body_2\" width=\"200\" height=\"64\">\n @ ./src/components/gnb/gnb.tsx 4:0-64 16:86-96\n @ ./src/components/gnb/layout.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
+    "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n./src/components/gnb/gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(4,24)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2307: Cannot find module 'src/asset/logo/hanmoa_horizontal.svg' or its corresponding type declarations.\u001b[39m\u001b[22m"
+  ],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "071d443ab4f625179002",
+  "hash": "36eae055feb5965b8cb4",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
-    "main": "main.js"
+    "main": [
+      "main.js",
+      "main.3e2f71e6c334978a92c2.hot-update.js"
+    ]
   },
   "assets": [
+    {
+      "name": "3e2f71e6c334978a92c2.hot-update.json",
+      "size": 46,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
     {
       "name": "ErrorPage.js",
       "size": 1088,
@@ -36,8 +53,23 @@
       "emitted": false
     },
     {
+      "name": "main.3e2f71e6c334978a92c2.hot-update.js",
+      "size": 26747,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
       "name": "main.js",
-      "size": 1491590,
+      "size": 1487422,
       "chunks": [
         "main"
       ],
@@ -55,7 +87,8 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.3e2f71e6c334978a92c2.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -67,7 +100,8 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.3e2f71e6c334978a92c2.hot-update.js"
       ],
       "children": {},
       "childAssets": {}

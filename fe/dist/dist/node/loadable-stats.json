@@ -1,10 +1,13 @@
 {
-  "errors": [],
+  "errors": [
+    "./src/asset/logo/hanmoa_horizontal.svg 1:0\nModule parse failed: Unexpected token (1:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n> <?xml version=\"1.0\" standalone=\"no\"?>\n| <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n| <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"body_2\" width=\"200\" height=\"64\">\n @ ./src/components/gnb/gnb.tsx 4:0-64 18:86-96\n @ ./src/components/gnb/layout.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx",
+    "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n./src/components/gnb/gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(4,24)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2307: Cannot find module 'src/asset/logo/hanmoa_horizontal.svg' or its corresponding type declarations.\u001b[39m\u001b[22m"
+  ],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "8fc17a0e3c4771cdf2a6",
+  "hash": "564bd008242556e3fed4",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\node",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\node",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
@@ -37,7 +40,7 @@
     },
     {
       "name": "main.js",
-      "size": 44469,
+      "size": 40465,
       "chunks": [
         "main"
       ],
