@@ -16,7 +16,7 @@ export const GlobalLayout:FC = ({
             <Gnb/>
             <Dummy/>
             <Main>
-                <MainContainer>
+                <MainContainer >
                     {children}
                 </MainContainer>            
             </Main>

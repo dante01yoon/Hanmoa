@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, createRef } from 'react';
+import React, { FC, useEffect, useState, createRef, useRef } from 'react';
 import styled from 'styled-components';
 import { Indicator } from './indicator'; 
 const Button = styled.button`
@@ -23,21 +23,31 @@ const Button = styled.button`
     right: 0;
   }
 `;
-const SliderContainer = styled.div`
+
+// parent covering Slider
+const SliderContainer = styled.div` 
   width: 100%;
+  overflow: hidden;
   position:relative;
+  margin: 0 auto;
 `;
-const Slider = styled.div`
-  width:100%;
-  overflow:hidden;
+
+// actual moving Slider
+const Slider = styled.div<{
+  width: number
+}>` 
   display: flex;
+  width: ${width}px;
+  overflow:hidden;
 `
 
 export const Carousel: FC = ({
   children
 }) => {
   const [count, setCount ] = useState<number>(0); 
+  const [parentWidth, setParentWidth] = useState<number>(0); 
   const slideRef = createRef<HTMLDivElement>(); 
+  const parentRef = useRef<HTMLDivElement>(null); 
   const total = React.Children.count(children); 
   const nextSlide = () => {
     if( count < total -1 ){
@@ -58,10 +68,13 @@ export const Carousel: FC = ({
       slideRef.current.style.transition = "all 0.5s ease-in-out";
       slideRef.current.style.transform = `translateX(-${count}00%)`;
     }
-  },[count])
+    if(parentRef.current){
+      setParentWidth(parentRef.current.offsetWidth);
+    }
+  },[count || parentWidth])
   return(
-    <SliderContainer>
-      <Slider ref={slideRef}>
+    <SliderContainer ref={parentRef}>
+      <Slider ref={slideRef} width={parentWidth * total}>
         {children}      
       </Slider>
       <Indicator now={1} total={total}/>

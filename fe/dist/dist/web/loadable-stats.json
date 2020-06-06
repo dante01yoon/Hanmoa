@@ -1,20 +1,15 @@
 {
-  "errors": [],
-  "warnings": [
-    "./src/pages/home/index.tsx 12:9-14\n\"export 'Adobe' was not found in '../../asset/adobe.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
-    "./src/pages/home/index.tsx 10:9-16\n\"export 'Netflix' was not found in '../../asset/netflix.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
-    "./src/pages/home/index.tsx 14:9-21\n\"export 'NetflixPhone' was not found in '../../asset/netflix_phone.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx"
+  "errors": [
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx\n./src/components/carousel/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx(40,12)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'width'.\u001b[39m\u001b[22m"
   ],
+  "warnings": [],
   "version": "4.43.0",
-  "hash": "38134fc4736112cf8b3b",
+  "hash": "37c882698acdb8169935",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
-    "HomePage": [
-      "HomePage.js",
-      "HomePage.b6a84b559e2e65e59b60.hot-update.js"
-    ],
+    "HomePage": "HomePage.js",
     "main": "main.js"
   },
   "assets": [
@@ -47,23 +42,8 @@
       "emitted": false
     },
     {
-      "name": "HomePage.b6a84b559e2e65e59b60.hot-update.js",
-      "size": 8924,
-      "chunks": [
-        "HomePage"
-      ],
-      "chunkNames": [
-        "HomePage"
-      ],
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true
-      },
-      "emitted": false
-    },
-    {
       "name": "HomePage.js",
-      "size": 18920,
+      "size": 19673,
       "chunks": [
         "HomePage"
       ],
@@ -71,18 +51,7 @@
         "HomePage"
       ],
       "info": {},
-      "emitted": false
-    },
-    {
-      "name": "b6a84b559e2e65e59b60.hot-update.json",
-      "size": 50,
-      "chunks": [],
-      "chunkNames": [],
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true
-      },
-      "emitted": false
+      "emitted": true
     },
     {
       "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
@@ -102,7 +71,7 @@
         "main"
       ],
       "info": {},
-      "emitted": false
+      "emitted": true
     }
   ],
   "filteredAssets": 0,
@@ -134,8 +103,7 @@
         "HomePage"
       ],
       "assets": [
-        "HomePage.js",
-        "HomePage.b6a84b559e2e65e59b60.hot-update.js"
+        "HomePage.js"
       ],
       "children": {},
       "childAssets": {}

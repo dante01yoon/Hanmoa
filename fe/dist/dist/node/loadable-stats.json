@@ -1,12 +1,10 @@
 {
-  "errors": [],
-  "warnings": [
-    "./src/pages/home/index.tsx 12:9-14\n\"export 'Adobe' was not found in '../../asset/adobe.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx",
-    "./src/pages/home/index.tsx 10:9-16\n\"export 'Netflix' was not found in '../../asset/netflix.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx",
-    "./src/pages/home/index.tsx 14:9-21\n\"export 'NetflixPhone' was not found in '../../asset/netflix_phone.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx"
+  "errors": [
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx\n./src/components/carousel/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx(40,12)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'width'.\u001b[39m\u001b[22m"
   ],
+  "warnings": [],
   "version": "4.43.0",
-  "hash": "68ebdcb409491c58725d",
+  "hash": "e412e0fd4502be903f7f",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\node",
   "assetsByChunkName": {
@@ -45,7 +43,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 14786,
+      "size": 15410,
       "chunks": [
         "HomePage"
       ],
@@ -53,7 +51,7 @@
         "HomePage"
       ],
       "info": {},
-      "emitted": false
+      "emitted": true
     },
     {
       "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",

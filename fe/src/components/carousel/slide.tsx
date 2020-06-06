@@ -1,20 +1,24 @@
 import React, { SFC } from 'react';
 import styled from 'styled-components';
 
-const IMG = styled.img`
+const Img = styled.div<{
+  url: string 
+}>`
+  border: 1px solid black;
   width: 100%;
   height: 70vh;
+  background: url(${p=>p.url}) no-repeat center;
+  background-size: cover;
 `;
 
-export const Slide: SFC<{
-  src?: string,
-  alt?: string
-}> =({
-  src,
-  alt
+interface Props {
+  url: string
+}
+export const Slide: SFC<Props> = ({
+  url,
 }) => {
   return(
-    <IMG src={src} alt={alt}/>
+    <Img url={url} />
   )
 }
 
