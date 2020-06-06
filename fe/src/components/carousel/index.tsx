@@ -67,7 +67,7 @@ export const Carousel: FC = ({
   const [state, setState ] = useState<StateProps>({
     activeIndex: 0,
     translate: 0,
-    transition: 0.5
+    transition: 0.25
 })
   const parentWidth = useResize(parentRef);
   const { activeIndex, translate, transition } = state;
@@ -75,13 +75,13 @@ export const Carousel: FC = ({
   const nextSlide = () => {
     if( activeIndex < total -1 ){ 
       setState({ 
-        ...state,
+        transition: 0.5,
         translate: (activeIndex + 1) * parentWidth ,
         activeIndex: activeIndex +1 
        });
     } else if( activeIndex === total-1 ){
       setState({
-        ...state, 
+        transition: 0, 
         translate: 0,
         activeIndex: 0
       })
@@ -91,13 +91,13 @@ export const Carousel: FC = ({
   const prevSlide = () => {
     if( activeIndex > 0 ){
       setState({
-        ...state,
+        transition: 0.5,
         translate: (activeIndex -1) * parentWidth,
         activeIndex: activeIndex -1
       })
     } else if( activeIndex === 0 ){
       setState({
-        ...state,
+        transition: 0,
         translate: (total-1) * parentWidth,
         activeIndex: total-1 
       })

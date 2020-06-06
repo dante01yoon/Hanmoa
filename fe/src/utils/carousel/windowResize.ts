@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, RefObject } from 'react'
+import { useLayoutEffect, useState, RefObject } from 'react'
 
 /***
  * @function resizeWindow
