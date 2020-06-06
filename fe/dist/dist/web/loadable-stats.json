@@ -1,18 +1,30 @@
 {
-  "errors": [
-    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx\n./src/components/carousel/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx(40,12)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'width'.\u001b[39m\u001b[22m"
-  ],
+  "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "37c882698acdb8169935",
+  "hash": "2170bb58a5e679d04f2b",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
-    "HomePage": "HomePage.js",
+    "HomePage": [
+      "HomePage.js",
+      "HomePage.35f721e5cfdfeb89c63b.hot-update.js"
+    ],
     "main": "main.js"
   },
   "assets": [
+    {
+      "name": "35f721e5cfdfeb89c63b.hot-update.json",
+      "size": 50,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
     {
       "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
       "size": 145092,
@@ -42,8 +54,23 @@
       "emitted": false
     },
     {
+      "name": "HomePage.35f721e5cfdfeb89c63b.hot-update.js",
+      "size": 12104,
+      "chunks": [
+        "HomePage"
+      ],
+      "chunkNames": [
+        "HomePage"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
       "name": "HomePage.js",
-      "size": 19673,
+      "size": 25696,
       "chunks": [
         "HomePage"
       ],
@@ -51,7 +78,7 @@
         "HomePage"
       ],
       "info": {},
-      "emitted": true
+      "emitted": false
     },
     {
       "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
@@ -63,7 +90,7 @@
     },
     {
       "name": "main.js",
-      "size": 1491590,
+      "size": 1491592,
       "chunks": [
         "main"
       ],
@@ -71,7 +98,7 @@
         "main"
       ],
       "info": {},
-      "emitted": true
+      "emitted": false
     }
   ],
   "filteredAssets": 0,
@@ -103,7 +130,8 @@
         "HomePage"
       ],
       "assets": [
-        "HomePage.js"
+        "HomePage.js",
+        "HomePage.35f721e5cfdfeb89c63b.hot-update.js"
       ],
       "children": {},
       "childAssets": {}

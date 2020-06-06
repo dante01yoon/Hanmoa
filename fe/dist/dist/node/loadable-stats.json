@@ -1,12 +1,10 @@
 {
-  "errors": [
-    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx\n./src/components/carousel/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\carousel\\index.tsx(40,12)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'width'.\u001b[39m\u001b[22m"
-  ],
+  "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "e412e0fd4502be903f7f",
+  "hash": "18bd3e9558dd98323864",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\node",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\node",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
@@ -43,7 +41,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 15410,
+      "size": 18255,
       "chunks": [
         "HomePage"
       ],
@@ -51,7 +49,7 @@
         "HomePage"
       ],
       "info": {},
-      "emitted": true
+      "emitted": false
     },
     {
       "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
@@ -63,7 +61,7 @@
     },
     {
       "name": "main.js",
-      "size": 44609,
+      "size": 44471,
       "chunks": [
         "main"
       ],

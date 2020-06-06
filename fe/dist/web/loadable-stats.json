@@ -1,14 +1,10 @@
 {
   "errors": [],
-  "warnings": [
-    "./src/pages/home/index.tsx 12:9-14\n\"export 'Adobe' was not found in '../../asset/adobe.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
-    "./src/pages/home/index.tsx 10:9-16\n\"export 'Netflix' was not found in '../../asset/netflix.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
-    "./src/pages/home/index.tsx 14:9-21\n\"export 'NetflixPhone' was not found in '../../asset/netflix_phone.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx"
-  ],
+  "warnings": [],
   "version": "4.43.0",
-  "hash": "88e152a012f22df363df",
+  "hash": "e0f2f3b312e4de66c92b",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\web",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
@@ -45,7 +41,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 18920,
+      "size": 25698,
       "chunks": [
         "HomePage"
       ],
@@ -65,7 +61,7 @@
     },
     {
       "name": "main.js",
-      "size": 1491590,
+      "size": 1491592,
       "chunks": [
         "main"
       ],

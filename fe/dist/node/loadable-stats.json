@@ -1,14 +1,10 @@
 {
   "errors": [],
-  "warnings": [
-    "./src/pages/home/index.tsx 12:9-14\n\"export 'Adobe' was not found in '../../asset/adobe.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx",
-    "./src/pages/home/index.tsx 10:9-16\n\"export 'Netflix' was not found in '../../asset/netflix.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx",
-    "./src/pages/home/index.tsx 14:9-21\n\"export 'NetflixPhone' was not found in '../../asset/netflix_phone.jpg'\n @ ./src/components/route/route.tsx\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx"
-  ],
+  "warnings": [],
   "version": "4.43.0",
-  "hash": "71f347a2adf715aafebb",
+  "hash": "32f7e440026c423f4b08",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\node",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\node",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
@@ -45,7 +41,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 14786,
+      "size": 18257,
       "chunks": [
         "HomePage"
       ],
@@ -65,7 +61,7 @@
     },
     {
       "name": "main.js",
-      "size": 44469,
+      "size": 44471,
       "chunks": [
         "main"
       ],

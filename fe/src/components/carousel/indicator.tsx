@@ -34,7 +34,7 @@ export const Indicator: FC<{
   const dotArray= new Array();
   for(let i = 1; i <= dotMax; i++){
     if(i===now) dotArray.push(<Dot key={i} fill={true} />)
-    else dotArray.push(<Dot/>)
+    else dotArray.push(<Dot key={i} fill={false}/>)
   }
   return(
     <Container>
