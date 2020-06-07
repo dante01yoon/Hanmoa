@@ -11,20 +11,16 @@ import useResize from '@utils/carousel/windowResize';
  */
 
 const Button = styled.button`
-  position:absolute;
-  top: 0;
   height:100%;
-  all: unset; 
-  border: 1px solid ${p => p.theme.colors.cyan};
-  border-radius: 8px;
-  background-color: ${p => p.theme.colors.cyan};
+  bottom: 0;
+  position: absolute;
+  background-color: ${p => p.theme.colors.transparent};
   cursor: pointer;
-  opacity: 1;
-  transition: all 0.4 ease-in;
+  opacity: 0;
+  transition: all 0.5s ease;
   &:hover {
-    opacity:1; 
+    opacity:0.5; 
   }
-  background-color: yellow;
   &:first-child{
     left:0;
   }
@@ -104,7 +100,6 @@ export const Carousel: FC = ({
     }
   }
   useEffect(()=> {
-    console.log('parentWidth: ',parentWidth);
      if(parentRef.current){
        console.log(parentRef.current.offsetWidth);
     }
@@ -118,7 +113,7 @@ export const Carousel: FC = ({
       >
         {children}        
       </Slider>   
-      <Indicator now={1} total={total}/>
+      <Indicator now={activeIndex+1} total={total}/>
       <Button onClick={prevSlide}>left</Button>
       <Button onClick={nextSlide}>right</Button>
     </SliderContainer>

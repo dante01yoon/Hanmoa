@@ -2,7 +2,7 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "742a1ea104033d0ba83f",
+  "hash": "5abccf3844fb7d0de843",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\node",
   "assetsByChunkName": {
@@ -41,7 +41,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 18294,
+      "size": 18032,
       "chunks": [
         "HomePage"
       ],
