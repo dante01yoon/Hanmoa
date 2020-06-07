@@ -39,7 +39,7 @@ module.exports = api => {
             '@store': './src/store',
             '@reducers': './src/store/reducers',
             '@theme': './src/theme',
-            '@util': './src/util',
+            '@utils': './src/utils',
             '@modules': './src/modules',
             '@apis': './src/apis',
             '@models': './src/models'

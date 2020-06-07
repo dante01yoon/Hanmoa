@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import { GlobalLayout } from '@components/gnb/layout';
 import { HanmoaRouter } from './components/route';
+
 export const App:FC = () => {
   return (
     <HanmoaTheme>
