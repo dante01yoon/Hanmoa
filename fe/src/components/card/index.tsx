@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { CardData } from 'src/models/card';
+import { Icon } from 'src/components/icon';
 import * as Styled from './style';
-
 const { 
   Container,
   ImgBox,
@@ -55,8 +55,8 @@ export const Card:FC<Props> = ({
             {title}
           </Title>
           <TitleIcons>
-            <IconBox /> 
-            <IconBox />
+            <Icon shape={'share'} clickHandler={() => console.log('share')}/> 
+            <Icon shape={'heart'} clickHandler={() => console.log('heart')}/>
           </TitleIcons>        
         </TitleBox>
       </ContentBox>  
