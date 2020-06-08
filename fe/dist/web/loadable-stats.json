@@ -2,7 +2,7 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "071d443ab4f625179002",
+  "hash": "67d2d29309497ac9fc30",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\web",
   "assetsByChunkName": {
@@ -11,6 +11,22 @@
     "main": "main.js"
   },
   "assets": [
+    {
+      "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
+      "size": 145092,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "8521fef91ad62d462c9be9127cb383f5.jpg",
+      "size": 71453,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
     {
       "name": "ErrorPage.js",
       "size": 1088,
@@ -25,7 +41,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 3936,
+      "size": 23908,
       "chunks": [
         "HomePage"
       ],
@@ -36,8 +52,16 @@
       "emitted": false
     },
     {
+      "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
+      "size": 153063,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
       "name": "main.js",
-      "size": 1491590,
+      "size": 1491676,
       "chunks": [
         "main"
       ],

@@ -5,7 +5,11 @@
   ],
   "warnings": [],
   "version": "4.43.0",
+<<<<<<< HEAD
   "hash": "36eae055feb5965b8cb4",
+=======
+  "hash": "67d2d29309497ac9fc30",
+>>>>>>> b0e4f6b45c561b6848ff79846386c287e22c6dbe
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
@@ -18,6 +22,7 @@
   },
   "assets": [
     {
+<<<<<<< HEAD
       "name": "3e2f71e6c334978a92c2.hot-update.json",
       "size": 46,
       "chunks": [],
@@ -26,6 +31,21 @@
         "hotModuleReplacement": true,
         "immutable": true
       },
+=======
+      "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
+      "size": 145092,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "8521fef91ad62d462c9be9127cb383f5.jpg",
+      "size": 71453,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+>>>>>>> b0e4f6b45c561b6848ff79846386c287e22c6dbe
       "emitted": false
     },
     {
@@ -42,7 +62,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 3936,
+      "size": 23908,
       "chunks": [
         "HomePage"
       ],
@@ -53,6 +73,7 @@
       "emitted": false
     },
     {
+<<<<<<< HEAD
       "name": "main.3e2f71e6c334978a92c2.hot-update.js",
       "size": 26747,
       "chunks": [
@@ -65,11 +86,22 @@
         "hotModuleReplacement": true,
         "immutable": true
       },
+=======
+      "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
+      "size": 153063,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+>>>>>>> b0e4f6b45c561b6848ff79846386c287e22c6dbe
       "emitted": false
     },
     {
       "name": "main.js",
+<<<<<<< HEAD
       "size": 1487422,
+=======
+      "size": 1491676,
+>>>>>>> b0e4f6b45c561b6848ff79846386c287e22c6dbe
       "chunks": [
         "main"
       ],

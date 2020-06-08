@@ -5,7 +5,11 @@
   ],
   "warnings": [],
   "version": "4.43.0",
+<<<<<<< HEAD
   "hash": "564bd008242556e3fed4",
+=======
+  "hash": "5abccf3844fb7d0de843",
+>>>>>>> b0e4f6b45c561b6848ff79846386c287e22c6dbe
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\node",
   "assetsByChunkName": {
@@ -14,6 +18,22 @@
     "main": "main.js"
   },
   "assets": [
+    {
+      "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
+      "size": 145092,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "8521fef91ad62d462c9be9127cb383f5.jpg",
+      "size": 71453,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
     {
       "name": "ErrorPage.js",
       "size": 993,
@@ -28,13 +48,21 @@
     },
     {
       "name": "HomePage.js",
-      "size": 3731,
+      "size": 18032,
       "chunks": [
         "HomePage"
       ],
       "chunkNames": [
         "HomePage"
       ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
+      "size": 153063,
+      "chunks": [],
+      "chunkNames": [],
       "info": {},
       "emitted": false
     },
