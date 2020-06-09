@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{
+export const Container = styled.li<{
   width?: number,
   height?: number 
 }>`
   width: ${p => p.width ? `${p.width}` : 296}px;
   height: ${p => p.height ? `${p.height}` : 280}px;
+  margin: 16px;
+  display: inline-block;
 `;
 
 export const ImgBox = styled.div<{
@@ -17,23 +19,29 @@ export const ImgBox = styled.div<{
   background-size: cover;
 `
 export const ContentBox = styled.div`
-  width: 100%;
+  width: 100%
   height: 42%; 
   margin: 0 auto;
+  padding: 16px;
+  background-color: ${p => p.theme.colors.yellow_white};
 `
 export const CategoryBox = styled.div`
   width: 248px;
   height: 24px;
   display:flex; 
 `;
-export const CategoryIcon = styled.div`
+export const CategoryIcon = styled.div<{
+}>`
   width: 24px;
   height: 100%;
+  background: url() no-repeat center;
+  background-size: cover; 
 ` 
 export const Category = styled.div`
-  width: 192px;
+  width: 152px;
+  margin-right: 40px;
   height: 100%:
-  line-clamps: 1; 
+  line-clamp: 1; 
 `
 export const MemberCount = styled.div`
   width: 32px; 
@@ -46,8 +54,8 @@ export const TitleBox = styled.div`
 `
 export const Title = styled.div`
   width: 152px;
-  height: 100%;
-  line-clamps: 2;
+  padding: 8px;
+  line-clamp: 2;
 `
 export const TitleIcons = styled.div`
   width: 64px;
@@ -57,11 +65,9 @@ export const TitleIcons = styled.div`
   align-items: center;
 `
 export const IconBox = styled.div<{
-  url: string
 }>`
+  margin-right: 8px;
   width: 24px;
   height: 24px;
-  background: url(${p => p.url}) no-repeat center;
-  background-size: cover; 
   cursor: pointer;
 `

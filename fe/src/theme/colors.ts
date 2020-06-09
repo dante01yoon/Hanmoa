@@ -7,6 +7,7 @@ export const colors: Colors = {
     red: '#be1e08',
     orange: '#fd7e14',
     yellow: '#ffc107',
+    yellow_white: '#FDF9F9',
     green: '#28a745',
     teal: '#007871',
     cyan: '#17a2b8',

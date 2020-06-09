@@ -6,6 +6,7 @@ export interface Colors{
     red:string,
     orange:string,
     yellow:string,
+    yellow_white: string,
     green:string,
     teal:string,
     cyan:string,

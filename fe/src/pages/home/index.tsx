@@ -3,7 +3,10 @@ import * as Styled from './style';
 import { Carousel } from 'src/components/carousel';
 import { Slide } from 'src/components/carousel/slide'; 
 import { Card } from 'src/components/card'; 
+import { ProgressBar } from 'src/components/progress';
 import { dummyData } from './dummy';
+
+// carousel 
 import Adobe from 'src/asset/adobe.jpg';
 import NetflixPhone from 'src/asset/netflix_phone.jpg';
 import Netflix from 'src/asset/netflix.jpg';
@@ -16,8 +19,10 @@ const {
 const HomePage: FC =( ) =>{
     const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
     useEffect(() => {
-      setArray(dummyData()); 
-    },[]);
+      setTimeout(() => {
+        setArray(dummyData()); 
+      },700);
+    },[])
     return(
       <>
         <section>
@@ -35,7 +40,7 @@ const HomePage: FC =( ) =>{
                   return <Card data={value} key={value.id} /> 
                 })
                : 
-              <div> ... loading </div>
+              <ProgressBar/>
             }
           </RoomContainer>
         </section>

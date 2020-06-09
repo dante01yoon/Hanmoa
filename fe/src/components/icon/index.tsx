@@ -1,13 +1,4 @@
 import React, { FC } from 'react';
-<<<<<<< HEAD
-import styled from 'styled-components';
-
-
-export const Icon: FC = () => {
-  return(
-    <>
-    </>
-=======
 import { iconMap, IconProps } from './chart';
 import styled, { css } from 'styled-components';
 
@@ -16,8 +7,6 @@ export const IconBox = styled.div<{
   size?: number 
 }>`
   cursor:pointer;
-  width: ${p => p.size}px;
-  height:${p => p.size}px;
   display:flex; 
   align-items: center;
   & svg{
@@ -35,22 +24,33 @@ interface Props {
   color?: string,
   size?: number,
   shape: keyof IconProps
+  viewBox?: string,
+  preserveAspectRatio?: string,
+  scale?: number   
   clickHandler : (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 export const Icon: FC<Props>= ({
   color = '#000000',
   size = 24,
   shape,
+  scale = 1.0,
+  viewBox = `0 0 ${size} ${size}`,
+  preserveAspectRatio = "none", 
   clickHandler
 }) => {
   return(
     <IconBox 
       onClick={clickHandler}
     >
-        <svg width={size} height={size} fill={color}>
-            <path d={iconMap[shape]} />
+        <svg 
+          width={`${size}px`} 
+          height={`${size}px`} 
+          fill={color} 
+          preserveAspectRatio={preserveAspectRatio}
+          viewBox={viewBox}
+        >
+          <path style={{transform:`scale(${scale})`}} d={iconMap[shape]} />
         </svg>
     </IconBox>
->>>>>>> 352e02d65dc4b3a4b06d0f60c51c6eb27cdc3c2d
   )
 }

@@ -1,5 +1,5 @@
 import { CardData } from 'src/models/card';
-
+import DummyImg from 'src/asset/netflix.jpg';
 export const singleDummy: CardData = {
   id: 1, //방 고유 아이디 
   title: 'test', //방 제목
@@ -38,7 +38,7 @@ export const singleDummy: CardData = {
   full: 4, // 입장 가능한 전체 인원 
   current: 3, // 현 인원 
   category: '넷플릭스',// 주제 카테고리 
-  imgUrl: 'some image url', // 커버 이미지 URL
+  imgUrl: `${DummyImg}`, // 커버 이미지 URL
   url: 'some imageurl', // 주소 
   block: true // 방 입장 가능여부  
 }

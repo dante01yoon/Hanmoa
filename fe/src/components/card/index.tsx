@@ -1,7 +1,12 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { CardData } from 'src/models/card';
 import { Icon } from 'src/components/icon';
+import CategoryImage from 'src/asset/monitor-tv.svg';
+import ShareImage from 'src/asset/share.svg';
+import HeartImage from 'src/asset/heart_not_checked.svg';
+import HeartFilledImage from 'src/asset/heart_checked.svg';
 import * as Styled from './style';
+
 const { 
   Container,
   ImgBox,
@@ -27,6 +32,10 @@ export const Card:FC<Props> = ({
   height,
   data
 }) => {
+  const [like, setLike] = useState<boolean>(false);
+  useEffect(() => {
+    console.log(`like: ${like}`);
+  })
   const { 
     imgUrl,
     title,
@@ -40,13 +49,13 @@ export const Card:FC<Props> = ({
   }  = data; 
   const extractedUrl = imgUrl ?? 'none'; 
   return(
-    <>
-      <Container>
-        <ImgBox imgUrl={extractedUrl}/>
-      </Container>
+    <Container>
+      <ImgBox imgUrl={extractedUrl}/>
       <ContentBox>
         <CategoryBox>
-          <CategoryIcon />
+          <IconBox> 
+            <CategoryImage />
+          </IconBox>
           <Category>{category}</Category>
           <MemberCount> {current} / {full} </MemberCount>  <MemberCount/>  
         </CategoryBox>
@@ -55,11 +64,21 @@ export const Card:FC<Props> = ({
             {title}
           </Title>
           <TitleIcons>
-            <Icon shape={'share'} clickHandler={() => console.log('share')}/> 
-            <Icon shape={'heart'} clickHandler={() => console.log('heart')}/>
+            <IconBox>
+              <ShareImage/>
+            </IconBox>
+            <IconBox>
+              {
+                like ? 
+                <HeartFilledImage /> : 
+                <HeartImage />  
+              }
+            </IconBox>
+            {/* <Icon shape={'share'} scale={1.5} clickHandler={() => console.log('share')}/>  */}
+            {/* <Icon shape={'heart'} clickHandler={() => console.log('heart')}/> */}
           </TitleIcons>        
         </TitleBox>
-      </ContentBox>  
-    </>
+      </ContentBox> 
+    </Container>
   )
 }
