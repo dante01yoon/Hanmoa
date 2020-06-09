@@ -45,7 +45,8 @@ export const Card:FC<Props> = ({
     full, 
     current,
     category,
-    url
+    url,
+    block
   }  = data; 
   const extractedUrl = imgUrl ?? 'none'; 
   return(
@@ -57,7 +58,11 @@ export const Card:FC<Props> = ({
             <CategoryImage />
           </IconBox>
           <Category>{category}</Category>
-          <MemberCount> {current} / {full} </MemberCount>  <MemberCount/>  
+          <MemberCount block={block}> 
+            {current} 
+              / 
+            {full} 
+          </MemberCount> 
         </CategoryBox>
         <TitleBox>
           <Title>

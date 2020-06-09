@@ -2,7 +2,7 @@ import { CardData } from 'src/models/card';
 import DummyImg from 'src/asset/netflix.jpg';
 export const singleDummy: CardData = {
   id: 1, //방 고유 아이디 
-  title: 'test', //방 제목
+  title: '오래 볼 분만 제발 오래 볼 문만 제발제발제발 오랫동안 같이 볼 분들만 들어와주세요 제발요.', //방 제목
   description: 'this is test room', // 방 내용
   host: {
     id: 1,
@@ -37,10 +37,10 @@ export const singleDummy: CardData = {
   ], // 방 멤버 정보 
   full: 4, // 입장 가능한 전체 인원 
   current: 3, // 현 인원 
-  category: '넷플릭스',// 주제 카테고리 
+  category: '음식 같이 나누어 먹기',// 주제 카테고리 
   imgUrl: `${DummyImg}`, // 커버 이미지 URL
   url: 'some imageurl', // 주소 
-  block: true // 방 입장 가능여부  
+  block: false // 방 입장 가능여부  
 }
 
 export const dummyData: () => CardData[] = (
