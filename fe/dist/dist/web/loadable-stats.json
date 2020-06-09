@@ -1,0 +1,159 @@
+{
+  "errors": [],
+  "warnings": [],
+  "version": "4.43.0",
+  "hash": "5bd91d91699e541ce20f",
+  "publicPath": "/web/",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
+  "assetsByChunkName": {
+    "ErrorPage": "ErrorPage.js",
+    "HomePage": "HomePage.js",
+    "main": [
+      "main.js",
+      "main.18b3464745ba5c36c092.hot-update.js"
+    ]
+  },
+  "assets": [
+    {
+      "name": "18b3464745ba5c36c092.hot-update.json",
+      "size": 46,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
+      "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
+      "size": 145092,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "8521fef91ad62d462c9be9127cb383f5.jpg",
+      "size": 71453,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "ErrorPage.js",
+      "size": 1088,
+      "chunks": [
+        "ErrorPage"
+      ],
+      "chunkNames": [
+        "ErrorPage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "HomePage.js",
+      "size": 47730,
+      "chunks": [
+        "HomePage"
+      ],
+      "chunkNames": [
+        "HomePage"
+      ],
+      "info": {},
+      "emitted": true
+    },
+    {
+      "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
+      "size": 153063,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "main.18b3464745ba5c36c092.hot-update.js",
+      "size": 10466,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
+      "name": "main.js",
+      "size": 1491676,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {},
+      "emitted": false
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "main.js",
+        "main.18b3464745ba5c36c092.hot-update.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "namedChunkGroups": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "main.js",
+        "main.18b3464745ba5c36c092.hot-update.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "HomePage": {
+      "chunks": [
+        "HomePage"
+      ],
+      "assets": [
+        "HomePage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "ErrorPage": {
+      "chunks": [
+        "ErrorPage"
+      ],
+      "assets": [
+        "ErrorPage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "logging": {
+    "webpack.buildChunkGraph.visitModules": {
+      "entries": [],
+      "filteredEntries": 5,
+      "debug": false
+    }
+  },
+  "children": []
+}
