@@ -20,7 +20,9 @@ export const Nav = styled.nav`
 `;
 export const ItemBox = styled.div`
     display:flex;
+    align-items:center;
     margin: 0 16px;
+    height:64px;
 `;
 export const Item = styled.li`
     padding: 0 8px;
@@ -52,4 +54,23 @@ export const MainContainer = styled.div`
     height:100vh;
     margin: 0 auto;
     position:relative;
+`;
+export const TopicButton = styled.button`
+    height:32px;
+    display:flex;
+    align-items:center;
+    border-radius: 8px;
+    border: 0;
+    outline: 0; 
+    background-color: ${p=> p.theme.colors.white};
+    &:focus{
+        box-shadow: 0 0 0 0.2rem rgba(237,102,83,.25);
+    }
+`;
+export const Topic = styled.span`
+    margin-left: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height:32px;
+    height:100%;
 `;

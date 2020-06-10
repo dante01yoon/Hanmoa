@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useState, createRef, RefObject } from 'react';
 import * as Styled from './style';
 import { SmartLink } from '@components/smartlink';
 import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
+import Hamburger from 'src/asset/hamburger.svg';
 const { 
     Header,
     Nav,
@@ -10,9 +11,15 @@ const {
     LeftItemContainer,
     ItemList,
     Item,
-    ItemBox     
+    ItemBox,
+    TopicButton,
+    Topic     
 } = Styled;
+
 export const Gnb:FC = () => {
+    const [visible, setVisible] = useState<boolean>(false); 
+    const topicRef = createRef<HTMLButtonElement>();
+    
     return (
         <Header>
             <Nav>
@@ -23,11 +30,12 @@ export const Gnb:FC = () => {
                                     <HanmoaLogo/>
                                 </ItemBox>
                             </SmartLink>
-                            <SmartLink >
-                                <ItemBox>
-                                    Topic
-                                </ItemBox>
-                            </SmartLink>
+                            <ItemBox>
+                                <TopicButton ref={topicRef}>
+                                    <Hamburger/>
+                                    <Topic>토픽</Topic>
+                                </TopicButton>
+                            </ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>
