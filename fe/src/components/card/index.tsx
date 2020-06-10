@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, SyntheticEvent } from 'react';
 import { CardData } from 'src/models/card';
 import { Icon } from 'src/components/icon';
 import CategoryImage from 'src/asset/monitor-tv.svg';
@@ -25,12 +25,14 @@ interface Props {
   width?: number,
   height?: number, 
   data: CardData
+  handleClick: (e:SyntheticEvent) => void 
 }
 
 export const Card:FC<Props> = ({
   width,
   height,
-  data
+  data,
+  handleClick
 }) => {
   const [like, setLike] = useState<boolean>(false);
   useEffect(() => {
@@ -50,7 +52,7 @@ export const Card:FC<Props> = ({
   }  = data; 
   const extractedUrl = imgUrl ?? 'none'; 
   return(
-    <Container>
+    <Container onClick={handleClick}>
       <ImgBox imgUrl={extractedUrl}/>
       <ContentBox>
         <CategoryBox>

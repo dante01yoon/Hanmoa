@@ -1,7 +1,8 @@
 export type HostType = number[] | null; 
 export type JoinType = number[] | null;  
 export interface Member { 
-  id: number
+  id: number,
+  number: number
   name: string // 이름 
   createdAt: string // 생성날짜 
   modifiedAt: string  // 개인정보 수정 날짜 

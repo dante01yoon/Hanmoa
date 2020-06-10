@@ -1,10 +1,13 @@
-import React,  { FC, useState, useEffect } from 'react';
+import React,  { FC, useState, useEffect, SyntheticEvent } from 'react';
 import * as Styled from './style';
 import { Carousel } from 'src/components/carousel';
 import { Slide } from 'src/components/carousel/slide'; 
 import { Card } from 'src/components/card'; 
 import { ProgressBar } from 'src/components/progress';
 import { dummyData } from './dummy';
+import { Modal } from 'src/components/modal';
+import { CardData } from 'src/models/card';
+import { ModalProps } from 'src/models/modal';
 
 // carousel 
 import Adobe from 'src/asset/adobe.jpg';
@@ -18,11 +21,16 @@ const {
 
 const HomePage: FC =( ) =>{
     const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
+    const [modalData, setModalData] = useState({} as ModalProps);
+
     useEffect(() => {
       setTimeout(() => {
         setArray(dummyData()); 
       },700);
     },[])
+    const handleClick : (data: CardData ) => void = (data) => {
+      setModalData(Object.assign(data,{visible: true})); 
+    }
     return(
       <>
         <section>
@@ -33,11 +41,18 @@ const HomePage: FC =( ) =>{
           </Carousel>
         </section>
         <section>
+          <Modal data={}/>
+        </section>
+        <section>
           <RoomContainer>
             {
               array.length > 0 ? 
                 array.map((value) => {
-                  return <Card data={value} key={value.id} /> 
+                  return <Card
+                    data={value} 
+                    key={value.id} 
+                    handleClick={() => handleClick(value)}
+                   /> 
                 })
                : 
               <ProgressBar/>

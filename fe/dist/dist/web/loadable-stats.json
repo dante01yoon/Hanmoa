@@ -1,30 +1,34 @@
 {
-  "errors": [],
+  "errors": [
+    "./src/pages/home/index.tsx\nModule build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx: Unterminated regular expression (34:23)\n\n\u001b[0m \u001b[90m 32 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33msection\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 33 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33msection\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 34 | \u001b[39m          \u001b[33m<\u001b[39m\u001b[33mModal\u001b[39m data\u001b[33m=\u001b[39m\u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 35 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33msection\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 36 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33msection\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 37 | \u001b[39m          \u001b[33m<\u001b[39m\u001b[33mRoomContainer\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n    at Object._raise (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:746:17)\n    at Object.raiseWithData (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:739:17)\n    at Object.raise (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:733:17)\n    at Object.readRegexp (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:8153:20)\n    at Object.readToken_slash (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:7759:12)\n    at Object.getTokenFromCode (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:8075:14)\n    at Object.getTokenFromCode (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:4670:18)\n    at Object.getTokenFromCode (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:7002:20)\n    at Object.nextToken (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:7598:12)\n    at Object.next (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\parser\\lib\\index.js:7526:10)\n @ ./src/components/route/route.tsx 54:13-52 29:11-31:23\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n./src/pages/home/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(44,23)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS17000: JSX attributes must only be assigned a non-empty 'expression'.\u001b[39m\u001b[22m"
+  ],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "543a8c4bb52255b87569",
+  "hash": "e89b224740a9a68177ed",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
-    "HomePage": "HomePage.js",
-    "main": "main.js"
+    "HomePage": [
+      "HomePage.js",
+      "HomePage.5bb8ce76bd150816c8e1.hot-update.js"
+    ],
+    "main": [
+      "main.js",
+      "main.5bb8ce76bd150816c8e1.hot-update.js"
+    ]
   },
   "assets": [
     {
-      "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
-      "size": 145092,
+      "name": "5bb8ce76bd150816c8e1.hot-update.json",
+      "size": 62,
       "chunks": [],
       "chunkNames": [],
-      "info": {},
-      "emitted": false
-    },
-    {
-      "name": "8521fef91ad62d462c9be9127cb383f5.jpg",
-      "size": 71453,
-      "chunks": [],
-      "chunkNames": [],
-      "info": {},
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
       "emitted": false
     },
     {
@@ -40,8 +44,23 @@
       "emitted": false
     },
     {
+      "name": "HomePage.5bb8ce76bd150816c8e1.hot-update.js",
+      "size": 3173,
+      "chunks": [
+        "HomePage"
+      ],
+      "chunkNames": [
+        "HomePage"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
       "name": "HomePage.js",
-      "size": 71832,
+      "size": 6127,
       "chunks": [
         "HomePage"
       ],
@@ -52,11 +71,18 @@
       "emitted": false
     },
     {
-      "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
-      "size": 153063,
-      "chunks": [],
-      "chunkNames": [],
-      "info": {},
+      "name": "main.5bb8ce76bd150816c8e1.hot-update.js",
+      "size": 10466,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
       "emitted": false
     },
     {
@@ -79,7 +105,8 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.5bb8ce76bd150816c8e1.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -91,7 +118,8 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.5bb8ce76bd150816c8e1.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -101,7 +129,8 @@
         "HomePage"
       ],
       "assets": [
-        "HomePage.js"
+        "HomePage.js",
+        "HomePage.5bb8ce76bd150816c8e1.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
