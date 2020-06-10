@@ -17,6 +17,7 @@ export const Container = styled.li<{
 export const ImgBox = styled.div<{
   imgUrl?: string 
 }>`
+  cursor: pointer;
   width: 100%;
   height: 168px;
   background: url(${p => p.imgUrl}) no-repeat center;

@@ -42,7 +42,7 @@ export const singleDummy: CardData = {
   current: 3, // 현 인원 
   category: '음식 같이 나누어 먹기',// 주제 카테고리 
   imgUrl: `${DummyImg}`, // 커버 이미지 URL
-  url: 'some imageurl', // 주소 
+  url: 'qwefwqsf1231232f', // 주소 
   block: false // 방 입장 가능여부  
 }
 

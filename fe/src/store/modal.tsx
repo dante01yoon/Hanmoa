@@ -12,14 +12,14 @@ type ModalState = ModalProps;
 // action 
 type Action = 
   | { type: 'OPEN' , payload: ModalState}
-  | { type: 'CLOSE' , payload: ModalState} ;
+  | { type: 'CLOSE' } ;
 // dispatch 
 type ModalDispatch = Dispatch<Action>;
 
 export const StateContext = createContext<ModalProps | null>(null);
 export const DispatchContext = createContext<ModalDispatch | null>(null);
 
-const {Provider, Consumer } = StateContext;
+const { Provider, Consumer } = StateContext;
 
 function modalReducer(state: ModalState, action: Action){
   switch(action.type){

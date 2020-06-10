@@ -7,9 +7,10 @@ import { ProgressBar } from 'src/components/progress';
 import { dummyData } from './dummy';
 import { Modal } from 'src/components/modal';
 import { CardData } from 'src/models/card';
-import { ModalProps } from 'src/models/modal';
+import { useModal, useModalState, useModalDispatch } from 'src/utils/modal/useModal';
 
-// carousel 
+
+// carousel contents : jpg 
 import Adobe from 'src/asset/adobe.jpg';
 import NetflixPhone from 'src/asset/netflix_phone.jpg';
 import Netflix from 'src/asset/netflix.jpg';
@@ -21,15 +22,20 @@ const {
 
 const HomePage: FC =( ) =>{
     const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
-    const [modalData, setModalData] = useState({} as ModalProps);
-
+    const [ state, dispatch ] = useModal(); 
     useEffect(() => {
       setTimeout(() => {
         setArray(dummyData()); 
       },700);
     },[])
     const handleClick : (data: CardData ) => void = (data) => {
-      setModalData(Object.assign(data,{visible: true})); 
+      dispatch({
+        type: 'OPEN', 
+        payload: {
+          data,
+          visible: true
+        }
+      });
     }
     return(
       <>
@@ -41,7 +47,7 @@ const HomePage: FC =( ) =>{
           </Carousel>
         </section>
         <section>
-          <Modal data={}/>
+          {state.visible && <Modal data={state.data} />}
         </section>
         <section>
           <RoomContainer>

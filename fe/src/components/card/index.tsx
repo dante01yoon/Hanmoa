@@ -6,7 +6,6 @@ import ShareImage from 'src/asset/share.svg';
 import HeartImage from 'src/asset/heart_not_checked.svg';
 import HeartFilledImage from 'src/asset/heart_checked.svg';
 import * as Styled from './style';
-import { ModalProvider } from 'src/store/modal';
 
 const { 
   Container,
@@ -36,9 +35,7 @@ export const Card:FC<Props> = ({
   handleClick
 }) => {
   const [like, setLike] = useState<boolean>(false);
-  useEffect(() => {
-    console.log(`like: ${like}`);
-  })
+  
   const { 
     imgUrl,
     title,
@@ -53,9 +50,8 @@ export const Card:FC<Props> = ({
   }  = data; 
   const extractedUrl = imgUrl ?? 'none'; 
   return(
-    <ModalProvider>
-      <Container onClick={handleClick}>
-        <ImgBox imgUrl={extractedUrl}/>
+      <Container >
+        <ImgBox imgUrl={extractedUrl} onClick={handleClick}/>
         <ContentBox>
           <CategoryBox>
             <IconBox> 
@@ -89,6 +85,5 @@ export const Card:FC<Props> = ({
           </TitleBox>
         </ContentBox> 
       </Container>
-    </ModalProvider>
   )
 }

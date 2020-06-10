@@ -4,10 +4,11 @@ import React, {
   useEffect, 
   SyntheticEvent 
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import * as Styled from './style';
 import { CardData } from 'src/models/card';
-
+import { BaseButton } from '@components/button';
+import { useModalDispatch } from '@utils/modal/useModal';
 const { 
   Wrapper,
   Row,
@@ -16,7 +17,8 @@ const {
   Member,
   StudentNumber, 
   StudentName,
-  MemberList
+  MemberList,
+  ButtonWrapper
 } = Styled;
 
 interface Props{
@@ -25,18 +27,18 @@ interface Props{
 export const Modal:FC<Props> = ({
   data
 }) => {
-  const [ visible, setVisible ] = useState<boolean>();
   const { 
     title, host, members, full, current ,category, url , block 
   } = data; 
   const enter: (e: SyntheticEvent) => void = () => {
     
   }
+  const close = useModalDispatch(); 
   const buildMemberList = () => (
     members.map((value, index) => {
       return (
         <Member key={index}>
-          <Name>{value.number}</Name>
+          <StudentNumber>{value.number}</StudentNumber>
           <StudentName>{value.name}</StudentName>
         </Member>
       )      
@@ -60,6 +62,28 @@ export const Modal:FC<Props> = ({
         <MemberList>
           {buildMemberList()}
         </MemberList>
+      </Row>
+      <Row>
+        <ButtonWrapper>
+          <Route render={({history}) => (
+            <BaseButton
+            background={'#28D84F'} 
+            clickHandler={() => {
+              close({type: 'CLOSE'}); 
+              history.push(`room/${url}`);
+            }}
+            >
+              입장
+            </BaseButton>
+          )} /> 
+          
+          <BaseButton 
+            background={'#DC3943'}
+            clickHandler={() => close({type: 'CLOSE'})}
+          >
+            닫기
+          </BaseButton>
+        </ButtonWrapper>
       </Row>
     </Wrapper>
   )
