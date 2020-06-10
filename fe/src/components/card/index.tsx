@@ -6,6 +6,7 @@ import ShareImage from 'src/asset/share.svg';
 import HeartImage from 'src/asset/heart_not_checked.svg';
 import HeartFilledImage from 'src/asset/heart_checked.svg';
 import * as Styled from './style';
+import { ModalProvider } from 'src/store/modal';
 
 const { 
   Container,
@@ -52,40 +53,42 @@ export const Card:FC<Props> = ({
   }  = data; 
   const extractedUrl = imgUrl ?? 'none'; 
   return(
-    <Container onClick={handleClick}>
-      <ImgBox imgUrl={extractedUrl}/>
-      <ContentBox>
-        <CategoryBox>
-          <IconBox> 
-            <CategoryImage />
-          </IconBox>
-          <Category>{category}</Category>
-          <MemberCount block={block}> 
-            {current} 
-              / 
-            {full} 
-          </MemberCount> 
-        </CategoryBox>
-        <TitleBox>
-          <Title>
-            {title}
-          </Title>
-          <TitleIcons>
-            <IconBox>
-              <ShareImage/>
+    <ModalProvider>
+      <Container onClick={handleClick}>
+        <ImgBox imgUrl={extractedUrl}/>
+        <ContentBox>
+          <CategoryBox>
+            <IconBox> 
+              <CategoryImage />
             </IconBox>
-            <IconBox>
-              {
-                like ? 
-                <HeartFilledImage /> : 
-                <HeartImage />  
-              }
-            </IconBox>
-            {/* <Icon shape={'share'} scale={1.5} clickHandler={() => console.log('share')}/>  */}
-            {/* <Icon shape={'heart'} clickHandler={() => console.log('heart')}/> */}
-          </TitleIcons>        
-        </TitleBox>
-      </ContentBox> 
-    </Container>
+            <Category>{category}</Category>
+            <MemberCount block={block}> 
+              {current} 
+                / 
+              {full} 
+            </MemberCount> 
+          </CategoryBox>
+          <TitleBox>
+            <Title>
+              {title}
+            </Title>
+            <TitleIcons>
+              <IconBox>
+                <ShareImage/>
+              </IconBox>
+              <IconBox>
+                {
+                  like ? 
+                  <HeartFilledImage /> : 
+                  <HeartImage />  
+                }
+              </IconBox>
+              {/* <Icon shape={'share'} scale={1.5} clickHandler={() => console.log('share')}/>  */}
+              {/* <Icon shape={'heart'} clickHandler={() => console.log('heart')}/> */}
+            </TitleIcons>        
+          </TitleBox>
+        </ContentBox> 
+      </Container>
+    </ModalProvider>
   )
 }

@@ -1,5 +1,6 @@
 import { CardData } from './card';
-export interface ModalProps extends CardData { 
+export interface ModalProps {
+  data: CardData 
   visible: boolean 
 }
 
