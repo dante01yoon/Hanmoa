@@ -1,8 +1,11 @@
 {
-  "errors": [],
+  "errors": [
+    "./src/pages/home/index.tsx\nModule build failed (from ./node_modules/ts-loader/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx'\n @ ./src/components/route/route.tsx 54:13-52 27:21-29:21\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\route\\route.tsx\n./src/components/route/route.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\route\\route.tsx(6,74)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx' is not a module.\u001b[39m\u001b[22m"
+  ],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "8fc17a0e3c4771cdf2a6",
+  "hash": "979646a051cee2bdd43e",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\node",
   "assetsByChunkName": {
@@ -25,7 +28,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 3731,
+      "size": 3349,
       "chunks": [
         "HomePage"
       ],
@@ -37,7 +40,7 @@
     },
     {
       "name": "main.js",
-      "size": 44469,
+      "size": 44609,
       "chunks": [
         "main"
       ],

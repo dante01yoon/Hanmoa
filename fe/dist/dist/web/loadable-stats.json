@@ -1,16 +1,33 @@
 {
-  "errors": [],
+  "errors": [
+    "./src/pages/home/index.tsx\nModule build failed (from ./node_modules/ts-loader/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx'\n @ ./src/components/route/route.tsx 54:13-52 29:11-31:23\n @ ./src/components/route/index.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\route\\route.tsx\n./src/components/route/route.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\route\\route.tsx(6,74)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx' is not a module.\u001b[39m\u001b[22m"
+  ],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "071d443ab4f625179002",
+  "hash": "06638dfe1a335f71ebfb",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
-    "main": "main.js"
+    "main": [
+      "main.js",
+      "main.21fae7bfa46895f3c852.hot-update.js"
+    ]
   },
   "assets": [
+    {
+      "name": "21fae7bfa46895f3c852.hot-update.json",
+      "size": 46,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
     {
       "name": "ErrorPage.js",
       "size": 1088,
@@ -21,11 +38,11 @@
         "ErrorPage"
       ],
       "info": {},
-      "emitted": false
+      "emitted": true
     },
     {
       "name": "HomePage.js",
-      "size": 3936,
+      "size": 3518,
       "chunks": [
         "HomePage"
       ],
@@ -33,11 +50,26 @@
         "HomePage"
       ],
       "info": {},
+      "emitted": true
+    },
+    {
+      "name": "main.21fae7bfa46895f3c852.hot-update.js",
+      "size": 33646,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
       "emitted": false
     },
     {
       "name": "main.js",
-      "size": 1491590,
+      "size": 1491676,
       "chunks": [
         "main"
       ],
@@ -55,7 +87,8 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.21fae7bfa46895f3c852.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -67,7 +100,8 @@
         "main"
       ],
       "assets": [
-        "main.js"
+        "main.js",
+        "main.21fae7bfa46895f3c852.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
