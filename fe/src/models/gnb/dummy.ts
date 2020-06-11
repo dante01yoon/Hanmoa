@@ -33,6 +33,11 @@ export const topicDummy: TopicData =
     },
     {
       id: 7,
+      name: 'KTX',
+      url: 'train'
+    },
+    {
+      id: 8,
       name: '기타',
       url: 'etc'
     },

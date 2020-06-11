@@ -1,4 +1,4 @@
-import React, { FC, useState, createRef, RefObject } from 'react';
+import React, { FC, useState, createRef, RefObject, useEffect, SyntheticEvent } from 'react';
 import * as Styled from './style';
 import { SmartLink } from '@components/smartlink';
 import { topicDummy } from '@models/gnb';
@@ -26,8 +26,24 @@ const {
 
 export const Gnb:FC = () => {
     const [visible, setVisible] = useState<boolean>(false); 
-    const topicRef = createRef<HTMLButtonElement>();
-    
+    const topicRef = createRef<HTMLDivElement>();
+    const checkContain = (e: MouseEvent) => {
+      console.log('hello checkContain');
+      if(e.target instanceof HTMLElement && 
+        !topicRef.current?.contains( e.target )){
+        console.log('where am I ? ', e.target);
+
+        visible && setVisible(false);
+      }      
+    };
+    const toggleTopicList = () => {
+      !visible && setVisible(true);
+      console.log('hello toggleTopicList');  
+    }
+    useEffect(() => {
+      document.addEventListener('click',checkContain);
+      return (() => document.removeEventListener('click', checkContain));
+    },[]);
     return (
         <Header>
             <Nav>
@@ -43,7 +59,13 @@ export const Gnb:FC = () => {
                                     <Hamburger/>
                                     <TopicTitle>토픽</TopicTitle>
                                 </TopicButton>
-                                <TopicBox>{buildTopicList(topicDummy)}</TopicBox>
+                                <TopicBox
+                                  visible={visible}
+                                  ref={topicRef}
+                                  onClick={toggleTopicList}
+                                >
+                                  {buildTopicList(topicDummy)}
+                                </TopicBox>
                             </ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
