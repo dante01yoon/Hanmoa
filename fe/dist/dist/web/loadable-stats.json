@@ -2,16 +2,13 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "b679f090efc318735703",
+  "hash": "8d22407ac1a9c3b67487",
   "publicPath": "/web/",
-  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\web\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
-    "main": [
-      "main.js",
-      "main.73d81a4e3bcdcb4896c2.hot-update.js"
-    ]
+    "main": "main.js"
   },
   "assets": [
     {
@@ -20,17 +17,6 @@
       "chunks": [],
       "chunkNames": [],
       "info": {},
-      "emitted": false
-    },
-    {
-      "name": "73d81a4e3bcdcb4896c2.hot-update.json",
-      "size": 46,
-      "chunks": [],
-      "chunkNames": [],
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true
-      },
       "emitted": false
     },
     {
@@ -55,7 +41,7 @@
     },
     {
       "name": "HomePage.js",
-      "size": 23908,
+      "size": 23909,
       "chunks": [
         "HomePage"
       ],
@@ -74,23 +60,8 @@
       "emitted": false
     },
     {
-      "name": "main.73d81a4e3bcdcb4896c2.hot-update.js",
-      "size": 7927,
-      "chunks": [
-        "main"
-      ],
-      "chunkNames": [
-        "main"
-      ],
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true
-      },
-      "emitted": false
-    },
-    {
       "name": "main.js",
-      "size": 1496885,
+      "size": 1502368,
       "chunks": [
         "main"
       ],
@@ -98,7 +69,7 @@
         "main"
       ],
       "info": {},
-      "emitted": false
+      "emitted": true
     }
   ],
   "filteredAssets": 0,
@@ -108,8 +79,7 @@
         "main"
       ],
       "assets": [
-        "main.js",
-        "main.73d81a4e3bcdcb4896c2.hot-update.js"
+        "main.js"
       ],
       "children": {},
       "childAssets": {}
@@ -121,8 +91,7 @@
         "main"
       ],
       "assets": [
-        "main.js",
-        "main.73d81a4e3bcdcb4896c2.hot-update.js"
+        "main.js"
       ],
       "children": {},
       "childAssets": {}

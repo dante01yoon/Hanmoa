@@ -13,6 +13,9 @@ const {
     Item,
     ItemBox,
     TopicButton,
+    TopicTitle,
+    TopicBox,
+    TopicList,
     Topic     
 } = Styled;
 
@@ -27,14 +30,67 @@ export const Gnb:FC = () => {
                     <LeftItemContainer>
                             <SmartLink href={"/"}>
                                 <ItemBox>
-                                    <HanmoaLogo/>
+                                  <HanmoaLogo/>
                                 </ItemBox>
                             </SmartLink>
                             <ItemBox>
-                                <TopicButton ref={topicRef}>
+                                <TopicButton>
                                     <Hamburger/>
-                                    <Topic>토픽</Topic>
+                                    <TopicTitle>토픽</TopicTitle>
                                 </TopicButton>
+                                <TopicBox>
+                                  <TopicList>
+                                    <Topic>
+                                      <SmartLink>
+                                        전체보기
+                                      </SmartLink>
+                                    </Topic>
+                                    <Topic>
+                                      <SmartLink>
+                                        브랜딩/마케팅
+                                      </SmartLink>
+                                    </Topic>
+                                    <Topic>
+                                      <SmartLink>
+                                        비즈니스 전략
+                                      </SmartLink>
+                                    </Topic> 
+                                  </TopicList>
+                                  <TopicList>
+                                    <Topic>
+                                      <SmartLink>
+                                        전체보기
+                                      </SmartLink>
+                                    </Topic>
+                                    <Topic>
+                                      <SmartLink>
+                                        브랜딩/마케팅
+                                      </SmartLink>
+                                    </Topic>
+                                    <Topic>
+                                      <SmartLink>
+                                        비즈니스 전략
+                                      </SmartLink>
+                                    </Topic> 
+                                  </TopicList>
+                                  <TopicList>
+                                    <Topic>
+                                      <SmartLink>
+                                        전체보기
+                                      </SmartLink>
+                                    </Topic>
+                                    <Topic>
+                                      <SmartLink>
+                                        브랜딩/마케팅
+                                      </SmartLink>
+                                    </Topic>
+                                    <Topic>
+                                      <SmartLink>
+                                        비즈니스 전략
+                                      </SmartLink>
+                                    </Topic> 
+                                  </TopicList>
+                                </TopicBox>
                             </ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
