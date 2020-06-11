@@ -26,22 +26,18 @@ const {
 
 export const Gnb:FC = () => {
     const [visible, setVisible] = useState<boolean>(false); 
-    const topicRef = createRef<HTMLDivElement>();
     const [topicList, setTopicList ] = useState(buildTopicList(topicDummy));
+    const topicRef = createRef<HTMLDivElement>();
     const checkContain = (e: MouseEvent) => {
-      console.log('hello checkContain');
-      if(e.target instanceof HTMLElement && 
-        !topicRef.current?.contains( e.target )){
-        console.log('where am I ? ', e.target);
-
+      if(e.target instanceof HTMLElement && (
+        !topicRef.current?.contains( e.target )
+      )){
         visible && setVisible(false);
         console.log(visible);
       }      
     };
     const toggleTopicList = () => {
       setVisible((visible) => !visible);
-      console.log('hello toggleTopicList'); 
-      console.log(`visible: ${visible}`); 
     }
     useEffect(() => {
       document.addEventListener('click',checkContain);

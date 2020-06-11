@@ -1,8 +1,10 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import {
   TopicList,
   Topic
 } from '@components/gnb/style';
+
 import { SmartLink} from '@components/smartlink';
 import { TopicItem, TopicData } from '@models/gnb/topic';
 
@@ -24,11 +26,16 @@ export function buildTopicList(items: TopicItem[]){
         {
           topicList.map((value,index) => { 
             return(
-              <Topic key={index}>
-                <SmartLink href={`topic/${value.url}`}>
+              <Route 
+                render={({history}) => (
+                <Topic 
+                  key={index} 
+                  onClick={() => {history.push(`${value.url}`)}}
+                >
                   {value.name}
-                </SmartLink>
-              </Topic>
+                </Topic>
+              )}/>
+              
             )
           })
         }
