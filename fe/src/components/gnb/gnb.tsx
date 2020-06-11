@@ -29,11 +29,9 @@ export const Gnb:FC = () => {
     const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
     const checkContain = (e: MouseEvent) => {
-      console.log('checkContain');
       if(e.target instanceof HTMLElement){
         if(!topicRef.current?.contains( e.target )){
           visible ? setVisible(false) : null;
-          console.log(`I'm clicked`);
         }
       }      
     };

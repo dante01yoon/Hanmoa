@@ -2,7 +2,7 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "bf8ede142df39c238214",
+  "hash": "18aaaaf2afbb424f684c",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
@@ -10,7 +10,7 @@
     "HomePage": "HomePage.js",
     "main": [
       "main.js",
-      "main.f634134a47b56f4865a5.hot-update.js"
+      "main.d4824c113d118643d51f.hot-update.js"
     ]
   },
   "assets": [
@@ -63,7 +63,7 @@
       "emitted": false
     },
     {
-      "name": "f634134a47b56f4865a5.hot-update.json",
+      "name": "d4824c113d118643d51f.hot-update.json",
       "size": 46,
       "chunks": [],
       "chunkNames": [],
@@ -74,8 +74,8 @@
       "emitted": false
     },
     {
-      "name": "main.f634134a47b56f4865a5.hot-update.js",
-      "size": 9796,
+      "name": "main.d4824c113d118643d51f.hot-update.js",
+      "size": 2330,
       "chunks": [
         "main"
       ],
@@ -90,7 +90,7 @@
     },
     {
       "name": "main.js",
-      "size": 1512042,
+      "size": 1512016,
       "chunks": [
         "main"
       ],
@@ -109,7 +109,7 @@
       ],
       "assets": [
         "main.js",
-        "main.f634134a47b56f4865a5.hot-update.js"
+        "main.d4824c113d118643d51f.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -122,7 +122,7 @@
       ],
       "assets": [
         "main.js",
-        "main.f634134a47b56f4865a5.hot-update.js"
+        "main.d4824c113d118643d51f.hot-update.js"
       ],
       "children": {},
       "childAssets": {}

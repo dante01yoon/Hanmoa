@@ -9,36 +9,36 @@ export const topicDummy: TopicData =
     {
       id: 2,
       name: '어도비',
-      url: 'adobe'
+      url: '/topic/adobe'
     },
     {
       id: 3,
       name: '왓챠',
-      url: 'watcha'
+      url: '/topic/watcha'
     },
     {
       id: 4,
       name: '방돌이/방순이',
-      url: 'roommate'
+      url: '/topic/roommate'
     },
     {
       id: 5,
       name: '신문구독',
-      url: 'newspaper'
+      url: '/topic/newspaper'
     },
     {
       id: 6,
       name: '공동구매',
-      url: 'share'
+      url: '/topic/share'
     },
     {
       id: 7,
       name: 'KTX',
-      url: 'train'
+      url: '/topic/train'
     },
     {
       id: 8,
       name: '기타',
-      url: 'etc'
+      url: '/topic/etc'
     },
   ]
