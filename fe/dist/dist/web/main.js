@@ -92,7 +92,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "a32ba34f16aa6ec149e7";
+/******/ 	var hotCurrentHash = "d17c343b87ddf04112bf";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1784,9 +1784,10 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
   !*** ./src/theme/colors.ts ***!
   \*****************************/
 /*! exports provided: colors */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open 'C:\\\\Users\\\\jaewon\\\\Desktop\\\\github\\\\Hanmoa\\\\fe\\\\src\\\\theme\\\\colors.ts'\");\n\n//# sourceURL=webpack:///./src/theme/colors.ts?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"colors\", function() { return colors; });\nvar colors = {\n  blue: '#007bff',\n  indigo: '#6610f2',\n  purple: '#6f42c1',\n  pink: '#e83e8c',\n  red: '#be1e08',\n  orange: '#fd7e14',\n  yellow: '#ffc107',\n  yellow_white: '#FDF9F9',\n  green: '#28a745',\n  light_green: '#28D84F',\n  light_red: '#DC3943',\n  teal: '#007871',\n  cyan: '#17a2b8',\n  white: '#fff',\n  gray: '#999',\n  gray_dark: '#555',\n  primary: '#ed6653',\n  secondary: '#777',\n  success: '#28a745',\n  info: '#007871',\n  warning: '#ffc107',\n  danger: '#be1e08',\n  light: '#f7f7f7',\n  dark: '#333',\n  gray_white: '#E5E5E5',\n  gray_100: '#f7f7f7',\n  gray_200: '#eee',\n  gray_300: '#dbdbdb',\n  gray_400: '#c7c7c7',\n  gray_500: '#aaa',\n  gray_600: '#999',\n  gray_700: '#777',\n  gray_800: '#555',\n  gray_900: '#333',\n  coral_100: '#ffedee',\n  coral_400: '#f39c90',\n  coral_500: '#ef7b6a',\n  coral_600: '#ed6653',\n  coral_800: '#be1e08',\n  primary_100: '#ffedee',\n  primary_200: '#f39c90',\n  primary_300: '#ef7b6a',\n  primary_400: '#ed6653',\n  teal_100: '#d5f4f2',\n  teal_400: '#9fd8d4',\n  teal_700: '#45ada6',\n  teal_800: '#007871',\n  teal_900: '#0b4b58',\n  davy_gray: '#555',\n  medium: '#dbdbdb',\n  breakpoint_xs: '0',\n  breakpoint_sm: '576px',\n  breakpoint_md: '768px',\n  breakpoint_lg: '992px'\n};\n\n//# sourceURL=webpack:///./src/theme/colors.ts?");
 
 /***/ }),
 

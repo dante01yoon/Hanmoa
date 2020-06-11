@@ -1,37 +1,21 @@
 {
   "errors": [
-    "./src/theme/colors.ts\nModule build failed (from ./node_modules/ts-loader/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\colors.ts'\n @ ./src/theme/theme.ts 1:0-34 4:10-16\n @ ./src/theme/Provider.tsx\n @ ./src/App.tsx\n @ ./src/index.tsx\n @ multi webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx",
-    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx\n./src/components/card/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx(3,22)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\icon\\index.tsx' is not a module.\u001b[39m\u001b[22m",
-    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\theme.ts\n./src/theme/theme.ts\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\theme.ts(2,24)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\colors.ts' is not a module.\u001b[39m\u001b[22m"
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx\n./src/components/card/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx(3,22)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\icon\\index.tsx' is not a module.\u001b[39m\u001b[22m"
   ],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "a32ba34f16aa6ec149e7",
+  "hash": "d17c343b87ddf04112bf",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
-    "HomePage": [
-      "HomePage.js",
-      "HomePage.1673dc7b556289eb454c.hot-update.js"
-    ],
+    "HomePage": "HomePage.js",
     "main": [
       "main.js",
-      "main.1673dc7b556289eb454c.hot-update.js"
+      "main.a32ba34f16aa6ec149e7.hot-update.js"
     ]
   },
   "assets": [
-    {
-      "name": "1673dc7b556289eb454c.hot-update.json",
-      "size": 62,
-      "chunks": [],
-      "chunkNames": [],
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true
-      },
-      "emitted": false
-    },
     {
       "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
       "size": 145092,
@@ -61,21 +45,6 @@
       "emitted": false
     },
     {
-      "name": "HomePage.1673dc7b556289eb454c.hot-update.js",
-      "size": 71,
-      "chunks": [
-        "HomePage"
-      ],
-      "chunkNames": [
-        "HomePage"
-      ],
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true
-      },
-      "emitted": false
-    },
-    {
       "name": "HomePage.js",
       "size": 89919,
       "chunks": [
@@ -85,6 +54,17 @@
         "HomePage"
       ],
       "info": {},
+      "emitted": true
+    },
+    {
+      "name": "a32ba34f16aa6ec149e7.hot-update.json",
+      "size": 46,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
       "emitted": false
     },
     {
@@ -96,8 +76,8 @@
       "emitted": false
     },
     {
-      "name": "main.1673dc7b556289eb454c.hot-update.js",
-      "size": 4466,
+      "name": "main.a32ba34f16aa6ec149e7.hot-update.js",
+      "size": 2676,
       "chunks": [
         "main"
       ],
@@ -112,7 +92,7 @@
     },
     {
       "name": "main.js",
-      "size": 1495825,
+      "size": 1497072,
       "chunks": [
         "main"
       ],
@@ -131,7 +111,7 @@
       ],
       "assets": [
         "main.js",
-        "main.1673dc7b556289eb454c.hot-update.js"
+        "main.a32ba34f16aa6ec149e7.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -144,7 +124,7 @@
       ],
       "assets": [
         "main.js",
-        "main.1673dc7b556289eb454c.hot-update.js"
+        "main.a32ba34f16aa6ec149e7.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
@@ -154,8 +134,7 @@
         "HomePage"
       ],
       "assets": [
-        "HomePage.js",
-        "HomePage.1673dc7b556289eb454c.hot-update.js"
+        "HomePage.js"
       ],
       "children": {},
       "childAssets": {}

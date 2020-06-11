@@ -1,12 +1,10 @@
 {
   "errors": [
-    "./src/theme/colors.ts\nModule build failed (from ./node_modules/ts-loader/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\colors.ts'\n @ ./src/theme/theme.ts 1:0-34 4:2-8\n @ ./src/theme/Provider.tsx\n @ ./src/App.tsx\n @ multi ./src/App.tsx",
-    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx\n./src/components/card/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx(3,22)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\icon\\index.tsx' is not a module.\u001b[39m\u001b[22m",
-    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\theme.ts\n./src/theme/theme.ts\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\theme.ts(2,24)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\theme\\colors.ts' is not a module.\u001b[39m\u001b[22m"
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx\n./src/components/card/index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\card\\index.tsx(3,22)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2306: File 'C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\icon\\index.tsx' is not a module.\u001b[39m\u001b[22m"
   ],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "29284f2bca103bf09a57",
+  "hash": "6baed3afd8d57061ab4a",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\node",
   "assetsByChunkName": {
@@ -53,7 +51,7 @@
         "HomePage"
       ],
       "info": {},
-      "emitted": false
+      "emitted": true
     },
     {
       "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
@@ -65,7 +63,7 @@
     },
     {
       "name": "main.js",
-      "size": 45868,
+      "size": 47117,
       "chunks": [
         "main"
       ],
