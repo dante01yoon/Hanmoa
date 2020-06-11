@@ -1,10 +1,8 @@
-export type Topic = {
+export type TopicItem = {
   id: number
   name: string
   url: string
 }
 
-export type TopicList = {
-  data: Topic[]
-}
+export type TopicData = TopicItem[];
 

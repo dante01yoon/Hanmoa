@@ -1,8 +1,13 @@
 import React, { FC, useState, createRef, RefObject } from 'react';
 import * as Styled from './style';
 import { SmartLink } from '@components/smartlink';
+import { topicDummy } from '@models/gnb';
+import { buildTopicList } from '@utils/topic/buildtopicList';
+
+
 import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
 import Hamburger from 'src/asset/hamburger.svg';
+
 const { 
     Header,
     Nav,
@@ -38,59 +43,7 @@ export const Gnb:FC = () => {
                                     <Hamburger/>
                                     <TopicTitle>토픽</TopicTitle>
                                 </TopicButton>
-                                <TopicBox>
-                                  <TopicList>
-                                    <Topic>
-                                      <SmartLink>
-                                        전체보기
-                                      </SmartLink>
-                                    </Topic>
-                                    <Topic>
-                                      <SmartLink>
-                                        브랜딩/마케팅
-                                      </SmartLink>
-                                    </Topic>
-                                    <Topic>
-                                      <SmartLink>
-                                        비즈니스 전략
-                                      </SmartLink>
-                                    </Topic> 
-                                  </TopicList>
-                                  <TopicList>
-                                    <Topic>
-                                      <SmartLink>
-                                        전체보기
-                                      </SmartLink>
-                                    </Topic>
-                                    <Topic>
-                                      <SmartLink>
-                                        브랜딩/마케팅
-                                      </SmartLink>
-                                    </Topic>
-                                    <Topic>
-                                      <SmartLink>
-                                        비즈니스 전략
-                                      </SmartLink>
-                                    </Topic> 
-                                  </TopicList>
-                                  <TopicList>
-                                    <Topic>
-                                      <SmartLink>
-                                        전체보기
-                                      </SmartLink>
-                                    </Topic>
-                                    <Topic>
-                                      <SmartLink>
-                                        브랜딩/마케팅
-                                      </SmartLink>
-                                    </Topic>
-                                    <Topic>
-                                      <SmartLink>
-                                        비즈니스 전략
-                                      </SmartLink>
-                                    </Topic> 
-                                  </TopicList>
-                                </TopicBox>
+                                <TopicBox>{buildTopicList(topicDummy)}</TopicBox>
                             </ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
