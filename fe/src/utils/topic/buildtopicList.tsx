@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { Route } from 'react-router-dom';
 import {
   TopicList,
   Topic
 } from '@components/gnb/style';
-
-import { SmartLink} from '@components/smartlink';
 import { TopicItem, TopicData } from '@models/gnb/topic';
 
 /**
  * @params data: TopicData 
  * @returns jsx TopicList used in Topic GNB
  */
-export function buildTopicList(items: TopicItem[]){
+export function buildTopicList(items: TopicItem[], setState: Dispatch<React.SetStateAction<boolean>>){
   let jsxList = new Array();
 
   while(items.length){
@@ -30,12 +28,14 @@ export function buildTopicList(items: TopicItem[]){
                 render={({history}) => (
                 <Topic 
                   key={index} 
-                  onClick={() => {history.push(`${value.url}`)}}
+                  onClick={() => {
+                    setState(false);
+                    history.push(`${value.url}`)
+                  }}
                 >
                   {value.name}
                 </Topic>
               )}/>
-              
             )
           })
         }

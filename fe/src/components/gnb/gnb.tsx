@@ -26,20 +26,22 @@ const {
 
 export const Gnb:FC = () => {
     const [visible, setVisible] = useState<boolean>(false); 
-    const [topicList, setTopicList ] = useState(buildTopicList(topicDummy));
+    const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
     const checkContain = (e: MouseEvent) => {
-      if(e.target instanceof HTMLElement && (
-        !topicRef.current?.contains( e.target )
-      )){
-        visible && setVisible(false);
-        console.log(visible);
+      console.log('checkContain');
+      if(e.target instanceof HTMLElement){
+        if(!topicRef.current?.contains( e.target )){
+          visible ? setVisible(false) : null;
+          console.log(`I'm clicked`);
+        }
       }      
     };
     const toggleTopicList = () => {
       setVisible((visible) => !visible);
     }
     useEffect(() => {
+      console.log(topicList);
       document.addEventListener('click',checkContain);
       return (() => document.removeEventListener('click', checkContain));
     },[]);
@@ -60,12 +62,13 @@ export const Gnb:FC = () => {
                                     <Hamburger/>
                                     <TopicTitle>토픽</TopicTitle>
                                 </TopicButton>
-                                <TopicBox
-                                  visible={visible}
-                                  ref={topicRef}
-                                >
-                                  {topicList}
-                                </TopicBox>
+                                { visible && 
+                                  <TopicBox
+                                    ref={topicRef}
+                                  >
+                                    {topicList}
+                                  </TopicBox>
+                                }
                             </ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
