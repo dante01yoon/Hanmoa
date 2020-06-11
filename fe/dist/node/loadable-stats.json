@@ -2,12 +2,13 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "95d501098f5c5952c872",
+  "hash": "3e4a5cd852cebceea8b8",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\node",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
     "HomePage": "HomePage.js",
+    "TopicPage": "TopicPage.js",
     "main": "main.js"
   },
   "assets": [
@@ -52,6 +53,18 @@
       "emitted": false
     },
     {
+      "name": "TopicPage.js",
+      "size": 959,
+      "chunks": [
+        "TopicPage"
+      ],
+      "chunkNames": [
+        "TopicPage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
       "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
       "size": 153063,
       "chunks": [],
@@ -61,7 +74,7 @@
     },
     {
       "name": "main.js",
-      "size": 58482,
+      "size": 59815,
       "chunks": [
         "main"
       ],
@@ -112,6 +125,16 @@
       ],
       "assets": [
         "ErrorPage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "TopicPage": {
+      "chunks": [
+        "TopicPage"
+      ],
+      "assets": [
+        "TopicPage.js"
       ],
       "children": {},
       "childAssets": {}
