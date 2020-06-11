@@ -78,7 +78,7 @@ export const TopicTitle = styled.span`
 export const TopicBox = styled.div<{
   visible: boolean 
 }>`
-  display: ${p => p.visible ? 'block' : 'none'};
+  display: ${p => p.visible ? 'display' : 'none'};
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 16px;
   position: absolute;
