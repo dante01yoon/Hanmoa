@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 
 import { GlobalLayout } from '@components/gnb/layout';
 import { HanmoaRouter } from './components/route';
+import { ModalProvider } from 'src/store/modal';
+import { Modal } from './components/modal';
 
 export const App:FC = () => {
   return (
@@ -11,9 +13,11 @@ export const App:FC = () => {
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
-      <GlobalLayout>
-        <HanmoaRouter/>
-      </GlobalLayout>
+      <ModalProvider>
+        <GlobalLayout>
+          <HanmoaRouter/>
+        </GlobalLayout>
+      </ModalProvider>
     </HanmoaTheme>
   )
 }
