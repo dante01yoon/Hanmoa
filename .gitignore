@@ -1,2 +1,7 @@
 */node_modules
+<<<<<<< HEAD
 /fe/dist/*
+=======
+*/yarn.lock
+/fe/dist
+>>>>>>> 1e52e8623b78952bdbf8ee621dca4d581dc9ec2f

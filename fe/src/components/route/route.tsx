@@ -8,6 +8,7 @@ const SignUpPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../.
 const LoginPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/login'));
 const RoomPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/room'));
 const ErrorPage = loadable(() => import(/* webpackChunkName: "ErrorPage" */'../../pages/error')); 
+const TopicPage = loadable(() => import(/* webpackChunkName: "TopicPage" */'../../pages/topic'));
 type RouteType = {
   path: string,
   exact?: boolean,
@@ -34,6 +35,11 @@ export const routes: RouteType[] = [
     path: '/room/:id',
     exact: false, 
     component: RoomPage
+  },
+  {
+    path: '/topic/:id',
+    exact: false,
+    component: TopicPage
   }
 ];
 

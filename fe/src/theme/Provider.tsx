@@ -6,6 +6,20 @@ const GlobalStyle = createGlobalStyle`
     ${reset}
     * {
         box-sizing: border-box;
+        ::-webkit-scrollbar {
+          width: 8px;  /* 세로축 스크롤바 길이 */
+          height: 16px;  /* 가로축 스크롤바 길이 */
+        }
+        ::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
+        ::-webkit-scrollbar-track-piece {
+          background-color: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          border-radius: 8px;
+          background-color: lightblue;
+        }
     }
     body{
         background-color: #ffffff;
