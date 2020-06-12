@@ -70,7 +70,6 @@ const getConfig = target => ({
     alias: {
       pages:path.resolve('src/pages/'),
       components: path.resolve('src/components/'),
-      redux: path.resolve('src/redux/'),
       util: path.resolve('src/util/'),
       style: path.resolve('src/style/')
     },
