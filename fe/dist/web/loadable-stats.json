@@ -1,0 +1,151 @@
+{
+  "errors": [],
+  "warnings": [],
+  "version": "4.43.0",
+  "hash": "3a39c4805da693a04e67",
+  "publicPath": "/web/",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\web",
+  "assetsByChunkName": {
+    "ErrorPage": "ErrorPage.js",
+    "HomePage": "HomePage.js",
+    "TopicPage": "TopicPage.js",
+    "main": "main.js"
+  },
+  "assets": [
+    {
+      "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
+      "size": 145092,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "8521fef91ad62d462c9be9127cb383f5.jpg",
+      "size": 71453,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "ErrorPage.js",
+      "size": 1088,
+      "chunks": [
+        "ErrorPage"
+      ],
+      "chunkNames": [
+        "ErrorPage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "HomePage.js",
+      "size": 89919,
+      "chunks": [
+        "HomePage"
+      ],
+      "chunkNames": [
+        "HomePage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "TopicPage.js",
+      "size": 1054,
+      "chunks": [
+        "TopicPage"
+      ],
+      "chunkNames": [
+        "TopicPage"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "ca2f7fccd9970e786ebb1172d3d304cc.jpg",
+      "size": 153063,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "main.js",
+      "size": 1513443,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {},
+      "emitted": false
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "main.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "namedChunkGroups": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "main.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "HomePage": {
+      "chunks": [
+        "HomePage"
+      ],
+      "assets": [
+        "HomePage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "ErrorPage": {
+      "chunks": [
+        "ErrorPage"
+      ],
+      "assets": [
+        "ErrorPage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "TopicPage": {
+      "chunks": [
+        "TopicPage"
+      ],
+      "assets": [
+        "TopicPage.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "logging": {
+    "webpack.buildChunkGraph.visitModules": {
+      "entries": [],
+      "filteredEntries": 5,
+      "debug": false
+    }
+  },
+  "children": []
+}
