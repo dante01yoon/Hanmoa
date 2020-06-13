@@ -35,6 +35,7 @@ module.exports = api => {
             'src': './src',
             '@redux': './src/redux',
             '@components': './src/components',
+            '@sagas': './src/sagas', 
             '@pages': './src/pages',
             '@store': './src/store',
             '@reducers': './src/store/reducers',

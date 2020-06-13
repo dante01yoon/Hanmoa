@@ -71,7 +71,7 @@ const getConfig = target => ({
       pages:path.resolve('src/pages/'),
       components: path.resolve('src/components/'),
       util: path.resolve('src/util/'),
-      style: path.resolve('src/style/')
+      style: path.resolve('src/style/'),
     },
   },
   plugins:

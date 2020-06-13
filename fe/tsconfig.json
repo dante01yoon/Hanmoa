@@ -25,6 +25,7 @@
       "@modules/*": ["./src/modules/*"],
       "@apis/*": ["./src/apis/*"],
       "@models/*": ["./src/models/*"],
+      "@sagas/*": ["./src/sagas/*"],
     },
     "esModuleInterop": true,
   },
