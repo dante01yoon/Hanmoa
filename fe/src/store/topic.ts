@@ -1,64 +1,83 @@
 import { Action, Reducer } from 'redux';
 import { CardData } from '@models/card';
 import { TopicName } from 'src/models/topic';
-import { DefaultAction } from './index';
-
+import { DefaultAction, ActionEnum } from './index';
 
 //action
-type FETCH_TOPIC = "FETCH_TOPIC"
-
-interface TopicAction extends DefaultAction{
-  FETCH_TOPIC: FETCH_TOPIC 
-} 
-
-
-export interface InitialState{
-  topic: TopicName
-  data: CardData[]; 
+export enum TopicEnum {
+  FETCH_TOPIC = "FETCH_TOPIC"
 }
-export const initialState = {} as InitialState;
+type TopicType = ActionEnum | TopicEnum;  
+
+export interface TopicBasicState{
+  topic: TopicName
+  isLoading :boolean
+  data: CardData[];
+  error: boolean 
+}
+export const initialState = {} as TopicBasicState;
 
 //action type
-export interface DispatchAction extends Action {
-  payload? : InitialState;
-  url?: string 
+export interface DispatchAction extends Action<TopicType> {
+  payload? : TopicBasicState;
+  url?: string
 }
 //action creator
 type ActionCreator = (
-  type?: TopicAction,
-  data?: InitialState,
+  type?: TopicType,
+  payload?: TopicBasicState,
   url?: string
-) => DispatchAction | DispatchAction;
+) => DispatchAction;
 
-export const fetch: ActionCreator = (
-  url: string
+const fetch: ActionCreator = (
+  url
 ) => ({
-  type: 'FETCH_TOPIC',
+  type: TopicEnum.FETCH_TOPIC,
   url, 
 });
-export const load: DispatchAction = {
-  type: 'FETCH_LOADING',
-}
-export const success: ( payload: InitialState ) => DispatchAction => {
-  type: 'FETCH_SUCCESS'
+const load: ActionCreator = () => ({
+  type: ActionEnum.FETCH_LOADING,
+}); 
+const success: ActionCreator = (_, payload) => ({
+  type: ActionEnum.FETCH_SUCCESS,
+  payload
+})
+const error: ActionCreator = () => ({
+  type: ActionEnum.FETCH_ERROR
+})
+
+export const topicCreator = {
+  fetch,
+  load,
+  success,
+  error  
 }
 
 export const topicReducer = (
   state = initialState, action: DispatchAction
 ) => {
   switch(action.type){
-    case 'all':
-    case 'etc':
-    case 'netflix': 
-    case 'adobe':
-    case 'watcha':
-    case 'roommate':
-    case 'newspaper':
-    case 'share':
-    case 'ktx':
+    case TopicEnum.FETCH_TOPIC: 
+      return {
+        ...state,
+        error: false
+      }
+    case ActionEnum.FETCH_SUCCESS: 
       return {
         topic: action.payload?.topic,
-        data: action.payload?.data 
+        data: action.payload?.data,
+        error: false 
+      }
+    case ActionEnum.FETCH_LOADING: 
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case ActionEnum.FETCH_ERROR:
+      return {
+        state: [],
+        isLoading: false,
+        error: true  
       }
     default:
       throw new Error(`unknown topic name ${action.type}`); 

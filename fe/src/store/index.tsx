@@ -10,12 +10,16 @@ import createSagaMiddleware from 'redux-saga';
 import { topicReducer } from './topic';
 import { rootSaga } from '@sagas/index'; 
 
-export enum DefaultAction {
+export enum ActionEnum {
   FETCH_LOADING = "FETCH_LOADING",
   FETCH_SUCCESS = "FETCH_SUCCESS", 
   FETCH_ERROR =  "FETCH_ERROR"
 }
-
+export type DefaultAction = 
+  | ActionEnum.FETCH_SUCCESS
+  | ActionEnum.FETCH_LOADING 
+  | ActionEnum.FETCH_ERROR
+    
 //dispatch
 interface DispatchAction<T> extends Dispatch{
   payload: Partial<T>;
