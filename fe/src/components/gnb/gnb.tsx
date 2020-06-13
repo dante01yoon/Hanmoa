@@ -1,7 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useState, createRef, RefObject, useEffect, SyntheticEvent } from 'react';
 import * as Styled from './style';
 import { SmartLink } from '@components/smartlink';
+import { topicDummy } from '@models/gnb';
+import { buildTopicList } from '@utils/topic/buildtopicList';
+
+
 import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
+import Hamburger from 'src/asset/hamburger.svg';
+
 const { 
     Header,
     Nav,
@@ -10,9 +16,33 @@ const {
     LeftItemContainer,
     ItemList,
     Item,
-    ItemBox     
+    ItemBox,
+    TopicButton,
+    TopicTitle,
+    TopicBox,
+    TopicList,
+    Topic     
 } = Styled;
+
 export const Gnb:FC = () => {
+    const [visible, setVisible] = useState<boolean>(false); 
+    const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
+    const topicRef = createRef<HTMLDivElement>();
+    const checkContain = (e: MouseEvent) => {
+      if(e.target instanceof HTMLElement){
+        if(!topicRef.current?.contains( e.target )){
+          visible ? setVisible(false) : null;
+        }
+      }      
+    };
+    const toggleTopicList = () => {
+      setVisible((visible) => !visible);
+    }
+    useEffect(() => {
+      console.log(topicList);
+      document.addEventListener('click',checkContain);
+      return (() => document.removeEventListener('click', checkContain));
+    },[]);
     return (
         <Header>
             <Nav>
@@ -20,14 +50,24 @@ export const Gnb:FC = () => {
                     <LeftItemContainer>
                             <SmartLink href={"/"}>
                                 <ItemBox>
-                                    <HanmoaLogo/>
+                                  <HanmoaLogo/>
                                 </ItemBox>
                             </SmartLink>
-                            <SmartLink >
-                                <ItemBox>
-                                    Topic
-                                </ItemBox>
-                            </SmartLink>
+                            <ItemBox>
+                                <TopicButton
+                                  onClick={toggleTopicList}
+                                >
+                                    <Hamburger/>
+                                    <TopicTitle>토픽</TopicTitle>
+                                </TopicButton>
+                                { visible && 
+                                  <TopicBox
+                                    ref={topicRef}
+                                  >
+                                    {topicList}
+                                  </TopicBox>
+                                }
+                            </ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>

@@ -4,12 +4,11 @@ import { Dispatch } from 'redux';
 import loadable from '@loadable/component';
 
 const HomePage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/home'));
-const SignUpPage = loadable(() => import(/* webpackChunkName: "SignUpPage" */'../../pages/signup'));
-const LoginPage = loadable(() => import(/* webpackChunkName: "LoginPage" */'../../pages/login'));
-const RoomPage = loadable(() => import(/* webpackChunkName: "RoomPage" */'../../pages/room'));
+const SignUpPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/signup'));
+const LoginPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/login'));
+const RoomPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/room'));
 const ErrorPage = loadable(() => import(/* webpackChunkName: "ErrorPage" */'../../pages/error')); 
-const TopicPage = loadable(()=> import(/* webpackChunkName: "TopicPage"*/'../../pages/topic'));
-
+const TopicPage = loadable(() => import(/* webpackChunkName: "TopicPage" */'../../pages/topic'));
 type RouteType = {
   path: string,
   exact?: boolean,
@@ -36,11 +35,6 @@ export const routes: RouteType[] = [
     path: '/room/:id',
     exact: false, 
     component: RoomPage
-  },
-  {
-    path: '/topic', 
-    exact: true,
-    component: TopicPage
   },
   {
     path: '/topic/:id',
