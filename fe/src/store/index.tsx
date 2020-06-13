@@ -7,8 +7,14 @@ import {
   applyMiddleware
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { topicReducer as topic } from './topic';
+import { topicReducer } from './topic';
 import { rootSaga } from '@sagas/index'; 
+
+export enum DefaultAction {
+  FETCH_LOADING = "FETCH_LOADING",
+  FETCH_SUCCESS = "FETCH_SUCCESS", 
+  FETCH_ERROR =  "FETCH_ERROR"
+}
 
 //dispatch
 interface DispatchAction<T> extends Dispatch{
@@ -17,10 +23,10 @@ interface DispatchAction<T> extends Dispatch{
 
 // reducer
 export interface RootReducer{
-  topic: typeof topic 
-  }
+  topic: typeof topicReducer 
+}
 export const reducerIntegration: RootReducer = {
-  topic 
+  topic: topicReducer 
 }
 export const rootReducer = combineReducers(reducerIntegration);
 // root store type 

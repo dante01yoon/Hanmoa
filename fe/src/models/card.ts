@@ -17,3 +17,4 @@ export interface CardData {
   block: boolean // 방 입장 가능여부  
 }
 
+  

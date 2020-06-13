@@ -38,7 +38,7 @@ export const singleDummy: CardData = {
       joinAt: [1,2] // 내가 현재 참여중인 방의 id
     }
   ], // 방 멤버 정보 
-  full: 4, // 입장 가능한 전체 인원 
+full: 4, // 입장 가능한 전체 인원 
   current: 3, // 현 인원 
   category: '음식 같이 나누어 먹기',// 주제 카테고리 
   imgUrl: `${DummyImg}`, // 커버 이미지 URL

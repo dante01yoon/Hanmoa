@@ -1,66 +1,67 @@
 import { Action, Reducer } from 'redux';
+import { CardData } from '@models/card';
+import { TopicName } from 'src/models/topic';
+import { DefaultAction } from './index';
+
+
+//action
+type FETCH_TOPIC = "FETCH_TOPIC"
+
+interface TopicAction extends DefaultAction{
+  FETCH_TOPIC: FETCH_TOPIC 
+} 
+
 
 export interface InitialState{
-  id: number, 
-  topic: string    
+  topic: TopicName
+  data: CardData[]; 
 }
 export const initialState = {} as InitialState;
+
+//action type
 export interface DispatchAction extends Action {
-  payload: Partial<InitialState>;
+  payload? : InitialState;
+  url?: string 
+}
+//action creator
+type ActionCreator = (
+  type?: TopicAction,
+  data?: InitialState,
+  url?: string
+) => DispatchAction | DispatchAction;
+
+export const fetch: ActionCreator = (
+  url: string
+) => ({
+  type: 'FETCH_TOPIC',
+  url, 
+});
+export const load: DispatchAction = {
+  type: 'FETCH_LOADING',
+}
+export const success: ( payload: InitialState ) => DispatchAction => {
+  type: 'FETCH_SUCCESS'
 }
 
-
-export const topicReducer: Reducer<InitialState, DispatchAction> = (
-  state = initialState, action
+export const topicReducer = (
+  state = initialState, action: DispatchAction
 ) => {
   switch(action.type){
     case 'all':
-      return {
-        id: 0,
-        topic: 'all'
-      }
     case 'etc':
-      return {
-        id: 1,
-        topic: 'etc'
-      }
-    case 'netflix':
-      return {
-        id: 2,
-        topic: 'netflix'
-      }
+    case 'netflix': 
     case 'adobe':
-      return {
-        id: 3,
-        topic: 'adobe'
-      }
     case 'watcha':
-      return {
-        id: 4,
-        topic: 'watcha'
-      }
     case 'roommate':
-      return {
-        id: 5,
-        topic: 'roommate'
-      }
     case 'newspaper':
-      return {
-        id: 6,
-        topic: 'newspaper'
-      }
     case 'share':
-      return {
-        id: 7,
-        topic: 'share'
-      }
     case 'ktx':
       return {
-        id: 8,
-        topic: 'ktx'
+        topic: action.payload?.topic,
+        data: action.payload?.data 
       }
     default:
-      return state
+      throw new Error(`unknown topic name ${action.type}`); 
   } 
 }
 

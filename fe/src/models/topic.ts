@@ -1,5 +1,5 @@
 export type TopicName = 
-  | 'all' 
+  'all' 
   | 'etc' 
   | 'ktx' 
   | 'netflix' 
@@ -7,6 +7,7 @@ export type TopicName =
   | 'share' 
   | 'roommate'
   | 'adobe'
+
 export type Topic = {
   id: number,
   name: TopicName

@@ -3,14 +3,11 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { TopicState } from '@store/topic';
 
-interface Props extends RouteComponentProps { 
-}
-const TopicPage: FC<Props> = withRouter(({
+const TopicPage = withRouter(({
   location : {
-    search
-  }  
+    pathname
+  } 
 }) => {
-  
   return(
     <>
     </>

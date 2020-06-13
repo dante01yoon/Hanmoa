@@ -1,5 +1,10 @@
+import { fork, all } from 'redux-saga/effects';
+import { fetchTopic } from './topic';
+
 function* rootSaga(){
-  yield console.log('hello saga');
+  yield all([
+    fork()
+  ])
 }
 
 
