@@ -13,7 +13,7 @@ const getEntryPoint = target => {
   if(target === 'node'){
     return ['./src/App.tsx'];
   }
-  return devMode? [hotMiddlewareScript, './src/index.tsx'] : ['./src/index.tsx'];
+  return devMode? ['babel-polyfill',hotMiddlewareScript, './src/index.tsx'] : ['babel-polyfill', './src/index.tsx'];
 };
 
 const getConfig = target => ({

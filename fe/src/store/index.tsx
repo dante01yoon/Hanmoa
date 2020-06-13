@@ -4,10 +4,11 @@ import {
   Dispatch,
   combineReducers,
   createStore,
-  applyMiddleware
+  applyMiddleware,
+  compose
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { topicReducer } from './topic';
+import { topicReducer as topic } from './topic';
 import { rootSaga } from '@sagas/index'; 
 
 export enum ActionEnum {
@@ -25,24 +26,29 @@ interface DispatchAction<T> extends Dispatch{
   payload: Partial<T>;
 }
 
-// reducer
-export interface RootReducer{
-  topic: typeof topicReducer 
-}
-export const reducerIntegration: RootReducer = {
-  topic: topicReducer 
-}
-export const rootReducer = combineReducers(reducerIntegration);
+// root reducer
+export const rootReducer = combineReducers({
+  topic
+});
 // root store type 
 export type RootState = ReturnType<typeof rootReducer>
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancer =  (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 //saga
 const sagaMiddleware = createSagaMiddleware();
 
 const configureStore = () => {
   const rootStore = createStore(
     rootReducer,
-    applyMiddleware(sagaMiddleware) 
+    composeEnhancer(  
+      applyMiddleware(sagaMiddleware)
+    ) 
   ); 
 
   sagaMiddleware.run(rootSaga); 

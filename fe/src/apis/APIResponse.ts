@@ -12,3 +12,4 @@ export type Response<Data> = {
 export type WhenError = [APIError, undefined];
 export type WhenSuccess<Data> = [undefined, Response<Data>];
 export type APIResponse<Data> = WhenError | WhenSuccess<Data>;
+ 

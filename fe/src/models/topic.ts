@@ -1,3 +1,4 @@
+import { CardData} from './card'; 
 export type TopicName = 
   'all' 
   | 'etc' 
@@ -7,10 +8,7 @@ export type TopicName =
   | 'share' 
   | 'roommate'
   | 'adobe'
-
-export type Topic = {
-  id: number,
+export type TopicData = {
   name: TopicName
+  data: CardData[]
 }
-
-export type TopicList = Topic[];

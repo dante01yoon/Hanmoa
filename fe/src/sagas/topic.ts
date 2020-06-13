@@ -1,21 +1,26 @@
-import { takeLatest, call, put, all,fork, delay } from 'redux-saga/effects';
-import { TopicName, Topic, TopicList} from '@models/topic';
+import * as Effects from 'redux-saga/effects';
+import { TopicName, TopicData} from '@models/topic';
 import { dummyData } from '@pages/home/dummy';
-import { TopicEnum, topicCreator } from '@store/topic';
+import { TopicEnum, topicCreator, DispatchAction } from '@store/topic';
+const { takeLatest, put, all,fork, delay } = Effects; 
+const call: any = Effects.call;
+
 const dummyTopicData = Object.assign({
   topic: 'etc',
   data: dummyData()
 }, )
-function topicDummy() {
-  return setTimeout(() => {
-    return dummyTopicData
-  }, 700);     
+function topicDummy<TopicData>(url: string): Promise<TopicData> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => 
+      resolve(dummyTopicData)  
+    , 700);  
+  })   
 } 
 
-function* fetchTopic(action){
+function* fetchTopic(action: DispatchAction){
   try{
     yield put(topicCreator.load()); 
-    const topicList = yield call(topicDummy);
+    const topicList = yield call(topicDummy, action.url);
     yield put(topicCreator.success(topicList));
   } catch(error){
     throw new Error(`Error exist in fetchTopic function`); 
@@ -25,7 +30,7 @@ function* fetchTopic(action){
 function* fetchTopicWatcher() {
   yield takeLatest(TopicEnum.FETCH_TOPIC, fetchTopic);
 }
-function* topicSaga(){
+export function* topicSaga(){
   all([
     fork(fetchTopicWatcher), 
   ])

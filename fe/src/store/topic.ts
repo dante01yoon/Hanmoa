@@ -80,7 +80,8 @@ export const topicReducer = (
         error: true  
       }
     default:
-      throw new Error(`unknown topic name ${action.type}`); 
+      return state;
+      // throw new Error(`unknown topic name ${action.type}`); 
   } 
 }
 
