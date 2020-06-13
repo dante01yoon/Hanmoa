@@ -1,7 +1,7 @@
 import * as Effects from 'redux-saga/effects';
 import { TopicName, TopicData} from '@models/topic';
 import { dummyData } from '@pages/home/dummy';
-import { TopicEnum, topicCreator, DispatchAction } from '@store/topic';
+import { TopicEnum, topicCreator, FetchAction } from '@store/topic';
 const { takeLatest, put, all,fork, delay } = Effects; 
 const call: any = Effects.call;
 
@@ -17,7 +17,7 @@ function topicDummy<TopicData>(url: string): Promise<TopicData> {
   })   
 } 
 
-function* fetchTopic(action: DispatchAction){
+function* fetchTopic(action: FetchAction){
   try{
     yield put(topicCreator.load()); 
     const topicList = yield call(topicDummy, action.url);

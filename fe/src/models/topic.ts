@@ -1,6 +1,6 @@
 import { CardData} from './card'; 
 export type TopicName = 
-  'all' 
+  | 'all' 
   | 'etc' 
   | 'ktx' 
   | 'netflix' 

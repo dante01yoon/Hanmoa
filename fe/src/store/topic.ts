@@ -1,7 +1,7 @@
-import { Action, Reducer } from 'redux';
+import { Action, ActionCreator } from 'redux';
 import { CardData } from '@models/card';
 import { TopicName } from 'src/models/topic';
-import { DefaultAction, ActionEnum } from './index';
+import { ActionEnum } from './index';
 
 //action
 export enum TopicEnum {
@@ -12,39 +12,54 @@ type TopicType = ActionEnum | TopicEnum;
 export interface TopicBasicState{
   topic: TopicName
   isLoading :boolean
-  data: CardData[];
-  error: boolean 
+  data: CardData[]
+  isError: boolean 
 }
-export const initialState = {} as TopicBasicState;
+export const initialState: TopicBasicState = {
+  topic: 'all',
+  isLoading: true,
+  data: [] as CardData[], 
+  isError: false
+}
 
 //action type
-export interface DispatchAction extends Action<TopicType> {
-  payload? : TopicBasicState;
-  url?: string
+export interface FetchAction extends Action {
+  type: typeof TopicEnum.FETCH_TOPIC
+  url: string;
+}
+interface LoadingAction extends Action{
+  type: typeof ActionEnum.FETCH_LOADING
+}
+interface SuccessAction extends Action{
+  type: typeof ActionEnum.FETCH_SUCCESS
+  payload: TopicBasicState
+}
+interface ErrorAction extends Action{
+  type: typeof ActionEnum.FETCH_ERROR
 }
 //action creator
-type ActionCreator = (
-  type?: TopicType,
-  payload?: TopicBasicState,
-  url?: string
-) => DispatchAction;
-
-const fetch: ActionCreator = (
+const fetch: ActionCreator<FetchAction> = (
   url
 ) => ({
   type: TopicEnum.FETCH_TOPIC,
   url, 
 });
-const load: ActionCreator = () => ({
+const load: ActionCreator<LoadingAction> = () => ({
   type: ActionEnum.FETCH_LOADING,
 }); 
-const success: ActionCreator = (_, payload) => ({
+const success: ActionCreator<SuccessAction> = (_, payload) => ({
   type: ActionEnum.FETCH_SUCCESS,
   payload
 })
-const error: ActionCreator = () => ({
+const error: ActionCreator<ErrorAction> = () => ({
   type: ActionEnum.FETCH_ERROR
 })
+
+type TopicAction =
+  | ReturnType<typeof fetch>
+  | ReturnType<typeof load>
+  | ReturnType<typeof success>
+  | ReturnType<typeof error>
 
 export const topicCreator = {
   fetch,
@@ -52,21 +67,24 @@ export const topicCreator = {
   success,
   error  
 }
-
-export const topicReducer = (
-  state = initialState, action: DispatchAction
+const topicReducer: (
+  state: TopicBasicState,
+  action: TopicAction
+) => TopicBasicState = (
+  state = initialState, action
 ) => {
   switch(action.type){
     case TopicEnum.FETCH_TOPIC: 
       return {
         ...state,
-        error: false
+        isError: false
       }
     case ActionEnum.FETCH_SUCCESS: 
       return {
+        ...state, 
         topic: action.payload?.topic,
-        data: action.payload?.data,
-        error: false 
+        isLoading: false, 
+        data: action.payload?.data
       }
     case ActionEnum.FETCH_LOADING: 
       return {
@@ -75,14 +93,14 @@ export const topicReducer = (
       }
     case ActionEnum.FETCH_ERROR:
       return {
-        state: [],
+        ...state,
         isLoading: false,
-        error: true  
+        isError: true  
       }
     default:
       return state;
-      // throw new Error(`unknown topic name ${action.type}`); 
   } 
 }
 
 export type TopicState = ReturnType<typeof topicReducer>; 
+export default topicReducer;
