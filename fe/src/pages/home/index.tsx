@@ -32,7 +32,7 @@ const HomePage = withRouter(({
 }) =>{
     // const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
     const [ isModal, setModal ] = useModal();
-    const { data, isLoading, id } = useSelector((state: RootState) => state.topic);
+    const { data, isLoading } = useSelector((state: RootState) => state.topic);
     const dispatch= useDispatch();
     const { fetch}  = topicCreator; 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { Action, ActionCreator } from 'redux';
+import { Action, ActionCreator, Reducer } from 'redux';
 import { CardData } from '@models/card';
 import { TopicName } from 'src/models/topic';
 import { ActionEnum } from './index';
@@ -39,15 +39,15 @@ interface ErrorAction extends Action{
 }
 //action creator
 const fetch: ActionCreator<FetchAction> = (
-  url
-) => ({
+  url = 'all'
+) => ({ 
   type: TopicEnum.FETCH_TOPIC,
   url, 
 });
 const load: ActionCreator<LoadingAction> = () => ({
   type: ActionEnum.FETCH_LOADING,
 }); 
-const success: ActionCreator<SuccessAction> = (_, payload) => ({
+const success: ActionCreator<SuccessAction> = (payload) => ({
   type: ActionEnum.FETCH_SUCCESS,
   payload
 })
@@ -67,10 +67,7 @@ export const topicCreator = {
   success,
   error  
 }
-const topicReducer: (
-  state: TopicBasicState,
-  action: TopicAction
-) => TopicBasicState = (
+const topicReducer: Reducer<TopicBasicState, TopicAction>= (
   state = initialState, action
 ) => {
   switch(action.type){
