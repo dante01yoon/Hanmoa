@@ -8,6 +8,7 @@ import {
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import topic from './topic';
+import user from './user';
 import { rootSaga } from '@sagas/index'; 
 
 export enum ActionEnum {
@@ -22,7 +23,8 @@ export type DefaultAction =
     
 // root reducer
 export const rootReducer = combineReducers({
-  topic
+  topic,
+  user 
 });
 // root store type 
 export type RootState = ReturnType<typeof rootReducer>

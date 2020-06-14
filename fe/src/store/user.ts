@@ -3,7 +3,6 @@ import {
   Reducer,
   ActionCreator
  } from "redux";
-import { stringify } from "querystring";
  export enum LOGIN_ENUM {
   LOGIN_FETCH = "LOGIN_FETCH",
   LOGIN_LOADING = "LOGIN_LOADING",
@@ -19,10 +18,18 @@ type LoginStateType = {
   isSignIn: boolean,
   isValidate: boolean
   isError: boolean
+  user: {
+    username: string, 
+    stduentNumber: number
+  }
 }
 const initialState: LoginStateType = {
   isLoading: false,
   token: '',
+  user: {
+    username: '', 
+    stduentNumber: 0
+  },
   isSignIn: false, 
   isValidate: false, 
   isError: false  
@@ -127,8 +134,10 @@ const loginReducer: Reducer<LoginStateType , LoginAction>  = (
         ...state,
         
       }
-    default: state
+    default: 
+      return state
   }
   
 }
-//
+export type LoginState = ReturnType<typeof loginReducer>; 
+export default loginReducer 
