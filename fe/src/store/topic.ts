@@ -7,7 +7,6 @@ import { ActionEnum } from './index';
 export enum TopicEnum {
   FETCH_TOPIC = "FETCH_TOPIC"
 }
-type TopicType = ActionEnum | TopicEnum;  
 
 export interface TopicBasicState{
   topic: TopicName
