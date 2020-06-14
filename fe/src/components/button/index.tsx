@@ -8,16 +8,16 @@ const {
 
 interface ButtonProps{
   color?: string,
-  size?: number,
+  size?: number ,
   background?: string,
   clickHandler: (e: SyntheticEvent) => void 
 }
 export const BaseButton:FC<ButtonProps> = ({
   clickHandler,
   color='#ffffff',
-  size=72,
   background='#FDF9F9',
-  children
+  children,
+  size
 }) => {
   return(
     <Wrapper>

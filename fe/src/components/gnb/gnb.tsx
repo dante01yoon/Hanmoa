@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import * as Styled from './style';
 import { SmartLink } from '@components/smartlink';
+import { Portal } from '@components/portal';
+import LoginModal from '@components/login';
 import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
 const { 
     Header,
@@ -13,6 +15,13 @@ const {
     ItemBox     
 } = Styled;
 export const Gnb:FC = () => {
+    const [loginModal, setLoginModal] = useState(false);
+    const openloginModal = () => {
+        setLoginModal(true); 
+    }
+    const closeLoginModal = () =>{
+        setLoginModal(false); 
+    }
     return (
         <Header>
             <Nav>
@@ -31,10 +40,8 @@ export const Gnb:FC = () => {
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>
-                            <Item>
-                                <SmartLink href={'login'}>
-                                    로그인
-                                </SmartLink>
+                            <Item onClick={openloginModal}>
+                                로그인
                             </Item>
                             <Item>
                                 <SmartLink href={'signup'}>
@@ -43,6 +50,11 @@ export const Gnb:FC = () => {
                             </Item>
                         </ItemList>
                     </RightItemContainer>
+                    { loginModal &&
+                        <Portal>
+                            <LoginModal closeModal={closeLoginModal}/>
+                        </Portal>
+                    }
                 </ItemContainer>
             </Nav>
         </Header>
