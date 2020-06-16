@@ -1,6 +1,12 @@
-import express from 'express';
-const app = express(); 
+'use strict';
 
-app.get('/', (req: express.Request, res: express.Response) => {
-  res.send('Hello world');
-})
+const express = require('express');
+const router =express.Router(); 
+
+const request = require('request');
+const readline = require('readline');
+const google = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
+
+module.exports = router;
+
