@@ -42,7 +42,8 @@ module.exports = api => {
             '@utils': './src/utils',
             '@modules': './src/modules',
             '@apis': './src/apis',
-            '@models': './src/models'
+            '@models': './src/models',
+            '@sagas': './src/sagas',
           }
         }
       ], // end of module-resolver 

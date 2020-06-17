@@ -1,13 +1,17 @@
-import React,  { FC, useState, useEffect, SyntheticEvent } from 'react';
+import React,  { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom'; 
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@store/index';  
+import { topicCreator} from '@store/topic'; 
 import * as Styled from './style';
 import { Carousel } from 'src/components/carousel';
 import { Slide } from 'src/components/carousel/slide'; 
 import { Card } from 'src/components/card'; 
 import { ProgressBar } from 'src/components/progress';
-import { dummyData } from './dummy';
 import { Modal } from 'src/components/modal';
 import { CardData } from 'src/models/card';
-import { useModal, useModalState, useModalDispatch } from 'src/utils/modal/useModal';
+import { useModal } from '@utils/modal/useModal';
+import { pathExtractor } from '@utils/topic/pathExtractor'; 
 
 
 // carousel contents : jpg 
@@ -20,7 +24,6 @@ const {
 } = Styled; 
 
 
-<<<<<<< HEAD
 const HomePage = withRouter(({
   location: {
     pathname
@@ -31,18 +34,13 @@ const HomePage = withRouter(({
     const { data, isLoading } = useSelector((state: RootState) => state.topic);
     const dispatch= useDispatch();
     const { fetch}  = topicCreator; 
-=======
-const HomePage: FC =( ) =>{
-    const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
-    const [ state, dispatch ] = useModal(); 
->>>>>>> c8539cbabd9cbe2b4e7efda88a39fa3a8a95d489
     useEffect(() => {
-      setTimeout(() => {
-        setArray(dummyData()); 
-      },700);
+      console.log('path: ', pathname);
+      const [ include, exclude ] = pathExtractor(pathname); 
+      dispatch(fetch()); 
     },[])
     const handleClick : (data: CardData ) => void = (data) => {
-      dispatch({
+      setModal({
         type: 'OPEN', 
         payload: {
           data,
@@ -60,26 +58,26 @@ const HomePage: FC =( ) =>{
           </Carousel>
         </section>
         <section>
-          {state.visible && <Modal data={state.data} />}
+          {isModal.visible && <Modal data={isModal.data} />}
         </section>
         <section>
           <RoomContainer>
             {
-              array.length > 0 ? 
-                array.map((value) => {
+              isLoading ?
+                <ProgressBar/>
+                :
+                data.map((value) => {
                   return <Card
                     data={value} 
                     key={value.id} 
                     handleClick={() => handleClick(value)}
                    /> 
                 })
-               : 
-              <ProgressBar/>
             }
           </RoomContainer>
         </section>
       </>
     )
-}
+}); 
 
 export default HomePage;
