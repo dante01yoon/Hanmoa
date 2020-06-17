@@ -1,0 +1,118 @@
+{
+  "errors": [
+    "./src/index.tsx\nModule build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 936\n    at JSON.parse (<anonymous>)\n    at readConfigPackage (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:57:20)\n    at C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\core\\lib\\config\\files\\utils.js:37:12\n    at Generator.next (<anonymous>)\n    at Function.<anonymous> (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:26:3)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\gensync\\index.js:84:14)\n    at sync (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:66:25)\n    at sync (C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\node_modules\\gensync\\index.js:177:19)\n @ multi babel-polyfill webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true ./src/index.tsx main[2]",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(1,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(7,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(15,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(36,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(44,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(63,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(76,44)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'toggleTopicList'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(81,35)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'visible'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(83,42)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'topicRef'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\components\\gnb\\gnb.tsx(85,38)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2552: Cannot find name 'topicList'. Did you mean 'TopicList'?\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(23,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(34,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(38,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1185: Merge conflict marker encountered.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(85,1)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS1005: ',' expected.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(24,18)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'withRouter'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(26,5)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS7031: Binding element 'pathname' implicitly has an 'any' type.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(31,33)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'useSelector'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(31,53)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'RootState'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(32,21)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'useDispatch'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(33,23)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'topicCreator'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(41,9)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'setArray'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(63,12)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'state'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(63,42)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'state'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(68,15)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'array'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(69,17)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2304: Cannot find name 'array'.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\pages\\home\\index.tsx(69,28)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS7006: Parameter 'value' implicitly has an 'any' type.\u001b[39m\u001b[22m",
+    "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\store\\topic.ts\n\u001b[90m[tsl] \u001b[39m\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m\u001b[1m\u001b[31m in \u001b[39m\u001b[22m\u001b[1m\u001b[36mC:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\src\\store\\topic.ts(3,27)\u001b[39m\u001b[22m\r\n\u001b[1m\u001b[31m      TS2307: Cannot find module 'src/models/topic' or its corresponding type declarations.\u001b[39m\u001b[22m"
+  ],
+  "warnings": [],
+  "version": "4.43.0",
+  "hash": "db7c3262fdb2ee3449f1",
+  "publicPath": "/web/",
+  "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
+  "assetsByChunkName": {
+    "main": [
+      "main.js",
+      "main.9f898a9e6c801442b579.hot-update.js"
+    ]
+  },
+  "assets": [
+    {
+      "name": "9f898a9e6c801442b579.hot-update.json",
+      "size": 153,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
+      "name": "main.9f898a9e6c801442b579.hot-update.js",
+      "size": 8229,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
+      "name": "main.js",
+      "size": 612773,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {},
+      "emitted": false
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "main.js",
+        "main.9f898a9e6c801442b579.hot-update.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "namedChunkGroups": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "main.js",
+        "main.9f898a9e6c801442b579.hot-update.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "logging": {
+    "webpack.buildChunkGraph.visitModules": {
+      "entries": [],
+      "filteredEntries": 2,
+      "debug": false
+    }
+  },
+  "children": []
+}
