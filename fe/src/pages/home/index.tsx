@@ -20,9 +20,22 @@ const {
 } = Styled; 
 
 
+<<<<<<< HEAD
+const HomePage = withRouter(({
+  location: {
+    pathname
+  }
+}) =>{
+    // const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
+    const [ isModal, setModal ] = useModal();
+    const { data, isLoading } = useSelector((state: RootState) => state.topic);
+    const dispatch= useDispatch();
+    const { fetch}  = topicCreator; 
+=======
 const HomePage: FC =( ) =>{
     const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
     const [ state, dispatch ] = useModal(); 
+>>>>>>> c8539cbabd9cbe2b4e7efda88a39fa3a8a95d489
     useEffect(() => {
       setTimeout(() => {
         setArray(dummyData()); 

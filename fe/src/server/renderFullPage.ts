@@ -16,6 +16,7 @@ export const renderFullPage = (webExtractor: WebExtractor, html: Html) => `
       </head>
       <body>
         <div id="root">${html}</div>
+        <div id="mordal"></div>
         ${webExtractor.script}
       </body>
     </html>

@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+import React, { FC, useState } from 'react';
+import * as Styled from './style';
+import { SmartLink } from '@components/smartlink';
+import { Portal } from '@components/portal';
+import LoginModal from '@components/login';
+=======
 import React, { FC, useState, createRef, RefObject, useEffect, SyntheticEvent } from 'react';
 import * as Styled from './style';
 import { SmartLink } from '@components/smartlink';
@@ -5,6 +12,7 @@ import { topicDummy } from '@models/gnb';
 import { buildTopicList } from '@utils/topic/buildtopicList';
 
 
+>>>>>>> c8539cbabd9cbe2b4e7efda88a39fa3a8a95d489
 import HanmoaLogo from 'src/asset/logo/hanmoa_horizontal.svg';
 import Hamburger from 'src/asset/hamburger.svg';
 
@@ -25,6 +33,15 @@ const {
 } = Styled;
 
 export const Gnb:FC = () => {
+<<<<<<< HEAD
+    const [loginModal, setLoginModal] = useState(false);
+    const openloginModal = () => {
+        setLoginModal(true); 
+    }
+    const closeLoginModal = () =>{
+        setLoginModal(false); 
+    }
+=======
     const [visible, setVisible] = useState<boolean>(false); 
     const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
@@ -43,6 +60,7 @@ export const Gnb:FC = () => {
       document.addEventListener('click',checkContain);
       return (() => document.removeEventListener('click', checkContain));
     },[]);
+>>>>>>> c8539cbabd9cbe2b4e7efda88a39fa3a8a95d489
     return (
         <Header>
             <Nav>
@@ -71,10 +89,8 @@ export const Gnb:FC = () => {
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>
-                            <Item>
-                                <SmartLink href={'login'}>
-                                    로그인
-                                </SmartLink>
+                            <Item onClick={openloginModal}>
+                                로그인
                             </Item>
                             <Item>
                                 <SmartLink href={'signup'}>
@@ -83,6 +99,11 @@ export const Gnb:FC = () => {
                             </Item>
                         </ItemList>
                     </RightItemContainer>
+                    { loginModal &&
+                        <Portal>
+                            <LoginModal closeModal={closeLoginModal}/>
+                        </Portal>
+                    }
                 </ItemContainer>
             </Nav>
         </Header>
