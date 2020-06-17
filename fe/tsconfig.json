@@ -16,8 +16,7 @@
     "baseUrl": "./",
     "paths": {
       "src/*": ["src/*"],
-      "@redux/*": ["./src/redux/*"], 
-      "@components/*": ["./src/components/*"],
+      "@components/*":   ["./src/components/*"],
       "@pages/*": ["./src/pages/*"],
       "@store/*": ["./src/store/*"],
       "@reducers/*": ["./src/store/reducers/*"],
@@ -26,6 +25,7 @@
       "@modules/*": ["./src/modules/*"],
       "@apis/*": ["./src/apis/*"],
       "@models/*": ["./src/models/*"],
+      "@sagas/*": ["./src/sagas/*"],
     },
     "esModuleInterop": true,
   },
