@@ -1,7 +1,5 @@
 import * as effects from 'redux-saga/effects';
 import { 
-  LoginFetch, 
-  LoginSignout,
   LoginLoading,
   LoginSuccess
  } from '@store/user';
@@ -24,6 +22,6 @@ function* fetchLogin(){
 function* fetchLoginWatcher() {
   yield takeLatest(LOGIN_ENUM.LOGIN_FETCH, fetchLogin); 
 }
-export function* LoginSaga(){
+export function* loginSaga(){
   yield fork(fetchLoginWatcher); 
 }

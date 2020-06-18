@@ -38,10 +38,6 @@ const initialState: LoginStateType = {
 //action
 interface LoginFetchAction extends Action {
   type: typeof LOGIN_ENUM.LOGIN_FETCH
-  payload: {
-    id: string,
-    password: string
-  } 
 }
 interface LoginFetchLoading extends Action {
   type: typeof LOGIN_ENUM.LOGIN_LOADING
@@ -62,11 +58,10 @@ interface LoginSingOutSuccess extends Action {
   type: typeof LOGIN_ENUM.LOGIN_SIGNOUT_SUCCESS
 }
 //actioncreator
-export const LoginFetch: ActionCreator<LoginFetchAction> = ({
-  id, password  
-}) => ({
+export const LoginFetch: ActionCreator<LoginFetchAction> = (
+  
+) => ({
   type: LOGIN_ENUM.LOGIN_FETCH,
-  payload: { id, password }
 })
 export const LoginLoading: ActionCreator<LoginFetchLoading> = (
 

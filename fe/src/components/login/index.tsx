@@ -1,8 +1,11 @@
 import React, {FC, SyntheticEvent } from 'react';
+import { useDispatch } from 'react-redux'; 
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as Styled from './style';
-import { BaseButton } from '@components/button'; 
 import GoogleIcon from 'src/asset/google.svg'; 
+import { BaseButton } from '@components/button'; 
+import { LoginFetch } from '@store/user';
+
 const {
   Wrapper,
   IconWrapper,
@@ -15,8 +18,9 @@ const LoginModal:FC<Props & RouteComponentProps> = ({
   history : { push },
   closeModal
 }) => {
-  const getGoogleAuth = () => {
-    push('/googleLogin');
+  const dispatch = useDispatch(); 
+  const getGoogleAuth = (e: SyntheticEvent) => {
+    dispatch(LoginFetch());
   }
   return(
     <Wrapper>
@@ -25,9 +29,9 @@ const LoginModal:FC<Props & RouteComponentProps> = ({
       </IconWrapper>  
       <ButtonContainer>
         <BaseButton 
-          clickHandler={closeModal} 
           background='#28D84F'
           size={88}
+          clickHandler={getGoogleAuth}
         > 로그인</BaseButton>
         <BaseButton 
           clickHandler={closeModal} 
