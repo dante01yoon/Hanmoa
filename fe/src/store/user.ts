@@ -62,37 +62,38 @@ interface LoginSingOutSuccess extends Action {
   type: typeof LOGIN_ENUM.LOGIN_SIGNOUT_SUCCESS
 }
 //actioncreator
-const LoginFetch: ActionCreator<LoginFetchAction> = ({
+export const LoginFetch: ActionCreator<LoginFetchAction> = ({
   id, password  
 }) => ({
   type: LOGIN_ENUM.LOGIN_FETCH,
   payload: { id, password }
 })
-const LoginLoading: ActionCreator<LoginFetchLoading> = (
+export const LoginLoading: ActionCreator<LoginFetchLoading> = (
 
 ) => ({
   type: LOGIN_ENUM.LOGIN_LOADING
 })
-const LoginSuccess: ActionCreator<LoginFetchSuccess> = (
+export const LoginSuccess: ActionCreator<LoginFetchSuccess> = (
  token: string ) => ({
   type: LOGIN_ENUM.LOGIN_SUCCESS,
   payload: { token }
 })
-const LoginError: ActionCreator<LoginFetchError> = (
+export const LoginError: ActionCreator<LoginFetchError> = (
 
 ) =>({
   type: LOGIN_ENUM.LOGIN_ERROR  
 })
-const LoginSignout: ActionCreator<LoginSignOut> = (
+export const LoginSignout: ActionCreator<LoginSignOut> = (
   type: LOGIN_ENUM.LOGIN_ERROR 
 ) => ({
   type: LOGIN_ENUM.LOGIN_SIGNOUT
 })
-const LoginSignoutSuccess: ActionCreator<LoginSingOutSuccess> =(
+export const LoginSignoutSuccess: ActionCreator<LoginSingOutSuccess> =(
   type: LOGIN_ENUM.LOGIN_SIGNOUT_SUCCESS
 ) => ({
   type: LOGIN_ENUM.LOGIN_SIGNOUT_SUCCESS
 })
+
 type LoginAction  =
   | ReturnType<typeof LoginError>
   | ReturnType<typeof LoginSuccess>

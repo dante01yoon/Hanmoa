@@ -1,4 +1,5 @@
 const path = require('path');
+const dotenv = require('dotenv-webpack'); 
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const LoadablePlugin = require('@loadable/webpack-plugin');
@@ -76,8 +77,8 @@ const getConfig = target => ({
   },
   plugins:
     target === 'web'
-      ? [new LoadablePlugin(), new MiniCssExtractPlugin(), new webpack.HotModuleReplacementPlugin()]
-      : [new LoadablePlugin(), new MiniCssExtractPlugin()],
+      ? [new LoadablePlugin(), new MiniCssExtractPlugin(), new dotenv(), new webpack.HotModuleReplacementPlugin()]
+      : [new LoadablePlugin(), new MiniCssExtractPlugin(), new dotenv()],
 
     externals: target === 'node' ? ['@loadable/component', nodeExternals()]: undefined, 
 });
