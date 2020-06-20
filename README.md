@@ -10,7 +10,7 @@
   #### storybook, jest
   *working progress*
     1. homepage markup done 
-    2. login page -> google Oauth keep working on
+    2. login page -> google Oauth keep working on 
 ### BE
   *develop*
   #### Koa
