@@ -14,6 +14,7 @@ const {
 interface Props {
   closeModal : (e:SyntheticEvent) => void;
 }
+
 const LoginModal:FC<Props & RouteComponentProps> = ({
   history : { push },
   closeModal
