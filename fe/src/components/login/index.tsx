@@ -1,6 +1,6 @@
 import React, {FC, SyntheticEvent } from 'react';
 import { useDispatch } from 'react-redux'; 
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import * as Styled from './style';
 import GoogleIcon from 'src/asset/google.svg'; 
 import { BaseButton } from '@components/button'; 
@@ -16,12 +16,19 @@ interface Props {
 }
 
 const LoginModal:FC<Props & RouteComponentProps> = ({
-  history : { push },
+  history,
   closeModal
 }) => {
   const dispatch = useDispatch(); 
   const getGoogleAuth = (e: SyntheticEvent) => {
-    dispatch(LoginFetch());
+    const googleAuthHost = process.env.GOOGLE_AUTH;
+    const params = [
+      `client_id=${process.env.GOOGLE_CLIENT}`,
+      `scope=${process.env.GOOGLE_SCOPE}`,
+      `response_type=${process.env.GOOGLE_RESONSE_TYPE}` 
+    ].join("&");
+    console.log(`${googleAuthHost}${params}`); 
+    // return window.location.assign(process.env.GOOGLE_AUTH!); 
   }
   return(
     <Wrapper>
