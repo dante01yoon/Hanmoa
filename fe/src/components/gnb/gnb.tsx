@@ -33,6 +33,7 @@ export const Gnb:FC = () => {
     const [visible, setVisible] = useState<boolean>(false); 
     const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
+    
     const checkContain = (e: MouseEvent) => {
       if(e.target instanceof HTMLElement){
         if(!topicRef.current?.contains( e.target )){
