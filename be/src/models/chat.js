@@ -18,7 +18,7 @@ const conversationSchema = new mongoose.Schema({
 );
 
 
-// 위의 채팅 
+// 위의 채팅  
 const chatSchema = new mongoose.Schema({
   writer: {
     type: Schema.Types.ObjectId,
