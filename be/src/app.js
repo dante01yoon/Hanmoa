@@ -1,6 +1,7 @@
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
+
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth-routes');
 const mongoConnect = require('./config/mongoConfig');
@@ -9,7 +10,6 @@ const mongoConnect = require('./config/mongoConfig');
 const app = express();
 //mongoConnect
 mongoConnect();
-
 //Static File Service
 app.use(express.static('public'));
 //Body-parser
