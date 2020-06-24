@@ -23,12 +23,13 @@ const LoginModal:FC<Props & RouteComponentProps> = ({
   const getGoogleAuth = (e: SyntheticEvent) => {
     const googleAuthHost = process.env.GOOGLE_AUTH;
     const params = [
-      `client_id=${process.env.GOOGLE_CLIENT}`,
+      `client_id=${process.env.GOOGLE_CLIENT_ID}`,
       `scope=${process.env.GOOGLE_SCOPE}`,
-      `response_type=${process.env.GOOGLE_RESONSE_TYPE}` 
+      `response_type=${process.env.GOOGLE_RESPONSE_TYPE}`,
+      `redirect_uri=${process.env.GOOGLE_REDIRECT_URI}` 
     ].join("&");
     console.log(`${googleAuthHost}${params}`); 
-    // return window.location.assign(process.env.GOOGLE_AUTH!); 
+    return window.location.assign(`${googleAuthHost}${params}`); 
   }
   return(
     <Wrapper>
