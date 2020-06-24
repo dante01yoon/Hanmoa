@@ -1,11 +1,12 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({path: path.join(__dirname, '../.env')});
 
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
 // Connect to mongodb server
-const getMongoConnect = () => mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
+const getMongoConnect = () => mongoose.connect(process.env.MONGODB_URI)
   .then(()=> console.log('Successfully connected to mongodb'))
   .catch(e => console.error(e));
 

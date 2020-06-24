@@ -1,5 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+
 const authRoutes = require('./routes/auth-routes');
 const mongoConnect = require('./config/mongoConfig');
 
@@ -12,7 +14,7 @@ mongoConnect();
 app.use(express.static('public'));
 //Body-parser
 app.use(bodyParser.urlencoded({ extended: true}));
-app.use(bodyParserr.json());
+app.use(bodyParser.json());
 
 app.use('/auth', authRoutes); 
 app.get('/', (req,res) => {
