@@ -1,12 +1,32 @@
+const cors = require('cors'); 
 const express = require('express');
+const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const authRoutes = require('./routes/auth-routes');
-
 const app = express();
 
-app.use('/auth', authRoutes); 
+//mongodb config 
+const mongoConnect = require('./config/mongoConfig');
+//mongoConnect
+mongoConnect();
+
+//routes require
+const authRoutes = require('./routes/auth');
+const chatRoutes = require('./routes/chat');
+const userRoutes = require('./routes/user');
+const roomRoutes = require('./routes/room');
+
+
+//Static File Service
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json());
+app.use(cors());
+
+
 app.get('/', (req,res) => {
   res.render('home');
 })
+app.use('/auth', authRoutes); 
+
 
 app.listen(5001, () => console.log('Server listening on port 5001'));

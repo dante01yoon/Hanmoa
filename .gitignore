@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 */node_modules
 /fe/dist/*
 **/dist/*
 */.env
+=======
+**/node_modules
+/fe/dist/*
+**/.env
+>>>>>>> 3c8648950fa7db1c82f01403751aef72705ad572

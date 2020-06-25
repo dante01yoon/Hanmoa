@@ -1,4 +1,5 @@
 const path = require('path');
+const dotenv = require('dotenv'); 
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const LoadablePlugin = require('@loadable/webpack-plugin');
@@ -8,6 +9,12 @@ const createStyledComponentsTransformer = require('typescript-plugin-styled-comp
 const devMode = process.env.NODE_ENV !== 'production';
 const styledComponetnsTransformer = createStyledComponentsTransformer();
 const hotMiddlewareScript = `webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true`;
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev,next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {}); 
 
 const getEntryPoint = target => {
   if(target === 'node'){
@@ -76,10 +83,11 @@ const getConfig = target => ({
   },
   plugins:
     target === 'web'
-      ? [new LoadablePlugin(), new MiniCssExtractPlugin(), new webpack.HotModuleReplacementPlugin()]
-      : [new LoadablePlugin(), new MiniCssExtractPlugin()],
+      ? [new LoadablePlugin(), new MiniCssExtractPlugin(), new webpack.DefinePlugin(envKeys), new webpack.HotModuleReplacementPlugin()]
+      : [new LoadablePlugin(), new MiniCssExtractPlugin(), new webpack.DefinePlugin(envKeys)],
 
     externals: target === 'node' ? ['@loadable/component', nodeExternals()]: undefined, 
 });
+
 
 module.exports = [getConfig('web'), getConfig('node')];

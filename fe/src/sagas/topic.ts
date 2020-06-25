@@ -1,7 +1,7 @@
 import * as Effects from 'redux-saga/effects';
 import { dummyData } from '@pages/home/dummy';
 import { TopicEnum, topicCreator, FetchAction } from '@store/topic';
-const { takeLatest, put, all,fork, delay } = Effects; 
+const { takeLatest, put, all, fork } = Effects; 
 const call: any = Effects.call;
 
 const dummyTopicData = Object.assign({
