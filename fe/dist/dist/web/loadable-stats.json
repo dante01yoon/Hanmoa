@@ -2,16 +2,30 @@
   "errors": [],
   "warnings": [],
   "version": "4.43.0",
-  "hash": "1ccfa19e8247042a5027",
+  "hash": "6d2cc56259b407a9e5bb",
   "publicPath": "/web/",
   "outputPath": "C:\\Users\\jaewon\\Desktop\\github\\Hanmoa\\fe\\dist\\dist\\web",
   "assetsByChunkName": {
     "ErrorPage": "ErrorPage.js",
-    "HomePage": "HomePage.js",
+    "HomePage": [
+      "HomePage.js",
+      "HomePage.1a7d290ec7159a5d6632.hot-update.js"
+    ],
     "TopicPage": "TopicPage.js",
     "main": "main.js"
   },
   "assets": [
+    {
+      "name": "1a7d290ec7159a5d6632.hot-update.json",
+      "size": 50,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
     {
       "name": "579b7161eec96a7d853f3ca8c8969812.jpg",
       "size": 145092,
@@ -41,8 +55,23 @@
       "emitted": false
     },
     {
+      "name": "HomePage.1a7d290ec7159a5d6632.hot-update.js",
+      "size": 5392,
+      "chunks": [
+        "HomePage"
+      ],
+      "chunkNames": [
+        "HomePage"
+      ],
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true
+      },
+      "emitted": false
+    },
+    {
       "name": "HomePage.js",
-      "size": 85518,
+      "size": 89928,
       "chunks": [
         "HomePage"
       ],
@@ -82,7 +111,7 @@
         "main"
       ],
       "info": {},
-      "emitted": true
+      "emitted": false
     }
   ],
   "filteredAssets": 0,
@@ -114,7 +143,8 @@
         "HomePage"
       ],
       "assets": [
-        "HomePage.js"
+        "HomePage.js",
+        "HomePage.1a7d290ec7159a5d6632.hot-update.js"
       ],
       "children": {},
       "childAssets": {}
