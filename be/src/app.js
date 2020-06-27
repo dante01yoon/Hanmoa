@@ -15,7 +15,6 @@ const chatRoutes = require('./routes/chat');
 const userRoutes = require('./routes/user');
 const roomRoutes = require('./routes/room');
 
-
 //Static File Service
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true}));

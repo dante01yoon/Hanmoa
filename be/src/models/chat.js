@@ -17,7 +17,6 @@ const conversationSchema = new mongoose.Schema({
 },
 );
 
-
 // 위의 채팅  
 const chatSchema = new mongoose.Schema({
   writer: {
@@ -34,3 +33,4 @@ exports.module = {
   Conversation = mongoose.model('Conversation', conversationSchema),
   Mesage = mongoose.model('Chat', 'chatSchema'),
 } 
+
