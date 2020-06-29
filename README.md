@@ -11,7 +11,7 @@
   *working progress*
     1. homepage markup done 
     2. login page -> google Oauth keep working on 
-    3. mongodb config and research.
+    3. mongodb config and research. 
 ### BE
   *develop*
   #### Koa

@@ -21,12 +21,24 @@ const userSchema = new mongoose.Schema({
     likes: [{
       type: Schema.Types.ObjectId,
       ref: 'Room',
-    }]
+    }],
+    lastHosting: {
+      room: {
+        type: Schema.Types.ObjectId,
+        ref: 'Room',
+      },
+      date: Date, 
+      default: null,
+    }
 },
-{
-  timestamps: true
-},
+{ timestamps: true },
 ); 
+
+userSchema.statics.create = function( payload ){
+  const user = new this(payload);
+  
+  return user.save();
+}
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

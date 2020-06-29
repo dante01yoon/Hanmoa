@@ -46,5 +46,6 @@ topicSchema.statics.deleteByTodoId = function(topicId) {
 }
 
 // create Model & Export 
-module.exports = mongoose.model('Topic', topicSchema); 
+const Topic = mongoose.model('Topic', topicSchema);
+module.exports = Topic; 
 
