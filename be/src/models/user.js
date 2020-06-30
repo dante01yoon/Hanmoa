@@ -6,6 +6,14 @@ const userSchema = new mongoose.Schema({
       required: true, 
       unique: true
     },
+    name: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    },
     image: { 
       type: Buffer, 
       required: false, 
@@ -33,10 +41,13 @@ const userSchema = new mongoose.Schema({
 },
 { timestamps: true },
 ); 
-
-userSchema.statics.create = function( payload ){
-  const user = new this(payload);
+userSchema.statics.checkUserExists = function( payload ){
   
+}
+userSchema.statics.create = function( payload ){
+  
+  const user = new this(payload);
+
   return user.save();
 }
 

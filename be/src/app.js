@@ -9,7 +9,7 @@ const mongoConnect = require('./config/mongoConfig');
 //mongoConnect
 mongoConnect();
 
-//routes require
+//routes controller require
 const authRoutes = require('./routes/auth');
 const chatRoutes = require('./routes/chat');
 const userRoutes = require('./routes/user');
@@ -24,8 +24,11 @@ app.use(cors());
 
 app.get('/', (req,res) => {
   res.render('home');
-})
-app.use('/auth', authRoutes); 
+});
 
+app.use('/auth', authRoutes); 
+app.use('/chat', chatRoutes);
+app.use('/user', userRoutes);
+app.use('/room', roomRoutes);
 
 app.listen(5001, () => console.log('Server listening on port 5001'));
