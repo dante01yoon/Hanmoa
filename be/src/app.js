@@ -30,6 +30,9 @@ app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
 app.use('/user', userRoutes);
 app.use('/room', roomRoutes);
-
+app.use(function(err,req,res,next){
+  console.err(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 app.listen(5001, () => console.log('Server listening on port 5001'));
