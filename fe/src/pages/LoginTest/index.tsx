@@ -1,21 +1,24 @@
+import LoginForm from '@components/login/form';
 import React, { FC } from 'react';
-import {useFormik} from 'formik';
 import { withRouter } from 'react-router'; 
 import styled from 'styled-components';
 
-
-
-
-const LoginTest = ({}) => {
+const StyledTitle = styled.h2`
   
+`;
+
+const LoginTest = ({
+
+}) => {
+  const customSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+  }
   return(
     <section> 
-      <article>
-                  
-      </article>
-      <article>
-      
-      </article> 
+      <LoginForm 
+        message={"Please Fill your Login form"}
+        onSubmit={customSubmit} 
+      />
     </section>
   )
 }
