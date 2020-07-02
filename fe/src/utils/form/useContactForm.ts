@@ -4,26 +4,23 @@ interface IContactFormFields {
   email: string,
   password: string
 }
-type ISubmitFormType = (e: React.FormEvent<HTMLFormElement>) => Promise<void> ;
+type ISubmitFormType = (e: React.FormEvent<HTMLFormElement>) => void ;
 
 // seems not good place for specific purpose 
-const submitContactForm = (params: IContactFormFields): ISubmitFormType => {
-  return ( e: React.FormEvent<HTMLFormElement> ) => {
-     e.preventDefault();
-     return new Promise<void>(
-      (resolve, _ ) => setTimeout(() => {
-        console.log(params); 
-      }, 1000)
-    );
-  }
+const submitContactForm = <T>(params: T): Promise<T> => {
+  return new Promise<T>(
+    (resolve, _ ) => setTimeout(() => {
+      resolve(params); 
+    }, 1000)
+  );
 }
 
 const useContactForm = () => {
   const handleSubmit = useCallback(
     ( formFields : IContactFormFields ) => {
-      return submitContactForm(formFields).then(() => {
-        console.log('form submitted');
-      })
+      submitContactForm<IContactFormFields>(formFields).then((params) => {
+        console.log(params);
+      });
     },[]);
 
   const initialValues: IContactFormFields = {

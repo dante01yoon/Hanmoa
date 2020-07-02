@@ -22,3 +22,5 @@ const LoginTest = ({
     </section>
   )
 }
+
+export default LoginTest;  

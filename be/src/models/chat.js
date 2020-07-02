@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema; 
 
 // 한 방에서 이뤄지는 채팅을 의미하는 conversatoin, 한 채팅에는 여러 명의 유저 , 하나의 방, 여러 채팅으로 이루어져 있다. 
 const conversationSchema = new mongoose.Schema({
