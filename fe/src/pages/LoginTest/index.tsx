@@ -4,9 +4,12 @@ import { withRouter } from 'react-router';
 import styled from 'styled-components';
 
 const StyledTitle = styled.h2`
-  
 `;
+const StyledLoginForm = styled(LoginForm)`
+  margin: 0 auto;
+  padding: 24px; 
 
+`;
 const LoginTest = ({
 
 }) => {
@@ -15,7 +18,7 @@ const LoginTest = ({
   }
   return(
     <section> 
-      <LoginForm 
+      <StyledLoginForm 
         message={"Please Fill your Login form"}
         onSubmit={customSubmit} 
       />
