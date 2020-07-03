@@ -115,27 +115,35 @@ const Form: FC<IFormProps> = ({
         password: false
       })
     }
-   })
+   },[])
   const renderField = () => {
     return(
         <>
           <StyledList key={`_field::email`}>
             <label htmlFor="email">이메일</label>
-            <StyledInput 
+            <StyledInput
+              required 
               ref={inputRef}
               onChange={formik.handleChange}
               name={"email"}
               value={formik.values.email}
               type={"email"}
+              focus={focused === "email"}
+              onClick={() => setFocused("email")}
+              onKeyDown={()=> setFocused("email")}
             />
           </StyledList>
           <StyledList key={`_field::password`}>
             <label htmlFor="password">비밀번호</label>
             <StyledInput
+              required
               onChange={formik.handleChange}
               name={"password"}
               value={formik.values.password}
               type={"password"}
+              focus={focused === "password"}
+              onClick={() => setFocused("password")} 
+              onKeyDown={()=> setFocused("password")}
             />
           </StyledList>
         </>
