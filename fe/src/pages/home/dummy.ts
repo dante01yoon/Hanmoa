@@ -6,7 +6,8 @@ export const singleDummy: CardData = {
   description: 'this is test room', // 방 내용
   host: {
     id: 1,
-    number: 13, 
+    image: "",
+    studentNumber: 13, 
     name: 'jay', // 이름 
     createdAt: '123123123', // 생성날짜 
     modifiedAt: '123123',  // 개인정보 수정 날짜 
@@ -16,7 +17,8 @@ export const singleDummy: CardData = {
   }, // 방장 
   author: {
     id: 2,
-    number: 13,
+    image: "",
+    studentNumber: 13,
     name: 'dante', // 이름 
     createdAt: '123123123', // 생성날짜 
     modifiedAt: '123123',  // 개인정보 수정 날짜 
@@ -29,8 +31,9 @@ export const singleDummy: CardData = {
   members: [
     {
       id: 1,
-      number: 13, // 학번 
+      studentNumber: 13, // 학번 
       name: 'jay', // 이름 
+      image: '..', // 유저 이미지 
       createdAt: '123123123', // 생성날짜 
       modifiedAt: '123123',  // 개인정보 수정 날짜 
       recentCreation : '123123', // 최근 방 개설 날짜

@@ -14,6 +14,7 @@ export const colors: Colors = {
     teal: '#007871',
     cyan: '#17a2b8',
     white: '#fff',
+    whiteGray: 'F3F5F4',
     gray: '#999',
     gray_dark: '#555',
     primary: '#ed6653',

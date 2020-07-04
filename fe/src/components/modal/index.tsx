@@ -38,7 +38,7 @@ export const Modal:FC<Props> = ({
     members.map((value, index) => {
       return (
         <Member key={index}>
-          <StudentNumber>{value.number}</StudentNumber>
+          <StudentNumber>{value.studentNumber}</StudentNumber>
           <StudentName>{value.name}</StudentName>
         </Member>
       )      

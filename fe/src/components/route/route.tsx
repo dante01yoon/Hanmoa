@@ -47,7 +47,12 @@ export const routes: RouteType[] = [
     path: '/test/login',
     exact: true,
     component: LoginTestPage
-  }
+  },
+  {
+    path: '/room/:id',
+    exact: false, 
+    component: RoomPage
+  },
 ];
 
 
