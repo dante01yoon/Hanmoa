@@ -1,5 +1,6 @@
 import React, { FC, useMemo, ReactNode } from 'react'
 import styled from 'styled-components';
+import ProfileImg from "src/asset/profile.svg";
 import { ISingleChat } from "@models/chat"; 
 
 const StyledListGroup = styled.ul`
@@ -24,7 +25,7 @@ const StyledImage = styled.p<{
     content: '',
     width: 56px;
     height: 56px;
-    background: url(${p => p.image.length > 0 ? p.image : p.image});
+    background: url(${p => p.image.length > 0 ? p.image : "src/asset/profile.svg"});
     background-size: cover;
     bacground-position: center;
 ` 
@@ -45,14 +46,13 @@ const StyledDescription = styled.p`
 type TEventType = {
   event: "join" | "leave" | "none"; 
 } 
-interface IChatModelProps extends ISingleChat{
+interface IChatModelProps extends Omit<ISingleChat , "chatCardId"> {
   event: "join" | "leave" | "none";
 };
 
 const ChatCard: FC<IChatModelProps> = ({
   chatData,
   writtenAt, 
-  chatCardId,
   studentNumber,
   name,
   image,
