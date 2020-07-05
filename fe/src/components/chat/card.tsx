@@ -52,7 +52,7 @@ interface IChatModelProps extends ISingleChat{
 const ChatCard: FC<IChatModelProps> = ({
   chatData,
   writtenAt, 
-  id,
+  chatCardId,
   studentNumber,
   name,
   image,

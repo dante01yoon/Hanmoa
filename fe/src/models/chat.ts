@@ -1,12 +1,12 @@
 import IUser from './user';
 
-export interface ISingleChat extends Omit<IUser, "createdAt, modifedAt">{
+export interface ISingleChat extends Omit<IUser, "id" | "createdAt" | "modifiedAt">{
   chatCardId: number;
   chatData: string;
   writtenAt: string;
 }
 
-interface IChat extends IUser{
+interface IChat {
   chatGroupId: number; 
   chatData: ISingleChat[];
 }
