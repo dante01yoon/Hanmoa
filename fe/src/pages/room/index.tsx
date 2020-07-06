@@ -4,20 +4,28 @@ import styled from 'styled-components';
 
 import dummyChatData from "./dummy";
 import ChatCard from "@components/chat/card";
-import {EmbedChatRoom} from "@components/embed/chatRoom"; 
+import EmbedChatRoom from "@components/embed/chatRoom"; 
+import ChatPeopleContainer from "@components/embed/chatPeople";
 
 const StyledSelf = styled.section`
-
+  display:flex;
+  justify-content: center;
 `;
 
 const StyledArticle = styled.article`
-  
+  & > div{
+    background-color: ${p => p.theme.colors.yellow_white};
+    padding: 48px 64px; 
+    height: 100vh;
+    overflow-y: auto;
+  }
 `;
 
 const RoomPage: FC =({
 
 }) =>{
   const { chatGroupId, chatData} = dummyChatData;
+
   const renderChatContent = ():ReactNode => {
     return (
       <> 
@@ -37,6 +45,13 @@ const RoomPage: FC =({
     )
   } 
 
+  const renderChatPeopleContent = ():JSX.Element=> {
+    return(
+      <>
+        Hello
+      </> 
+    )
+  }
 
   return (
     <StyledSelf>
@@ -46,7 +61,9 @@ const RoomPage: FC =({
         </EmbedChatRoom>
       </StyledArticle>
       <StyledArticle>
-
+        <ChatPeopleContainer>
+          {renderChatPeopleContent()}
+        </ChatPeopleContainer>
       </StyledArticle>
     </StyledSelf>
   )
