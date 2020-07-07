@@ -1,10 +1,11 @@
-import React, {FC, ReactNode, useRef } from 'react';
-import {useFormik, FormikConfig} from 'formik';
+import React, {FC, ReactNode, useRef, useEffect } from 'react';
+import {useFormik, } from 'formik';
 import styled from 'styled-components';
 
 const StyledSelf = styled.div`
   width: 500px;
   background-color: ${p => p.theme.colors.yello_white};
+  height:75vh;
 `; 
 
 const StyledChatContainer= styled.div`
@@ -13,7 +14,21 @@ const StyledChatContainer= styled.div`
 
 const StyledEnterContainer= styled.div`
   display: flex;
+  & > form {
+    width: 100%;
+    display:flex;
+  }
 `;
+
+
+const StyledTextArea = styled.textarea`
+  padding: 16px;
+  display:inline-block;
+  resize: none;
+  width: 100%;
+  height: 10vh; 
+  background-color: ${p => p.theme.colors.yello_white}; 
+` 
 
 interface IEmbedChatProps {
   children: ReactNode
@@ -30,26 +45,35 @@ export const EmbedChatRoom:FC<IEmbedChatProps> = ({
   }
   const formik = useFormik<IChatValues>({
     initialValues: {
-      chat: '',
+      chat: 'Write your message...',
     },
     onSubmit: (values) => handleSubmit(values)
   })
   
+  useEffect(() => {
+    if(textareaRef.current){
+      textareaRef.current.focus();
+    }
+  },[]);
   return(
-    <StyledSelf>
-      <StyledChatContainer>
-        {children}
-      </StyledChatContainer>
+    <>
+      <StyledSelf>
+        <StyledChatContainer>
+          {children}
+        </StyledChatContainer>
+      </StyledSelf>
       <StyledEnterContainer>
         <form onSubmit={formik.handleSubmit}>
-          <textarea 
+          <StyledTextArea 
+            name="chat"
             ref={textareaRef}
             onChange={formik.handleChange}
+            placeholder={"Write your message..."}
           />
           <button type="submit">입력</button>
         </form>
-      </StyledEnterContainer>    
-    </StyledSelf>
+      </StyledEnterContainer> 
+    </>   
   )
 
 }

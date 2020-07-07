@@ -13,10 +13,11 @@ const StyledSelf = styled.section`
 `;
 
 const StyledArticle = styled.article`
-  & > div{
+  & >div:first-child{
     background-color: ${p => p.theme.colors.yellow_white};
     padding: 48px 64px; 
     overflow-y: auto;
+    max-height:75vh;
   }
 `;
 
