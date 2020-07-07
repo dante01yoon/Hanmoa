@@ -16,7 +16,6 @@ const StyledArticle = styled.article`
   & > div{
     background-color: ${p => p.theme.colors.yellow_white};
     padding: 48px 64px; 
-    height: 100vh;
     overflow-y: auto;
   }
 `;
