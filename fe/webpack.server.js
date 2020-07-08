@@ -26,6 +26,30 @@ module.exports = {
           'babel-loader', 'ts-loader',
         ],
       },
+      {
+        test: /\.(svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+              publicPath: 'src/asset'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options:{
+              limit: 10000,
+
+            }
+          }
+        ]
+      },
     ],
   },
 

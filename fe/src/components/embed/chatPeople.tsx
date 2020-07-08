@@ -21,4 +21,4 @@ const ChatPeople: FC<IChatPeopleProps> =({
   )
 }
 
-export default ChatPeople; 
+export default ChatPeople;

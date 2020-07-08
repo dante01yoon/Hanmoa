@@ -19,12 +19,13 @@ const StyledList = styled.li<{
  }
 
 `;
+// ${p => `background: url(${src/asset/check.svg})`};
 const StyledIcon = styled.p<{
   valid: boolean
 }>`
   width: 64px;
   height: 64px; 
-  ${p => `background: url(${CheckIcon})`};
+  ${p => `background: url(${'src/asset/check.svg'})`};
   background-size: cover;
   background-position: center; 
 `; 

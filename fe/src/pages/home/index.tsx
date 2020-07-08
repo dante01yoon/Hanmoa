@@ -52,9 +52,9 @@ const HomePage = withRouter(({
       <>
         <section>
           <Carousel>
-            <Slide url={Netflix} />
+            {/* <Slide url={Netflix} />
             <Slide url={Adobe} />
-            <Slide url={NetflixPhone} />    
+            <Slide url={NetflixPhone} />     */}
           </Carousel>
         </section>
         <section>

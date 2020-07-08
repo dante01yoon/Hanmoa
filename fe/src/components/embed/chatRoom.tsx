@@ -25,9 +25,10 @@ const StyledTextArea = styled.textarea`
   padding: 16px;
   display:inline-block;
   resize: none;
+  border-radius: 8px;
   width: 100%;
   height: 10vh; 
-  background-color: ${p => p.theme.colors.yello_white}; 
+  background-color: ${p => p.theme.colors.whiteGray}; 
 ` 
 
 interface IEmbedChatProps {
@@ -36,7 +37,7 @@ interface IEmbedChatProps {
 interface IChatValues{
   chat: string 
 }
-export const EmbedChatRoom:FC<IEmbedChatProps> = ({
+const EmbedChatRoom:FC<IEmbedChatProps> = ({
   children
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);

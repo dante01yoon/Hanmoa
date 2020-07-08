@@ -1,10 +1,20 @@
 import React, { FC, useMemo, ReactNode } from 'react'
 import styled from 'styled-components';
-import ProfileImg from "src/asset/profile.svg";
+import ProfileImg from "src/asset/google.svg";
+import { renderToStaticMarkup } from "react-dom/server";
 import { ISingleChat } from "@models/chat"; 
+// React.FC<React.SVGAttributes<SVGElement>>
+
+// const convertSVGToString = ( SVG: JSX.Element) => {
+//   return encodeURIComponent(renderToStaticMarkup(SVG));
+// }
+// const svgString = convertSVGToString(<ProfileImg/>); 
 
 const StyledListGroup = styled.ul`
   display: inline-block;  
+  &> li:first-child {
+    display: flex;
+  }
 `;
 
 const StyledList = styled.li`
@@ -16,18 +26,24 @@ const StyledName = styled.small`
   margin: 8px;
   max-width: 40px;
   height: 16px;
+   & > span {
+    margin-left: 8px;
+    display: table-cell;
+    vertical-align: middle;
+   }
 ` ; 
+// background-image: url("${svgString}");
 
 const StyledImage = styled.p<{
   image: string
 }>`
-  & ::after{
-    content: '',
+    display:inline-block;
+    content: "";
     width: 56px;
     height: 56px;
-    background: url(${p => p.image.length > 0 ? p.image : "src/asset/profile.svg"});
     background-size: cover;
-    bacground-position: center;
+    background-repeat: no-repeat;
+    background-position: center;
 ` 
 
 const StyledChatContainer = styled.div`
@@ -36,6 +52,9 @@ const StyledChatContainer = styled.div`
   min-width: 32px; 
   min-height: 32px;
   margin: 16px 0;
+
+`;
+const StyledChatBox = styled.div`
 
 `;
 
@@ -63,7 +82,7 @@ const ChatCard: FC<IChatModelProps> = ({
 ) => {
   
   const processingNumberAndName = useMemo((
-  ) => {
+  ) => { // 학번, 이름 
     return [studentNumber.toString().slice(1,3), name];
   }, [studentNumber, name]);
 
@@ -71,8 +90,8 @@ const ChatCard: FC<IChatModelProps> = ({
     const [ joinNumber, name ] = processingNumberAndName;
     return (
       <StyledName>
-          {joinNumber}
-          <span>{name}</span>
+        {joinNumber}
+        <span>{name}</span>
       </StyledName>    
     ); 
   }
@@ -116,9 +135,10 @@ const ChatCard: FC<IChatModelProps> = ({
       <>
         <StyledList>
           <StyledImage image={image}/>
+          <h3>{renderNumberAndName()}</h3>
         </StyledList>
         <StyledList>
-          <h3>{renderNumberAndName()}</h3>
+          
           {renderChatBox(event)}
         </StyledList>
       </> :
