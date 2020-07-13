@@ -16,6 +16,7 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].js',
     chunkFilename: '[name].js',
+    publicPath: `/node/`
   },
 
   module: {
@@ -33,7 +34,6 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[path][name].[ext]',
-              publicPath: 'src/asset'
             }
           }
         ]
@@ -45,7 +45,6 @@ module.exports = {
             loader: 'url-loader',
             options:{
               limit: 10000,
-
             }
           }
         ]

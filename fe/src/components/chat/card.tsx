@@ -32,13 +32,14 @@ const StyledName = styled.small`
     vertical-align: middle;
    }
 ` ; 
-// background-image: url("${svgString}");
+// background-image: url("${src/asset/google.svg}");
 
 const StyledImage = styled.p<{
   image: string
 }>`
     display:inline-block;
     content: "";
+    background-image: url("${ProfileImg}");
     width: 56px;
     height: 56px;
     background-size: cover;
@@ -135,10 +136,9 @@ const ChatCard: FC<IChatModelProps> = ({
       <>
         <StyledList>
           <StyledImage image={image}/>
-          <h3>{renderNumberAndName()}</h3>
         </StyledList>
         <StyledList>
-          
+          <h3>{renderNumberAndName()}</h3>
           {renderChatBox(event)}
         </StyledList>
       </> :

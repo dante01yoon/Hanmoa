@@ -30,9 +30,9 @@ const getConfig = target => ({
   entry: getEntryPoint(target),
 
   output:  {
-    path: path.resolve(__dirname, `dist/${target}`),
+    path: path.resolve(__dirname, `./dist/${target}`),
     filename: '[name].js',
-    publicPath: '/web/',
+    publicPath: `/${target}/`,
     libraryTarget: target=== 'node' ?  'commonjs2' : undefined,
   },
 
@@ -66,7 +66,6 @@ const getConfig = target => ({
             loader: 'file-loader',
             options: {
               name: '[path][name].[ext]',
-              publicPath: 'src/asset'
             }
           }
         ]
