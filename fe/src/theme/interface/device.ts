@@ -26,3 +26,4 @@ export interface ICustomObject extends ObjectConstructor {
   entries<K extends keyof IMediaDevice, T>(o: { [s in K]: T} | ArrayLike<T>): [K,T][]
 }
 
+export interface Media extends TInterPolation<IMediaDevice>{}
