@@ -1,7 +1,6 @@
 import React, { FC, useMemo, ReactNode } from 'react'
 import styled from 'styled-components';
-import ProfileImg from "src/asset/google.svg";
-import { renderToStaticMarkup } from "react-dom/server";
+import ProfileImg from "src/asset/profile.svg";
 import { ISingleChat } from "@models/chat"; 
 // React.FC<React.SVGAttributes<SVGElement>>
 
@@ -12,8 +11,8 @@ import { ISingleChat } from "@models/chat";
 
 const StyledListGroup = styled.ul`
   display: inline-block;  
-  &> li:first-child {
-    display: flex;
+  & > li {
+    display: inline-block;
   }
 `;
 
@@ -32,7 +31,6 @@ const StyledName = styled.small`
     vertical-align: middle;
    }
 ` ; 
-// background-image: url("${src/asset/google.svg}");
 
 const StyledImage = styled.p<{
   image: string
@@ -40,8 +38,8 @@ const StyledImage = styled.p<{
     display:inline-block;
     content: "";
     background-image: url("${ProfileImg}");
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
