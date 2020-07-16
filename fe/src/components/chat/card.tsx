@@ -5,15 +5,20 @@ import { ISingleChat } from "@models/chat";
 
 const StyledListGroup = styled.ul`
   display:inline-block;
-    
+  margin-bottom: 16px;
+  
   & > li {
 
     &:first-child {
       float:left; 
-
+  
       & +li {
         float:right;
         max-width: 240px;
+        
+        & > h3 {
+          margin-bottom: 32px;
+        }
       }
     }
   }
@@ -50,15 +55,22 @@ const StyledImage = styled.p<{
 ` 
 
 const StyledChatContainer = styled.div`
+  position: relative;
+  margin: 16px 0;
+  
+  & > small {
+    font-size: 8px;
+    position: absolute; 
+    bottom: -16px;
+    width: 56px;  
+  }
+`;
+const StyledChatContentBox = styled.span`
   padding: 16px;
   background-color: ${p => p.theme.colors.whiteGray};
   min-width: 32px; 
   min-height: 32px;
-  margin: 16px 0;
   border-radius:8px;
-
-`;
-const StyledChatBox = styled.div`
 
 `;
 
@@ -125,7 +137,9 @@ const ChatCard: FC<IChatModelProps> = ({
     if(!description){
       return(
         <StyledChatContainer>
-          {chatData}
+          <StyledChatContentBox>
+            {chatData}
+          </StyledChatContentBox>
           <small>{processingDate}</small>      
         </StyledChatContainer>
       )

@@ -3,16 +3,20 @@ import {useFormik, } from 'formik';
 import styled from 'styled-components';
 
 const StyledSelf = styled.div`
-  width: 500px;
   background-color: ${p => p.theme.colors.yello_white};
   height:75vh;
-  ${p => p.theme.media.lb`
-      width: 360px;
-  `}
+  
 `; 
 
 const StyledChatContainer= styled.div`
+  padding: 48px 64px; 
   height:100%;
+  max-width:500px;
+  ${p => p.theme.media.lb`
+      width: 480px;
+  `}
+  
+  position: relative;
 `; 
 
 const StyledEnterContainer= styled.div`
@@ -21,9 +25,9 @@ const StyledEnterContainer= styled.div`
     width: 100%;
     display:flex;
   }
-  width:500px;
+  max-width:500px;
   ${p => p.theme.media.lb`
-      width: 360px;
+      width: 480px;
   `}
 `;
 
