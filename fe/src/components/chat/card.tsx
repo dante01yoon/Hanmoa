@@ -1,7 +1,8 @@
 import React, { FC, useMemo, ReactNode } from 'react'
 import styled from 'styled-components';
 import ProfileImg from "src/asset/profile.svg";
-import { ISingleChat } from "@models/chat"; 
+import { ISingleChat } from "@models/chat";
+import timeSlice from "@utils/chat/timeSlice";
 
 const StyledListGroup = styled.ul`
   display:inline-block;
@@ -59,6 +60,7 @@ const StyledChatContainer = styled.div`
   margin: 16px 0;
   
   & > small {
+    margin-left: 8px;
     font-size: 8px;
     position: absolute; 
     bottom: -16px;
@@ -71,7 +73,6 @@ const StyledChatContentBox = styled.span`
   min-width: 32px; 
   min-height: 32px;
   border-radius:8px;
-
 `;
 
 const StyledDescription = styled.p`
@@ -114,11 +115,13 @@ const ChatCard: FC<IChatModelProps> = ({
   
   const processingDate: string = useMemo(() => {
     // "2020-05-18T16:00:00Z"
-    const dateArray = writtenAt.split("T");
-    const [ date, notParsedTime ] = dateArray;
-    const [ hours, minutes, seconds ] = notParsedTime.split(":");
+    const {
+      hours,
+      minutes,
+      AMOrPM
+    } = timeSlice(writtenAt);
     const parsedTime = `${hours}:${minutes}`;
-    return `${date}${parsedTime}`
+    return `${AMOrPM} ${hours}:${minutes}`
   },[]);
   
   const classifyEvent = (event: "join" | "leave" | "none") => {

@@ -31,7 +31,6 @@ const StyledEnterContainer= styled.div`
   `}
 `;
 
-
 const StyledTextArea = styled.textarea`
   padding: 16px;
   display:inline-block;
