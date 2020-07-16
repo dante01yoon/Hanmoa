@@ -4,6 +4,9 @@ import styled from 'styled-components';
 const StyledSelf = styled.div`
   width: 500px;
   height:75vh;
+  ${p => p.theme.media.lb`
+    width: 360px;
+  `}
 `;
 
 interface IChatPeopleProps {

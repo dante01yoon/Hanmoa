@@ -6,6 +6,9 @@ const StyledSelf = styled.div`
   width: 500px;
   background-color: ${p => p.theme.colors.yello_white};
   height:75vh;
+  ${p => p.theme.media.lb`
+      width: 360px;
+  `}
 `; 
 
 const StyledChatContainer= styled.div`
@@ -18,6 +21,10 @@ const StyledEnterContainer= styled.div`
     width: 100%;
     display:flex;
   }
+  width:500px;
+  ${p => p.theme.media.lb`
+      width: 360px;
+  `}
 `;
 
 

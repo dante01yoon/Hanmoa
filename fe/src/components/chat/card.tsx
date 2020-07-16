@@ -2,17 +2,20 @@ import React, { FC, useMemo, ReactNode } from 'react'
 import styled from 'styled-components';
 import ProfileImg from "src/asset/profile.svg";
 import { ISingleChat } from "@models/chat"; 
-// React.FC<React.SVGAttributes<SVGElement>>
-
-// const convertSVGToString = ( SVG: JSX.Element) => {
-//   return encodeURIComponent(renderToStaticMarkup(SVG));
-// }
-// const svgString = convertSVGToString(<ProfileImg/>); 
 
 const StyledListGroup = styled.ul`
-  display: inline-block;  
+  display:inline-block;
+    
   & > li {
-    display: inline-block;
+
+    &:first-child {
+      float:left; 
+
+      & +li {
+        float:right;
+        max-width: 240px;
+      }
+    }
   }
 `;
 
@@ -25,11 +28,12 @@ const StyledName = styled.small`
   margin: 8px;
   max-width: 40px;
   height: 16px;
-   & > span {
-    margin-left: 8px;
-    display: table-cell;
-    vertical-align: middle;
-   }
+
+  & > span {
+  margin-left: 8px;
+  display: table-cell;
+  vertical-align: middle;
+  }
 ` ; 
 
 const StyledImage = styled.p<{
@@ -51,6 +55,7 @@ const StyledChatContainer = styled.div`
   min-width: 32px; 
   min-height: 32px;
   margin: 16px 0;
+  border-radius:8px;
 
 `;
 const StyledChatBox = styled.div`
@@ -70,7 +75,7 @@ interface IChatModelProps extends Omit<ISingleChat , "chatCardId"> {
 
 const ChatCard: FC<IChatModelProps> = ({
   chatData,
-  writtenAt, 
+  writtenAt,
   studentNumber,
   name,
   image,
@@ -103,14 +108,21 @@ const ChatCard: FC<IChatModelProps> = ({
     const parsedTime = `${hours}:${minutes}`;
     return `${date}${parsedTime}`
   },[]);
+  
+  const classifyEvent = (event: "join" | "leave" | "none") => {
+    switch(event){
+      case "join":
+        return "입장"
+      case "leave":
+        return "퇴장"
+      default: 
+        return 0 
+    }
+  } 
 
   const renderChatBox = (event: "join" | "leave" | "none"): ReactNode => {
-    const description = 
-      event === "join" ?
-        "입장" :
-      event === "leave" ? 
-        "퇴장" : ""; 
-    if( event === "none"){
+    const description = classifyEvent(event); 
+    if(!description){
       return(
         <StyledChatContainer>
           {chatData}
@@ -130,7 +142,7 @@ const ChatCard: FC<IChatModelProps> = ({
   }
 
   const renderListGroup = ( event: "join" | "leave" | "none" ): JSX.Element => {
-    const renderResult = event === "none" ?
+    const renderResult = !classifyEvent(event) ?
       <>
         <StyledList>
           <StyledImage image={image}/>
