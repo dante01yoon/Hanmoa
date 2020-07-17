@@ -9,7 +9,7 @@ const StyledSelf = styled.div`
 `; 
 
 const StyledChatContainer= styled.div`
-  padding: 48px 64px; 
+  padding: 48px; 
   height:100%;
   max-width:500px;
   ${p => p.theme.media.lb`
