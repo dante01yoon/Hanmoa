@@ -5,20 +5,18 @@ import { ISingleChat } from "@models/chat";
 import timeSlice from "@utils/chat/timeSlice";
 
 const StyledListGroup = styled.ul`
-  display:inline-block;
+  display:flex;
   margin-bottom: 16px;
   
   & > li {
 
     &:first-child {
-      float:left; 
   
       & +li {
-        float:right;
         max-width: 240px;
         
         & > h3 {
-          margin-bottom: 32px;
+          margin-bottom: 16px;
         }
       }
     }
@@ -67,7 +65,7 @@ const StyledChatContainer = styled.div`
     width: 56px;  
   }
 `;
-const StyledChatContentBox = styled.span`
+const StyledChatContentBox = styled.p`
   padding: 16px;
   background-color: ${p => p.theme.colors.whiteGray};
   min-width: 32px; 
