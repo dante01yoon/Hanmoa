@@ -5,6 +5,12 @@ import { ISingleChat } from "@models/chat";
 import timeSlice from "@utils/chat/timeSlice";
 
 const StyledListGroup = styled.ul`
+  display: flex;
+  margin-bottom: 24px;
+
+  & > li {
+    &:first-child {
+      & + li {
   display: inline-block;
   margin-bottom: 16px;
 
@@ -17,7 +23,7 @@ const StyledListGroup = styled.ul`
         max-width: 240px;
 
         & > h3 {
-          margin-bottom: 32px;
+          margin-bottom: 16px;
         }
       }
     }
@@ -66,11 +72,12 @@ const StyledChatContainer = styled.div`
     width: 56px;
   }
 `;
-const StyledChatContentBox = styled.span`
+const StyledChatContentBox = styled.p`
   padding: 16px;
   background-color: ${(p) => p.theme.colors.whiteGray};
   min-width: 32px;
   min-height: 32px;
+  line-height: 1;
   border-radius: 8px;
 `;
 
@@ -145,7 +152,7 @@ const ChatCard: FC<IChatModelProps> = ({
       );
     }
   };
-
+  const isMyChatBox = (studentNumber: number) => {};
   const renderListGroup = (event: "join" | "leave" | "none"): JSX.Element => {
     const renderResult = !classifyEvent(event) ? (
       <>

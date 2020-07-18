@@ -1,7 +1,9 @@
-import React, {FC, ReactNode, useRef, useEffect } from 'react';
+import React, {FC, ReactNode, useRef, useEffect, useState} from 'react';
 import {useFormik, } from 'formik';
 import styled from 'styled-components';
 
+import Send from "src/asset/send.png";
+import SendBefore from "src/asset/send-before.png";
 const StyledSelf = styled.div`
   background-color: ${p => p.theme.colors.yello_white};
   height:75vh;
@@ -9,7 +11,7 @@ const StyledSelf = styled.div`
 `; 
 
 const StyledChatContainer= styled.div`
-  padding: 48px 64px; 
+  padding: 48px; 
   height:100%;
   max-width:500px;
   ${p => p.theme.media.lb`
@@ -40,7 +42,18 @@ const StyledTextArea = styled.textarea`
   height: 10vh; 
   background-color: ${p => p.theme.colors.whiteGray}; 
 ` 
-
+const StyledSubmitButton = styled.button<{clicked: boolean}>`
+  &::after {
+    content: "";
+    display:block;
+    width: 48px;
+    height: 48px;
+    background-image: url('${p => p.clicked ? SendBefore : Send }');
+    background-position: center;
+    background-size: cover;
+    transition: all 0.6s ease; 
+  }
+`;
 interface IEmbedChatProps {
   children: ReactNode
 }
@@ -50,10 +63,17 @@ interface IChatValues{
 const EmbedChatRoom:FC<IEmbedChatProps> = ({
   children
 }) => {
+  const [clicked, setClicked] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleSetClick = () => {
+    setClicked(true);
+  }
   const handleSubmit = (values: IChatValues) => {
     console.log(values.chat);
+    handleSetClick();
   }
+
   const formik = useFormik<IChatValues>({
     initialValues: {
       chat: 'Write your message...',
@@ -81,7 +101,11 @@ const EmbedChatRoom:FC<IEmbedChatProps> = ({
             onChange={formik.handleChange}
             placeholder={"Write your message..."}
           />
-          <button type="submit">입력</button>
+          <StyledSubmitButton
+              clicked={clicked}
+              type="submit"
+              disabled={clicked}
+          />
         </form>
       </StyledEnterContainer> 
     </>   
