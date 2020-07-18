@@ -5,12 +5,24 @@ import { ISingleChat } from "@models/chat";
 import timeSlice from "@utils/chat/timeSlice";
 
 const StyledListGroup = styled.ul`
+<<<<<<< HEAD
   display: flex;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 
   & > li {
     &:first-child {
       & + li {
+=======
+  display: inline-block;
+  margin-bottom: 16px;
+
+  & > li {
+    &:first-child {
+      float: left;
+
+      & + li {
+        float: right;
+>>>>>>> 42ee5fc... chat/card.tsx merge
         max-width: 240px;
 
         & > h3 {

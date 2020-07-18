@@ -2,3 +2,5 @@
 /fe/dist/*
 **/dist/*
 */.env
+
+package.json

@@ -1,73 +1,88 @@
-import React, { FC, ReactType } from 'react';
-import { Switch, Route } from 'react-router';
-import { Dispatch } from 'redux';
-import loadable from '@loadable/component';
+import React, { FC, ReactType } from "react";
+import { Switch, Route } from "react-router";
+import { Dispatch } from "redux";
+import loadable from "@loadable/component";
 
-const HomePage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/home'));
-const SignUpPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/signup'));
-const LoginPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/login'));
-const RoomPage = loadable(() => import(/* webpackChunkName: "HomePage" */'../../pages/room'));
-const ErrorPage = loadable(() => import(/* webpackChunkName: "ErrorPage" */'../../pages/error')); 
-const TopicPage = loadable(() => import(/* webpackChunkName: "TopicPage" */'../../pages/topic'));
-const LoginTestPage = loadable(() => import(/* webpackChunkName: "LoginTestPage" */'../../pages/LoginTest'));
+const HomePage = loadable(() =>
+  import(/* webpackChunkName: "HomePage" */ "../../pages/home")
+);
+const SignUpPage = loadable(() =>
+  import(/* webpackChunkName: "HomePage" */ "../../pages/signup")
+);
+const LoginPage = loadable(() =>
+  import(/* webpackChunkName: "HomePage" */ "../../pages/login")
+);
+const RoomPage = loadable(() =>
+  import(/* webpackChunkName: "HomePage" */ "../../pages/room")
+);
+const ErrorPage = loadable(() =>
+  import(/* webpackChunkName: "ErrorPage" */ "../../pages/error")
+);
+const TopicPage = loadable(() =>
+  import(/* webpackChunkName: "TopicPage" */ "../../pages/topic")
+);
+const LoginTestPage = loadable(() =>
+  import(/* webpackChunkName: "LoginTestPage" */ "../../pages/LoginTest")
+);
 
 type RouteType = {
-  path: string,
-  exact?: boolean,
-  component?: ReactType,
-  fetchInitialData?: (req?: any ) => Dispatch 
-}
+  path: string;
+  exact?: boolean;
+  component?: ReactType;
+  fetchInitialData?: (req?: any) => Dispatch;
+};
 export const routes: RouteType[] = [
   {
-    path: '/',
+    path: "/",
     exact: true,
     component: HomePage,
   },
   {
-    path: '/signup',
+    path: "/signup",
     exact: true,
-    component: SignUpPage        
+    component: SignUpPage,
   },
   {
-    path: '/login',
+    path: "/login",
     exact: false,
     component: LoginPage,
   },
   {
-    path: '/room/:id',
-    exact: false, 
-    component: RoomPage
-  },
-  {
-    path: '/topic/:id',
+    path: "/room/:id",
     exact: false,
-    component: TopicPage
+    component: RoomPage,
   },
   {
-    path: '/test/login',
+    path: "/topic/:id",
+    exact: false,
+    component: TopicPage,
+  },
+  {
+    path: "/test/login",
     exact: true,
-    component: LoginTestPage
+    component: LoginTestPage,
   },
   {
-    path: '/room/:id',
-    exact: false, 
-    component: RoomPage
+    path: "/room/:id",
+    exact: false,
+    component: RoomPage,
   },
 ];
 
-
-export const Router:FC = () => {
-  return(
+export const Router: FC = () => {
+  return (
     <Switch>
-      {routes.map(({ path, exact, component: Component, ...rest}) => (
-        <Route key={path} path={path} exact={ exact || false } render={(props) => {
-         return  Component ?
-            <Component {...props} {...rest} />
-              :
-            null 
-        }}/> 
+      {routes.map(({ path, exact, component: Component, ...rest }) => (
+        <Route
+          key={path}
+          path={path}
+          exact={exact || false}
+          render={(props) => {
+            return Component ? <Component {...props} {...rest} /> : null;
+          }}
+        />
       ))}
-      <Route render={ () => <ErrorPage/> } />
-    </Switch> 
-  )
-}
+      <Route render={() => <ErrorPage />} />
+    </Switch>
+  );
+};
