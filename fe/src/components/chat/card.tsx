@@ -6,7 +6,7 @@ import timeSlice from "@utils/chat/timeSlice";
 
 const StyledListGroup = styled.ul`
   display:flex;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   
   & > li {
 
@@ -70,6 +70,7 @@ const StyledChatContentBox = styled.p`
   background-color: ${p => p.theme.colors.whiteGray};
   min-width: 32px; 
   min-height: 32px;
+  line-height: 1;
   border-radius:8px;
 `;
 
@@ -155,7 +156,9 @@ const ChatCard: FC<IChatModelProps> = ({
       )
     }
   }
+  const isMyChatBox = (studentNumber: number) => {
 
+  }
   const renderListGroup = ( event: "join" | "leave" | "none" ): JSX.Element => {
     const renderResult = !classifyEvent(event) ?
       <>
