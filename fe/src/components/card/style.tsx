@@ -94,10 +94,17 @@ export const TitleIcons = styled.div`
   align-items: center;
 `
 export const IconBox = styled.div<{
+  src: string
 }>`
   margin-right: 8px;
-  width: 24px;
-  height: 24px;
   line-height: 33px;  /* ugly :( any idea? */
   cursor: pointer;
+  &::after {
+    display: block;
+    content: ""; 
+    width: 24px;
+    height: 24px; 
+    background: url("${p => p.src}") center;
+    transition: all 0.2s;
+  }
 `
