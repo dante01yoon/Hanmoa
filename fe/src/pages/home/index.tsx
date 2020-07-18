@@ -13,11 +13,9 @@ import { CardData } from 'src/models/card';
 import { useModal } from '@utils/modal/useModal';
 import { pathExtractor } from '@utils/topic/pathExtractor'; 
 
-
-// carousel contents : jpg 
-import Adobe from 'src/asset/adobe.jpg';
-import NetflixPhone from 'src/asset/netflix_phone.jpg';
-import Netflix from 'src/asset/netflix.jpg';
+import adobe from 'src/asset/adobe.jpg';
+import netflix_phone from 'src/asset/netflix_phone.jpg';
+import netflix from 'src/asset/netflix.jpg';
 
 const {
   RoomContainer
@@ -52,9 +50,9 @@ const HomePage = withRouter(({
       <>
         <section>
           <Carousel>
-            {/* <Slide url={Netflix} />
-            <Slide url={Adobe} />
-            <Slide url={NetflixPhone} />     */}
+            <Slide url={netflix} />
+            <Slide url={adobe} />
+            <Slide url={netflix_phone} />
           </Carousel>
         </section>
         <section>
