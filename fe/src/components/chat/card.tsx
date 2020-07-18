@@ -1,20 +1,18 @@
-import React, { FC, useMemo, ReactNode } from 'react'
-import styled from 'styled-components';
+import React, { FC, useMemo, ReactNode } from "react";
+import styled from "styled-components";
 import ProfileImg from "src/asset/profile.svg";
 import { ISingleChat } from "@models/chat";
 import timeSlice from "@utils/chat/timeSlice";
 
 const StyledListGroup = styled.ul`
-  display:flex;
-  margin-bottom: 24px;
-  
-  & > li {
+  display: flex;
+  margin-bottom: 16px;
 
+  & > li {
     &:first-child {
-  
-      & +li {
+      & + li {
         max-width: 240px;
-        
+
         & > h3 {
           margin-bottom: 16px;
         }
@@ -34,14 +32,14 @@ const StyledName = styled.small`
   height: 16px;
 
   & > span {
-  margin-left: 8px;
-  display: table-cell;
-  vertical-align: middle;
+    margin-left: 8px;
+    display: table-cell;
+    vertical-align: middle;
   }
-` ; 
+`;
 
 const StyledImage = styled.p<{
-  image: string
+  image: string;
 }>`
     display:inline-block;
     content: "";
@@ -51,27 +49,27 @@ const StyledImage = styled.p<{
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-` 
+`;
 
 const StyledChatContainer = styled.div`
   position: relative;
   margin: 16px 0;
-  
+
   & > small {
     margin-left: 8px;
     font-size: 8px;
-    position: absolute; 
+    position: absolute;
     bottom: -16px;
-    width: 56px;  
+    width: 56px;
   }
 `;
 const StyledChatContentBox = styled.p`
   padding: 16px;
-  background-color: ${p => p.theme.colors.whiteGray};
-  min-width: 32px; 
+  background-color: ${(p) => p.theme.colors.whiteGray};
+  min-width: 32px;
   min-height: 32px;
   line-height: 1;
-  border-radius:8px;
+  border-radius: 8px;
 `;
 
 const StyledDescription = styled.p`
@@ -79,11 +77,11 @@ const StyledDescription = styled.p`
 `;
 
 type TEventType = {
-  event: "join" | "leave" | "none"; 
-} 
-interface IChatModelProps extends Omit<ISingleChat , "chatCardId"> {
   event: "join" | "leave" | "none";
 };
+interface IChatModelProps extends Omit<ISingleChat, "chatCardId"> {
+  event: "join" | "leave" | "none";
+}
 
 const ChatCard: FC<IChatModelProps> = ({
   chatData,
@@ -92,96 +90,79 @@ const ChatCard: FC<IChatModelProps> = ({
   name,
   image,
   event,
-}
-
-
-) => {
-  
-  const processingNumberAndName = useMemo((
-  ) => { // 학번, 이름 
-    return [studentNumber.toString().slice(1,3), name];
+}) => {
+  const processingNumberAndName = useMemo(() => {
+    // 학번, 이름
+    return [studentNumber.toString().slice(1, 3), name];
   }, [studentNumber, name]);
 
   const renderNumberAndName = () => {
-    const [ joinNumber, name ] = processingNumberAndName;
+    const [joinNumber, name] = processingNumberAndName;
     return (
       <StyledName>
         {joinNumber}
         <span>{name}</span>
-      </StyledName>    
-    ); 
-  }
-  
+      </StyledName>
+    );
+  };
+
   const processingDate: string = useMemo(() => {
     // "2020-05-18T16:00:00Z"
-    const {
-      hours,
-      minutes,
-      AMOrPM
-    } = timeSlice(writtenAt);
+    const { hours, minutes, AMOrPM } = timeSlice(writtenAt);
     const parsedTime = `${hours}:${minutes}`;
-    return `${AMOrPM} ${hours}:${minutes}`
-  },[]);
-  
+    return `${AMOrPM} ${hours}:${minutes}`;
+  }, []);
+
   const classifyEvent = (event: "join" | "leave" | "none") => {
-    switch(event){
+    switch (event) {
       case "join":
-        return "입장"
+        return "입장";
       case "leave":
-        return "퇴장"
-      default: 
-        return 0 
+        return "퇴장";
+      default:
+        return 0;
     }
-  } 
+  };
 
   const renderChatBox = (event: "join" | "leave" | "none"): ReactNode => {
-    const description = classifyEvent(event); 
-    if(!description){
-      return(
+    const description = classifyEvent(event);
+    if (!description) {
+      return (
         <StyledChatContainer>
-          <StyledChatContentBox>
-            {chatData}
-          </StyledChatContentBox>
-          <small>{processingDate}</small>      
+          <StyledChatContentBox>{chatData}</StyledChatContentBox>
+          <small>{processingDate}</small>
         </StyledChatContainer>
-      )
-    }
-    else {
-      return(
+      );
+    } else {
+      return (
         <StyledChatContainer>
           <StyledDescription>
             {`${studentNumber}학번 ${name} 님이 ${description}하셨습니다.`}
           </StyledDescription>
         </StyledChatContainer>
-      )
+      );
     }
-  }
-  const isMyChatBox = (studentNumber: number) => {
-
-  }
-  const renderListGroup = ( event: "join" | "leave" | "none" ): JSX.Element => {
-    const renderResult = !classifyEvent(event) ?
+  };
+  const isMyChatBox = (studentNumber: number) => {};
+  const renderListGroup = (event: "join" | "leave" | "none"): JSX.Element => {
+    const renderResult = !classifyEvent(event) ? (
       <>
         <StyledList>
-          <StyledImage image={image}/>
+          <StyledImage image={image} />
         </StyledList>
         <StyledList>
           <h3>{renderNumberAndName()}</h3>
           {renderChatBox(event)}
         </StyledList>
-      </> :
-      <>
-        <StyledList>
-          {renderChatBox(event)}
-        </StyledList>
       </>
-  return renderResult; 
-}
-    return(
-      <StyledListGroup>
-        {renderListGroup(event)}
-      </StyledListGroup>    
-    )
-}
+    ) : (
+      <>
+        <StyledList>{renderChatBox(event)}</StyledList>
+      </>
+    );
+    return renderResult;
+  };
+  return <StyledListGroup>{renderListGroup(event)}</StyledListGroup>;
+};
 
 export default ChatCard;
