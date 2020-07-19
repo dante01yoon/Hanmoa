@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { SmartLink } from '../smartlink';
+import hamburger from 'src/asset/hamburger.svg';
+
 export const Main = styled.main`
     both: clear;
 `;
@@ -19,11 +20,20 @@ export const Nav = styled.nav`
     line-height: 64px;
     height: 64px;
 `;
-export const ItemBox = styled.div`
+export const ItemBox = styled.div<{
+    url?: string
+    width?: number
+}>`
     display:flex;
     align-items:center;
     margin: 0 16px;
-    height:64px;
+    &::after {
+        display: block;
+        content: "";
+        height:64px;
+        width: ${p=>p.width ? p.width+'px' : '64px' }; 
+        background: center url("${p => p.url}");
+    }
 `;
 export const Item = styled.li`
     padding: 0 8px;
@@ -64,12 +74,21 @@ export const TopicButton = styled.button`
     border: 0;
     outline: 0; 
     background-color: ${p=> p.theme.colors.white};
+    padding: 0 8px;
     &:focus{
         box-shadow: 0 0 0 0.2rem rgba(237,102,83,.25);
     }
+    
+    &::after{
+        display:block;
+        content:"";
+        background: center url("${hamburger}");
+        width:24px;
+        height:32px;
+    }
 `;
 export const TopicTitle = styled.span`
-  margin-left: 8px;
+  margin-right: 8px;
   font-size: 16px;
   font-weight: 500;
   line-height:40px;

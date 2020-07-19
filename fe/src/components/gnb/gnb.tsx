@@ -10,8 +10,7 @@ import LoginModal from '@components/login';
 import { topicDummy } from '@models/gnb';
 import { buildTopicList } from '@utils/topic/buildtopicList';
 
-import {ReactComponent as HanmoaLogo} from 'src/asset/logo/hanmoa_horizontal.svg';
-import {ReactComponent as Hamburger} from 'src/asset/hamburger.svg';
+import hanmoa_logo from 'src/asset/logo/hanmoa_horizontal.svg';
 
 const { 
     Header,
@@ -57,15 +56,16 @@ export const Gnb:FC = () => {
                 <ItemContainer>
                     <LeftItemContainer>
                             <SmartLink href={"/"}>
-                                <ItemBox>
-                                    {/* <HanmoaLogo/> */}
-                                </ItemBox>
+                                <ItemBox
+                                    url={hanmoa_logo}
+                                    width={192}
+                                />
                             </SmartLink>
                             <ItemBox>
                                 <TopicButton
                                   onClick={toggleTopicList}
                                 >
-                                    {/* <Hamburger/> */}
+
                                     <TopicTitle>토픽</TopicTitle>
                                 </TopicButton>
                                 { visible && 
