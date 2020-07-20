@@ -54,4 +54,5 @@ const loginReducer: Reducer<ILoginStateInterface, TLoginAction> = (
 }
 
 export type TLoginStateType = ReturnType<typeof loginReducer>;
+
 export default loginReducer;
