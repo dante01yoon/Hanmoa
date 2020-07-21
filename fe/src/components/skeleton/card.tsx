@@ -1,37 +1,10 @@
 import React from "react";
 import styled, { keyframes, css } from "styled-components";
+import {
+    DummySkeletonColor,
+    createSkeleteonAnimation,
+} from "./skeletonAnimation";
 
-const DummySkeletonColor = "#eee" as const;
-
-const skeletonLoading = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-  50%,
-  100% {
-    transform: translateX(210px);
-  }
-`;
-
-const createSkeleteonAnimation = (width = "24px", height = "100%") => css`
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: ${width};
-    height: ${height};
-    background: linear-gradient(
-      to right,
-      ${(p) => p.theme.colors.gray_100},
-      ${(p) => p.theme.colors.gray_white},
-      ${(p) => p.theme.colors.gray_100}
-    );
-    animation: ${skeletonLoading} 1.5s infinite linear;
-  }
-  overflow: hidden;
-  position: relative;
-`;
 const StyledUl = styled.ul`
   display: inline-block;
   padding: 8px;

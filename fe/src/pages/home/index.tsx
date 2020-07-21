@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@store/index';  
 import { topicCreator} from '@store/topic'; 
 import * as Styled from './style';
-import { Carousel } from 'src/components/carousel';
-import { Slide } from 'src/components/carousel/slide'; 
-import { Card } from 'src/components/card'; 
+import { Carousel } from '@components/carousel';
+import { Slide } from '@components/carousel/slide';
+import { Card } from '@components/card';
+import SkeletonCard from "@components/skeleton/home";
 import { ProgressBar } from 'src/components/progress';
 import { Modal } from 'src/components/modal';
 import { CardData } from 'src/models/card';
@@ -62,8 +63,13 @@ const HomePage = withRouter(({
           <RoomContainer>
             {
               isLoading ?
-                <ProgressBar/>
-                :
+                // <ProgressBar/>
+                        Array(10).fill(0).map((_,index) => {
+                            return <SkeletonCard
+                                        key={`skeleton::${index}`}
+                                   />
+                        })
+                  :
                 data.map((value) => {
                   return <Card
                     data={value} 
