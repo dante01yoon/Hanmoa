@@ -2,9 +2,7 @@ import React, {FC, SyntheticEvent } from 'react';
 import { useDispatch } from 'react-redux'; 
 import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import * as Styled from './style';
-import GoogleIcon from "src/asset/google.svg"; 
-import { BaseButton } from '@components/button'; 
-import { LoginFetch } from '@store/user';
+import { BaseButton } from '@components/button';
 
 const {
   Wrapper,
@@ -33,9 +31,7 @@ const LoginModal:FC<Props & RouteComponentProps> = ({
   }
   return(
     <Wrapper>
-      <IconWrapper>
-        <GoogleIcon/> 
-      </IconWrapper>  
+      <IconWrapper/>
       <ButtonContainer>
         <BaseButton 
           background='#28D84F'

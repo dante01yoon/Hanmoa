@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-
+import google_icon from "src/asset/google.svg";
 export const Wrapper = styled.div`
-  background-color:${p => p.theme.colors.white}; 
+  background-color:${p => p.theme.colors.light}; 
   position:fixed;
   top: 50%;
   left: 50%;
@@ -23,7 +23,15 @@ export const Wrapper = styled.div`
   `;
 
 export const IconWrapper = styled.div`
-    
+    background-color: ${p => p.theme.colors.light};
+    margin: 24px 0; 
+    &::after {
+      display:block;
+      content: "";
+      width: 128px;
+      height: 120px;
+      background: center url("${google_icon}");
+    }
 `; 
 export const ButtonContainer = styled.div`
 

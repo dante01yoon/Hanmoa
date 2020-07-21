@@ -78,7 +78,7 @@ const StyledChatContainer = styled.div``;
 
 const StyledChatContentBox = styled.div`
   height: 56px;
-  width: 112px;
+  width: 160px;
   background-color: ${DummySkeletonColor};
   margin: 8px 0;
   ${createSkeleteonAnimation("30px")}
