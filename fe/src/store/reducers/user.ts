@@ -30,12 +30,12 @@ const loginReducer: Reducer<ILoginStateInterface, TLoginAction> = (
     action
 ) => {
     switch(action.type){
-        case GET_LOGIN_ENUM.GET_LOGIN_BEGIN:
+        case GET_LOGIN_ENUM.REQUEST:
             return {
                 ...state,
                 isLoading: true,
             }
-        case GET_LOGIN_ENUM.GET_LOGIN_SUCCESS:
+        case GET_LOGIN_ENUM.SUCCESS:
             return {
                 ...state,
                 isLoading: false,
@@ -45,7 +45,7 @@ const loginReducer: Reducer<ILoginStateInterface, TLoginAction> = (
                 },
                 token: action.payload.token
             }
-        case GET_LOGIN_ENUM.GET_LOGIN_FAILURE:
+        case GET_LOGIN_ENUM.FAILURE:
             return {
                 ...state,
                 isError: true,
