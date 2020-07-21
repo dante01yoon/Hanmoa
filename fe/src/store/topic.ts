@@ -98,5 +98,5 @@ const topicReducer: Reducer<TopicBasicState, TopicAction>= (
   } 
 }
 
-export type TopicState = ReturnType<typeof topicReducer>; 
+export type TTopicStateType = ReturnType<typeof topicReducer>;
 export default topicReducer;

@@ -8,7 +8,6 @@ import { Carousel } from '@components/carousel';
 import { Slide } from '@components/carousel/slide';
 import { Card } from '@components/card';
 import SkeletonCard from "@components/skeleton/home";
-import { ProgressBar } from 'src/components/progress';
 import { Modal } from 'src/components/modal';
 import { CardData } from 'src/models/card';
 import { useModal } from '@utils/modal/useModal';
@@ -63,12 +62,11 @@ const HomePage = withRouter(({
           <RoomContainer>
             {
               isLoading ?
-                // <ProgressBar/>
-                        Array(10).fill(0).map((_,index) => {
-                            return <SkeletonCard
-                                        key={`skeleton::${index}`}
-                                   />
-                        })
+                    Array(10).fill(0).map((_,index) => {
+                        return <SkeletonCard
+                                    key={`skeleton::${index}`}
+                               />
+                    })
                   :
                 data.map((value) => {
                   return <Card

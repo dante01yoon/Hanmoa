@@ -20,7 +20,9 @@ export type DefaultAction =
   | ActionEnum.FETCH_SUCCESS
   | ActionEnum.FETCH_LOADING 
   | ActionEnum.FETCH_ERROR
-    
+
+export type TRootReducerKey = "topic" | "user"
+
 // root reducer
 export const rootReducer = combineReducers({
   topic,
@@ -28,7 +30,6 @@ export const rootReducer = combineReducers({
 });
 // root store type 
 export type RootState = ReturnType<typeof rootReducer>
-
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
