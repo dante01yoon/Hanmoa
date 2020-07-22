@@ -1,6 +1,7 @@
 import React,  { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom'; 
 import { useSelector, useDispatch } from 'react-redux';
+import useStores from "@utils/store/useStores";
 import { RootState } from '@store/index';  
 import { topicCreator} from '@store/topic'; 
 import * as Styled from './style';

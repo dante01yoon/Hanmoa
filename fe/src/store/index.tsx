@@ -8,25 +8,15 @@ import {
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import topic from './topic';
-import user from './user';
+import {loginReducer, TLoginStateType} from '@store/reducers';
 import { rootSaga } from '@sagas/index'; 
-
-export enum ActionEnum {
-  FETCH_LOADING = "FETCH_LOADING",
-  FETCH_SUCCESS = "FETCH_SUCCESS", 
-  FETCH_ERROR =  "FETCH_ERROR"
-}
-export type DefaultAction = 
-  | ActionEnum.FETCH_SUCCESS
-  | ActionEnum.FETCH_LOADING 
-  | ActionEnum.FETCH_ERROR
 
 export type TRootReducerKey = "topic" | "user"
 
 // root reducer
 export const rootReducer = combineReducers({
   topic,
-  user 
+  user: loginReducer,
 });
 // root store type 
 export type RootState = ReturnType<typeof rootReducer>

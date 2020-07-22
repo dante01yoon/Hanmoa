@@ -89,10 +89,12 @@ type TEventType = {
   event: "join" | "leave" | "none";
 };
 interface IChatModelProps extends Omit<ISingleChat, "chatCardId"> {
+  align: "left" | "right";
   event: "join" | "leave" | "none";
 }
 
 const ChatCard: FC<IChatModelProps> = ({
+  align,
   chatData,
   writtenAt,
   studentNumber,

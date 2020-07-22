@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
 import {RootState, TRootReducerKey} from "src/store";
 
-const useStores = (key: TRootReducerKey) => {
-    return useSelector<RootState>((state ) => state[key]);
-}
+const useStores = (selectedState : keyof RootState):RootState[typeof selectedState] => useSelector((state:RootState) => state[selectedState]);
+export default useStores;
+

@@ -50,6 +50,8 @@ const loginReducer: Reducer<ILoginStateInterface, TLoginAction> = (
                 ...state,
                 isError: true,
             }
+        default:
+            return state
     }
 }
 

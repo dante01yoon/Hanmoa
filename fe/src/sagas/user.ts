@@ -1,11 +1,6 @@
 import * as effects from 'redux-saga/effects';
-import { 
-  LoginLoading,
-  LoginSuccess
- } from '@store/user';
 import { ActionCreatorsMapObject} from "redux";
-import { LOGIN_ENUM } from '@store/user';
-import { googleAuthRequest } from '@apis/auth'; 
+import { googleAuthRequest } from '@apis/auth';
 import {GET_LOGIN_ENUM, getLoginActions, TLoginAction} from "@store/actions";
 const { takeLatest, put , call, all ,fork, delay } = effects;
 

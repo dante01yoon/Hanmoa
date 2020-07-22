@@ -1,7 +1,6 @@
 import { Action, ActionCreator, Reducer } from 'redux';
 import { CardData } from '@models/card';
-import { TopicName } from 'src/models/topic';
-import { ActionEnum } from './index';
+import { TTopicName } from 'src/models/topic';
 
 //action
 export enum TopicEnum {

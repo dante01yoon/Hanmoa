@@ -1,5 +1,6 @@
 import React, { FC, useState, ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
+import {RootState} from "src/store";
 import styled from "styled-components";
 import dummyChatData from "./dummy";
 import ChatCard from "@components/chat/card";
@@ -26,10 +27,13 @@ const RoomPage: FC = ({}) => {
     chatGroupId: 0,
     chatData: [],
   } as IChat);
+
   const { chatGroupId, chatData } = chatDataState;
   // 1. redux - useDispatch fetch method call 어디에다가 모듈화?
   // 2. response 오면 state 변경 ->
   // 3. RoomPage Container state propagation
+
+  const {user: {studentId}} = useSelector((state: RootState) => state.user);
 
   const fetchDummyData = () => {
     setTimeout(() => {
@@ -58,6 +62,7 @@ const RoomPage: FC = ({}) => {
           const { chatCardId, ...rest } = value;
           return (
             <ChatCard
+              align={studentId ? 'right': 'left'}
               key={`single_chat_card::${chatCardId}`}
               event={"none"}
               {...rest}

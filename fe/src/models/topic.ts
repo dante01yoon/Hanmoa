@@ -1,5 +1,5 @@
 import { CardData} from './card'; 
-export type TopicName = 
+export type TTopicName =
   | 'all' 
   | 'etc' 
   | 'ktx' 
@@ -8,7 +8,7 @@ export type TopicName =
   | 'share' 
   | 'roommate'
   | 'adobe'
-export type TopicData = {
-  name: TopicName
+export type TTopicData = {
+  topic: TTopicName
   data: CardData[]
 }
