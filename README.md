@@ -1,17 +1,29 @@
 # Hanmoa
 
-##SKILL STACK 
-## React, typescript ,Nodejs, Koa
+##SKILL STACK
 
-### FE 
-  *develop*
-  #### React, typescript ,styled-components, redux, redux-saga
-  *test*
-  #### storybook, jest
-  *working progress*
-    1. homepage markup done 
-    2. login page -> google Oauth keep working on 
-    3. mongodb config and research. 
+##
+
+[x] react
+[x] redux
+[x] redux-saga
+[x] styled-components
+[x] typescript
+[x] express
+[x] SSR / code splitting
+[ ] MongoDB
+[ ] jest
+[ ] cypress
+[ ] storybook
+[ ] graphql
+[ ] google analytics
+
+### FE
+
+_working progress_ 1. homepage markup done 2. login page -> google Oauth keep working on 3. mongodb config and research.
+
 ### BE
-  *develop*
-  #### Koa
+
+_develop_
+
+#### Express
