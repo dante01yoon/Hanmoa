@@ -1,10 +1,10 @@
 interface IUser {
   id: number;
-  studentNumber: number; 
+  studentNumber: number;
   name: string;
   image: string;
   createdAt: string;
   modifiedAt: string;
 }
 
-export default IUser
+export default IUser;

@@ -1,37 +1,57 @@
-let express = require("express");
-let models = require("../models");
-let router = express.Router(); 
+const topicDicts = {
+  all: "all",
+  etc: "etc",
+  ktx: "ktx",
+  netflix: "netflix",
+  watcha: "watcha",
+  share: "share",
+  roommate: "roommate",
+  adobe: "adobe",
+};
+const topicLists = [
+  "all",
+  "etc",
+  "ktx",
+  "netflix",
+  "watcha",
+  "share",
+  "roommate",
+  "adobe",
+];
 
-let jwt = require("jsonwebtoken");
-let secretObj = require("../config/jwt");
-
-router.get("api/v1/", ( req,res) => {
-  res.render
-})
-
-router.get("/login", function(req,res,next){
-  // default : HMAC SHA258
-  let token = jwt.sign({
-    email: ""
-  },
-  secretObj.secret ,
-  {
-    expiresin: '1d'
+const routes = (app) => {
+  app.get("/api/all", function (req, res) {
+    res.end();
   });
 
-  models.user.find({
-    where: {
-      email: ""
-    }
-  })
-  .then( user => {
-    if(user.pwd === "1234"){
-      res.cookie("user", token);
-      res.json({
-        token
-      })
-    }
-  })
-})
+  app.get("/api/all/:id", function (req, res) {
+    res.end();
+  });
 
-module.exports = router;
+  app.get("/api/etc", function (req, res) {
+    res.end();
+  });
+
+  app.get("/api/ktx", function (req, res) {
+    res.end();
+  });
+
+  app.get("/api/netflix", function (req, res) {
+    res.end();
+  });
+
+  app.get("/api/watcha", function (req, res) {
+    res.end();
+  });
+  app.get("/api/share", function (req, res) {
+    res.end();
+  });
+  app.get("/api/roommate", function (req, res) {
+    res.end();
+  });
+  app.get("/api/adobe", function (req, res) {
+    res.end();
+  });
+};
+
+exports.module = routes;
