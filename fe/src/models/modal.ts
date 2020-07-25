@@ -1,6 +1,5 @@
-import { CardData } from './card';
+import { ICardData } from "./card";
 export interface ModalProps {
-  data: CardData 
-  visible: boolean 
+  data: ICardData;
+  visible: boolean;
 }
-

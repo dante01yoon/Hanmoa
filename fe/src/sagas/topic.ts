@@ -1,35 +1,28 @@
-import * as Effects from 'redux-saga/effects';
-import { dummyData } from '@pages/home/dummy';
-import { TopicEnum, topicCreator, FetchAction } from '@store/topic';
-const { takeLatest, put, all, fork } = Effects; 
-const call: any = Effects.call;
+import * as Effects from "redux-saga/effects";
+import { dummyData } from "@pages/home/dummy";
+import { GET_TOPIC_ENUM } from "@store/actions";
+import { createFetchEntity, createEntityAction } from "@sagas/common";
+const { takeLatest, fork } = Effects;
 
 const dummyTopicData = Object.assign({
-  topic: 'etc',
-  data: dummyData()
-}, )
-function topicDummy<TopicData>(url: string): Promise<TopicData> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => 
-      resolve(dummyTopicData)  
-    , 700);  
-  })   
-} 
+  topic: "all",
+  data: dummyData(),
+});
 
-function* fetchTopic(action: FetchAction){
-  yield console.log("fetchTopic dispatched");
-  try{
-    yield put(topicCreator.load()); 
-    const topicList = yield call(topicDummy, action.url);
-    yield put(topicCreator.success(topicList));
-  } catch(error){
-    throw new Error(`Error exist in fetchTopic function`); 
-  }
-}
+const topicDummy = <TopicData>(): Promise<TopicData> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(dummyTopicData), 700);
+  });
+};
+
+const topicEntity = createEntityAction(GET_TOPIC_ENUM, topicDummy);
+
+const fetchTopicSaga = createFetchEntity(topicEntity);
 
 function* fetchTopicWatcher() {
-  yield takeLatest(TopicEnum.FETCH_TOPIC, fetchTopic);
+  yield takeLatest(GET_TOPIC_ENUM.REQUEST, fetchTopicSaga);
 }
-export function* topicSaga(){
+
+export function* topicSaga() {
   yield fork(fetchTopicWatcher);
 }

@@ -1,16 +1,12 @@
-import { fork, all } from 'redux-saga/effects';
-import { topicSaga } from './topic';
-import { loginSaga } from './user'; 
+export * from "./type";
 
+//
+import { all } from "redux-saga/effects";
+import { topicSaga } from "./topic";
+import { loginSaga } from "./user";
 
-function* rootSaga(){
-  yield fork(topicSaga);
-  yield fork(loginSaga)
+function* rootSaga() {
+  yield all([topicSaga(), loginSaga()]);
 }
 
-type APIEndpoint<P extends any[], R> = (...p:P) => Promise<R>;
-
-
-export {
-  rootSaga,
-}
+export default rootSaga;
