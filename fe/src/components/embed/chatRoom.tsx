@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import Send from "src/asset/send.png";
 import SendBefore from "src/asset/send-before.png";
+import upload from "src/asset/upload.svg";
 const StyledSelf = styled.div`
   background-color: ${(p) => p.theme.colors.yello_white};
   height: 75vh;
@@ -41,6 +42,17 @@ const StyledTextArea = styled.textarea`
   height: 10vh;
   background-color: ${(p) => p.theme.colors.whiteGray};
 `;
+
+const StyledUploadButton = styled.button`
+ &::after{
+  content: "";
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  background: url(${upload}) center/100%;
+  
+ 
+`
 const StyledSubmitButton = styled.button<{ clicked: boolean }>`
   &::after {
     content: "";
@@ -106,7 +118,9 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
       textareaRef.current.focus();
     }
   };
+  const uploadHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
 
+  };
   useEffect(() => {
     handleTextArea();
 
@@ -129,11 +143,16 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
             onChange={formik.handleChange}
             placeholder ={ isTextEmpty() && !isFocusing ? INITIAL_TEXTAREA_VALUE : ''  }
           />
+          <StyledUploadButton
+            onClick={uploadHandler}
+            type="button"
+          />
           <StyledSubmitButton
             clicked={clicked}
             type="submit"
             disabled={clicked}
           />
+
         </form>
       </StyledEnterContainer>
     </>
