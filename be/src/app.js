@@ -1,38 +1,41 @@
-const cors = require('cors'); 
-const express = require('express');
-const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
+const cors = require("cors");
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
-//mongodb config 
-const mongoConnect = require('./config/mongoConfig');
-//mongoConnect
+// [ LOAD PRE-DEFINED  MONGODB CONFIG ]
+const mongoConnect = require("./config/mongoConfig");
+// [ MONGOOSE INITIALIZATION]
 mongoConnect();
 
+// [ ROUTES CONFIG ]
+const routes = require("./routes");
+
 //routes controller require
-const authRoutes = require('./routes/auth');
-const chatRoutes = require('./routes/chat');
-const userRoutes = require('./routes/user');
-const roomRoutes = require('./routes/room');
+const authRoutes = require("./routes/auth");
+const chatRoutes = require("./routes/chat");
+const userRoutes = require("./routes/user");
+const roomRoutes = require("./routes/room");
 
-//Static File Service
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(express.static("public"));
+// [ CONFIGURE body-parser for DATA PROCESSING ]
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// [ SET CORS  ]
 app.use(cors());
+// [ SET PORT ]
+const port = processn.env.PORT || 5001;
 
+app.use("/api", apiRoutes);
 
-app.get('/', (req,res) => {
-  res.render('home');
-});
-
-app.use('/auth', authRoutes); 
-app.use('/chat', chatRoutes);
-app.use('/user', userRoutes);
-app.use('/room', roomRoutes);
-app.use(function(err,req,res,next){
+app.use("/auth", authRoutes);
+app.use("/chat", chatRoutes);
+app.use("/user", userRoutes);
+app.use("/room", roomRoutes);
+app.use(function (err, req, res, next) {
   console.err(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).send("Something broke!");
 });
 
-app.listen(5001, () => console.log('Server listening on port 5001'));
+// [ START SERVER ON PORT NUMBER ]
+app.listen(port, () => console.log("Server listening on port 5001"));
