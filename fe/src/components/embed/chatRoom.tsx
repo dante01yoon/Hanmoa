@@ -42,7 +42,9 @@ const StyledTextArea = styled.textarea`
   height: 10vh;
   background-color: ${(p) => p.theme.colors.whiteGray};
 `;
-
+const StyledImageInput = styled.input`
+  display: none;
+`;
 const StyledUploadButton = styled.button`
  &::after{
   content: "";
@@ -52,7 +54,7 @@ const StyledUploadButton = styled.button`
   background: url(${upload}) center/100%;
   
  
-`
+`;
 const StyledSubmitButton = styled.button<{ clicked: boolean }>`
   &::after {
     content: "";
@@ -72,13 +74,14 @@ interface IChatValues {
   chat: string;
 }
 interface IRefObject {
-  textareaRef:  React.RefObject<HTMLTextAreaElement>
+  textareaRef: React.RefObject<HTMLTextAreaElement>;
 }
 const INITIAL_TEXTAREA_VALUE = "Write your message..." as const;
 const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   // const [hasFocused, setHasFocused] = useState(false);
-  const [isFocusing, setIsFocusing] = useState( false);
+  const [isFocusing, setIsFocusing] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const inputImageRef = useRef<HTMLInputElement>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -98,36 +101,36 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   });
 
   const textareaFocusHandler = (e: FocusEvent): void => {
-      setIsFocusing(true);
+    setIsFocusing(true);
   };
   const textareaBlurHandler = (e: FocusEvent): void => {
     setIsFocusing(false);
-  }
+  };
   const isTextEmpty = () => {
-    return formik.values.chat.length === 0
-  }
+    return formik.values.chat.length === 0;
+  };
   const handleTextArea = () => {
     if (textareaRef.current) {
       const refObject = {
-        textareaRef
-      }
+        textareaRef,
+      };
 
       //ugly :(
-      textareaRef.current.addEventListener("focusin", textareaFocusHandler.bind(refObject));
-      textareaRef.current.addEventListener("blur",textareaBlurHandler );
+      textareaRef.current.addEventListener(
+        "focusin",
+        textareaFocusHandler.bind(refObject)
+      );
+      textareaRef.current.addEventListener("blur", textareaBlurHandler);
       textareaRef.current.focus();
     }
   };
-  const uploadHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
-
-  };
+  const uploadHandler = (e: React.MouseEvent<HTMLButtonElement>) => {};
   useEffect(() => {
     handleTextArea();
 
     return () => {
       textareaRef.current?.removeEventListener("focusin", textareaFocusHandler);
-      textareaRef.current?.removeEventListener("blur",textareaBlurHandler );
-
+      textareaRef.current?.removeEventListener("blur", textareaBlurHandler);
     };
   }, []);
   return (
@@ -141,18 +144,17 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
             name="chat"
             ref={textareaRef}
             onChange={formik.handleChange}
-            placeholder ={ isTextEmpty() && !isFocusing ? INITIAL_TEXTAREA_VALUE : ''  }
+            placeholder={
+              isTextEmpty() && !isFocusing ? INITIAL_TEXTAREA_VALUE : ""
+            }
           />
-          <StyledUploadButton
-            onClick={uploadHandler}
-            type="button"
-          />
+          <StyledImageInput type="file" ref={inputImageRef} />
+          <StyledUploadButton onClick={uploadHandler} type="button" />
           <StyledSubmitButton
             clicked={clicked}
             type="submit"
             disabled={clicked}
           />
-
         </form>
       </StyledEnterContainer>
     </>
