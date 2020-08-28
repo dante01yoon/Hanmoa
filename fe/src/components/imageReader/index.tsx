@@ -6,7 +6,7 @@ interface IImageReaderProps {
 const ImageReader: FC<IImageReaderProps> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [thumb, setThumb] = useState<string | ArrayBuffer | null>("");
-  const fileRef = useRef<Blob>(new Blob([], { type: "image/png" }));
+  // const fileRef = useRef<Blob>(new Blob([], { type: "image/png" }));
   const handleReader = () => {
     const fileReader = new FileReader();
 
@@ -15,17 +15,13 @@ const ImageReader: FC<IImageReaderProps> = () => {
       setThumb(fileReader.result);
     };
 
-    fileReader.readAsDataURL(fileRef.current);
+    // fileReader.readAsDataURL(fileRef.current);
   };
-  useEffect(() => {
-    if (fileRef !== name) {
-      handleReader();
-    }
-  }, [thumb]);
+  
 
   if (isLoading) {
     return <p>...loading</p>;
   }
-
-  return <img src={thumb} alt={fileRef.current} />;
+  return (<>hello</>)
+  // return <img src={thumb} alt={fileRef.current} />;
 };
