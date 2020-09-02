@@ -26,7 +26,6 @@ const HomePage = withRouter(({ location: { pathname } }) => {
   const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("path: ", pathname);
     const [include, exclude] = pathExtractor(pathname);
     dispatch(getTopicActions.REQUEST());
   }, []);
