@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import useStores from "@utils/store/useStores";
+import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll"
 import { RootState } from "@store/index";
 import { getTopicActions } from "@store/actions";
 import * as Styled from "./style";
@@ -23,12 +23,26 @@ const { RoomContainer } = Styled;
 const HomePage = withRouter(({ location: { pathname } }) => {
   // const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
   const [isModal, setModal] = useModal();
+  const homeRef = useRef<HTMLUListElement>(null);
   const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const [include, exclude] = pathExtractor(pathname);
     dispatch(getTopicActions.REQUEST());
+
   }, []);
+  
+  useInfiniteScroll({
+    target: data,
+    cb: () => {
+      console.log("console useInfinitescroll")
+      dispatch(getTopicActions.REQUEST())
+    },
+    options: {
+      root: homeRef.current
+    }
+  }); 
   const handleClick: (data: ICardData) => void = (data) => {
     setModal({
       type: "OPEN",
@@ -48,8 +62,8 @@ const HomePage = withRouter(({ location: { pathname } }) => {
         </Carousel>
       </section>
       <section>{isModal.visible && <Modal data={isModal.data} />}</section>
-      <section>
-        <RoomContainer>
+      <section >
+        <RoomContainer ref={homeRef}>
           {isLoading
             ? Array(10)
                 .fill(0)

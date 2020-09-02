@@ -8,7 +8,7 @@ export interface IIntersectionOptions{
 
 interface IUseInfiniteScrollParams<T> {
   target: T
-  cb: () => Dispatch<SetStateAction<T>>;
+  cb: () => any;
   options?: IntersectionObserverInit;
 }
 
