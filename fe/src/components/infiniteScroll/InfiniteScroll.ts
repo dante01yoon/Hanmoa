@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect,Dispatch, SetStateAction } from "react";
+import React, {useState, useRef, useEffect,Dispatch, SetStateAction, RefObject } from "react";
 
 export interface IIntersectionOptions{
   root?: React.ReactNode;
@@ -7,7 +7,7 @@ export interface IIntersectionOptions{
 }
 
 interface IUseInfiniteScrollParams<T> {
-  target: T
+  target: RefObject<Element>
   cb: () => any;
   options?: IntersectionObserverInit;
 }
@@ -28,8 +28,9 @@ const useInfiniteScroll = <S>( parameters: IUseInfiniteScrollParams<S>) => {
       if(entry.isIntersecting){
         cb();
       }
+      io.current?.observe(target.current);
     }, options);
   },[target]);
 }
-
+   
 export default useInfiniteScroll;
