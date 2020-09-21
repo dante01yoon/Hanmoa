@@ -48,7 +48,7 @@ const StyledName = styled.small`
 `;
 
 const StyledImage = styled.p<{
-  image: string;
+  image: string | null;
 }>`
     display:inline-block;
     content: "";

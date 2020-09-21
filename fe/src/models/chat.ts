@@ -9,6 +9,7 @@ export interface ISingleChat extends Omit<IUser, "id" | "createdAt" | "modifiedA
 interface IChat {
   chatGroupId: number; 
   chatData: ISingleChat[];
+  chatPeople: IUser[]; 
 }
 
 export default IChat;

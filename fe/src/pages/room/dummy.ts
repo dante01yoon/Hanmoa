@@ -1,4 +1,5 @@
 import IChat, {ISingleChat} from "@models/chat"; 
+import IUser from "src/models/user";
 
 const dummyData: ISingleChat[] = [
     {
@@ -79,7 +80,7 @@ const dummyData: ISingleChat[] = [
         writtenAt: "2020-05-19T12:00:00Z",
         name: 'Kim',
         studentNumber: 21300512,
-        image: ""
+        image: "",
     },
 ]
 
@@ -87,9 +88,37 @@ const createDummyChatData = (): ISingleChat[] => {
   return [...dummyData]
 }
 
+const dummyChatPeople: IUser[] = [
+    {
+        id: 123,
+        studentNumber: 13,
+        name: "윤재원",
+        image: null,
+        createdAt: "",
+        modifiedAt: "",
+    },
+    {
+        id: 1234,
+        studentNumber: 14,
+        name: "조재은",
+        image: null,
+        createdAt: "",
+        modifiedAt: "",
+    },
+    {
+        id: 123,
+        studentNumber: 15,
+        name: "서상원",
+        image: null,
+        createdAt: "",
+        modifiedAt: "",
+    }
+];
+
 const dummyChatData: IChat = {
   chatGroupId: 123123,
-  chatData: createDummyChatData()
+  chatData: createDummyChatData(),
+  chatPeople: dummyChatPeople
 };
 
 export default dummyChatData;

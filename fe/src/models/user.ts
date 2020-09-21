@@ -2,7 +2,7 @@ interface IUser {
   id: number;
   studentNumber: number;
   name: string;
-  image: string;
+  image: string | null;
   createdAt: string;
   modifiedAt: string;
 }

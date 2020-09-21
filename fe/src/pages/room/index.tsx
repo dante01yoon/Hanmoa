@@ -26,8 +26,9 @@ const RoomPage: FC = ({}) => {
   const [chatDataState, setChatDataState] = useState({
     chatGroupId: 0,
     chatData: [],
+    chatPeople: [],
   } as IChat);
-
+  
   const { chatGroupId, chatData } = chatDataState;
   // 1. redux - useDispatch fetch method call 어디에다가 모듈화?
   // 2. response 오면 state 변경 ->
@@ -74,7 +75,7 @@ const RoomPage: FC = ({}) => {
   };
 
   const renderChatPeopleContent = (): JSX.Element => {
-    return <>Hello</>;
+    return <></>;
   };
 
   return (
