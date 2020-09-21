@@ -33,16 +33,6 @@ const HomePage = withRouter(({ location: { pathname } }) => {
 
   }, []);
   
-  useInfiniteScroll({
-    target: data,
-    cb: () => {
-      console.log("console useInfinitescroll")
-      dispatch(getTopicActions.REQUEST())
-    },
-    options: {
-      root: homeRef.current
-    }
-  }); 
   const handleClick: (data: ICardData) => void = (data) => {
     setModal({
       type: "OPEN",

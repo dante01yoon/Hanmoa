@@ -28,8 +28,12 @@ const useInfiniteScroll = <S>( parameters: IUseInfiniteScrollParams<S>) => {
       if(entry.isIntersecting){
         cb();
       }
-      io.current?.observe(target.current);
+      // io.current?.observe();
     }, options);
+
+    return (() => {
+      io.current?.disconnect();
+    })
   },[target]);
 }
    

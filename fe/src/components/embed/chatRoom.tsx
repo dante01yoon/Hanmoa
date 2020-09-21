@@ -2,8 +2,7 @@ import React, { FC, ReactNode, useRef, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import styled from "styled-components";
 
-import Send from "src/asset/send.png";
-import SendBefore from "src/asset/send-before.png";
+import enter from "src/asset/enter.svg";
 import upload from "src/asset/upload.svg";
 const StyledSelf = styled.div`
   background-color: ${(p) => p.theme.colors.yello_white};
@@ -49,19 +48,17 @@ const StyledUploadButton = styled.button`
  &::after{
   content: "";
   display: inline-block;
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   background: url(${upload}) center/100%;
-  
- 
 `;
 const StyledSubmitButton = styled.button<{ clicked: boolean }>`
   &::after {
     content: "";
     display:block;
-    width: 48px;
-    height: 48px;
-    background-image: url('${(p) => (p.clicked ? SendBefore : Send)}');
+    width: 24px;
+    height: 24px;
+    background-image: url(${enter});
     background-position: center;
     background-size: cover;
     transition: all 0.6s ease; 
@@ -73,10 +70,13 @@ interface IEmbedChatProps {
 interface IChatValues {
   chat: string;
 }
+
 interface IRefObject {
   textareaRef: React.RefObject<HTMLTextAreaElement>;
 }
+
 const INITIAL_TEXTAREA_VALUE = "Write your message..." as const;
+
 const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   // const [hasFocused, setHasFocused] = useState(false);
   const [isFocusing, setIsFocusing] = useState(false);
