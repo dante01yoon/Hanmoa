@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Switch } from 'react-router';
+import HanmoaRouter from '@components/route/route';
 
-import { Router } from '@components/route/route';
-
-export const HanmoaRouter: FC = ({}) => {
+const HanmoaRouterCover: FC = ({}) => {
     return(
-          <Router/>
+          <HanmoaRouter/>
     )
 }
+
+export default HanmoaRouterCover;

@@ -2,6 +2,7 @@ import React, { FC, ReactType } from "react";
 import { Switch, Route } from "react-router";
 import { Dispatch } from "redux";
 import loadable from "@loadable/component";
+import { BrowserRouter } from "react-router-dom";
 
 const HomePage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/home")
@@ -69,20 +70,24 @@ export const routes: RouteType[] = [
   },
 ];
 
-export const Router: FC = () => {
+const HanmoaRouter: FC = () => {
   return (
-    <Switch>
-      {routes.map(({ path, exact, component: Component, ...rest }) => (
-        <Route
-          key={path}
-          path={path}
-          exact={exact || false}
-          render={(props) => {
-            return Component ? <Component {...props} {...rest} /> : null;
-          }}
-        />
-      ))}
-      <Route render={() => <ErrorPage />} />
-    </Switch>
+    <BrowserRouter>
+      <Switch>
+        {routes.map(({ path, exact, component: Component, ...rest }) => (
+          <Route
+            key={path}
+            path={path}
+            exact={exact || false}
+            render={(props) => {
+              return Component ? <Component {...props} {...rest} /> : null;
+            }}
+          />
+        ))}
+        <Route render={() => <ErrorPage />} />
+      </Switch>
+    </BrowserRouter>
   );
 };
+
+export default HanmoaRouter;

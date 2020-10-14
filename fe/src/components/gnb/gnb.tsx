@@ -9,7 +9,7 @@ import { Portal } from '@components/portal';
 import LoginModal from '@components/login';
 import { topicDummy } from '@models/gnb';
 import { buildTopicList } from '@utils/topic/buildtopicList';
-
+import {Redirect} from "react-router-dom";
 import hanmoa_logo from 'src/asset/logo/hanmoa_horizontal.svg';
 
 const { 
@@ -45,11 +45,18 @@ export const Gnb:FC = () => {
     }
 
     const openloginModal = () => {
-        setLoginModal(true); 
+      setLoginModal(true); 
     }
+    
     const closeLoginModal = () =>{
-        setLoginModal(false); 
+      setLoginModal(false); 
     }
+    
+    const handleLoginClick = () => {
+      console.log("handleLoginClick");
+      return <Redirect to="/login" />; 
+    }
+
     return (
         <Header>
             <Nav>
@@ -79,7 +86,7 @@ export const Gnb:FC = () => {
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>
-                            <Item onClick={openloginModal}>
+                            <Item onClick={handleLoginClick}>
                                 로그인
                             </Item>
                             <Item>
