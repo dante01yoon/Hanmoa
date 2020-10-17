@@ -52,11 +52,6 @@ export const Gnb:FC = () => {
       setLoginModal(false); 
     }
     
-    const handleLoginClick = () => {
-      console.log("handleLoginClick");
-      return <Redirect to="/login" />; 
-    }
-
     return (
         <Header>
             <Nav>
@@ -86,8 +81,10 @@ export const Gnb:FC = () => {
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>
-                            <Item onClick={handleLoginClick}>
+                            <Item >
+                                <SmartLink href="login">
                                 로그인
+                                </SmartLink>
                             </Item>
                             <Item>
                                 <SmartLink href={'signup'}>

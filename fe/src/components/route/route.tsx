@@ -72,21 +72,19 @@ export const routes: RouteType[] = [
 
 const HanmoaRouter: FC = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        {routes.map(({ path, exact, component: Component, ...rest }) => (
-          <Route
-            key={path}
-            path={path}
-            exact={exact || false}
-            render={(props) => {
-              return Component ? <Component {...props} {...rest} /> : null;
-            }}
-          />
-        ))}
-        <Route render={() => <ErrorPage />} />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      {routes.map(({ path, exact, component: Component, ...rest }) => (
+        <Route
+          key={path}
+          path={path}
+          exact={exact || false}
+          render={(props) => {
+            return Component ? <Component {...props} {...rest} /> : null;
+          }}
+        />
+      ))}
+      <Route render={() => <ErrorPage />} />
+    </Switch>
   );
 };
 

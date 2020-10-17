@@ -4,6 +4,7 @@ import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import * as Styled from './style';
 import { BaseButton } from '@components/button';
 
+
 const {
   Wrapper,
   IconWrapper,
@@ -18,6 +19,7 @@ const LoginModal:FC<Props & RouteComponentProps> = ({
   closeModal
 }) => {
   const dispatch = useDispatch(); 
+
   const getGoogleAuth = (e: SyntheticEvent) => {
     const googleAuthHost = process.env.GOOGLE_AUTH;
     const params = [
@@ -29,6 +31,7 @@ const LoginModal:FC<Props & RouteComponentProps> = ({
     console.log(`${googleAuthHost}${params}`); 
     return window.location.assign(`${googleAuthHost}${params}`); 
   }
+
   return(
     <Wrapper>
       <IconWrapper/>
