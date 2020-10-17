@@ -9,7 +9,6 @@ import { Portal } from '@components/portal';
 import LoginModal from '@components/login';
 import { topicDummy } from '@models/gnb';
 import { buildTopicList } from '@utils/topic/buildtopicList';
-import {Redirect} from "react-router-dom";
 import hanmoa_logo from 'src/asset/logo/hanmoa_horizontal.svg';
 
 const { 

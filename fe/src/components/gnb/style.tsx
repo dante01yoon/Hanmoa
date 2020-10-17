@@ -5,7 +5,7 @@ export const Main = styled.main`
     both: clear;
 `;
 export const Dummy = styled.div`
-    height: 88px;
+    height: 64px;
 `;
 export const Header = styled.header`
     z-index: 500; 
@@ -30,7 +30,7 @@ export const ItemBox = styled.div<{
     &::after {
         display: block;
         content: "";
-        height:64px;
+        height:63px;
         width: ${p=>p.width ? p.width+'px' : '64px' }; 
         background: center url("${p => p.url}");
     }
@@ -47,7 +47,9 @@ export const ItemList= styled.ul`
 `;
 
 export const ItemContainer = styled.div`
+    height: 64px;
     max-width: 1280px;
+    border-bottom: 1px solid ${({theme}) => theme.colors.gray_300}; 
     margin: 0 auto;
 `;
 export const LeftItemContainer = styled.div`
