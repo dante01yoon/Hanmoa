@@ -22,6 +22,7 @@ export interface Colors{
     info:string,
     warning:string,
     danger:string,
+    disable: string,
     light:string,
     dark:string,   
     gray_white: string,

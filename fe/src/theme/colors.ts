@@ -23,6 +23,7 @@ export const colors: Colors = {
     info: '#007871',
     warning: '#ffc107',
     danger: '#be1e08',
+    disable: '#00aacc',
     light: '#f7f7f7',
     dark: '#333',
     gray_white: '#E5E5E5', 
