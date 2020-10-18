@@ -29,12 +29,13 @@ export const renderFullPage = (webExtractor: WebExtractor, html: Html) => `
         ${webExtractor.helmet}
         ${webExtractor.link}
         ${webExtractor.style}
+        <script src="https://apis.google.com/js/api.js"></script>
       </head>
       <body>
         <div id="root">${html}</div>
         <div id="mordal"></div>
         ${webExtractor.script}
-        <script src="https://apis.google.com/js/api.js"></script>
+        
       </body>
     </html>
 `
