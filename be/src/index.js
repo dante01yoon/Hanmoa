@@ -3,6 +3,7 @@ const Router = require("koa-router");
 const dotenv = require("dotenv");
 const api = require("./api");
 const mongoose = require("mongoose");
+const bodyParser = require("koa-bodyparser");
 
 dotenv.config(); 
 
