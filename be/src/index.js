@@ -1,6 +1,23 @@
 const Koa = require("koa");
 const Router = require("koa-router");
+const dotenv = require("dotenv");
 const api = require("./api");
+const mongoose = require("mongoose");
+
+dotenv.config(); 
+
+console.log(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(
+  (response) => {
+    console.log('Successfully connected to mongodb');
+  }
+).catch(e => {
+  console.error(e);
+});
 
 const app = new Koa();
 const router = new Router(); 
@@ -11,31 +28,12 @@ const router = new Router();
 // next는 프로미스이다. 
 
 
-router.get('/', (ctx, next) => {
-  ctx.body = "홈"; 
-})
-
-router.get('/about', (ctx, next) => {
-  ctx.body = "소개"; 
-})
-
-router.get('/about:name', (ctx,next) => {
-  const { name } = ctx.params; // 라우터 경로에서 :파라메터명으로 정의 된 값이 ctx.params로 정의됨 . 
-  ctx.body = name + '의 소개'; 
-})
-
-router.get('/post', (ctx, next) => {
-  const {id} = ctx.request.query; // 쿼리스트링 
-
-  if( id) {
-    ctx.body = '포스트 #' +id;
-  }
-}); 
-
 router.use('/api', api.routes()); // api 라우트를 '/api'  경로 하위 라우트로 설정
 
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(5001, () => {
+const port = process.env.PORT || 5001;
+
+app.listen(port, () => {
   console.log("hanmoa koa server is listening to port 5001"); 
 })
