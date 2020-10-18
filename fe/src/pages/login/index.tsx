@@ -66,22 +66,24 @@ const LoginPage: FC =( ) =>{
   const [gapiReady, setGapiReady] = useState(false);
 
   useEffect(() => {
-    console.log("client_id", process.env.CLIENT_ID); 
     window.gapi.load('auth2', () => {
-      window.gapi.auth2.init({
-        client_id: process.env.CLIENT_ID,
-        fetch_basic_profile: false,
-        scope: "profile email openid",
-        hosted_domain: "handong.edu",
-      }).then(() => {
-        setGapiReady(true);
-      })
+      setGapiReady(true); 
     })
   },[]);
 
-  const openGoogleAuth = () => {
+  const openGoogleAuth = async () => {
     if( gapiReady ) {
-      window.gapi.auth2.getAuthInstance().signIn();
+      window.gapi.auth2.authorize({
+        client_id: process.env.CLIENT_ID,
+        scope: "profile email openid",
+        response_type: process.env.RESPONSE_TYPE,
+        hosted_domain: "handong.edu",
+      },(response: gapi.auth2.AuthorizeResponse) => {
+        console.log("response: ", response);
+        console.log("response.code: ", response.code); 
+      })
+
+      
     }
   }
 

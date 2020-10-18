@@ -7,6 +7,6 @@ declare namespace NodeJS {
 
   interface ProcessEnv{
     /** node environment */
-    [key: string]: string | undefined;
+    [key: string]: string;
   }
 }
