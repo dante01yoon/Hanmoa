@@ -70,7 +70,9 @@ const LoginPage: FC =( ) =>{
     window.gapi.load('auth2', () => {
       window.gapi.auth2.init({
         client_id: process.env.CLIENT_ID,
-        scope: "profile",
+        fetch_basic_profile: false,
+        scope: "profile email openid",
+        hosted_domain: "handong.edu",
       }).then(() => {
         setGapiReady(true);
       })
