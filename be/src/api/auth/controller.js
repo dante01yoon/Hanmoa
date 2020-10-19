@@ -57,5 +57,9 @@ exports.loginAndRegister = async (ctx) => {
 
 
 exports.logout = async(ctx) =>{
-  
-}
+  ctx.cookies.set('access_token', null, {
+    maxAge: 0,
+    httpOnly: true
+  });
+  ctx.status = 204;
+}; 

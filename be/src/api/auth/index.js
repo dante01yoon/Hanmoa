@@ -4,7 +4,6 @@ const auth = new Router();
 const authController = require("api/auth/controller");
 
 auth.post('/signIn', authController.loginAndRegister);
-auth.get('/signIn', (ctx,next) => {
-  ctx.body = '/api/auth/signIn'
-})
+auth.get('/signOut', authController.logout);
+
 module.exports = auth;
