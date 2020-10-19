@@ -23,12 +23,13 @@ mongoose.connect(process.env.MONGO_URI, {
 const app = new Koa();
 const router = new Router(); 
 
+// ctx.request.body 를 사용할 수 있음 
+app.use(bodyParser());
+
 // ctx 는 웹 요청과 응답에 대한 정보를 가지고 있음
 // next는 다음 미들웨어를 실행시키는 함수
 // 만약 미들웨어에서 next를 호출하지 않으면 요청처리를 완료하고 응답을 하게 됨. 
 // next는 프로미스이다. 
-
-
 router.use('/api', api.routes()); // api 라우트를 '/api'  경로 하위 라우트로 설정
 
 app.use(router.routes()).use(router.allowedMethods());

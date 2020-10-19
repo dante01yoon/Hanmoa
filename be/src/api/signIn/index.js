@@ -3,11 +3,7 @@ const { list, create, remove, replace, update } = require("./controller");
 
 const signIn = new Router();
 
-signIn.get('/', (ctx, next) =>{
-  ctx.body = 'GET ' + ctx.request.path;
-})
-
-
-signIn.get('/create', create);
+signIn.get('/', list);
+signIn.post('/', create);
 
 module.exports = signIn;

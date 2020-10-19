@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
@@ -12,7 +13,8 @@
     "nodemon": "^2.0.5"
   },
   "scripts": {
-    "start": "nodemon --watch src/ src/index.js"
+    "start": "NODE_PATH=src nodemon --watch src/ src/index.js",
+    "start:window": "cross-env NODE_PATH=src nodemon --watch src/ src/index.js"
   },
   "devDependencies": {
     "eslint": "^7.11.0"
