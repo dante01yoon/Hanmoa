@@ -1,51 +1,58 @@
 const User = require("models/user"); 
 
 const exists = async(ctx) => {
-  let existing = null; 
+  let user = null; 
 
   try{
-    existing = await User.findByEmail(ctx.request.body.email);
+    user = await User.findByEmail(ctx.request.body.email);
   } catch (e) {
     ctx.throw(500, e);
   };
 
-  if(existing){
+  if(user){
     // 중복되는 아이디/이메일이 있을 경우 
-    return true;
+  console.log('has been signedIn: ', user);
+    return {
+      isExist: true,
+      user
+    };
   }
-  
-  // 신규 유저일 경우 
-  try{
-    const newUser = await User.register(ctx.request.body)
-  }catch (e){
-    ctx.throw(500,e);
+  // 신규 회원가입 
+  return {
+    isExist: false,
+    user: {} 
   }
 };
-
-const login = (studentNumber) => {
-  let account = null; 
-  try{
-
-  }catch(e) {
-    
-  }
-}
 
 exports.loginAndRegister = async (ctx) => {
   const { email, userName, studentNumber } = ctx.request.body;
 
-  // try{ 
-    const isExist = await exists(ctx);
+  let user = null;
+  
+  try{ 
+    const existsResponse = exists(ctx);
 
-    if(isExist) {
-      
+    if(!existsResponse.isExist){
+
+      user = await User.register({userName, email, studentNumber});
     }
     else {
-      await User.register({userName, email, studentNumber});
+      user = existsResponse.user; 
     }
-  // } catch(e) {
-    // ctx.throw(500,e);
-  // }
+  } catch(e) {
+    ctx.throw(500,e);
+  }
+
+  let token = null; 
+  
+  try{
+    token = await user.generateToken();
+  } catch(e) {
+    ctx.throw(500,e);
+  }
+
+  ctx.cookies.set('access_token', token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7});
+  ctx.body = user.profile;
 }; 
 
 

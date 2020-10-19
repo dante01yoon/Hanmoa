@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const {generateToken} = require("lib/token");
+
 const { Schema } = mongoose; 
 
 const User = new Schema({
@@ -46,5 +48,14 @@ User.statics.register = function({ userName, email, studentNumber}) {
 
   return newAccount.save();
 };
+
+User.methods.generateToken = async function() {
+  const payload = {
+    _id: this._id,
+    profile: this.profile
+  };
+
+  return await generateToken(payload, 'account');
+}
 
 module.exports = mongoose.model("User", User);

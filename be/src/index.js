@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const api = require("./api");
 const mongoose = require("mongoose");
 const bodyParser = require("koa-bodyparser");
+const jwt = require("jsonwebtoken");
 
 dotenv.config(); 
 
@@ -23,7 +24,6 @@ mongoose.connect(process.env.MONGO_URI, {
 const app = new Koa();
 const router = new Router(); 
 
-// ctx.request.body 를 사용할 수 있음 
 app.use(bodyParser());
 
 // ctx 는 웹 요청과 응답에 대한 정보를 가지고 있음
