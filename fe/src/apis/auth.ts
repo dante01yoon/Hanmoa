@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
 import { http } from './httpModule';
 
 const googleAuth: AxiosInstance = axios.create({
-  baseURL: 'https://accounts.google.com/o/oauth2/v2/auth/'
+  baseURL: 'http://localhost:5001/'
 })
 
 const request = async(config: AxiosRequestConfig) => {

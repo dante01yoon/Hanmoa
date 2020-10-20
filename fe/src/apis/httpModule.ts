@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { APIResponse } from './types';
-import { string, object } from 'prop-types';
+
 const baseURL = 'http://localhost:5001';
 
 const hanmoaAxios: AxiosInstance = axios.create({
@@ -16,9 +16,9 @@ const request = async<T>(config:AxiosRequestConfig):Promise<APIResponse<T>> => {
   }
 }
 
-const GET= <T>(url: string, params?: object, config?:AxiosRequestConfig): Promise<APIResponse<T>> =>
+export const GET= <T>(url: string, params?: object, config?:AxiosRequestConfig): Promise<APIResponse<T>> =>
   request({...config, method: 'GET', url, params });
-const POST = <T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<APIResponse<T>> => 
+export const POST = <T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<APIResponse<T>> => 
 request({...config, method: 'POST', url, params});
 
 export const http = {
