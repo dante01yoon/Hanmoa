@@ -28,6 +28,7 @@
       "@sagas/*": ["./src/sagas/*"],
     },
     "esModuleInterop": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "**/*.test.*",

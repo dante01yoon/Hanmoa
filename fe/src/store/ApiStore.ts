@@ -1,12 +1,14 @@
 import RootStore from "./RootStore";
 import { AxiosRequestConfig } from "axios"; 
 import { GET, POST } from "@apis/httpModule";
+import { makeAutoObservable } from "mobx";
 
 class ApiStore {
   rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
+    makeAutoObservable(this); 
   }
   
   async getJson<T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<T>{
