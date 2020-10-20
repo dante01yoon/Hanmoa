@@ -11,7 +11,7 @@ export const useMobxStores = () => {
   if(!store) {
     throw new Error();
   }
-  return 
+  return store;
 }
 
 

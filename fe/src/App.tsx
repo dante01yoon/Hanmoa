@@ -8,7 +8,7 @@ import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider } from '@store/index'; 
 import RootStore from './store/RootStore';
 
-const rootStore = new RootStore;
+const rootStore = new RootStore();
 
 export const App:FC = () => {
   return (

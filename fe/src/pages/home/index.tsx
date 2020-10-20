@@ -13,6 +13,7 @@ import { Modal } from "src/components/modal";
 import { ICardData } from "src/models/card";
 import { useModal } from "@utils/modal/useModal";
 import { pathExtractor } from "@utils/topic/pathExtractor";
+import {useMobxStores} from "@utils/store/useStores"; 
 
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
@@ -26,11 +27,13 @@ const HomePage = withRouter(({ location: { pathname } }) => {
   const homeRef = useRef<HTMLUListElement>(null);
   const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const dispatch = useDispatch();
+  const { SessionStore } = useMobxStores();
 
+  
   useEffect(() => {
     const [include, exclude] = pathExtractor(pathname);
     dispatch(getTopicActions.REQUEST());
-
+    console.log("sessionStore: ", SessionStore.isSignedIn)
   }, []);
   
   const handleClick: (data: ICardData) => void = (data) => {
