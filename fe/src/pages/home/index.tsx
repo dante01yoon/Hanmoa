@@ -33,7 +33,6 @@ const HomePage = withRouter(({ location: { pathname } }) => {
   useEffect(() => {
     const [include, exclude] = pathExtractor(pathname);
     dispatch(getTopicActions.REQUEST());
-    console.log("sessionStore: ", sessionStore)
   }, []);
   
   const handleClick: (data: ICardData) => void = (data) => {
