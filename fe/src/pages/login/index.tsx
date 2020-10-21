@@ -64,7 +64,7 @@ const StyledIcon = styled.div<{
 
 const LoginPage: FC =( ) =>{
   const [gapiReady, setGapiReady] = useState(false);
-  const { api, sessionStore } = useMobxStores();
+  const { sessionStore } = useMobxStores();
 
   useEffect(() => {
     window.gapi.load('auth2', () => {
@@ -75,12 +75,15 @@ const LoginPage: FC =( ) =>{
   const openGoogleAuth = async () => {
     let accessCode = null;
     if( gapiReady ) {
+      debugger;
       window.gapi.auth2.authorize({
         client_id: process.env.CLIENT_ID,
         scope: "profile email openid",
         response_type: process.env.RESPONSE_TYPE,
         hosted_domain: "handong.edu",
       },(response: gapi.auth2.AuthorizeResponse) => {
+        debugger;
+        console.log(response);
         accessCode = response.code;
       })
     }
@@ -96,6 +99,8 @@ const LoginPage: FC =( ) =>{
 
   const handleGoogleLoginClick = async() => {
     const accessCode = await openGoogleAuth();
+    debugger;
+    console.log(accessCode); 
     onAfterGetGoogleAuthCode(accessCode);
   }
   
