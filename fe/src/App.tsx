@@ -16,7 +16,7 @@ export const App:FC = () => {
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
-        <Provider store={rootStore}>
+        <Provider {...rootStore}>
           <ReduxProvider>
             <ModalProvider>
               <GlobalLayout>

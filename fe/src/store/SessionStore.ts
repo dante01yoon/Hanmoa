@@ -26,7 +26,7 @@ class SessionStore {
   async signIn(){
    await this.rootStore.apiStore.postJson('/auth/signIn');
   }
-
+  
   
 }
 
