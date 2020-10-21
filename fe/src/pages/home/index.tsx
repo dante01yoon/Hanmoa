@@ -22,7 +22,6 @@ import netflix from "src/asset/netflix.jpg";
 const { RoomContainer } = Styled;
 
 const HomePage = withRouter(({ location: { pathname } }) => {
-  // const [array, setArray] = useState([] as ReturnType<typeof dummyData> )
   const [isModal, setModal] = useModal();
   const homeRef = useRef<HTMLUListElement>(null);
   const { data, isLoading } = useSelector((state: RootState) => state.topic);

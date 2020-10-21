@@ -1,6 +1,6 @@
 import React,  { FC, useEffect, useState } from 'react';
 import styled from "styled-components";
-
+import { useMobxStores } from "@utils/store/useStores";
 import google_auth from "src/asset/google_auth.svg";
 
 const StyledSection = styled.section`
@@ -64,6 +64,7 @@ const StyledIcon = styled.div<{
 
 const LoginPage: FC =( ) =>{
   const [gapiReady, setGapiReady] = useState(false);
+  const { api, sessionStore } = useMobxStores();
 
   useEffect(() => {
     window.gapi.load('auth2', () => {
@@ -72,6 +73,7 @@ const LoginPage: FC =( ) =>{
   },[]);
 
   const openGoogleAuth = async () => {
+    let accessCode = null;
     if( gapiReady ) {
       window.gapi.auth2.authorize({
         client_id: process.env.CLIENT_ID,
@@ -79,19 +81,29 @@ const LoginPage: FC =( ) =>{
         response_type: process.env.RESPONSE_TYPE,
         hosted_domain: "handong.edu",
       },(response: gapi.auth2.AuthorizeResponse) => {
-        console.log("response: ", response);
-        console.log("response.code: ", response.code); 
+        accessCode = response.code;
       })
-
+    }
+    return accessCode; 
+  }
+  
+  const onAfterGetGoogleAuthCode = async (accessCode: string | null) => {
+    if(accessCode){
+      const response = await  sessionStore.fetchSignIn(accessCode);
       
     }
   }
 
+  const handleGoogleLoginClick = async() => {
+    const accessCode = await openGoogleAuth();
+    onAfterGetGoogleAuthCode(accessCode);
+  }
+  
   return(
     <StyledSection>
       <StyledLoginWrapper>
         <StyledTitle>로그인</StyledTitle> 
-        <StyledGoogleLoginBox onClick={openGoogleAuth} gapiBlock={!gapiReady}>
+        <StyledGoogleLoginBox onClick={handleGoogleLoginClick} gapiBlock={!gapiReady}>
           <StyledIcon src={google_auth} /> 
           구글로 계속하기
         </StyledGoogleLoginBox>

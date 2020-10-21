@@ -3,11 +3,11 @@ import SessionStore from "./SessionStore";
 
 class RootStore {
   sessionStore: SessionStore;
-  apiStore: ApiStore;
+  api: ApiStore;
   
   constructor() {
     this.sessionStore = new SessionStore(this); 
-    this.apiStore = new ApiStore(this);
+    this.api = new ApiStore(this);
   }
 }
 
