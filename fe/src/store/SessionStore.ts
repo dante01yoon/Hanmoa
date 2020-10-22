@@ -17,8 +17,8 @@ class SessionStore {
   }
 
   @action
-  async fetchSignIn(){
-    const fetchSignInResult = await this.signIn();
+  async fetchSignIn(accessCode: string){
+    const fetchSignInResult = await this.signIn(accessCode);
     debugger;
     console.log("fetchSignInResult", fetchSignInResult);        
   }
@@ -29,8 +29,10 @@ class SessionStore {
   }
   
   @action
-  async signIn(){
-   await this.api.postJson('/auth/signIn');
+  async signIn(accessCode: string){
+    await this.api.postJson('/auth/signIn',{
+      
+    });
   }
   
   
