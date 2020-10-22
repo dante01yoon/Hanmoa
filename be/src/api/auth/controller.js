@@ -51,15 +51,25 @@ exports.loginAndRegister = async (ctx) => {
     ctx.throw(500,e);
   }
 
-  ctx.cookies.set('access_token', token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7});
+  ctx.cookies.set('hm_s_guit', token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7});
   ctx.body = user.profile;
 }; 
 
 
 exports.logout = async(ctx) =>{
-  ctx.cookies.set('access_token', null, {
+  ctx.cookies.set('hm_s_guit', null, {
     maxAge: 0,
     httpOnly: true
   });
   ctx.status = 204;
 }; 
+
+exports.check = ( ctx ) => {
+  const { user} = ctx.request;
+
+  if(!user) {
+    ctx.status = 403;
+    return ;
+  }
+  ctx.body = user.profile; 
+}

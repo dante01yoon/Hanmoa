@@ -5,6 +5,7 @@ const api = require("./api");
 const mongoose = require("mongoose");
 const bodyParser = require("koa-bodyparser");
 const jwt = require("jsonwebtoken");
+const { jwtMiddleware } = require("./lib/token");
 
 dotenv.config(); 
 
@@ -25,6 +26,8 @@ const app = new Koa();
 const router = new Router(); 
 
 app.use(bodyParser());
+// jwtMiddleware 적용 
+app.use(jwtMiddleware); 
 
 // ctx 는 웹 요청과 응답에 대한 정보를 가지고 있음
 // next는 다음 미들웨어를 실행시키는 함수
