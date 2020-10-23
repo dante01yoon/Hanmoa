@@ -8,7 +8,6 @@ class ApiStore {
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
-    makeAutoObservable(this); 
   }
   
   async getJson<T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<T>{

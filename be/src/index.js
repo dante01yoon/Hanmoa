@@ -4,12 +4,10 @@ const dotenv = require("dotenv");
 const api = require("./api");
 const mongoose = require("mongoose");
 const bodyParser = require("koa-bodyparser");
-const jwt = require("jsonwebtoken");
+const cors = require("@koa/cors");
 const { jwtMiddleware } = require("./lib/token");
 
 dotenv.config(); 
-
-console.log(process.env.MONGO_URI);
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -29,6 +27,9 @@ app.use(bodyParser());
 // jwtMiddleware 적용 
 app.use(jwtMiddleware); 
 
+app.use(cors({
+  origin: "http://localhost:5000"
+}));
 // ctx 는 웹 요청과 응답에 대한 정보를 가지고 있음
 // next는 다음 미들웨어를 실행시키는 함수
 // 만약 미들웨어에서 next를 호출하지 않으면 요청처리를 완료하고 응답을 하게 됨. 

@@ -1,25 +1,25 @@
 import { computed, makeAutoObservable, action } from "mobx"; 
 import ApiStore from "./ApiStore";
 import RootStore from "./RootStore";
+import {http} from "@apis/httpModule";
 
 class SessionStore {
   rootStore: RootStore; 
   curUserCode: number | null;
   waitingForServer: boolean;
-  api: ApiStore
+  api: typeof http; 
 
-  constructor(rootStore: RootStore, ){
+  constructor(rootStore: RootStore, {api} = {api : http}){
     this.rootStore = rootStore;
     makeAutoObservable(this);
     this.curUserCode = null;
     this.waitingForServer = false;
-    this.api = this.rootStore.api; 
+    this.api = api; 
   }
 
   @action
   async fetchSignIn(accessCode: string){
     const fetchSignInResult = await this.signIn(accessCode);
-    debugger;
     console.log("fetchSignInResult", fetchSignInResult);        
   }
 
@@ -30,8 +30,8 @@ class SessionStore {
   
   @action
   async signIn(accessCode: string){
-    await this.api.postJson('/auth/signIn',{
-      
+    await this.api.POST('/auth/signIn',{
+    
     });
   }
   

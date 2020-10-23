@@ -3,6 +3,14 @@ import styled from "styled-components";
 import { useMobxStores } from "@utils/store/useStores";
 import google_auth from "src/asset/google_auth.svg";
 
+interface AuthResponse {
+  authUser: string;
+  code: string;
+  hd: string;
+  prompt: string;
+  scope: string;
+}
+
 const StyledSection = styled.section`
   background-color: ${({theme}) => theme.colors.light};
   height: 80vh;
@@ -64,44 +72,50 @@ const StyledIcon = styled.div<{
 
 const LoginPage: FC =( ) =>{
   const [gapiReady, setGapiReady] = useState(false);
-  const { sessionStore } = useMobxStores();
+  const { sessionStore, api } = useMobxStores();
 
   useEffect(() => {
+    console.log("sessionStore: ", sessionStore); 
+    console.log("apiStore: ", api);
     window.gapi.load('auth2', () => {
       setGapiReady(true); 
     })
   },[]);
 
-  const openGoogleAuth = async () => {
+  const openGoogleAuth = ():Promise<string> => {
     let accessCode = null;
     if( gapiReady ) {
-      debugger;
-      window.gapi.auth2.authorize({
-        client_id: process.env.CLIENT_ID,
-        scope: "profile email openid",
-        response_type: process.env.RESPONSE_TYPE,
-        hosted_domain: "handong.edu",
-      },(response: gapi.auth2.AuthorizeResponse) => {
-        debugger;
-        console.log(response);
-        accessCode = response.code;
+      return new Promise((resolve) => {
+        window.gapi.auth2.authorize({
+          client_id: process.env.CLIENT_ID,
+          scope: "profile email openid",
+          response_type: process.env.RESPONSE_TYPE,
+          hosted_domain: "handong.edu",
+        },(response: gapi.auth2.AuthorizeResponse & {hd?: string} ) => {
+          console.log(response);
+          if(!response.hd){
+            alert('handong@edu 이메일이 아닙니다.')
+          }
+          accessCode = response.code;
+          resolve(accessCode);
+        })
       })
     }
-    return accessCode; 
+    return new Promise(resolve => resolve("error"));
   }
   
   const onAfterGetGoogleAuthCode = async (accessCode: string | null) => {
     if(accessCode){
-      const response = await  sessionStore.fetchSignIn(accessCode);
-      
+      const response = await sessionStore.fetchSignIn(accessCode);
+      console.log("response:", response);
     }
   }
 
   const handleGoogleLoginClick = async() => {
     const accessCode = await openGoogleAuth();
-    debugger;
     console.log(accessCode); 
-    onAfterGetGoogleAuthCode(accessCode);
+    const wow = await onAfterGetGoogleAuthCode(accessCode);
+    console.log("wow:", wow);
   }
   
   return(

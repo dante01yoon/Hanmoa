@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { APIResponse } from './types';
 
-const baseURL = 'http://localhost:5001';
+const baseURL = 'http://localhost:5001/api';
 
 const hanmoaAxios: AxiosInstance = axios.create({
   baseURL
