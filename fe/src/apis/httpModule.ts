@@ -18,8 +18,8 @@ const request = async<T>(config:AxiosRequestConfig):Promise<APIResponse<T>> => {
 
 export const GET= <T>(url: string, params?: object, config?:AxiosRequestConfig): Promise<APIResponse<T>> =>
   request({...config, method: 'GET', url, params });
-export const POST = <T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<APIResponse<T>> => 
-request({...config, method: 'POST', url, params});
+export const POST = <T>(url: string, data?: object, config?: AxiosRequestConfig): Promise<APIResponse<T>> => 
+request({...config, method: 'POST', url, data});
 
 export const http = {
   GET,

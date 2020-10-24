@@ -1,7 +1,7 @@
 import { computed, makeAutoObservable, action } from "mobx"; 
-import ApiStore from "./ApiStore";
 import RootStore from "./RootStore";
 import {http} from "@apis/httpModule";
+import {UserPayload} from "src/payload/user";
 
 class SessionStore {
   rootStore: RootStore; 
@@ -19,8 +19,12 @@ class SessionStore {
 
   @action
   async fetchSignIn(accessCode: string){
-    const fetchSignInResult = await this.signIn(accessCode);
-    console.log("fetchSignInResult", fetchSignInResult);        
+    const [_, fetchSignInResult] = await this.signIn(accessCode);
+    if(fetchSignInResult){
+      console.log("fetchSignInResult: ",fetchSignInResult);
+      this.curUserCode = fetchSignInResult?.data.id; 
+      
+    }
   }
 
   @computed
@@ -28,10 +32,9 @@ class SessionStore {
     return !!this.curUserCode; 
   }
   
-  @action
   async signIn(accessCode: string){
-    await this.api.POST('/auth/signIn',{
-    
+    return await this.api.POST<UserPayload>('/auth/signIn',{
+      code: accessCode
     });
   }
   

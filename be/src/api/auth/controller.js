@@ -2,6 +2,8 @@ const fetch = require("node-fetch");
 const User = require("models/user"); 
 const dotenv = require("dotenv");
 
+dotenv.config(); 
+
 const exists = async(email) => {
   let user = null; 
 
@@ -22,43 +24,77 @@ const exists = async(email) => {
   }
 };
 
-const fetchExchangeTokenWithCode = (code) => {
-  return fetch("https://oauth2.googleapis.com/token",{
+/**
+  * @param {string} code 
+  * @return {string} access_token
+  * @return {number} expires_in
+  * @return {string} scope
+  * @return {string} token_type
+  * @return {string} id_token
+*/
+const fetchExchangeTokenWithCode = async (code) => {
+  const request =  await fetch("https://oauth2.googleapis.com/token",{
     method: "POST",
     headers:{
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
-    client_id: dotenv.CLIENT_ID,
-    client_secret: dotenv.CLIENT_SECRET,
-    grant_type: "authorization_code",
-    code 
+    body: JSON.stringify({
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      grant_type: "authorization_code",
+      code,
+      redirect_uri: "postmessage"
+    })
   });
-}
 
-const fetchProfileFromGoogle = (access_token) => {
-  return fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={${access_token}}`)  
+  const response = await request.json();
+  
+  return response;
+}
+/**
+ * @return {string} sub 
+ * @return {family_name} given_name
+ * @return {string} given_name  
+ * @return {string} picture
+ * @return {string} email 
+ * @return {boolean} email_verified
+ * @return {string} locale
+ * @return {string} hd 
+ */
+const fetchProfileFromGoogle = async (access_token) => {
+  const request = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`,{
+    headers:{
+      "Authorization": `Bearer ${access_token}`
+    }
+  });
+  
+  return await request.json();
 }
 
 exports.loginAndRegister = async (ctx) => {
   const { code } = ctx.request.body;
   // 클라이언트에서 받은 코드를 google Oauth2 의 access_token으로 교환 
   // { access_token, refresh_token, expires_in, token_type }
-  const codeExchangedData = await fetchExchangeTokenWithCode(code);
-  console.log(codeExchangedData);
-  const {access_token } = codeExchangedData;
+  const codeExchangedResponse = await fetchExchangeTokenWithCode(code);
+  
+  const { access_token } = codeExchangedResponse;
+  
   // access_token을 사용해 유저 프로필 정보 받기 
   const data = await fetchProfileFromGoogle(access_token)
-  const { email, name, given_name, family_name, picture } = data; 
-
-  let user = null;
   
+  const { email, name, hd, picture, sub } = data; 
+  
+  let user = null;
+  let studentNumber;
+
   try{ 
     const existsResponse = exists(email);
 
     if(!existsResponse.isExist){
-
-      user = await User.register({name, email, studentNumber: 0});
+      studentNumber = email ? email.split("@")[0] : "";
+      user = await User.register({id: sub, name, email, studentNumber, picture});
     }
+
     else {
       user = existsResponse.user; 
     }
@@ -69,13 +105,16 @@ exports.loginAndRegister = async (ctx) => {
   let token = null; 
   
   try{
-    token = await user.generateToken();
+    token = await user.generateToken({name, email, studentNumber, access_token});
   } catch(e) {
     ctx.throw(500,e);
   }
 
   ctx.cookies.set('hm_s_guit', token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7});
-  ctx.body = user.profile;
+  console.log(user.profile);
+  ctx.body = {
+    data: user.profile,
+  }
 }; 
 
 
@@ -94,5 +133,7 @@ exports.check = ( ctx ) => {
     ctx.status = 403;
     return ;
   }
-  ctx.body = user.profile; 
+  ctx.body = {
+    data: user.profile,
+  }; 
 }

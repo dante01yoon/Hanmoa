@@ -5,9 +5,10 @@ const { Schema } = mongoose;
 
 const User = new Schema({
   profile: {
-    userName: String,
-    studentNumber: Number,
-    thumbnail: {type: String, default: '/static/images/default_profile.png'},
+    id: String, 
+    name: String,
+    studentNumber: String,
+    picture: {type: String, default: '/static/images/default_profile.png'},
     email: { type: String},
   },
   hostRoomNumber: Number,
@@ -37,12 +38,14 @@ User.statics.findByName = function(name) {
   return this.findOne({'profile.username': name}).exec();
 }
 
-User.statics.register = function({ userName, email, studentNumber}) {
+User.statics.register = function({ id,name, email, studentNumber, picture}) {
   const newAccount = new this({
     profile: {
-      userName,
+      id,
+      name,
       email,
-      studentNumber
+      studentNumber,
+      picture,
     }
   }); 
 

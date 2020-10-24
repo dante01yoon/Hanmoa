@@ -7,7 +7,6 @@ const jwtSecret = process.env.JWT_SECRET_KEY
  * @param {object} payload
  * @returns {string} token 
  */
-
  function generateToken(payload){
    return new Promise(
      (resolve, reject) => {
@@ -47,7 +46,7 @@ const jwtSecret = process.env.JWT_SECRET_KEY
      if(Date.now() / 1000 - decoded.iat > 60 * 60 * 24) {
        // 하루가 지나면 갱신해준다. 
        const { _id, profile } = decoded;
-       const freshToken = await generateToken({ _id, profiel}, "account");
+       const freshToken = await generateToken({ _id, profie}, "account");
        ctx.cookies.set("hm_s_guit", freshToken, {
          maxAge: 1000 * 60 * 60 * 24 * 7, 
          httpOnly: true
