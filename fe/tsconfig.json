@@ -26,6 +26,7 @@
       "@apis/*": ["./src/apis/*"],
       "@models/*": ["./src/models/*"],
       "@sagas/*": ["./src/sagas/*"],
+      "@payload/*": ["./src/payload/*"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true

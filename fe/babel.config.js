@@ -44,6 +44,7 @@ module.exports = api => {
             '@apis': './src/apis',
             '@models': './src/models',
             '@sagas': './src/sagas',
+            '@payload': './src/payload',
           }
         }
       ], // end of module-resolver 

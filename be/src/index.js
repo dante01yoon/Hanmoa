@@ -28,7 +28,8 @@ app.use(bodyParser());
 app.use(jwtMiddleware); 
 
 app.use(cors({
-  origin: "http://localhost:5000"
+  origin: "http://localhost:5000",
+  credentials: true,
 }));
 // ctx 는 웹 요청과 응답에 대한 정보를 가지고 있음
 // next는 다음 미들웨어를 실행시키는 함수

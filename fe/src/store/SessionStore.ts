@@ -34,7 +34,9 @@ class SessionStore {
   
   async signIn(accessCode: string){
     return await this.api.POST<UserPayload>('/auth/signIn',{
-      code: accessCode
+      code: accessCode,
+    },{
+      withCredentials: true
     });
   }
   
