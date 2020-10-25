@@ -2,10 +2,12 @@ import { computed, makeAutoObservable, action } from "mobx";
 import RootStore from "./RootStore";
 import {http} from "@apis/httpModule";
 import {UserPayload} from "src/payload/user";
+import Cookies from "js-cookie";
+import { createChainedFunction } from "@material-ui/core";
 
 class SessionStore {
   rootStore: RootStore; 
-  curUserCode: number | null;
+  curUserCode: string | null;
   waitingForServer: boolean;
   api: typeof http; 
 
@@ -40,7 +42,22 @@ class SessionStore {
     });
   }
   
-  
+  @action
+  async update(){
+    try {
+      const [error, response] = await this.api.POST<UserPayload>('/auth/convert',{
+        code: Cookies.get("hm_guit"),
+      })
+      if( error ){
+        throw new Error(error.error_message);
+      }
+      if(response){
+        this.curUserCode = response.data.id
+      };
+    } catch(e){
+      throw new Error(e); 
+    }
+  } 
 }
 
 export default SessionStore;

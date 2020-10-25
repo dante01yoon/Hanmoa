@@ -4,6 +4,7 @@ import React, {
   createRef 
 } from 'react';
 import * as Styled from './style';
+import { useMobxStores } from "@utils/store/useStores"; 
 import { SmartLink } from '@components/smartlink';
 import { Portal } from '@components/portal';
 import LoginModal from '@components/login';
@@ -31,7 +32,8 @@ export const Gnb:FC = () => {
     const [visible, setVisible] = useState<boolean>(false); 
     const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
-    
+    const { sessionStore: {isSignedIn} } = useMobxStores(); 
+
     const checkContain = (e: MouseEvent) => {
       if(e.target instanceof HTMLElement){
         if(!topicRef.current?.contains( e.target )){
@@ -79,7 +81,9 @@ export const Gnb:FC = () => {
                             </ItemBox>
                     </LeftItemContainer>
                     <RightItemContainer>
-                        <ItemList>
+                        <ItemList>{
+                          isSignedIn ? (
+                          <>
                             <Item >
                                 <SmartLink href="login">
                                 로그인
@@ -89,8 +93,12 @@ export const Gnb:FC = () => {
                                 <SmartLink href={'signup'}>
                                 회원가입
                                 </SmartLink>    
-                            </Item>
-                        </ItemList>
+                            </Item> 
+                          </>): 
+                          <Item>
+                              로그인 됨
+                          </Item>
+                      }</ItemList>
                     </RightItemContainer>
                     { loginModal &&
                         <Portal>

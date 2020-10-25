@@ -2,7 +2,7 @@ import React , { FC } from 'react';
 import { HanmoaTheme } from './theme/Provider';
 import { Helmet } from 'react-helmet';
 import { Provider } from "mobx-react";
-import { GlobalLayout } from '@components/gnb/layout';
+import GlobalLayout from '@components/gnb/layout';
 import HanmoaRouter from '@components/route/route';
 import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider } from '@store/index'; 

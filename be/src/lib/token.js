@@ -40,7 +40,7 @@ const jwtSecret = process.env.JWT_SECRET_KEY
    if(!token) return next(); // 토큰이 없으면 다음 작업을 진행함 
    
    try {
-     const decoded = await decodedToken(token);
+     const decoded = await decodeToken(token);
 
      // 토큰 만료일이 하루밖에 안남으면 토큰을 재발급한다. 
      if(Date.now() / 1000 - decoded.iat > 60 * 60 * 24) {

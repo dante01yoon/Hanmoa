@@ -117,6 +117,9 @@ exports.loginAndRegister = async (ctx) => {
   }
 }; 
 
+exports.convert = async(ctx) => {
+  const token = 
+}
 
 exports.logout = async(ctx) =>{
   ctx.cookies.set('hm_s_guit', null, {

@@ -1,7 +1,9 @@
 import React , { FC } from 'react';
+import { observer } from "mobx-react-lite";
 import * as Styled from './style';
 import { Gnb } from './gnb';
-import { Switch, BrowserRouter as Router } from "react-router-dom";
+import Cookies from "js-cookie"; 
+import { useMobxStores } from "@utils/store/useStores";
 
 const { 
     Main,
@@ -9,9 +11,15 @@ const {
     MainContainer
 } = Styled;
 
-export const GlobalLayout:FC = ({
+const GlobalLayout:FC = ({
     children
 }) => {
+    const {sessionStore} = useMobxStores();
+    const hmGuit = Cookies.get('hm_s_guit');
+    if( hmGuit ){
+        sessionStore.update(hmGuit);
+    }
+    
     return(
         <>
             <Gnb/>
@@ -23,4 +31,6 @@ export const GlobalLayout:FC = ({
             </Main>
         </>
     )
-}
+};
+
+export default observer(GlobalLayout);
