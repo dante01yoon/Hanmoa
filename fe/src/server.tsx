@@ -46,7 +46,7 @@ app.get('*',(req,res) => {
 
   // const store = createStore();
   const context = {};
-
+  
   const jsx = webExtractor.collectChunks(
     <StaticRouter location={req.url} context={context}>
       <App/>

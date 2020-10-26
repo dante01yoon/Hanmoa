@@ -1,6 +1,8 @@
 const fetch = require("node-fetch");
 const User = require("models/user"); 
 const dotenv = require("dotenv");
+const { decodeToken } = require("lib/token");
+const { model } = require("../../models/user");
 
 dotenv.config(); 
 
@@ -118,7 +120,22 @@ exports.loginAndRegister = async (ctx) => {
 }; 
 
 exports.convert = async(ctx) => {
-  const token = 
+  try{
+    const user = await User.findByEmail({
+      email
+    }).exec();
+    ctx.body = {
+      data: user,
+    }
+  } catch(e){
+    ctx.status = 403;
+    ctx.body = {
+      status_code: 403,
+      status_message: "user not found",
+      error_message: "유저조회실패",
+      success: false,
+    }
+  }
 }
 
 exports.logout = async(ctx) =>{
@@ -131,12 +148,18 @@ exports.logout = async(ctx) =>{
 
 exports.check = ( ctx ) => {
   const { user } = ctx.request;
-
+  
   if(!user) {
     ctx.status = 403;
+    ctx.body = {
+      status_code: 403,
+      status_message: "user not found",
+      error_message: "유저조회실패",
+      success: false,
+    }
     return ;
   }
   ctx.body = {
-    data: user.profile,
+    data: user,
   }; 
 }
