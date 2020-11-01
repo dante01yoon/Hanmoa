@@ -1,4 +1,4 @@
-import pick from "lodash/pick";
+const pick = require("lodash/pick");
 
 require("dotenv").config();
 
@@ -10,6 +10,6 @@ const globalEnvKeys = [
 
 const picked = pick(process.env, globalEnvKeys);
 
-export const webpackDefinedServer = {
+module.exports = {
   ...picked,
 }

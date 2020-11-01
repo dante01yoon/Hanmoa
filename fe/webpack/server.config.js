@@ -1,7 +1,8 @@
 const path = require("path");
+const {getOverridingServerWebpackConfig} =  require("./index");
 
 module.exports = function getOverridenServerWebpackConfig(env = null){
-  return overridingServerWebpackConfig( ({nodeEnv}) => {
+  return getOverridingServerWebpackConfig( ({nodeEnv}) => {
     let config = {
       context : path.resolve(__dirname, "../src"),
       entry: "web",

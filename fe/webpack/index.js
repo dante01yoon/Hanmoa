@@ -4,9 +4,9 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const nodeExternals = require("webpack-node-externals");
 
-const { webpackDefinedServer } = require("./helper/convertGlobalEnvToWebpackDefined"); 
+const webpackDefinedServer = require("./helper/convertGlobalEnvToWebpackDefined"); 
 
-exports.overrideClientWebpackConfig = function overrideClientWebpackConfig(overrider){
+exports.getOverridingClientWebpackConfig = function overrideClientWebpackConfig(overrider){
   const defaultPlugins = [
     ["@babel/proposal-decorators", { legacy: true }],
     "mobx-deep-action", // async await 에서 자동으로 nested 된 함수에 action을 달아주는 녀석 
@@ -118,7 +118,7 @@ exports.overrideClientWebpackConfig = function overrideClientWebpackConfig(overr
   )
 }
 
-exports.overrideServerWebpackConfig = function overrideClientWebpackConfig(
+exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
   overrider,
 ){
   const defaultPlugins = [
