@@ -1,8 +1,8 @@
-import React, { FC, ReactType } from "react";
-import { Switch, Route } from "react-router";
+import React, { FC, ElementType} from "react";
+import { Route } from "react-router";
 import { Dispatch } from "redux";
 import loadable from "@loadable/component";
-import { BrowserRouter } from "react-router-dom";
+import { IRootRouter } from "src/App";
 
 const HomePage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/home")
@@ -29,7 +29,7 @@ const LoginTestPage = loadable(() =>
 type RouteType = {
   path: string;
   exact?: boolean;
-  component?: ReactType;
+  component?: ElementType;
   fetchInitialData?: (req?: any) => Dispatch;
 };
 export const routes: RouteType[] = [
@@ -70,22 +70,30 @@ export const routes: RouteType[] = [
   },
 ];
 
-const HanmoaRouter: FC = () => {
+const renderRoutes = () => {
+  return routes.map(({path,exact, component: Component, ...rest}) => (
+    <Route
+      key={path}
+      exact={exact || false}
+      render={(props) => {
+        return Component ? <Component {...props} {...rest} /> : null
+      }}
+    />
+  ))
+}
+
+const HanmoaRouter: FC<IRootRouter> = ({
+  router,
+}) => {
   return (
-    <Switch>
-      {routes.map(({ path, exact, component: Component, ...rest }) => (
-        <Route
-          key={path}
-          path={path}
-          exact={exact || false}
-          render={(props) => {
-            return Component ? <Component {...props} {...rest} /> : null;
-          }}
-        />
-      ))}
-      <Route render={() => <ErrorPage />} />
-    </Switch>
+    React.cloneElement(
+      router,
+      undefined,
+      renderRoutes(),
+    )
   );
 };
 
 export default HanmoaRouter;
+
+<Route render={() => <ErrorPage />} />
