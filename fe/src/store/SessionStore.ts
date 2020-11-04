@@ -4,26 +4,22 @@ import {http} from "@apis/httpModule";
 import {UserPayload} from "src/payload/user";
 import Cookies from "js-cookie";
 import { createChainedFunction } from "@material-ui/core";
-
-class SessionStore {
-  rootStore: RootStore; 
+import BasicStore from "./BasicStore"; 
+class SessionStore extends BasicStore{
   curUserCode: string | null;
   waitingForServer: boolean;
-  api: typeof http; 
 
   constructor(rootStore: RootStore, {api} = {api : http}){
-    this.rootStore = rootStore;
+    super(rootStore, {api}); 
     makeAutoObservable(this);
     this.curUserCode = null;
     this.waitingForServer = false;
-    this.api = api; 
   }
 
   @action
   async fetchSignIn(accessCode: string){
     const [_, fetchSignInResult] = await this.signIn(accessCode);
     if(fetchSignInResult){
-      console.log("fetchSignInResult: ",fetchSignInResult);
       this.curUserCode = fetchSignInResult?.data.id; 
       
     }
@@ -60,4 +56,4 @@ class SessionStore {
   } 
 }
 
-export default SessionStore;
+export default SessionStore;``

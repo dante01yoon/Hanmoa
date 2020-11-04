@@ -4,6 +4,19 @@ import escapeForHtmlAttribute from "@utils/escapeForHtmlAttribute";
 import App from "src/App";
 import {StaticRouter} from "react-router";
 import { pick } from "lodash";
+import { createStore,  } from "@store/u"; 
+import { StoreSpecType } from "@store/storeSpec";
+
+const initStores = async (
+  storeSpec: StoreSpecType,
+  req: Request,
+) => {
+  const stores = createStore(storeSpec);
+  
+  try {
+    if(req.cookies[])
+  }
+}
 
 const renderHtml = ({
   assets = {},
@@ -16,7 +29,7 @@ const renderHtml = ({
     helmet?: Object,
     assets?: Object,
   }) => {
-  
+
   return (`
     <!DOCTYPE html>
     <html>
@@ -46,19 +59,18 @@ const renderHtml = ({
   `)
 }
 
-const renderApp = (options: Object): RequestHandler => {
-  const renderComponentHtml = (req: Request,res: Response) => ReactDOMServer.renderToString(
-    <App router={<StaticRouter location={req.url} />}
-  );
-  const stores = {};
+const renderAppAsync = async (req, res, {storeSpec, ...resetOptions}) => {
+  const stores = await initStores(
+    storeSpec,
+    req,
+  )
+}
+
+const renderApp = (options: {[key:string]: any}): RequestHandler => {
+  
 
   return (req, res, next )  => {
-    res.send(
-      renderHtml({
-        componentHtml: renderComponentHtml(req,res), 
-        stores,
-      })
-    );
+    renderAppAsync(req,res, options)
   } 
 };
 
