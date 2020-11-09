@@ -5,7 +5,7 @@ module.exports = function getOverridenServerWebpackConfig(env = null){
   return getOverridingServerWebpackConfig( ({nodeEnv}) => {
     let config = {
       context : path.resolve(__dirname, "../src"),
-      entry: "web",
+      entry: "./web",
       output: {
         path: path.resolve(__dirname, "../build"),
       },

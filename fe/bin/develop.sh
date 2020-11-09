@@ -32,7 +32,9 @@ program
   .version("0.0.1")
   .action(() => {
     server.run({
-      port: parseInt(PORT,10)
+      port: parseInt(PORT,10),
+      entry: "web",
+      webpackConfig: webpackConfig(),
     });
     console.log("program launched");
     runWebpackDevServer();

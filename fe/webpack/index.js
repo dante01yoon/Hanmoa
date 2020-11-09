@@ -1,7 +1,7 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
-const merge = require("webpack-merge");
+const {merge} = require("webpack-merge");
 const nodeExternals = require("webpack-node-externals");
 
 const webpackDefinedServer = require("./helper/convertGlobalEnvToWebpackDefined"); 
@@ -220,8 +220,10 @@ exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
       break;
   }
 
-  return merge(
+  const mergedConfig = merge(
     config,
     overrider({nodeEnv: process.env.NODE_ENV}),
-  )
+  );
+  console.log("mergedConfig.output: ", mergedConfig.output);
+  return mergedConfig;
 }

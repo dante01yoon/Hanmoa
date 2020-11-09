@@ -15,7 +15,7 @@ const GlobalLayout:FC = ({
     children
 }) => {
     const {sessionStore} = useMobxStores();
-    const hmGuit = Cookies.get('hm_s_guit');
+    const hmGuit = Cookies.get("_hm_guit");
     if( hmGuit ){
         sessionStore.update(hmGuit);
     }

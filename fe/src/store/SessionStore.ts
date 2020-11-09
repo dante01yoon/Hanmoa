@@ -2,9 +2,8 @@ import { computed, makeAutoObservable, action } from "mobx";
 import RootStore from "./RootStore";
 import {http} from "@apis/httpModule";
 import {UserPayload} from "src/payload/user";
-import Cookies from "js-cookie";
-import { createChainedFunction } from "@material-ui/core";
 import BasicStore from "./BasicStore"; 
+import { CookieRequest } from "src/middleware/renderApp";
 class SessionStore extends BasicStore{
   curUserCode: string | null;
   waitingForServer: boolean;
@@ -39,10 +38,11 @@ class SessionStore extends BasicStore{
   }
   
   @action
-  async update(){
+  async update(req: CookieRequest | null = null){
     try {
-      const [error, response] = await this.api.POST<UserPayload>('/auth/convert',{
-        code: Cookies.get("hm_guit"),
+      const [error, response] = await this.api.POST<UserPayload>('/auth/update',{
+      },{
+        
       })
       if( error ){
         throw new Error(error.error_message);

@@ -5,7 +5,6 @@ const https = require("https");
 
 const express = require("express");
 const mobx = require("mobx");
-const { stat } = require("fs");
 const {NODE_ENV = "development"} = process.env;
 
 class Server {
@@ -28,7 +27,7 @@ class Server {
     
     if(webpackConfig){
       const webpack = require("webpack");
-      
+      console.log("webpackConfig", webpackConfig);
       const compiler = webpack(webpackConfig);
       
       let prevHash;

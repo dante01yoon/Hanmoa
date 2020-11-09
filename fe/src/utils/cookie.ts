@@ -5,7 +5,7 @@ interface KeyPairObject {
 export const COOKIE_NAME: {
   [key: string]: string
 } = {
-  SESSION: "hs_guit"
+  SESSION: "_hm_guit"
 };
 
 export const buildCookieObject = (): KeyPairObject =>{
@@ -26,7 +26,7 @@ export const getCookie = (cookieName: string): string | undefined => {
 export const setCookie = (name: string, value: string)  => {
   const days = 365 * 100;
   const date = new Date();
-  date.setDate(date.getTime() + 365 * 100 * 60 * 60 * 24 * 1000);
+  date.setDate(date.getTime() + days * 60 * 60 * 24 * 1000);
   const expires = `; expires=${date.toUTCString()}`;
   document.cookie = `${name}=${value}${expires}; path=/`
 }

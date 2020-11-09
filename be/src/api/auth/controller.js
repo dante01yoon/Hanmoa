@@ -112,8 +112,7 @@ exports.loginAndRegister = async (ctx) => {
     ctx.throw(500,e);
   }
 
-  ctx.cookies.set('hm_s_guit', token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7});
-  console.log(user.profile);
+  ctx.cookies.set("_hm_guit', token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7});
   ctx.body = {
     data: user.profile,
   }
@@ -139,7 +138,7 @@ exports.convert = async(ctx) => {
 }
 
 exports.logout = async(ctx) =>{
-  ctx.cookies.set('hm_s_guit', null, {
+  ctx.cookies.set("_hm_guit", null, {
     maxAge: 0,
     httpOnly: true
   });

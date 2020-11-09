@@ -5,14 +5,14 @@ import { ReducedStore } from "./u";
 
 class RootStore {
   reducedStore: ReducedStore;
-  
+
   constructor(){
     this.reducedStore = storeSpec.reduce((reducedStore: ReducedStore, entry: SingleStoreObject) => {
       if(!reducedStore[entry.key]){
         reducedStore[entry.key] = new entry.class(this);
       }
       return reducedStore
-    }, {})
+    }, {} as ReducedStore)
   }
 }
 
