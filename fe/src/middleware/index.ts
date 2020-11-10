@@ -54,7 +54,7 @@ const createAppMiddleWare: CreateAppMiddleWareType<CreateAppMiddleWareOptions, P
       name: "bodyParser",
       value: new LazyMiddleWare(() => compose([
         bodyParser.json(),
-        bodyParser.urlEncoded({extended: false}),
+        bodyParser.urlencoded({extended: false}),
       ])),
     },
     {
@@ -70,8 +70,18 @@ const createAppMiddleWare: CreateAppMiddleWareType<CreateAppMiddleWareOptions, P
     addedMiddlewares = processMiddlewares(addedMiddlewares); 
   }
   return compose(
-    addedMiddlewares.map((middleware) => {
-      middleware.value.run();
+    addedMiddlewares.map((eachMiddleware) => {
+      switch(typeof eachMiddleware){
+        case "function":
+          return eachMiddleware
+        case "object":
+          return eachMiddleware.value instanceof LazyMiddleWare
+            ? eachMiddleware.value.run()
+            : eachMiddleware.value;
+        default:
+          throw Error("middleware is corrupted");
+      }
+      eachMiddleware.value.run();
     })
   )
 }

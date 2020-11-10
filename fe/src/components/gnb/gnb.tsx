@@ -32,7 +32,6 @@ export const Gnb:FC = () => {
     const [visible, setVisible] = useState<boolean>(false); 
     const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
-    const { sessionStore: {isSignedIn} } = useMobxStores(); 
 
     const checkContain = (e: MouseEvent) => {
       if(e.target instanceof HTMLElement){
@@ -82,7 +81,6 @@ export const Gnb:FC = () => {
                     </LeftItemContainer>
                     <RightItemContainer>
                         <ItemList>{
-                          isSignedIn ? (
                           <>
                             <Item >
                                 <SmartLink href="login">
@@ -94,10 +92,7 @@ export const Gnb:FC = () => {
                                 회원가입
                                 </SmartLink>    
                             </Item> 
-                          </>): 
-                          <Item>
-                              로그인 됨
-                          </Item>
+                          </>
                       }</ItemList>
                     </RightItemContainer>
                     { loginModal &&

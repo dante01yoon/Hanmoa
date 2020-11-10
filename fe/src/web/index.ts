@@ -1,7 +1,7 @@
 import createAppMiddleWare from "src/middleware";
 import storeSpec from "src/store/storeSpec";
 import { Request } from "express";
-import { http } from "@apis/httpModule";
+import { http } from "src/apis/httpModule";
 
 const web = createAppMiddleWare({
   renderApp: {

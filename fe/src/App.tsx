@@ -3,16 +3,24 @@ import { HanmoaTheme } from './theme/Provider';
 import { Helmet } from 'react-helmet';
 import { Provider } from "mobx-react";
 import GlobalLayout from '@components/gnb/layout';
-import HanmoaRouter from '@components/route/route';
+import renderRoutes from '@components/route/route';
 import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider } from '@store/index'; 
 import RootStore from './store/RootStore';
-import { StaticRouter, Switch } from 'react-router';
 
 export interface IRootRouter {
-  router: ReactElement
+  router: ReactElement;
 }
+
 const rootStore = new RootStore();
+
+const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
+  return React.cloneElement(
+    router,
+    undefined,
+    children
+  )
+}
 
 export const App:FC<IRootRouter> = ({
   router,
@@ -25,9 +33,11 @@ export const App:FC<IRootRouter> = ({
         <Provider {...rootStore}>
           <ReduxProvider>
             <ModalProvider>
-              <GlobalLayout>
-                <HanmoaRouter router={router}/>
-              </GlobalLayout>
+              {renderGrandRouter(router,(
+                <GlobalLayout>
+                  {renderRoutes()}
+                </GlobalLayout>
+              ),)}
             </ModalProvider>
           </ReduxProvider>
         </Provider>

@@ -1,8 +1,7 @@
-import React, { FC, ElementType} from "react";
+import React, { ElementType} from "react";
 import { Route } from "react-router";
 import { Dispatch } from "redux";
 import loadable from "@loadable/component";
-import { IRootRouter } from "src/App";
 
 const HomePage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/home")
@@ -71,29 +70,17 @@ export const routes: RouteType[] = [
 ];
 
 const renderRoutes = () => {
-  return routes.map(({path,exact, component: Component, ...rest}) => (
-    <Route
-      key={path}
-      exact={exact || false}
-      render={(props) => {
-        return Component ? <Component {...props} {...rest} /> : null
-      }}
-    />
+  const routeComponentArray = routes.map(({path,exact, component: Component, ...rest}) => (
+      <Route
+        key={path}
+        exact={exact || false}
+        render={(props) => {
+          return Component ? <Component {...props} {...rest} /> : null
+        }}
+      />
   ))
+  routeComponentArray.push(<Route render={() => <ErrorPage />} />);
+  return routeComponentArray; 
 }
 
-const HanmoaRouter: FC<IRootRouter> = ({
-  router,
-}) => {
-  return (
-    React.cloneElement(
-      router,
-      undefined,
-      renderRoutes(),
-    )
-  );
-};
-
-export default HanmoaRouter;
-
-<Route render={() => <ErrorPage />} />
+export default renderRoutes;

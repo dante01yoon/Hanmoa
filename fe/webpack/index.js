@@ -2,7 +2,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
 const {merge} = require("webpack-merge");
-const nodeExternals = require("webpack-node-externals");
+const path = require("path");
 
 const webpackDefinedServer = require("./helper/convertGlobalEnvToWebpackDefined"); 
 
@@ -76,7 +76,7 @@ exports.getOverridingClientWebpackConfig = function overrideClientWebpackConfig(
       ],
     },
     resolve: {
-      modules: ["node_modules"],
+      modules: ["node_modules", path.resolve(__dirname, "../")],
       extensions: [".js", ".json", ".ts", ".tsx"],
     },
     plugins: [
@@ -134,6 +134,7 @@ exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
     target: "node", 
     output: {
       filename: "[name].js",
+      publicPath: "http://localhost:8080/",
       library: "[name]",
       libraryTarget: "commonjs2", 
     },
@@ -187,8 +188,21 @@ exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
       ], // end of rules
     }, // end of modules
     resolve: {
-      modules: ["node_modules"],
+      modules: ["node_modules", path.resolve(__dirname, "../")],
       extensions: [".js", ".json", ".ts", ".tsx"],
+      alias:{
+        "@components": path.resolve(__dirname, "../src/components/"),
+        "@pages": path.resolve(__dirname, "../src/pages/"),
+        "@store": path.resolve(__dirname, "../src/store/"),
+        "@reducers": path.resolve(__dirname, "../src/store/reducers/"),
+        "@theme": path.resolve(__dirname, "../src/theme/"),
+        "@utils": path.resolve(__dirname, "../src/utils/"),
+        "@modules": path.resolve(__dirname, "../src/modules/"),
+        "@apis": path.resolve(__dirname, "../src/apis/"),
+        "@models": path.resolve(__dirname, "../src/models/"),
+        "@sagas": path.resolve(__dirname, "../src/sagas/"),
+        "@payload": path.resolve(__dirname, "../src/payload/")
+      }
     },
     plugins: [
       new webpack.DefinePlugin({

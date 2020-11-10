@@ -3,9 +3,12 @@ const {getOverridingServerWebpackConfig} =  require("./index");
 
 module.exports = function getOverridenServerWebpackConfig(env = null){
   return getOverridingServerWebpackConfig( ({nodeEnv}) => {
+    const entry = {
+      web: "./web",
+    }
     let config = {
       context : path.resolve(__dirname, "../src"),
-      entry: "./web",
+      entry: entry,
       output: {
         path: path.resolve(__dirname, "../build"),
       },

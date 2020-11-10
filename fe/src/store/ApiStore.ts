@@ -1,7 +1,6 @@
 import RootStore from "./RootStore";
 import { AxiosRequestConfig } from "axios"; 
 import { GET, POST } from "@apis/httpModule";
-import { makeAutoObservable } from "mobx";
 
 class ApiStore {
   rootStore: RootStore;

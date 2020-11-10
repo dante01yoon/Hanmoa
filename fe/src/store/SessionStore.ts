@@ -1,16 +1,17 @@
-import { computed, makeAutoObservable, action } from "mobx"; 
+import { computed, makeObservable, action } from "mobx"; 
 import RootStore from "./RootStore";
 import {http} from "@apis/httpModule";
 import {UserPayload} from "src/payload/user";
 import BasicStore from "./BasicStore"; 
-import { CookieRequest } from "src/middleware/renderApp";
+import { Request } from "express";
+
 class SessionStore extends BasicStore{
   curUserCode: string | null;
   waitingForServer: boolean;
 
   constructor(rootStore: RootStore, {api} = {api : http}){
     super(rootStore, {api}); 
-    makeAutoObservable(this);
+    makeObservable(this);
     this.curUserCode = null;
     this.waitingForServer = false;
   }
@@ -38,7 +39,7 @@ class SessionStore extends BasicStore{
   }
   
   @action
-  async update(req: CookieRequest | null = null){
+  async update(req: Request | null = null){
     try {
       const [error, response] = await this.api.POST<UserPayload>('/auth/update',{
       },{

@@ -1,12 +1,14 @@
-import { createElement } from "react";
+import React from "React";
+import { createElement, cloneElement } from "react";
 import type {NextFunction, Request, Response } from "express";
-import ReactDOMServer from "react-dom/server";
+import {renderToString} from "react-dom/server";
 import escapeForHtmlAttribute from "@utils/escapeForHtmlAttribute";
 import App from "src/App";
 import { createStore } from "@store/u"; 
 import { StoreSpecType } from "@store/storeSpec";
 import * as cookie from "@utils/cookie";
 import { RenderAppOptions } from "./index";
+import { StaticRouter } from "react-router-dom";
 
 const initStores = async (
   storeSpec: StoreSpecType,
@@ -80,7 +82,7 @@ const respond = (req:Request,res:Response, {
     }
   };
 
-  const componentHtml = ReactDOMServer.renderToString(createElement(App));
+  const componentHtml = renderToString(<App router={<StaticRouter location={req.url}/>} />);
   
   res.send(
     renderHtml({

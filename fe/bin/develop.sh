@@ -33,10 +33,9 @@ program
   .action(() => {
     server.run({
       port: parseInt(PORT,10),
-      entry: "web",
+      entry: path.resolve(__dirname, "../build/web"),
       webpackConfig: webpackConfig(),
     });
     console.log("program launched");
-    runWebpackDevServer();
   })
   .parse(process.argv);
