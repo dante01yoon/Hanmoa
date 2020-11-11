@@ -1,15 +1,16 @@
 import ApiStore from "./ApiStore";
 import SessionStore from "./SessionStore";
-import storeSpec, { SingleStoreObject } from "./storeSpec";
+import { SingleStoreObject, StoreSpecType } from "./storeSpec";
 import { ReducedStore } from "./u";
 
 class RootStore {
   reducedStore: ReducedStore;
-
-  constructor(){
+  
+  constructor(storeSpec: StoreSpecType){
+    
     this.reducedStore = storeSpec.reduce((reducedStore: ReducedStore, entry: SingleStoreObject) => {
       if(!reducedStore[entry.key]){
-        reducedStore[entry.key] = new entry.class(this);
+        reducedStore[entry.key] = null;
       }
       return reducedStore
     }, {} as ReducedStore)

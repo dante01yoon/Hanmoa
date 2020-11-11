@@ -1,5 +1,4 @@
 import React from "React";
-import { createElement, cloneElement } from "react";
 import type {NextFunction, Request, Response } from "express";
 import {renderToString} from "react-dom/server";
 import escapeForHtmlAttribute from "@utils/escapeForHtmlAttribute";
@@ -15,6 +14,7 @@ const initStores = async (
   req: Request
 ) => {
   const stores = createStore(storeSpec);
+
   try {
     if(req.cookies[cookie.COOKIE_NAME.SESSION]){
       await stores.sessionStore.update(req);
@@ -35,6 +35,7 @@ const renderHtml = ({
   helmet: { title: string; meta: any;},
   stores: ReturnType<typeof createStore>
 }) => {
+  console.log("stores: ", stores);
   return (`
     <!DOCTYPE html>
     <html>

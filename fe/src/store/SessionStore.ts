@@ -4,13 +4,14 @@ import {http} from "@apis/httpModule";
 import {UserPayload} from "src/payload/user";
 import BasicStore from "./BasicStore"; 
 import { Request } from "express";
+import { ReducedStore } from "./u";
 
 class SessionStore extends BasicStore{
   curUserCode: string | null;
   waitingForServer: boolean;
 
-  constructor(rootStore: RootStore, {api} = {api : http}){
-    super(rootStore, {api}); 
+  constructor(reducedStore: RootStore, {api} = {api : http}){
+    super(reducedStore, {api}); 
     makeObservable(this);
     this.curUserCode = null;
     this.waitingForServer = false;

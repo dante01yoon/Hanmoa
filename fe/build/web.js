@@ -114,7 +114,7 @@ module.exports =
 /******/ 	};
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "79c569404ca15fcb7349";
+/******/ 	__webpack_require__.h = "aa2fe243c0b87ad82bed";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "web";
@@ -131,8 +131,8 @@ module.exports =
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_middleware__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var src_store_storeSpec__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(291);
-/* harmony import */ var src_apis_httpModule__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(293);
+/* harmony import */ var src_store_storeSpec__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(293);
+/* harmony import */ var src_apis_httpModule__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(295);
 
 
 
@@ -13507,8 +13507,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom_server__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_escapeForHtmlAttribute__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(123);
 /* harmony import */ var src_App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(124);
-/* harmony import */ var _store_u__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(295);
-/* harmony import */ var _utils_cookie__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(296);
+/* harmony import */ var _store_u__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(290);
+/* harmony import */ var _utils_cookie__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(292);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(173);
 
 
@@ -13536,6 +13536,7 @@ const renderHtml = ({
   helmet,
   stores
 }) => {
+  console.log("stores: ", stores);
   return `
     <!DOCTYPE html>
     <html>
@@ -21855,7 +21856,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_route_route__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(226);
 /* harmony import */ var src_store_modal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(229);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(230);
-/* harmony import */ var _store_RootStore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(290);
 
 
 
@@ -21864,8 +21864,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-const rootStore = new _store_RootStore__WEBPACK_IMPORTED_MODULE_8__["default"]();
 
 const renderGrandRouter = (router, children) => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.cloneElement(router, undefined, children);
@@ -21874,7 +21872,7 @@ const renderGrandRouter = (router, children) => {
 const App = ({
   router
 }) => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_theme_Provider__WEBPACK_IMPORTED_MODULE_1__["HanmoaTheme"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_helmet__WEBPACK_IMPORTED_MODULE_2__["Helmet"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("title", null, "Hanmoa - grouping your team!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(mobx_react__WEBPACK_IMPORTED_MODULE_3__["Provider"], rootStore, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_store_index__WEBPACK_IMPORTED_MODULE_7__["ReduxProvider"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(src_store_modal__WEBPACK_IMPORTED_MODULE_6__["ModalProvider"], null, renderGrandRouter(router, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_gnb_layout__WEBPACK_IMPORTED_MODULE_4__["default"], null, Object(_components_route_route__WEBPACK_IMPORTED_MODULE_5__["default"])()))))));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_theme_Provider__WEBPACK_IMPORTED_MODULE_1__["HanmoaTheme"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_helmet__WEBPACK_IMPORTED_MODULE_2__["Helmet"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("title", null, "Hanmoa - grouping your team!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(mobx_react__WEBPACK_IMPORTED_MODULE_3__["Provider"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_store_index__WEBPACK_IMPORTED_MODULE_7__["ReduxProvider"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(src_store_modal__WEBPACK_IMPORTED_MODULE_6__["ModalProvider"], null, renderGrandRouter(router, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_gnb_layout__WEBPACK_IMPORTED_MODULE_4__["default"], null, Object(_components_route_route__WEBPACK_IMPORTED_MODULE_5__["default"])()))))));
 };
 /* harmony default export */ __webpack_exports__["default"] = (App);
 
@@ -73321,15 +73319,31 @@ module.exports = function spread(callback) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeSpec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(291);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createStore", function() { return createStore; });
+/* harmony import */ var _RootStore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(291);
 
+const createStore = storeSpecList => {
+  const rootStore = new _RootStore__WEBPACK_IMPORTED_MODULE_0__["default"](storeSpecList);
+  const reducedStore = storeSpecList.reduce((reducedSpec, singleSpec) => {
+    reducedSpec[singleSpec.key] = new singleSpec.class(rootStore);
+    return reducedSpec;
+  }, {});
+  return { ...reducedStore
+  };
+};
 
+/***/ }),
+/* 291 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 class RootStore {
-  constructor() {
+  constructor(storeSpec) {
     this.reducedStore = void 0;
-    this.reducedStore = _storeSpec__WEBPACK_IMPORTED_MODULE_0__["default"].reduce((reducedStore, entry) => {
+    this.reducedStore = storeSpec.reduce((reducedStore, entry) => {
       if (!reducedStore[entry.key]) {
-        reducedStore[entry.key] = new entry.class(this);
+        reducedStore[entry.key] = null;
       }
 
       return reducedStore;
@@ -73341,12 +73355,49 @@ class RootStore {
 /* harmony default export */ __webpack_exports__["default"] = (RootStore);
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SessionStore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COOKIE_NAME", function() { return COOKIE_NAME; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildCookieObject", function() { return buildCookieObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return getCookie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCookie", function() { return setCookie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteCookie", function() { return deleteCookie; });
+;
+const COOKIE_NAME = {
+  SESSION: "_hm_guit"
+};
+const buildCookieObject = () => {
+  const cookiePair = document.cookie.split(";").map(value => value.split("="));
+  return cookiePair.reduce((acc, curr) => {
+    acc[curr[0].trim()] = curr[1].trim();
+    return acc;
+  }, {});
+};
+const getCookie = cookieName => {
+  const documentCookie = buildCookieObject();
+  return documentCookie[cookieName];
+};
+const setCookie = (name, value) => {
+  const days = 365 * 100;
+  const date = new Date();
+  date.setDate(date.getTime() + days * 60 * 60 * 24 * 1000);
+  const expires = `; expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value}${expires}; path=/`;
+};
+const deleteCookie = cookieName => {
+  document.cookie = `${cookieName}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+};
+
+/***/ }),
+/* 293 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SessionStore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(294);
 
 const storeSpec = [{
   key: "sessionStore",
@@ -73355,14 +73406,14 @@ const storeSpec = [{
 /* harmony default export */ __webpack_exports__["default"] = (storeSpec);
 
 /***/ }),
-/* 292 */
+/* 294 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(147);
-/* harmony import */ var _apis_httpModule__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(293);
-/* harmony import */ var _BasicStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(294);
+/* harmony import */ var _apis_httpModule__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(295);
+/* harmony import */ var _BasicStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(296);
 var _class, _temp;
 
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
@@ -73371,12 +73422,12 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 
 let SessionStore = (_class = (_temp = class SessionStore extends _BasicStore__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor(rootStore, {
+  constructor(reducedStore, {
     api
   } = {
     api: _apis_httpModule__WEBPACK_IMPORTED_MODULE_1__["http"]
   }) {
-    super(rootStore, {
+    super(reducedStore, {
       api
     });
     this.curUserCode = void 0;
@@ -73429,7 +73480,7 @@ let SessionStore = (_class = (_temp = class SessionStore extends _BasicStore__WE
 ``;
 
 /***/ }),
-/* 293 */
+/* 295 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -73472,81 +73523,29 @@ const http = {
 };
 
 /***/ }),
-/* 294 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var src_apis_httpModule__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(293);
-
-
-class BasicStore {
-  constructor(root, {
-    api
-  } = {
-    api: src_apis_httpModule__WEBPACK_IMPORTED_MODULE_0__["http"]
-  }) {
-    this.api = void 0;
-    this.rootStore = void 0;
-    this.api = api;
-    this.rootStore = root;
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (BasicStore);
-
-/***/ }),
-/* 295 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createStore", function() { return createStore; });
-/* harmony import */ var _RootStore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(290);
-
-const rootStore = new _RootStore__WEBPACK_IMPORTED_MODULE_0__["default"]();
-const createStore = storeSpecList => {
-  return { ...rootStore.reducedStore
-  };
-};
-
-/***/ }),
 /* 296 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COOKIE_NAME", function() { return COOKIE_NAME; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildCookieObject", function() { return buildCookieObject; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return getCookie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCookie", function() { return setCookie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteCookie", function() { return deleteCookie; });
-;
-const COOKIE_NAME = {
-  SESSION: "_hm_guit"
-};
-const buildCookieObject = () => {
-  const cookiePair = document.cookie.split(";").map(value => value.split("="));
-  return cookiePair.reduce((acc, curr) => {
-    acc[curr[0].trim()] = curr[1].trim();
-    return acc;
-  }, {});
-};
-const getCookie = cookieName => {
-  const documentCookie = buildCookieObject();
-  return documentCookie[cookieName];
-};
-const setCookie = (name, value) => {
-  const days = 365 * 100;
-  const date = new Date();
-  date.setDate(date.getTime() + days * 60 * 60 * 24 * 1000);
-  const expires = `; expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${value}${expires}; path=/`;
-};
-const deleteCookie = cookieName => {
-  document.cookie = `${cookieName}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
-};
+/* harmony import */ var src_apis_httpModule__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(295);
+
+
+class BasicStore {
+  constructor(rootStore, {
+    api
+  } = {
+    api: src_apis_httpModule__WEBPACK_IMPORTED_MODULE_0__["http"]
+  }) {
+    this.api = void 0;
+    this.reducedStore = void 0;
+    this.api = api;
+    this.reducedStore = rootStore;
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (BasicStore);
 
 /***/ })
 /******/ ]);

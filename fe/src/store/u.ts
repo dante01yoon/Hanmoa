@@ -1,15 +1,21 @@
-import storeSpec from "./storeSpec";
+import {StoreSpecType} from "./storeSpec";
 import BasicStore from "./BasicStore";
 import RootStore from "./RootStore";
 import SessionStore from "./SessionStore";
 
 export interface ReducedStore {
-  sessionStore: Readonly<SessionStore>; 
-  [key: string]: Readonly<BasicStore>;
+  sessionStore: SessionStore | null; 
+  [key: string]: BasicStore | null;
 }
 
-const rootStore = new RootStore();
 
-export const createStore = (storeSpecList: typeof storeSpec) => {
-  return {...rootStore.reducedStore}
+export const createStore = (storeSpecList: StoreSpecType) => {
+  
+  const rootStore = new RootStore(storeSpecList);
+
+  const reducedStore = storeSpecList.reduce((reducedSpec, singleSpec) => {
+    reducedSpec[singleSpec.key] = new singleSpec.class(rootStore);
+    return reducedSpec; 
+  },{} as ReducedStore)
+  return {...reducedStore}
 }

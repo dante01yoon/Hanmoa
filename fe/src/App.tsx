@@ -12,8 +12,6 @@ export interface IRootRouter {
   router: ReactElement;
 }
 
-const rootStore = new RootStore();
-
 const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
   return React.cloneElement(
     router,
@@ -30,7 +28,7 @@ export const App:FC<IRootRouter> = ({
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
-        <Provider {...rootStore}>
+        <Provider>
           <ReduxProvider>
             <ModalProvider>
               {renderGrandRouter(router,(
