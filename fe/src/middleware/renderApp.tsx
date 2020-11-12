@@ -3,6 +3,7 @@ import type {NextFunction, Request, Response } from "express";
 import {renderToString} from "react-dom/server";
 import escapeForHtmlAttribute from "@utils/escapeForHtmlAttribute";
 import App from "src/App";
+import { ServerStyleSheet, StyleSheetManager } from "styled-components";
 import { createStore } from "@store/u"; 
 import { StoreSpecType } from "@store/storeSpec";
 import * as cookie from "@utils/cookie";
@@ -17,7 +18,7 @@ const initStores = async (
 
   try {
     if(req.cookies[cookie.COOKIE_NAME.SESSION]){
-      await stores.sessionStore.update(req);
+      await stores.sessionStore?.update(req);
     }
   } catch(_){}
   
@@ -27,11 +28,13 @@ const initStores = async (
 const renderHtml = ({
   assets = {},
   componentHtml,
+  styles,
   helmet,
   stores
 }: {
   assets: any,
   componentHtml: string,
+  styles: string,
   helmet: { title: string; meta: any;},
   stores: ReturnType<typeof createStore>
 }) => {
@@ -42,8 +45,9 @@ const renderHtml = ({
       <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        ${helmet.title};
-        ${helmet.meta};
+        ${styles}
+        ${helmet.title}
+        ${helmet.meta}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -82,17 +86,25 @@ const respond = (req:Request,res:Response, {
       meta: null,
     }
   };
+  const sheet = new ServerStyleSheet();
+  try {
+    const componentHtml = renderToString(sheet.collectStyles(<App router={<StaticRouter location={req.url}/>} />));
+    const styleTags = sheet.getStyleTags();
 
-  const componentHtml = renderToString(<App router={<StaticRouter location={req.url}/>} />);
-  
-  res.send(
-    renderHtml({
-      componentHtml,
-      stores,
-      assets,
-      helmet: helmetContext.helmet,
-    })
-  );
+    res.send(
+      renderHtml({
+        componentHtml,
+        stores,
+        assets,
+        styles: styleTags,
+        helmet: helmetContext.helmet,
+      })
+    );
+  } catch (e: any){
+    console.error(e)
+  } finally {
+    sheet.seal();
+  }
 }
 
 export type ValueOf<T> = T[keyof T]; 

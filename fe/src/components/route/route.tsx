@@ -71,13 +71,13 @@ export const routes: RouteType[] = [
 
 const renderRoutes = () => {
   const routeComponentArray = routes.map(({path,exact, component: Component, ...rest}) => (
-      <Route
-        key={path}
-        exact={exact || false}
-        render={(props) => {
-          return Component ? <Component {...props} {...rest} /> : null
-        }}
-      />
+    <Route
+      key={path}
+      exact={exact || false}
+      render={(props) => {
+        return Component ? <Component {...props} {...rest} /> : null
+      }}
+    />
   ))
   routeComponentArray.push(<Route render={() => <ErrorPage />} />);
   return routeComponentArray; 
