@@ -63,38 +63,36 @@ export const routes: RouteType[] = [
     component: LoginTestPage,
   },
   {
-    path: "/room/:id",
-    exact: false,
-    component: RoomPage,
-  },
-  {
-    component: ErrorPage
+    component: ErrorPage,
   }
 ];
 
 export const renderRoutes = () => {
   const routeComponents = routes.map(({path,exact, component: Component, ...rest}) => {
-    console.log(`path: ${path}`,exact,Component);
     return(
       <Route
         key={path || `$$${Math.random()*1000}`}
-        path={path}
+        path={path || null}
         exact={ exact ? exact : true}
         render={(props) => {
           return Component ? <Component {...props} {...rest} /> : null
         }}
       />
-
     )
   })
   
-  return routeComponents;
+  return (
+    <Switch>
+      {routeComponents}
+    </Switch>
+  );
 }
 
 const HanmoaRouter = () => {
   return(
     <Switch>
       {renderRoutes()}
+      <Route component={ErrorPage}/>
     </Switch>
   )
 }

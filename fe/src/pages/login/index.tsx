@@ -115,7 +115,6 @@ const LoginPage: FC =( ) =>{
     const accessCode = await openGoogleAuth();
     console.log(accessCode); 
     const wow = await onAfterGetGoogleAuthCode(accessCode);
-    console.log("wow:", wow);
   }
   
   return(

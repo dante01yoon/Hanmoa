@@ -10,7 +10,7 @@ import * as cookie from "@utils/cookie";
 import { RenderAppOptions } from "./index";
 import { StaticRouter } from "react-router-dom";
 
-const initStores = async (
+export const initStores = async (
   storeSpec: StoreSpecType,
   req: Request
 ) => {
@@ -75,7 +75,7 @@ interface RespondOptions extends Omit<RenderAppAsyncOptions, "storeSpec">{
   stores: ReturnType<typeof createStore>
 }
 
-const respond = (req:Request,res:Response, { 
+export const respond = (req:Request,res:Response, { 
   stores, 
   routes,
   assets,
