@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState, RefObject } from 'react'
+import debounce from "lodash/debounce";
 
 /***
  * @function resizeWindow
@@ -20,13 +21,13 @@ const useResize: (ref: RefObject<HTMLElement>) => number  = (
   );
   useLayoutEffect(() => {
     const updateSize = () => {
-      console.log('ref: ', [ref.current!.offsetWidth, ref.current!.offsetHeight]);
       setSize([ref.current!.offsetWidth, ref.current!.offsetHeight]);
     };
     updateSize(); 
-    window.addEventListener('resize', updateSize);
-    
-    return () => window.removeEventListener('resize', updateSize);
+    window.addEventListener('resize', 
+      debounce(updateSize, 200),
+    );
+    return () => window.removeEventListener('resize', debounce(updateSize, 200));
   },[]);
   return size[0];    
 };

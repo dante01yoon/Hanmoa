@@ -19,7 +19,7 @@ module.exports = api => {
         {
           useBuiltIns: web ? 'entry' : undefined,
           targets: !web ? { node: 'current' } : undefined,
-          modules: webpack ? false : 'commonjs',
+          modules: false
         },
       ],
       '@babel/preset-typescript',

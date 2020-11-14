@@ -1,27 +1,47 @@
-import React , { FC } from 'react';
+import React , { FC, ReactElement } from 'react';
 import { HanmoaTheme } from './theme/Provider';
+import {StaticRouter} from "react-router";
+import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Provider } from "mobx-react";
 import GlobalLayout from '@components/gnb/layout';
-import HanmoaRouter from '@components/route/route';
+import HanmoaRouter, {renderRoutes}  from '@components/route/route';
+import { Provider } from "mobx-react";
 import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider } from '@store/index'; 
-import RootStore from './store/RootStore';
 
-const rootStore = new RootStore();
+export interface IRootRouter {
+  router?: ReactElement;
+}
 
-export const App:FC = () => {
+const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
+  return React.cloneElement(
+    router ? router : typeof window === "undefined" ? <StaticRouter /> : <BrowserRouter />,
+    undefined,
+    children
+  )
+}
+
+export const App:FC<IRootRouter> = ({
+  router,
+}) => {
   return (
     <HanmoaTheme>
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
-        <Provider {...rootStore}>
+        <Provider>
           <ReduxProvider>
             <ModalProvider>
               <GlobalLayout>
-                <HanmoaRouter/>
+                {renderRoutes()}
               </GlobalLayout>
+              {
+              /* FIXME ssr 향상시킬때 사용하기 */
+              /* {renderGrandRouter(router,(
+                <GlobalLayout>
+                  {renderRoutes()}
+                </GlobalLayout>
+              ),)} */}
             </ModalProvider>
           </ReduxProvider>
         </Provider>

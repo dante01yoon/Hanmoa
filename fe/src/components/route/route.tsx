@@ -1,8 +1,7 @@
-import React, { FC, ReactType } from "react";
+import React, { ElementType} from "react";
 import { Switch, Route } from "react-router";
 import { Dispatch } from "redux";
 import loadable from "@loadable/component";
-import { BrowserRouter } from "react-router-dom";
 
 const HomePage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/home")
@@ -27,9 +26,9 @@ const LoginTestPage = loadable(() =>
 );
 
 type RouteType = {
-  path: string;
+  path?: string;
   exact?: boolean;
-  component?: ReactType;
+  component?: ElementType;
   fetchInitialData?: (req?: any) => Dispatch;
 };
 export const routes: RouteType[] = [
@@ -45,7 +44,7 @@ export const routes: RouteType[] = [
   },
   {
     path: "/login",
-    exact: false,
+    exact: true,
     component: LoginPage,
   },
   {
@@ -64,28 +63,38 @@ export const routes: RouteType[] = [
     component: LoginTestPage,
   },
   {
-    path: "/room/:id",
-    exact: false,
-    component: RoomPage,
-  },
+    component: ErrorPage,
+  }
 ];
 
-const HanmoaRouter: FC = () => {
+export const renderRoutes = () => {
+  const routeComponents = routes.map(({path,exact, component: Component, ...rest}) => {
+    return(
+      <Route
+        key={path || `$$${Math.random()*1000}`}
+        path={path || null}
+        exact={ exact ? exact : true}
+        render={(props) => {
+          return Component ? <Component {...props} {...rest} /> : null
+        }}
+      />
+    )
+  })
+  
   return (
     <Switch>
-      {routes.map(({ path, exact, component: Component, ...rest }) => (
-        <Route
-          key={path}
-          path={path}
-          exact={exact || false}
-          render={(props) => {
-            return Component ? <Component {...props} {...rest} /> : null;
-          }}
-        />
-      ))}
-      <Route render={() => <ErrorPage />} />
+      {routeComponents}
     </Switch>
   );
-};
+}
+
+const HanmoaRouter = () => {
+  return(
+    <Switch>
+      {renderRoutes()}
+      <Route component={ErrorPage}/>
+    </Switch>
+  )
+}
 
 export default HanmoaRouter;

@@ -8,7 +8,6 @@
 export const pathExtractor = (url:string) => {
   // '/topic/netflix'
   const urlArray = url.split('/');
-  console.log('urlArray', urlArray); 
   if(urlArray.length !== 3){
     return ['all','all']; 
   }  

@@ -1,4 +1,5 @@
 import React, { FC, useRef, useState, useEffect } from "react";
+import Blob from "cross-blob";
 
 interface IThumbProps {
   file: Blob;
