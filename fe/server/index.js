@@ -27,7 +27,6 @@ class Server {
     
     if(webpackConfig){
       const webpack = require("webpack");
-      console.log("webpackConfig", webpackConfig);
       const compiler = webpack(webpackConfig);
       
       let prevHash;

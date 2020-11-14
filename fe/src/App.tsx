@@ -1,20 +1,21 @@
 import React , { FC, ReactElement } from 'react';
 import { HanmoaTheme } from './theme/Provider';
+import {StaticRouter} from "react-router";
+import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Provider } from "mobx-react";
 import GlobalLayout from '@components/gnb/layout';
-import renderRoutes from '@components/route/route';
+import HanmoaRouter, {renderRoutes}  from '@components/route/route';
+import { Provider } from "mobx-react";
 import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider } from '@store/index'; 
-import RootStore from './store/RootStore';
 
 export interface IRootRouter {
-  router: ReactElement;
+  router?: ReactElement;
 }
 
 const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
   return React.cloneElement(
-    router,
+    router ? router : typeof window === "undefined" ? <StaticRouter /> : <BrowserRouter />,
     undefined,
     children
   )
@@ -31,11 +32,16 @@ export const App:FC<IRootRouter> = ({
         <Provider>
           <ReduxProvider>
             <ModalProvider>
-              {renderGrandRouter(router,(
+              <GlobalLayout>
+                {renderRoutes()}
+              </GlobalLayout>
+              {
+              /* FIXME ssr 향상시킬때 사용하기 */
+              /* {renderGrandRouter(router,(
                 <GlobalLayout>
                   {renderRoutes()}
                 </GlobalLayout>
-              ),)}
+              ),)} */}
             </ModalProvider>
           </ReduxProvider>
         </Provider>

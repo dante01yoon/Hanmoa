@@ -3,7 +3,7 @@ import type {NextFunction, Request, Response } from "express";
 import {renderToString} from "react-dom/server";
 import escapeForHtmlAttribute from "@utils/escapeForHtmlAttribute";
 import App from "src/App";
-import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+import { ServerStyleSheet } from "styled-components";
 import { createStore } from "@store/u"; 
 import { StoreSpecType } from "@store/storeSpec";
 import * as cookie from "@utils/cookie";
@@ -100,7 +100,7 @@ const respond = (req:Request,res:Response, {
         helmet: helmetContext.helmet,
       })
     );
-  } catch (e: any){
+  } catch (e){
     console.error(e)
   } finally {
     sheet.seal();

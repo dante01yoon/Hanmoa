@@ -1,5 +1,5 @@
 import React, { ElementType} from "react";
-import { Route } from "react-router";
+import { Switch, Route } from "react-router";
 import { Dispatch } from "redux";
 import loadable from "@loadable/component";
 
@@ -26,7 +26,7 @@ const LoginTestPage = loadable(() =>
 );
 
 type RouteType = {
-  path: string;
+  path?: string;
   exact?: boolean;
   component?: ElementType;
   fetchInitialData?: (req?: any) => Dispatch;
@@ -44,7 +44,7 @@ export const routes: RouteType[] = [
   },
   {
     path: "/login",
-    exact: false,
+    exact: true,
     component: LoginPage,
   },
   {
@@ -67,20 +67,36 @@ export const routes: RouteType[] = [
     exact: false,
     component: RoomPage,
   },
+  {
+    component: ErrorPage
+  }
 ];
 
-const renderRoutes = () => {
-  const routeComponentArray = routes.map(({path,exact, component: Component, ...rest}) => (
-    <Route
-      key={path}
-      exact={exact || false}
-      render={(props) => {
-        return Component ? <Component {...props} {...rest} /> : null
-      }}
-    />
-  ))
-  routeComponentArray.push(<Route render={() => <ErrorPage />} />);
-  return routeComponentArray; 
+export const renderRoutes = () => {
+  const routeComponents = routes.map(({path,exact, component: Component, ...rest}) => {
+    console.log(`path: ${path}`,exact,Component);
+    return(
+      <Route
+        key={path || `$$${Math.random()*1000}`}
+        path={path}
+        exact={ exact ? exact : true}
+        render={(props) => {
+          return Component ? <Component {...props} {...rest} /> : null
+        }}
+      />
+
+    )
+  })
+  
+  return routeComponents;
 }
 
-export default renderRoutes;
+const HanmoaRouter = () => {
+  return(
+    <Switch>
+      {renderRoutes()}
+    </Switch>
+  )
+}
+
+export default HanmoaRouter;

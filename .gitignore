@@ -1,4 +1,5 @@
 **/node_modules
 /fe/dist/*
+/fe/build
 **/dist/*
 */.env

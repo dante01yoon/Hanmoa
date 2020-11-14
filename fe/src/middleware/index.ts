@@ -1,4 +1,4 @@
-import type { RequestHandler, Request } from "express";
+import type { Request } from "express";
 import { StoreSpecType } from "src/store/storeSpec";
 
 class LazyMiddleWare{
