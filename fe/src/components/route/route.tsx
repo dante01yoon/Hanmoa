@@ -1,7 +1,8 @@
 import React, { ElementType} from "react";
-import { Switch, Route } from "react-router";
+import { Switch, Route, RouteComponentProps } from "react-router";
 import { Dispatch } from "redux";
-import loadable from "@loadable/component";
+import loadable, { LoadableComponent } from "@loadable/component";
+import { Request } from "express";
 
 const HomePage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/home")
@@ -25,11 +26,17 @@ const LoginTestPage = loadable(() =>
   import(/* webpackChunkName: "LoginTestPage" */ "../../pages/LoginTest")
 );
 
+interface HanmoaPageComponentStaticMethod {
+  initStoreOnServer?: Function;
+}
+
+type HanmoaPageComponent = React.ComponentType<any>  & HanmoaPageComponentStaticMethod;
+
 type RouteType = {
   path?: string;
   exact?: boolean;
-  component?: ElementType;
-  fetchInitialData?: (req?: any) => Dispatch;
+  component?: HanmoaPageComponent;
+  fetchInitialData?: (req?: Request) => Dispatch;
 };
 export const routes: RouteType[] = [
   {
@@ -72,7 +79,7 @@ export const renderRoutes = () => {
     return(
       <Route
         key={path || `$$${Math.random()*1000}`}
-        path={path || null}
+        path={path}
         exact={ exact ? exact : true}
         render={(props) => {
           return Component ? <Component {...props} {...rest} /> : null

@@ -11,6 +11,9 @@ import { renderFullPage } from './server/renderFullPage';
 import { ServerStyleSheet } from 'styled-components';
 import { initStores as initMobxStores } from "src/middleware/renderApp";
 import storeSpec from "src/store/storeSpec";
+import { routes } from "@components/route/route";
+import { matchRoutes } from "react-router-config";
+import { match } from 'assert';
 
 const app = express();
 
@@ -47,11 +50,22 @@ app.get('*', async (req,res) => {
   const webExtractor = new ChunkExtractor({statsFile: webStats});
   const context = {};
 
-  // init stores. 
+  // initialize store. 
+
   // const store = createStore();
   const mobxStores = await initMobxStores(storeSpec, req);
   console.log("mobxStores: ", mobxStores);
-
+  // server side data fetch in page component 
+  routes.filter((value) => {
+    if( value.path){
+      value.path.includes(req.path)
+    }
+  }).map((value) => {
+    if(value.component && value.component.initStoreOnServer){
+      value.component.initStoreOnServer()
+    }
+  })
+  
   const jsx = webExtractor.collectChunks(
     <StaticRouter location={req.url} context={context}>
       <App/>

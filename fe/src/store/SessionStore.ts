@@ -10,8 +10,8 @@ class SessionStore extends BasicStore{
   curUserCode: string | null;
   waitingForServer: boolean;
 
-  constructor(reducedStore: RootStore, {api} = {api : http}){
-    super(reducedStore, {api}); 
+  constructor(reducedStore: RootStore,){
+    super(reducedStore); 
     makeObservable(this);
     this.curUserCode = null;
     this.waitingForServer = false;

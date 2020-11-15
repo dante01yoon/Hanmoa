@@ -6,8 +6,8 @@ class BasicStore {
   api: typeof http;
   reducedStore: RootStore;
 
-  constructor(rootStore: RootStore,{api}: {api: typeof http} = {api:http} ){
-    this.api = api;
+  constructor(rootStore: RootStore, ){
+    this.api = http;
     this.reducedStore = rootStore; 
   }
 }
