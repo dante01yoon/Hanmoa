@@ -60,9 +60,9 @@ app.get('*', async (req,res) => {
     if( value.path){
       value.path.includes(req.path)
     }
-  }).map((value) => {
+  }).map(async (value) => {
     if(value.component && value.component.initStoreOnServer){
-      value.component.initStoreOnServer()
+      await value.component.initStoreOnServer()
     }
   })
   

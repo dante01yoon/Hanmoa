@@ -9,7 +9,7 @@ export interface ReducedStore {
 }
 
 
-export const createStore = (storeSpecList: StoreSpecType) => {
+export const createStore = (storeSpecList: StoreSpecType): ReducedStore => {
   
   const rootStore = new RootStore(storeSpecList);
 

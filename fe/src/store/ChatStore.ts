@@ -2,7 +2,7 @@ import BasicStore from "@store/BasicStore";
 import { makeObservable, observable, action } from "mobx";
 import RootStore from "@store/RootStore";
 import { Request } from "express";
-import { ChatMessages, ChatBox } from "@payload/chat";
+import { ChatBox } from "@payload/chat";
 
 
 class ChatStore extends BasicStore{
@@ -18,7 +18,8 @@ class ChatStore extends BasicStore{
 
   @action async fetchChatMessages(req: Request ){
     const [error, response] = await this.api.GET<ChatBox>("/chat",{
-      id: 
+      id: 1,
+      pages: 1,
     });
     if(error){
       throw Error(error.error_message);
@@ -28,4 +29,9 @@ class ChatStore extends BasicStore{
     }
   }
   
+  @action async fetchNewChtMessage(){
+    
+  }
 }
+
+export default ChatStore;

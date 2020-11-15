@@ -8,6 +8,9 @@ import EmbedChatRoom from "@components/embed/chatRoom";
 import ChatPeopleContainer from "@components/embed/chatPeople";
 import SkeletonCard from "@components/skeleton/card";
 import IChat from "src/models/chat";
+import makeFetchStoreOnServer from "@utils/makeFetchStoreOnServer";
+import ChatStore from "@store/ChatStore";
+import {Request} from "express";
 
 const StyledSelf = styled.section`
   display: flex;
@@ -22,7 +25,9 @@ const StyledArticle = styled.article`
   }
 `;
 
-const RoomPage: FC = ({}) => {
+const RoomPage: FC & {
+  initStoreOnServer: Function;
+} = ({}) => {
   const [chatDataState, setChatDataState] = useState({
     chatGroupId: 0,
     chatData: [],
@@ -89,5 +94,9 @@ const RoomPage: FC = ({}) => {
     </StyledSelf>
   );
 };
+
+RoomPage.initStoreOnServer = makeFetchStoreOnServer((req: Request, {chatStore}: {chatStore: ChatStore}) => {
+  Promise.resolve(chatStore.fetchChatMessages(req));
+});
 
 export default RoomPage;
