@@ -4,7 +4,7 @@ import RootStore from "./RootStore";
 import SessionStore from "./SessionStore";
 
 export interface ReducedStore {
-  sessionStore: SessionStore | null; 
+  sessionStore: SessionStore; 
   [key: string]: BasicStore | null;
 }
 

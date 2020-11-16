@@ -1,4 +1,4 @@
-import React, { FC, useState, ReactNode, useEffect } from "react";
+import React, { FC, useState, ReactNode, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import {RootState} from "src/store";
 import styled from "styled-components";
@@ -33,7 +33,9 @@ const RoomPage: FC & {
     chatData: [],
     chatPeople: [],
   } as IChat);
-  
+  const chatRoomRef = useRef<HTMLElement>(null);
+  const ioRef = useRef<IntersectionObserver>();
+  const targetRef = useRef<HTMLElement>(null);
   const { chatGroupId, chatData } = chatDataState;
   // 1. redux - useDispatch fetch method call 어디에다가 모듈화?
   // 2. response 오면 state 변경 ->
@@ -50,6 +52,30 @@ const RoomPage: FC & {
   useEffect(() => {
     fetchDummyData();
   }, []);
+
+  useEffect(() => {
+    ioRef.current = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.intersectionRatio === 0 ) {
+          
+        } 
+      });
+    },{
+      root: chatRoomRef.current,
+      threshold: 0,      
+    });
+    if(!targetRef || !targetRef.current ){
+      return ;
+    }else{
+    ioRef.current.observe(targetRef.current);
+    }
+
+    return () => {
+      if(ioRef.current){
+        ioRef.current.unobserve(targetRef.current);
+      }
+    }
+  });
 
   const renderChatContent = (): ReactNode => {
     if (!chatData.length) {
@@ -78,14 +104,14 @@ const RoomPage: FC & {
       </>
     );
   };
-
+ 
   const renderChatPeopleContent = (): JSX.Element => {
     return <></>;
   };
 
   return (
     <StyledSelf>
-      <StyledArticle>
+      <StyledArticle ref={chatRoomRef}>
         <EmbedChatRoom>{renderChatContent()}</EmbedChatRoom>
       </StyledArticle>
       <StyledArticle>

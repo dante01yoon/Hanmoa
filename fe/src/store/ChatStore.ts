@@ -7,12 +7,13 @@ import { ChatBox } from "@payload/chat";
 
 class ChatStore extends BasicStore{
   @observable chatMessages: ChatBox;
-  
+  @observable currentPage: number;
 
   constructor(rootStore: RootStore){
     super(rootStore);
     makeObservable(this);
     this.chatMessages = [];
+    this.currentPage = this.rootStore.reducedStore.sessionStore.hasRead;
   }
   
 

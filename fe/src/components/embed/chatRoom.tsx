@@ -46,11 +46,12 @@ const StyledImageInput = styled.input`
 `;
 const StyledUploadButton = styled.button`
  &::after{
-  content: "";
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background: url(${upload}) center/100%;
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url(${upload}) center/100%;
+  }
 `;
 const StyledSubmitButton = styled.button<{ clicked: boolean }>`
   &::after {
