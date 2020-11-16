@@ -1,38 +1,57 @@
 import BasicStore from "@store/BasicStore";
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, flow } from "mobx";
 import RootStore from "@store/RootStore";
 import { Request } from "express";
 import { ChatBox } from "@payload/chat";
+import {createDummyChatData} from "@pages/room/dummy";
+import { ISingleChat } from "src/models/chat";
 
+
+type ChatDataStatus = "pending" | "done";
 
 class ChatStore extends BasicStore{
-  @observable chatMessages: ChatBox;
-  @observable currentPage: number;
+  // @observable chatMessages: ChatBox;
+  @observable chatMessages: ISingleChat[] = [];
+  @observable currentPage: number | null = 0;
+  @observable hasEnteredBefore: boolean = false;
+  @observable status: ChatDataStatus = "pending";
 
   constructor(rootStore: RootStore){
     super(rootStore);
-    makeObservable(this);
-    this.chatMessages = [];
-    this.currentPage = this.rootStore.reducedStore.sessionStore.hasRead;
+    makeObservable(this,);
+  }
+  
+  // @action async fetchChatMessages(req: Request ){
+  //   const [error, response] = await this.api.GET<ChatBox>("/chat",{
+  //     id: 1,
+  //     pages: 1,
+  //   });
+  //   if(error){
+  //     throw Error(error.error_message);
+  //   }
+  //   if(response){
+  //     this.chatMessages = response.data
+  //   }
+  // }
+  @action feedChatMessage(){
+    
   }
   
 
-  @action async fetchChatMessages(req: Request ){
-    const [error, response] = await this.api.GET<ChatBox>("/chat",{
-      id: 1,
-      pages: 1,
-    });
-    if(error){
-      throw Error(error.error_message);
+  fetchNewChatMessage = flow(function *(){
+    this.status = "pending";
+    try {
+      const newMessages = yield new Promise<ReturnType<typeof createDummyChatData>>(
+        (resolve) => setTimeout(() => {resolve(createDummyChatData())},600)
+      )
+      this.chatMessages = [...this.chatMessages, ...newMessages];
+    } catch (e){
+      console.error(e);
+    } finally {
+      this.status = "done";
     }
-    if(response){
-      this.chatMessages = response.data
-    }
-  }
-  
-  @action async fetchNewChtMessage(){
-    
-  }
+  });
+
 }
 
 export default ChatStore;

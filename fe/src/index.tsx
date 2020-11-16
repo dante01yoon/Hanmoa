@@ -3,12 +3,19 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { loadableReady } from '@loadable/component';
 import { App } from './App';
+import { createStore } from "@store/u"
+import storeSpec from "@store/storeSpec";
 
-loadableReady(() => { // CSR일때
+const store = createStore(storeSpec);
+console.log("store: ", store);
+
+loadableReady( () => { // CSR일때
+  
   const rootElement = document.getElementById('root');
+
   hydrate(
     <BrowserRouter>
-      <App />
+      <App store={store}/>
     </BrowserRouter>,
     rootElement
   )

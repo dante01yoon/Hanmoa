@@ -84,7 +84,7 @@ const dummyData: ISingleChat[] = [
     },
 ]
 
-const createDummyChatData = (): ISingleChat[] => {
+export const createDummyChatData = (): ISingleChat[] => {
   return [...dummyData]
 }
 

@@ -13,7 +13,6 @@ import { initStores as initMobxStores } from "src/middleware/renderApp";
 import storeSpec from "src/store/storeSpec";
 import { routes } from "@components/route/route";
 import { matchRoutes } from "react-router-config";
-import { match } from 'assert';
 
 const app = express();
 
@@ -51,10 +50,8 @@ app.get('*', async (req,res) => {
   const context = {};
 
   // initialize store. 
-
   // const store = createStore();
   const mobxStores = await initMobxStores(storeSpec, req);
-  console.log("mobxStores: ", mobxStores);
   // server side data fetch in page component 
   routes.filter((value) => {
     if( value.path){

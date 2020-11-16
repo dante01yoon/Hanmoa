@@ -1,14 +1,13 @@
-import { computed, makeObservable, action } from "mobx"; 
+import { computed, makeObservable, action, observable } from "mobx"; 
 import RootStore from "./RootStore";
 import {http} from "@apis/httpModule";
 import {UserPayload} from "src/payload/user";
 import BasicStore from "./BasicStore"; 
 import { Request } from "express";
-import { ReducedStore } from "./u";
 
 class SessionStore extends BasicStore{
-  curUserCode: string | null;
-  waitingForServer: boolean;
+  @observable curUserCode: string | null;
+  @observable waitingForServer: boolean;
 
   constructor(reducedStore: RootStore,){
     super(reducedStore); 
