@@ -38,13 +38,13 @@ class ChatStore extends BasicStore{
   }
   
 
-  fetchNewChatMessage = flow(function *(){
+  fetchPreviousChatMessage = flow(function *(){
     this.status = "pending";
     try {
       const newMessages = yield new Promise<ReturnType<typeof createDummyChatData>>(
         (resolve) => setTimeout(() => {resolve(createDummyChatData())},600)
       )
-      this.chatMessages = [...this.chatMessages, ...newMessages];
+      this.chatMessages = [...newMessages, ...this.chatMessages, ];
     } catch (e){
       console.error(e);
     } finally {

@@ -91,9 +91,11 @@ type TEventType = {
 interface IChatModelProps extends Omit<ISingleChat, "chatCardId"> {
   align: "left" | "right";
   event: "join" | "leave" | "none";
+  ref: React.RefObject<HTMLElement> | undefined;
 }
 
 const ChatCard: FC<IChatModelProps> = ({
+  ref,
   align,
   chatData,
   writtenAt,

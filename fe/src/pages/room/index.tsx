@@ -49,10 +49,7 @@ const RoomPage: FC & {
   const {user: {studentId}} = useSelector((state: RootState) => state.user);
 
   const fetchDummyData = async () => {
-    // setTimeout(() => {
-    //   setChatDataState(dummyChatData);
-    // }, 3000);
-    await chatStore.fetchNewChatMessage();
+    await chatStore.fetchPreviousChatMessage();
   };
 
   useEffect(() => {
@@ -62,7 +59,7 @@ const RoomPage: FC & {
   useEffect(() => {
       ioRef.current = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if(entry.intersectionRatio === 0 ) {
+          if(entry.intersectionRatio === 1 ) {
             if( targetRef && targetRef.current) {
               fetchDummyData();
               targetRef.current.scrollTop + targetRef.current.offsetTop >= targetRef.current.scrollHeight * 0.8;
@@ -102,13 +99,14 @@ const RoomPage: FC & {
     *  20개 미만이라는 말은 더 이상 렌더링 할 채팅 데이터가 디비에 없다는 뜻.
     */
     // 
-    
+  
     return (
       <>
         {chatStore.chatMessages.map((value: ISingleChat, index: number) => {
           const { chatCardId, ...rest } = value;
           return (
             <ChatCard
+              ref={index === 0 ? targetRef : undefined}
               align={studentId ? 'right': 'left'}
               key={`single_chat_card::${chatCardId}`}
               event={"none"}
@@ -132,6 +130,7 @@ const RoomPage: FC & {
       <StyledArticle>
         <ChatPeopleContainer>{renderChatPeopleContent()}</ChatPeopleContainer>
       </StyledArticle>
+      <button onClick={fetchDummyData}>click Me</button>
     </StyledSelf>
   );
 };
