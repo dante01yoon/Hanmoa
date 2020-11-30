@@ -1,9 +1,14 @@
+import { v4 as uuidv4 } from "uuid";
 const mongoose = require("mongoose");
 const {generateToken} = require("lib/token");
 
 const { Schema } = mongoose; 
 
 const User = new Schema({
+  _id: {
+    type: String,
+    default: () => uuidv4().replace(/\-/g, ""),
+  },
   profile: {
     id: String, 
     name: String,
@@ -24,19 +29,52 @@ const User = new Schema({
     type: Date,
     default: Date.now
   },
+},{
+  timestamps: true,
+  collection: "users",
 }); 
 
-User.statics.findByStudentNumber = function(studentNumber) {
-  return this.findOne({'profile.studentNumber' : studentNumber}).exec();
-}
+User.statics.createUser = async function(args){
+  const { name, email, picture, studentNumber } = args;
+  
+  try {
+    const user = await this.create({
+      profile: {
+        name,
+        studentNumber,
+        picture,
+        email
+      }
+    });
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
-User.statics.findByEmail = function(email){
-  return this.findOne({email}).exec();
-}
+User.statics.findByStudentNumber = async function(studentNumber) {
+  try {
+    const user = await this.findOne({'profile.studentNumber' : studentNumber});
+    if(!user) throw ({error: "No user with this studentNumber"});
+    return user;
+  } catch(error){
+    throw error;
+  }
+};
+
+User.statics.findByEmail = async function(email){
+  try {
+    const user = await this.findOne({email});
+    if(!user) throw ({ error: "No user with this email found"});
+    return user; 
+  } catch(error) {
+    throw error;
+  }
+};
 
 User.statics.findByName = function(name) {
   return this.findOne({'profile.username': name}).exec();
-}
+};
 
 User.statics.register = function({ id,name, email, studentNumber, picture}) {
   const newAccount = new this({
@@ -59,6 +97,6 @@ User.methods.generateToken = async function() {
   };
 
   return await generateToken(payload, 'account');
-}
+};
 
 module.exports = mongoose.model("User", User);

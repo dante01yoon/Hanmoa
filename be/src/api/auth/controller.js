@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const User = require("models/user"); 
 const dotenv = require("dotenv");
+import makeValidation from "@withvoid/make-validation";
 const { decodeToken } = require("lib/token");
 const { model } = require("../../models/user");
 
@@ -123,11 +124,14 @@ exports.convert = async(ctx) => {
     const user = await User.findByEmail({
       email
     }).exec();
+
     ctx.body = {
       data: user,
     }
   } catch(e){
+
     ctx.status = 403;
+
     ctx.body = {
       status_code: 403,
       status_message: "user not found",
@@ -142,6 +146,7 @@ exports.logout = async(ctx) =>{
     maxAge: 0,
     httpOnly: true
   });
+
   ctx.status = 204;
 }; 
 

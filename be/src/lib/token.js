@@ -36,8 +36,8 @@ const jwtSecret = process.env.JWT_SECRET_KEY
   )
  }
 
-exports.jwtMiddleware = async( ctx, next) => {
-  const token = ctx.cookies.get('hm_s_guit');
+ exports.jwtMiddleware = async( ctx, next) => {
+  const token = ctx.cookies.get('_hm_guit');
   if(!token) return next(); // 토큰이 없으면 다음 작업을 진행함 
   
   try {

@@ -5,21 +5,29 @@
   "license": "MIT",
   "dependencies": {
     "@koa/cors": "^3.1.0",
+    "@withvoid/make-validation": "^1.0.5",
     "cross-env": "^7.0.2",
-    "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^9.4.0",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.10.15",
     "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.5"
+    "uuid": "^8.3.1"
   },
   "scripts": {
-    "start": "NODE_PATH=src nodemon --watch src/ src/index.js",
-    "start:window": "cross-env NODE_PATH=src nodemon --watch src/ src/index.js"
+    "start": "NODE_PATH=src nodemon --exec babel-node src/ src/index.js",
+    "start:window": "cross-env NODE_PATH=src nodemon --watch babel-node src/ src/index.js"
   },
   "devDependencies": {
-    "eslint": "^7.11.0"
+    "@babel/cli": "^7.12.7",
+    "@babel/core": "^7.12.7",
+    "@babel/node": "^7.12.6",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.11.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.6"
   }
 }
