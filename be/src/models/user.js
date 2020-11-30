@@ -72,9 +72,26 @@ User.statics.findByEmail = async function(email){
   }
 };
 
-User.statics.findByName = function(name) {
-  return this.findOne({'profile.username': name}).exec();
+User.statics.findByName = async function(name) {
+  try {
+    const user = await this.findOne({'profile.username': name});
+    if(!user){
+      throw ({error: "No User with this username found"});
+    }
+    return user;
+  } catch (error) {
+    throw error;
+  }
 };
+
+User.statics.getUsers = function(){
+  try{
+    const users = await this.find();
+    return users;
+  } catch(error) {
+    throw error;
+  }
+}
 
 User.statics.register = function({ id,name, email, studentNumber, picture}) {
   const newAccount = new this({

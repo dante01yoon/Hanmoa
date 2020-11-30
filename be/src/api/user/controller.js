@@ -1,5 +1,4 @@
 import makeValidation from "@withvoid/make-validation";
-import { escapeRegExp } from "lodash";
 import User from "../../models/user";
 
 const onCreateUser = async (ctx) => {
@@ -81,6 +80,34 @@ const onGetUserByStudentNumber = async (ctx) => {
     res.status = 500;
     res.body = error;
     return;
+  }
+}
+
+const onGetAllUsers = async function({request: req, response: res}){
+  
+  const {query } = req;
+  if(!query){
+    res.status = 400;
+    res.body = {
+      error: "파라메터 없음",
+      status: 400
+    }
+  }
+
+  try {
+    const users = await UserModel.getUsers();
+    res.status = 200;
+    res.body = {
+      ...users,
+      success: true,
+    };
+    return;
+  }catch (error) {
+    res.status = 500;
+    res.body = {
+      ...error,
+      success: false,
+    };
   }
 }
 
