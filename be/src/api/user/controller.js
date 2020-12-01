@@ -85,7 +85,7 @@ const onGetUserByStudentNumber = async (ctx) => {
 
 const onGetAllUsers = async function({request: req, response: res}){
   
-  const {query } = req;
+  const { query } = req;
   if(!query){
     res.status = 400;
     res.body = {
@@ -95,7 +95,7 @@ const onGetAllUsers = async function({request: req, response: res}){
   }
 
   try {
-    const users = await UserModel.getUsers();
+    const users = await User.getUsers();
     res.status = 200;
     res.body = {
       ...users,
@@ -103,6 +103,7 @@ const onGetAllUsers = async function({request: req, response: res}){
     };
     return;
   }catch (error) {
+    console.log(error);
     res.status = 500;
     res.body = {
       ...error,
@@ -115,4 +116,5 @@ export default {
   onCreateUser,
   onGetUserByEmail,
   onGetUserByStudentNumber,
+  onGetAllUsers,
 }

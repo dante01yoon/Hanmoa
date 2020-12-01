@@ -84,7 +84,7 @@ User.statics.findByName = async function(name) {
   }
 };
 
-User.statics.getUsers = function(){
+User.statics.getUsers = async function(){
   try{
     const users = await this.find();
     return users;
@@ -93,6 +93,12 @@ User.statics.getUsers = function(){
   }
 }
 
+/**
+ * @param {string} name
+ * @param {string} studentNumber
+ * @param {string} picture
+ * @param {string} email
+ */
 User.statics.register = function({ id,name, email, studentNumber, picture}) {
   const newAccount = new this({
     profile: {
