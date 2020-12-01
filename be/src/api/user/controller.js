@@ -36,7 +36,7 @@ const onCreateUser = async (ctx) => {
     }
     return;
   } catch (error){
-    console.log("error: ",error);
+    console.error("in onCreateUser:")
     res.status = 500;
     res.body = {
       success: false,
@@ -76,7 +76,7 @@ const onGetUserByStudentNumber = async (ctx) => {
     res.body = user;
     return;
   } catch (error) {
-    console.log(error);
+    console.error("in onGetUserByStudentNumber:")
     res.status = 500;
     res.body = error;
     return;
@@ -103,7 +103,7 @@ const onGetAllUsers = async function({request: req, response: res}){
     };
     return;
   }catch (error) {
-    console.log(error);
+    console.error("in onGetAllUsers:")
     res.status = 500;
     res.body = {
       ...error,
@@ -112,9 +112,35 @@ const onGetAllUsers = async function({request: req, response: res}){
   }
 }
 
+const onDeleteUserById = async ({request, response}) => {
+  try {
+    const user = await User.deleteById(request.params.id);
+    if(!user){
+      response.status = 400;
+      response.body = {
+        success: false,
+      }
+      return;
+    }
+    response.status = 200;
+    response.body = {
+      success: true,
+      ...user,
+    }
+    return;
+  } catch (error){
+    console.error("in onDeleteUserById:")
+    response.status = 500;
+    response.body = {
+      error,
+      success: false
+    }
+  }
+}
 export default {
   onCreateUser,
   onGetUserByEmail,
   onGetUserByStudentNumber,
   onGetAllUsers,
+  onDeleteUserById,
 }

@@ -34,6 +34,14 @@ const User = new Schema({
   collection: "users",
 }); 
 
+/**
+ * @param {object} { name, studentNumber, picture, email }
+ * @param {string} name
+ * @param {string} studentNumber
+ * @param {string} picture
+ * @param {string} email
+ */
+
 User.statics.createUser = async function(args){
   const { name, email, picture, studentNumber } = args;
   
@@ -93,12 +101,16 @@ User.statics.getUsers = async function(){
   }
 }
 
-/**
- * @param {string} name
- * @param {string} studentNumber
- * @param {string} picture
- * @param {string} email
- */
+User.statics.deleteById = async function(id){
+  try {
+    const user = await this.remove({ _id: id });
+    return user;
+  } catch (error){
+    throw error;
+  }
+}
+
+
 User.statics.register = function({ id,name, email, studentNumber, picture}) {
   const newAccount = new this({
     profile: {
@@ -112,6 +124,7 @@ User.statics.register = function({ id,name, email, studentNumber, picture}) {
 
   return newAccount.save();
 };
+
 
 User.methods.generateToken = async function() {
   const payload = {
