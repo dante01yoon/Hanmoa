@@ -63,7 +63,9 @@ User.statics.createUser = async function(args){
 User.statics.findByStudentNumber = async function(studentNumber) {
   try {
     const user = await this.findOne({'profile.studentNumber' : studentNumber});
-    if(!user) throw ({error: "No user with this studentNumber"});
+    if(!user){
+      throw ({error: "No user with this studentNumber"});
+    } 
     return user;
   } catch(error){
     throw error;

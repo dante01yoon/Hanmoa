@@ -1,7 +1,7 @@
 import IUser from './user';
 
 export interface ISingleChat extends Omit<IUser, "id" | "createdAt" | "modifiedAt">{
-  chatCardId: number;
+  chatCardId: string;
   chatData: string;
   writtenAt: string;
 }

@@ -1,3 +1,5 @@
+import { encode } from "../jwt";
+
 const fetch = require("node-fetch");
 const User = require("models/user"); 
 const dotenv = require("dotenv");
@@ -6,6 +8,22 @@ const { decodeToken } = require("lib/token");
 const { model } = require("../../models/user");
 
 dotenv.config(); 
+
+const signInWithGoogle = async ({request, response}, next) => {
+  const request =  await fetch("https://oauth2.googleapis.com/token",{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      grant_type: "authorization_code",
+      code,
+      redirect_uri: "postmessage"
+    })
+  });
+}
 
 const exists = async(email) => {
   let user = null; 

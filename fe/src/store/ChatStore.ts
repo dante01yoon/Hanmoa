@@ -15,6 +15,7 @@ class ChatStore extends BasicStore{
   @observable currentPage: number | null = 0;
   @observable hasEnteredBefore: boolean = false;
   @observable status: ChatDataStatus = "pending";
+  @observable clickedCard: string = "";
 
   constructor(rootStore: RootStore){
     super(rootStore);
@@ -37,7 +38,10 @@ class ChatStore extends BasicStore{
     
   }
   
-
+  @action clickChatCard(cardCode: string){
+    this.clickedCard = cardCode;
+  };
+  
   fetchPreviousChatMessage = flow(function *(){
     this.status = "pending";
     try {

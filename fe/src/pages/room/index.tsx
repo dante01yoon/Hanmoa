@@ -106,6 +106,7 @@ const RoomPage: FC & {
           const { chatCardId, ...rest } = value;
           return (
             <ChatCard
+              code={value.chatCardId}
               ref={index === 0 ? targetRef : undefined}
               align={studentId ? 'right': 'left'}
               key={`single_chat_card::${chatCardId}`}
