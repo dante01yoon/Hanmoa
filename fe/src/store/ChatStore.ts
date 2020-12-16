@@ -16,7 +16,7 @@ class ChatStore extends BasicStore{
   @observable hasEnteredBefore: boolean = false;
   @observable status: ChatDataStatus = "pending";
   @observable clickedCard: string = "";
-  @observable currentChat?: ISingleChat;
+  @observable currentChat?: ISingleChat = undefined;
 
   constructor(rootStore: RootStore){
     super(rootStore);
@@ -36,12 +36,11 @@ class ChatStore extends BasicStore{
   //   }
   // }
 
-  
+  @action
   clickChatCard(cardCode: string){
     this.clickedCard = cardCode;
   };
   
-  @action
   fetchSingleMessage = flow(function *(chatCardId: ISingleChat["chatCardId"]){
     this.status = "pending";
     
@@ -63,7 +62,6 @@ class ChatStore extends BasicStore{
     }
   })
 
-  @action
   fetchNewChatMessage = flow(function *(){
     this.status = "pending";
 
@@ -79,7 +77,6 @@ class ChatStore extends BasicStore{
     }
   })
 
-  @action
   fetchPreviousChatMessage = flow(function *(){
     this.status = "pending";
 

@@ -42,11 +42,7 @@ const RoomPage: FC & {
   const {user: {studentId}} = useSelector((state: RootState) => state.user);
 
   const fetchDummyData = async () => {
-    console.log("chatStore in fetchDummyData: ", chatStore);
-    debugger;
     await chatStore.fetchNewChatMessage();
-    console.log("chatStore after fetchNewChatMessage: ", chatStore);
-
   };
 
   useEffect(() => {
