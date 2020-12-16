@@ -1,17 +1,15 @@
-import React, { FC, useState, ReactNode, useEffect, useRef } from "react";
+import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import {RootState} from "src/store";
 import styled from "styled-components";
-import dummyChatData from "./dummy";
 import ChatCard from "@components/chat/card";
 import EmbedChatRoom from "@components/embed/chatRoom";
-import ChatPeopleContainer from "@components/embed/chatPeople";
 import SkeletonCard from "@components/skeleton/card";
-import IChat, { ISingleChat } from "src/models/chat";
+import { ISingleChat } from "src/models/chat";
 import makeFetchStoreOnServer from "@utils/makeFetchStoreOnServer";
 import ChatStore from "@store/ChatStore";
 import {Request} from "express";
-import { observer } from "mobx-react-lite";
+import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores";
 
 const StyledSelf = styled.section`
@@ -32,18 +30,11 @@ const StyledArticle = styled.article`
 const RoomPage: FC & {
   initStoreOnServer: Function;
 } = ({}) => {
-  const [chatDataState, setChatDataState] = useState({
-    chatGroupId: 0,
-    chatData: [],
-    chatPeople: [],
-  } as IChat);
-
   const { chatStore } = useMobxStores();
   console.log("chatStore: ", chatStore);
   const chatRoomRef = useRef<HTMLElement>(null);
   const ioRef = useRef<IntersectionObserver>();
   const targetRef = useRef<HTMLElement>(null);
-  const { chatGroupId, chatData } = chatDataState;
   // 1. redux - useDispatch fetch method call 어디에다가 모듈화?
   // 2. response 오면 state 변경 ->
   // 3. RoomPage Container state propagation
@@ -51,7 +42,11 @@ const RoomPage: FC & {
   const {user: {studentId}} = useSelector((state: RootState) => state.user);
 
   const fetchDummyData = async () => {
-    await chatStore.fetchPreviousChatMessage();
+    console.log("chatStore in fetchDummyData: ", chatStore);
+    debugger;
+    await chatStore.fetchNewChatMessage();
+    console.log("chatStore after fetchNewChatMessage: ", chatStore);
+
   };
 
   useEffect(() => {
@@ -86,7 +81,8 @@ const RoomPage: FC & {
   },[]);
 
   const renderChatContent = (): ReactNode => {
-    if (!chatStore.chatMessages.length) {
+    console.log("in RenderChatContent")
+    if (!chatStore || !chatStore.chatMessages.length) {
       const dummyArray = new Array(10).fill(0);
       return (
         <>
@@ -101,7 +97,6 @@ const RoomPage: FC & {
     *  20개 미만이라는 말은 더 이상 렌더링 할 채팅 데이터가 디비에 없다는 뜻.
     */
     // 
-  
     return (
       <>
         {chatStore.chatMessages.map((value: ISingleChat, index: number) => {
@@ -121,10 +116,6 @@ const RoomPage: FC & {
     );
   };
  
-  const renderChatPeopleContent = (): JSX.Element => {
-    return <></>;
-  };
-
   return (
     <StyledSelf>
       <StyledArticle ref={chatRoomRef}>

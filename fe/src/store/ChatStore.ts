@@ -41,6 +41,7 @@ class ChatStore extends BasicStore{
     this.clickedCard = cardCode;
   };
   
+  @action
   fetchSingleMessage = flow(function *(chatCardId: ISingleChat["chatCardId"]){
     this.status = "pending";
     
@@ -62,6 +63,23 @@ class ChatStore extends BasicStore{
     }
   })
 
+  @action
+  fetchNewChatMessage = flow(function *(){
+    this.status = "pending";
+
+    try {
+      const newMessages = yield new Promise<ReturnType<typeof createDummyChatData>>(
+        (resolve) => setTimeout(() => { resolve(createDummyChatData())}, 600)
+      );
+      this.chatMessages = newMessages;
+    } catch(error) {
+      console.error(error);
+    } finally {
+      this.status = "done";
+    }
+  })
+
+  @action
   fetchPreviousChatMessage = flow(function *(){
     this.status = "pending";
 
