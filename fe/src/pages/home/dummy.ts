@@ -1,4 +1,5 @@
 import { ICardData } from "src/models/card";
+import { nanoid } from "nanoid";
 import DummyImg from "src/asset/netflix.jpg";
 export const singleDummy: ICardData = {
   id: 1, //방 고유 아이디
@@ -6,7 +7,7 @@ export const singleDummy: ICardData = {
     "오래 볼 분만 제발 오래 볼 문만 제발제발제발 오랫동안 같이 볼 분들만 들어와주세요 제발요.", //방 제목
   description: "this is test room", // 방 내용
   host: {
-    id: 1,
+    id: nanoid(),
     image: "",
     studentNumber: 13,
     name: "jay", // 이름
@@ -17,7 +18,7 @@ export const singleDummy: ICardData = {
     joinAt: [1, 2], // 내가 현재 참여중인 방의 id
   }, // 방장
   author: {
-    id: 2,
+    id: nanoid(),
     image: "",
     studentNumber: 13,
     name: "dante", // 이름
@@ -31,7 +32,7 @@ export const singleDummy: ICardData = {
   modifiedAt: "some day", // 최근 수정 날짜
   members: [
     {
-      id: 1,
+      id: nanoid(),
       studentNumber: 13, // 학번
       name: "jay", // 이름
       image: "..", // 유저 이미지

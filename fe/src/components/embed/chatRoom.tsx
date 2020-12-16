@@ -5,7 +5,7 @@ import styled from "styled-components";
 import enter from "src/asset/enter.svg";
 import upload from "src/asset/upload.svg";
 const StyledSelf = styled.div`
-  background-color: ${(p) => p.theme.colors.yello_white};
+  background-color: ${(p) => p.theme.colors.dark_sky_blue};
   height: 75vh;
 `;
 
@@ -22,11 +22,12 @@ const StyledChatContainer = styled.div`
 
 const StyledEnterContainer = styled.div`
   display: flex;
+  width: 100%;
+
   & > form {
     width: 100%;
     display: flex;
   }
-  max-width: 500px;
   ${(p) => p.theme.media.lb`
       width: 480px;
   `}

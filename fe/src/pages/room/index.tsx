@@ -20,8 +20,10 @@ const StyledSelf = styled.section`
 `;
 
 const StyledArticle = styled.article`
+  width: 100%;
+  
   & > div:first-child {
-    background-color: ${(p) => p.theme.colors.yellow_white};
+    background-color: ${(p) => p.theme.colors.dark_sky_blue};
     overflow-y: auto;
     max-height: 75vh;
   }
@@ -127,9 +129,6 @@ const RoomPage: FC & {
     <StyledSelf>
       <StyledArticle ref={chatRoomRef}>
         <EmbedChatRoom>{renderChatContent()}</EmbedChatRoom>
-      </StyledArticle>
-      <StyledArticle>
-        <ChatPeopleContainer>{renderChatPeopleContent()}</ChatPeopleContainer>
       </StyledArticle>
       <button onClick={fetchDummyData}>click Me</button>
     </StyledSelf>

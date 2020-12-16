@@ -89,7 +89,7 @@ export const createDummyChatData = (): ISingleChat[] => {
 
 const dummyChatPeople: IUser[] = [
     {
-        id: 123,
+        id: nanoid(),
         studentNumber: 13,
         name: "윤재원",
         image: null,
@@ -97,7 +97,7 @@ const dummyChatPeople: IUser[] = [
         modifiedAt: "",
     },
     {
-        id: 1234,
+        id: nanoid(),
         studentNumber: 14,
         name: "조재은",
         image: null,
@@ -105,7 +105,7 @@ const dummyChatPeople: IUser[] = [
         modifiedAt: "",
     },
     {
-        id: 123,
+        id: nanoid(),
         studentNumber: 15,
         name: "서상원",
         image: null,
