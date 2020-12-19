@@ -1,9 +1,10 @@
 import React, { FC, ReactNode, useRef, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import styled from "styled-components";
+import { css } from "styled-components";
 import * as yup from "yup";
 
-import enter from "src/asset/enter.svg";
+import link from "src/asset/link.svg";
 import upload from "src/asset/upload.svg";
 const StyledSelf = styled.div`
   background-color: ${(p) => p.theme.colors.dark_sky_blue};
@@ -39,6 +40,7 @@ const StyledTextArea = styled.textarea`
   background-color: ${(p) => p.theme.colors.whiteGray};
   display: block;
   resize: none;
+  font-size: 18px;
   width: 100%;
   height: 10vh;
   padding: 16px;
@@ -50,6 +52,7 @@ const StyledTextArea = styled.textarea`
 `;
 
 const StyledToolBox = styled.div`
+  display: flex;
   background: ${({theme}) => theme.colors.gray_200};
   width: 100%;
   height: 48px;
@@ -59,14 +62,35 @@ const StyledImageInput = styled.input`
   display: none;
 `;
 
-const StyledUploadButton = styled.button`
- &::after{
-    content: "";
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background: url(${upload}) center/100%;
+const iconButtonStyle = (props: any) => css`
+  display: flex;
+  background: ${ props.clicked ? props.theme.colors.gray_300: "none"};
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+
+  &::after{
+      content: "";
+      line-height: 48px;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: url(${props.icon}) center/100%;
   }
+`; 
+
+const StyledLinkButton = styled.div<{
+  icon: string;
+  clicked?: boolean;
+}>`
+  ${iconButtonStyle}
+`;
+
+const StyledUploadButton = styled.div<{
+  icon: string;
+  clicked?: boolean;
+}>`
+  ${iconButtonStyle}
 `;
 
 const StyledSubmitButtonWrapper = styled.div`
@@ -170,7 +194,13 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
         <StyledChatContainer>{children}</StyledChatContainer>
       </StyledSelf>
       <StyledToolBox>
-            
+        <StyledUploadButton 
+          clicked
+          icon={upload}
+        />
+        <StyledLinkButton
+          icon={link}
+        />
       </StyledToolBox>
       <StyledEnterContainer>
         <form onSubmit={formik.handleSubmit}>
