@@ -117,7 +117,7 @@ const RoomPage: FC & {
       <StyledArticle ref={chatRoomRef}>
         <EmbedChatRoom>{renderChatContent()}</EmbedChatRoom>
       </StyledArticle>
-      <button onClick={fetchDummyData}>click Me</button>
+      {/* <button onClick={fetchDummyData}>click Me</button> */}
     </StyledSelf>
   );
 };

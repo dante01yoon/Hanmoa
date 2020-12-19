@@ -50,8 +50,10 @@ class ChatStore extends BasicStore{
       this.currentChat = cachedChat;
     } else {
       try {
+        const dummyChatMessage = createDummyChatData();
+        const foundDummyChatMessage = dummyChatMessage.find(item => item.chatCardId === chatCardId);
         const targetMessage = yield new Promise<ISingleChat>((resolve) => {
-          setTimeout(() => resolve(),500);
+          setTimeout(() => resolve(foundDummyChatMessage ?? dummyChatMessage[0]),500);
         });
         this.currentChat = targetMessage;
       } catch (error) {
