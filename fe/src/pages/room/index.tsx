@@ -1,6 +1,7 @@
 import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import {RootState} from "src/store";
+import { useHistory } from "react-router-dom"
 import styled from "styled-components";
 import ChatCard from "@components/chat/card";
 import EmbedChatRoom from "@components/embed/chatRoom";
@@ -11,6 +12,7 @@ import ChatStore from "@store/ChatStore";
 import {Request} from "express";
 import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores";
+import getRoomCode from "@utils/chat/getCode";
 
 const StyledSelf = styled.section`
   display: flex;
@@ -40,40 +42,45 @@ const RoomPage: FC & {
   // 3. RoomPage Container state propagation
 
   const {user: {studentId}} = useSelector((state: RootState) => state.user);
-
-  const fetchDummyData = async () => {
+  
+  const fetchDummyData = async (code: string) => {
     await chatStore.fetchNewChatMessage();
   };
 
+  const history = useHistory();
+  
   useEffect(() => {
-    fetchDummyData();
+    console.log("history", history);
+    fetchDummyData(getRoomCode(history.location.pathname));
   }, []);
 
   useEffect(() => {
-      ioRef.current = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.intersectionRatio === 1 ) {
-            if( targetRef && targetRef.current) {
-              fetchDummyData();
-              targetRef.current.scrollTop + targetRef.current.offsetTop >= targetRef.current.scrollHeight * 0.8;
-            }
-          } 
-        });
-      },{
-        root: chatRoomRef.current,
-        threshold: 0,      
+    ioRef.current = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.intersectionRatio === 1 ) {
+          if( targetRef && targetRef.current) {
+            targetRef.current.scrollTop + targetRef.current.offsetTop >= targetRef.current.scrollHeight * 0.8;
+          }
+        } 
       });
-      if(!targetRef || !targetRef.current ){
-        return ;
-      } else{
-        ioRef.current.observe(targetRef.current);
-      }
+    },{
+      root: chatRoomRef.current,
+      threshold: 0,      
+    });
+    if(!targetRef || !targetRef.current ){
+      return ;
+    } else{
+      ioRef.current.observe(targetRef.current);
+    }
 
-      return () => {
-        if(ioRef.current && targetRef && targetRef.current){
-          ioRef.current.unobserve(targetRef.current);
-        }
+    return () => {
+      if(ioRef.current && targetRef && targetRef.current){
+        ioRef.current.unobserve(targetRef.current);
       }
+    }
+
+    
+
   },[]);
 
   const renderChatContent = (): ReactNode => {

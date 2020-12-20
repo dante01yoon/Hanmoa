@@ -17,6 +17,7 @@ class ChatStore extends BasicStore{
   @observable status: ChatDataStatus = "pending";
   @observable clickedCard: string = "";
   @observable currentChat?: ISingleChat = undefined;
+  @observable next: boolean = false;
 
   constructor(rootStore: RootStore){
     super(rootStore);
@@ -63,8 +64,10 @@ class ChatStore extends BasicStore{
       }
     }
   })
-
-  fetchNewChatMessage = flow(function *(){
+  
+  fetchNewChatMessage = flow(function *(
+    roomCode: string,
+  ){
     this.status = "pending";
 
     try {
@@ -72,6 +75,7 @@ class ChatStore extends BasicStore{
         (resolve) => setTimeout(() => { resolve(createDummyChatData())}, 600)
       );
       this.chatMessages = newMessages;
+      this.next = false;
     } catch(error) {
       console.error(error);
     } finally {
