@@ -151,7 +151,11 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
     },
     onSubmit: (values) => handleSubmit(values),
   });
-
+  
+  useEffect(() => {
+    formik.validateForm();
+  },[]);
+  
   const textareaFocusHandler = (e: FocusEvent): void => {
     setIsFocusing(true);
   };
@@ -161,9 +165,11 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   };
 
   const isTextValid = () => {
-    return !!formik.errors.chat;
+    return !!formik.errors.chat && !formik.isSubmitting;
   };
-
+  useEffect(() => {
+    console.log(formik.errors.chat);
+  })
   const handleTextArea = () => {
     if (textareaRef.current) {
       const refObject = {
@@ -179,6 +185,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
       textareaRef.current.focus();
     }
   };
+
   const uploadHandler = (e: React.MouseEvent<HTMLButtonElement>) => {};
   useEffect(() => {
     handleTextArea();
@@ -188,6 +195,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
       textareaRef.current?.removeEventListener("blur", textareaBlurHandler);
     };
   }, []);
+
   return (
     <>
       <StyledSelf>
@@ -216,7 +224,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
             <StyledSubmitButton
               clicked={clicked}
               type="submit"
-              disabled={!isTextValid()}
+              disabled={isTextValid()}
             >
               입력
             </StyledSubmitButton>
