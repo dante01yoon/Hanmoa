@@ -4,15 +4,19 @@ import {StaticRouter} from "react-router";
 import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import GlobalLayout from '@components/gnb/layout';
-import HanmoaRouter, {renderRoutes}  from '@components/route/route';
+import {renderRoutes}  from '@components/route/route';
 import { Provider } from "mobx-react";
 import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider } from '@store/index'; 
+import { ReducedStore } from "@store/u";
 
 export interface IRootRouter {
   router?: ReactElement;
 }
 
+export interface AppProps extends IRootRouter {
+  store?: ReducedStore
+}
 const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
   return React.cloneElement(
     router ? router : typeof window === "undefined" ? <StaticRouter /> : <BrowserRouter />,
@@ -21,15 +25,17 @@ const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
   )
 }
 
-export const App:FC<IRootRouter> = ({
+export const App:FC<AppProps> = ({
   router,
+  store,
 }) => {
+  console.log("store: ", store);
   return (
-    <HanmoaTheme>
+    <HanmoaTheme> 
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
-        <Provider>
+        <Provider {...store}>
           <ReduxProvider>
             <ModalProvider>
               <GlobalLayout>

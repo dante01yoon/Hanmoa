@@ -1,10 +1,29 @@
+import { encode } from "../jwt";
+
 const fetch = require("node-fetch");
 const User = require("models/user"); 
 const dotenv = require("dotenv");
+import makeValidation from "@withvoid/make-validation";
 const { decodeToken } = require("lib/token");
 const { model } = require("../../models/user");
 
 dotenv.config(); 
+
+const signInWithGoogle = async ({request, response}, next) => {
+  const request =  await fetch("https://oauth2.googleapis.com/token",{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      grant_type: "authorization_code",
+      code,
+      redirect_uri: "postmessage"
+    })
+  });
+}
 
 const exists = async(email) => {
   let user = null; 
@@ -123,11 +142,14 @@ exports.convert = async(ctx) => {
     const user = await User.findByEmail({
       email
     }).exec();
+
     ctx.body = {
       data: user,
     }
   } catch(e){
+
     ctx.status = 403;
+
     ctx.body = {
       status_code: 403,
       status_message: "user not found",
@@ -142,6 +164,7 @@ exports.logout = async(ctx) =>{
     maxAge: 0,
     httpOnly: true
   });
+
   ctx.status = 204;
 }; 
 

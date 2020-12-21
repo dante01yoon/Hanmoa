@@ -3,6 +3,8 @@ import styled from "styled-components";
 import ProfileImg from "src/asset/profile.svg";
 import { ISingleChat } from "@models/chat";
 import timeSlice from "@utils/chat/timeSlice";
+import ContentBox from "./contentBox";
+import { useMobxStores } from "@utils/store/useStores";
 
 const StyledListGroup = styled.ul`
   display: flex;
@@ -89,12 +91,16 @@ type TEventType = {
   event: "join" | "leave" | "none";
 };
 interface IChatModelProps extends Omit<ISingleChat, "chatCardId"> {
+  code: ISingleChat["chatCardId"];
   align: "left" | "right";
   event: "join" | "leave" | "none";
+  ref: React.RefObject<HTMLElement> | undefined;
 }
 
 const ChatCard: FC<IChatModelProps> = ({
+  ref,
   align,
+  code,
   chatData,
   writtenAt,
   studentNumber,
@@ -102,6 +108,7 @@ const ChatCard: FC<IChatModelProps> = ({
   image,
   event,
 }) => {
+  const { chatStore } = useMobxStores();
   const processingNumberAndName = useMemo(() => {
     // 학번, 이름
     return [studentNumber.toString().slice(1, 3), name];
@@ -135,12 +142,19 @@ const ChatCard: FC<IChatModelProps> = ({
     }
   };
 
+  const handleClickCard = () => {
+    chatStore.clickChatCard(code);
+  }
+
   const renderChatBox = (event: "join" | "leave" | "none"): ReactNode => {
     const description = classifyEvent(event);
     if (!description) {
       return (
         <StyledChatContainer>
-          <StyledChatContentBox>{chatData}</StyledChatContentBox>
+          <ContentBox 
+            data={chatData} 
+            onClickCard={handleClickCard}
+          />
           <small>{processingDate}</small>
         </StyledChatContainer>
       );

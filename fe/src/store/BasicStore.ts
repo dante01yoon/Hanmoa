@@ -1,14 +1,14 @@
 import { http } from "src/apis/httpModule";
 import RootStore from "./RootStore";
-import { ReducedStore } from "./u";
+import {ReducedStore} from "./u";
 
 class BasicStore {
   api: typeof http;
-  reducedStore: RootStore;
+  rootStore: RootStore;
 
   constructor(rootStore: RootStore, ){
     this.api = http;
-    this.reducedStore = rootStore; 
+    this.rootStore = rootStore; 
   }
 }
 

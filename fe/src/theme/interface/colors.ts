@@ -1,5 +1,6 @@
 export interface Colors{
     blue:string,
+    dark_sky_blue:string,
     indigo:string,
     purple:string
     pink:string,

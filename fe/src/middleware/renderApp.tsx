@@ -15,7 +15,7 @@ export const initStores = async (
   req: Request
 ) => {
   const stores = createStore(storeSpec);
-
+  console.log("store in initStores: ", stores);
   try {
     if(req.cookies[cookie.COOKIE_NAME.SESSION]){
       await stores.sessionStore?.update(req);

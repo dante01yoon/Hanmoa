@@ -13,7 +13,6 @@ interface AuthResponse {
 
 const StyledSection = styled.section`
   background-color: ${({theme}) => theme.colors.light};
-  height: 80vh;
   padding: 80px 16px;
 `;
 

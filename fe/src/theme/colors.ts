@@ -1,6 +1,7 @@
 import { Colors } from './interface/colors';
 export const colors: Colors = {
     blue: '#007bff',
+    dark_sky_blue: '#9bbbd4',	
     indigo: '#6610f2',
     purple: '#6f42c1',
     pink: '#e83e8c',
