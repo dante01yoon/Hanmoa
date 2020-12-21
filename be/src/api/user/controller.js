@@ -137,10 +137,20 @@ const onDeleteUserById = async ({request, response}) => {
     }
   }
 }
+
+const postLogin = async({request, response}) => {
+  response.status = 200;
+  response.body = {
+    success: true,
+    authorization: request.authToken,
+  };
+};
+
 export default {
   onCreateUser,
   onGetUserByEmail,
   onGetUserByStudentNumber,
   onGetAllUsers,
   onDeleteUserById,
+  postLogin,
 }

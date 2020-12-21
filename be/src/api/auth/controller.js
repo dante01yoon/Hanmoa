@@ -1,5 +1,3 @@
-import { encode } from "../jwt";
-
 const fetch = require("node-fetch");
 const User = require("models/user"); 
 const dotenv = require("dotenv");
@@ -9,7 +7,7 @@ const { model } = require("../../models/user");
 
 dotenv.config(); 
 
-const signInWithGoogle = async ({request, response}, next) => {
+const signInWithGoogle = async ({req, response}, next) => {
   const request =  await fetch("https://oauth2.googleapis.com/token",{
     method: "POST",
     headers:{

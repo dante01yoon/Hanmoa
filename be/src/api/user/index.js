@@ -1,11 +1,12 @@
 import Router from "koa-router";
 import userController from "./controller";
+import jwt from "../../middlewares/jwt";
 
 const userRouter = new Router();
 
-userRouter.post("/", userController.onCreateUser);
-userRouter.get("/single", userController.onGetUserByStudentNumber);
-userRouter.get("/", userController.onGetAllUsers);
+userRouter.get("/", userController.onGetUserByStudentNumber);
+userRouter.get("/all", userController.onGetAllUsers);
+userRouter.post("/signIn", jwt.encode, userController.postLogin);
+userRouter.post("/signUp", userController.onCreateUser);
 userRouter.delete("/:id", userController.onDeleteUserById);
-
 export default userRouter;

@@ -7,8 +7,8 @@ export const encode = async (ctx, next) => {
   const { request, response } = ctx;
 
   try {
-    const { studentNumber } = request.query;
-    const user = await User.getUserByStudentNumber(studentNumber);
+    const { studentNumber } = request.body;
+    const user = await User.findByStudentNumber(studentNumber);
     const payload = {
       studentNumber: user.profile.studentNumber,
       name: user.profile.name,
@@ -59,4 +59,9 @@ export const decode = async( ctx, next ) => {
     };
     return;
   }
+}
+
+export default {
+  encode,
+  decode,
 }
