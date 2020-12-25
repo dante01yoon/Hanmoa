@@ -45,6 +45,7 @@ const User = new Schema({
  * @param {string} studentNumber
  * @param {string} picture
  * @param {string} email
+ * @param {string} token
  */
 
 User.statics.createUser = async function(args){
@@ -57,6 +58,10 @@ User.statics.createUser = async function(args){
         studentNumber,
         picture,
         email,
+<<<<<<< HEAD
+=======
+        token,
+>>>>>>> 7b1a554... Update: POST signIn 작성 -오류 없음
       }
     });
     return user;

@@ -67,10 +67,16 @@ app.get('*', async (req,res) => {
   routes.filter((value) => {
     if( value.path){
       value.path.includes(req.path)
+<<<<<<< HEAD
       // if(req.cookies && req.cookies["_hm_guit"]){
       //   mobxStores.sessionStore.fetch(req);
       //   console.log("sessionStore in server.tsx: ", mobxStores.sessionStore);
       // }
+=======
+      if(req.cookies && req.cookies["_hm_guit"]){
+        mobxStores.sessionStore.fetchSignIn(req.cookies["_hm_guit"]);
+      }
+>>>>>>> 7b1a554... Update: POST signIn 작성 -오류 없음
     }
   }).map(async (value) => {
     if(value.component && value.component.initStoreOnServer){

@@ -182,6 +182,7 @@ const onDeleteUserById = async ({request, response}) => {
 }
 
 const postLogin = async(ctx) => {
+<<<<<<< HEAD
   const {state} = ctx;
   
   ctx.req.authToken = state.authToken;
@@ -195,6 +196,13 @@ const postLogin = async(ctx) => {
         ...ctx.state.user
       },
     }
+=======
+  const {state, cookies} = ctx;
+  
+  ctx.body = {
+    success: true,
+    authorization: state.authToken,
+>>>>>>> 7b1a554... Update: POST signIn 작성 -오류 없음
   };
 };
 

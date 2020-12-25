@@ -19,6 +19,7 @@ class SessionStore extends BasicStore{
     }
   }
 
+<<<<<<< HEAD
   async fetch(req?: Request){
     try{
       const [error, response] = await this.api.GET<UserPayload>(`/users/me`,{},{
@@ -39,6 +40,20 @@ class SessionStore extends BasicStore{
     } catch(e){
       console.log("e in fetch:", e);
       throw new Error(e.error);
+=======
+  @action
+  async fetch(req: Request){
+    this.api.GET<UserPayload>(`/users/token`, {
+      cookies: req.cookies,
+    })
+  }
+  @action
+  async fetchSignIn(accessCode: string){
+    const [_, fetchSignInResult] = await this.signIn(accessCode);
+    if(fetchSignInResult){
+      this.curUserCode = fetchSignInResult?.data.id; 
+      
+>>>>>>> 7b1a554... Update: POST signIn 작성 -오류 없음
     }
   }
   
@@ -46,6 +61,7 @@ class SessionStore extends BasicStore{
     return !!this.curUserCode; 
   }
   
+<<<<<<< HEAD
   @action feedFetch(currentUser: UserPayload){
     this.user = currentUser.profile;
     this.curUserCode = currentUser.profile.id;
@@ -53,6 +69,10 @@ class SessionStore extends BasicStore{
   
   async fetchSignIn(accessCode: string){
     const [error, result] = await this.api.POST<UserPayload>('/users/signIn',{
+=======
+  async signIn(accessCode: string){
+    return await this.api.POST<UserPayload>('/users/signIn',{
+>>>>>>> 7b1a554... Update: POST signIn 작성 -오류 없음
       code: accessCode,
     },{
       withCredentials: true
