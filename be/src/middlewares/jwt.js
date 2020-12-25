@@ -4,10 +4,10 @@ import User from "../models/user";
 const SECRET_KEY = "_g_suit";
 
 export const encode = async (ctx, next) => {
-  const { request, response } = ctx;
+  const { request, response, cookies } = ctx;
 
   try {
-    const { studentNumber } = request.body;
+    const { studentNumber } = ctx.state;
     const user = await User.findByStudentNumber(studentNumber);
     const payload = {
       studentNumber: user.profile.studentNumber,
@@ -15,10 +15,20 @@ export const encode = async (ctx, next) => {
       email: user.profile.email,
     }
     const authToken = jwt.sign(payload, SECRET_KEY);
-    console.log("Auth", authToken);
-    request.authToken = authToken;
-    next();
+    
+    await User.updateByStudentNumber(studentNumber, {
+      profile: {token: authToken},
+    });
+
+    ctx.state.authToken = authToken;
+    cookies.set("_hm_guit", ctx.state.authToken, {
+      httpOnly: true, 
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    });
+    await next();
   } catch(error){
+    console.log(error);
+    console.log("error in jwt.encode");
     response.status = 400;
     response.body = {
       success: false,

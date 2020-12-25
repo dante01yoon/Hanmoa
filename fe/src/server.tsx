@@ -56,6 +56,9 @@ app.get('*', async (req,res) => {
   routes.filter((value) => {
     if( value.path){
       value.path.includes(req.path)
+      if(req.cookies && req.cookies["_hm_guit"]){
+        mobxStores.sessionStore.fetchSignIn(req.cookies["_hm_guit"]);
+      }
     }
   }).map(async (value) => {
     if(value.component && value.component.initStoreOnServer){

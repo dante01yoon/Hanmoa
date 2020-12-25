@@ -17,6 +17,12 @@ class SessionStore extends BasicStore{
   }
 
   @action
+  async fetch(req: Request){
+    this.api.GET<UserPayload>(`/users/token`, {
+      cookies: req.cookies,
+    })
+  }
+  @action
   async fetchSignIn(accessCode: string){
     const [_, fetchSignInResult] = await this.signIn(accessCode);
     if(fetchSignInResult){
@@ -31,7 +37,7 @@ class SessionStore extends BasicStore{
   }
   
   async signIn(accessCode: string){
-    return await this.api.POST<UserPayload>('/auth/signIn',{
+    return await this.api.POST<UserPayload>('/users/signIn',{
       code: accessCode,
     },{
       withCredentials: true

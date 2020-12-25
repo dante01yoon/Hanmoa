@@ -1,7 +1,26 @@
 import makeValidation from "@withvoid/make-validation";
 import User from "../../models/user";
 
-const onCreateUser = async (ctx) => {
+export const onGetUserByToken = async(ctx) => {
+  const { request, response } = ctx;
+
+  try {
+    const user = await User.findByToken(request.body.token);
+    response.status = 200;
+    response.body = {
+      success:true,
+      user,
+    };
+  } catch (error) {
+    response.status = 400;
+    response.body = {
+      success: false,
+      error,
+    }
+  }
+}
+
+export const onCreateUser = async (ctx) => {
   const { request : req, response: res } = ctx;
 
   try {
@@ -15,7 +34,7 @@ const onCreateUser = async (ctx) => {
     }));
     
     if(!validation.success) {
-      res.status = 400; 
+      res.status = 400;
       res.body = validation;
       return;
     }
@@ -138,15 +157,17 @@ const onDeleteUserById = async ({request, response}) => {
   }
 }
 
-const postLogin = async({request, response}) => {
-  response.status = 200;
-  response.body = {
+const postLogin = async(ctx) => {
+  const {state, cookies} = ctx;
+  
+  ctx.body = {
     success: true,
-    authorization: request.authToken,
+    authorization: state.authToken,
   };
 };
 
 export default {
+  onGetUserByToken,
   onCreateUser,
   onGetUserByEmail,
   onGetUserByStudentNumber,

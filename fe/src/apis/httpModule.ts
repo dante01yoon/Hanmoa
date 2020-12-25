@@ -4,11 +4,21 @@ import { APIResponse } from './types';
 const baseURL = 'http://localhost:5001/api';
 
 const hanmoaAxios: AxiosInstance = axios.create({
-  baseURL
+  baseURL,
+  withCredentials: true,
 })
 
 const request = async<T>(config:AxiosRequestConfig):Promise<APIResponse<T>> => {
+  let headers: {
+    [headerName: string]: string
+  } = {
+    accept: "application/json",
+  };
+
   try{
+    if(config && config.params && config.params.cookies){
+      headers.cookie = config.params.cookies
+    }
     const { data } = await hanmoaAxios.request(config);
     return [ undefined, data ]; 
   } catch(error){

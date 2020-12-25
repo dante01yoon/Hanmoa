@@ -40,6 +40,7 @@ const User = new Schema({
  * @param {string} studentNumber
  * @param {string} picture
  * @param {string} email
+ * @param {string} token
  */
 
 User.statics.createUser = async function(args){
@@ -51,7 +52,8 @@ User.statics.createUser = async function(args){
         name,
         studentNumber,
         picture,
-        email
+        email,
+        token,
       }
     });
     return user;
@@ -71,6 +73,16 @@ User.statics.findByStudentNumber = async function(studentNumber) {
     throw error;
   }
 };
+
+User.statics.findByToken = async function(token){
+  try {
+    const user = await this.findOne({token});
+    if(!user) throw ({ error: "No user with this email found"});
+    return user; 
+  } catch(error) {
+    throw error;
+  }
+}
 
 User.statics.findByEmail = async function(email){
   try {
@@ -127,6 +139,16 @@ User.statics.register = function({ id,name, email, studentNumber, picture}) {
   return newAccount.save();
 };
 
+User.statics.updateByStudentNumber = async function(studentNumber,params) {
+  try {
+    const user = await this.updateOne({profile: {studentNumber}},params);
+    
+    return user;
+  }catch(error){
+    console.log("error in User.methods.update");
+    throw error;
+  }
+}
 
 User.methods.generateToken = async function() {
   const payload = {
