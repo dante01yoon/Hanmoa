@@ -27,7 +27,7 @@ const initialState: ILoginStateInterface = {
 
 const loginReducer: Reducer<ILoginStateInterface, TLoginAction> = (
     state =  initialState,
-    action
+    action: any,
 ) => {
     switch(action.type){
         case GET_LOGIN_ENUM.REQUEST:

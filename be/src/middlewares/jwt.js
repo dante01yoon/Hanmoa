@@ -20,11 +20,22 @@ export const encode = async (ctx, next) => {
       profile: {token: authToken},
     });
 
-    ctx.state.authToken = authToken;
+    ctx.state = {
+      authToken,
+      user: {
+        id: user.profile.id,
+        studentName: user.profile.studentName,
+        email: user.profile.email,
+        name: user.profile.name,
+        picture: user.profile.picture,
+      },
+    };
+
     cookies.set("_hm_guit", ctx.state.authToken, {
       httpOnly: true, 
       maxAge: 1000 * 60 * 60 * 24 * 7
     });
+
     await next();
   } catch(error){
     console.log(error);
@@ -33,39 +44,37 @@ export const encode = async (ctx, next) => {
     response.body = {
       success: false,
       message: error.error,
+      user,
     };
   }
 }
 
 export const decode = async( ctx, next ) => {
-  const { request , response } = ctx;
-  if(!ctx.cookies.get("_hm_guit")){
+  const { req, request , response } = ctx;
+  const accessTokenObject = JSON.parse(ctx.headers.cookie);
+  const accessToken = accessTokenObject["_hm_guit"];
+  
+  if(!accessToken){
     response.status = 401;
     response.body = {
       success: false,
-      validate: true,
-      message: "No session cookie provided",
+      message: "No sessoin cookie provided",
     }
   }
-  if(!request.headers["authorization"]){
-    response.status = 400;
-    response.body = {
-      success: false, 
-      message: "No access token provided",
-    };
-  }
-  const accessToken = req.headers.authorization.split(" ")[1];
+  
   try {
-    const decoded = jwt.verify(accessToken, SECRET_KEY);
-    req.studentName = decoded.name;
-    req.studentEmail = decoded.email;
-    req.studentNumber = decoded.studentNumber;
+    const decoded = await jwt.verify(accessToken, SECRET_KEY);
+    ctx.request.studentName = decoded.name;
+    ctx.request.studentEmail = decoded.email;
+    ctx.request.studentNumber = decoded.studentNumber;
     return next();
   } catch (error) {
+    console.log("error in jwt.decode");
     response.status = 401; 
     response.body = {
-      success: false, 
-      message: error.message,
+      success: false,
+      status: 401, 
+      error: error.message,
     };
     return;
   }

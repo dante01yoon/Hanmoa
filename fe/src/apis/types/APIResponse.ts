@@ -1,15 +1,16 @@
 export type StatusCode = number;
-export type APIError = {
-  status_code: StatusCode;
-  status_message: string;
-  error_message?: string;
+export interface APIStatus {
+  statusCode: StatusCode;
   success?: boolean;
 }
-
-export type Response<Data> = {
+export interface APIError extends APIStatus{
+  error?: string;
+}
+export interface APISuccess extends APIStatus{};
+export interface Response<Data> extends APISuccess {
   data: Data
 }
 
 export type WhenError = [APIError, undefined]; 
-export type WhenSuccess<Data> = [ undefined, Response<Data>]; 
+export type WhenSuccess<Data> = [undefined, Response<Data>]; 
 export type APIResponse<Data> = WhenError | WhenSuccess<Data>;

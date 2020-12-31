@@ -13,6 +13,8 @@ import { initStores as initMobxStores } from "src/middleware/renderApp";
 import storeSpec from "src/store/storeSpec";
 import { routes } from "@components/route/route";
 import { matchRoutes } from "react-router-config";
+import cookieParser from "cookie-parser";
+import { ReducedStore } from './store/u';
 
 const app = express();
 
@@ -35,9 +37,9 @@ if( process.env.NODE_ENV !== 'production') {
       writeToDisk: true,
     }),
   );
-
   app.use(webpackHotMiddleware(compiler));
 }
+app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname)));
 
 app.get('*', async (req,res) => {
@@ -46,19 +48,29 @@ app.get('*', async (req,res) => {
   const sheet = new ServerStyleSheet();
   const nodeExtractor = new ChunkExtractor({statsFile: nodeStats});
   const { default: App } = nodeExtractor.requireEntrypoint();
+  const DefaultApp = App as React.ComponentType<{store: any}>;
   const webExtractor = new ChunkExtractor({statsFile: webStats});
   const context = {};
 
   // initialize store. 
   // const store = createStore();
-  const mobxStores = await initMobxStores(storeSpec, req);
+  let mobxStores = {} as ReducedStore;
+
+  try {
+    mobxStores = await initMobxStores(storeSpec, req);
+    console.log("mobxStores: ", mobxStores);
+  } catch(error){
+    console.log(error);
+    throw Error(error);
+  }
   // server side data fetch in page component 
   routes.filter((value) => {
     if( value.path){
       value.path.includes(req.path)
-      if(req.cookies && req.cookies["_hm_guit"]){
-        mobxStores.sessionStore.fetchSignIn(req.cookies["_hm_guit"]);
-      }
+      // if(req.cookies && req.cookies["_hm_guit"]){
+      //   mobxStores.sessionStore.fetch(req);
+      //   console.log("sessionStore in server.tsx: ", mobxStores.sessionStore);
+      // }
     }
   }).map(async (value) => {
     if(value.component && value.component.initStoreOnServer){
@@ -68,7 +80,7 @@ app.get('*', async (req,res) => {
   
   const jsx = webExtractor.collectChunks(
     <StaticRouter location={req.url} context={context}>
-      <App/>
+      <DefaultApp store={mobxStores}/>
     </StaticRouter>
   );
 

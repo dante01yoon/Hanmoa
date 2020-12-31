@@ -19,9 +19,18 @@ class ChatStore extends BasicStore{
   @observable currentChat?: ISingleChat = undefined;
   @observable next: boolean = false;
 
-  constructor(rootStore: RootStore){
-    super(rootStore);
+  constructor({root, state}: {root: RootStore, state: ChatStore}){
+    super({root});
     makeObservable(this,);
+    if(state){
+      this.chatMessages = state.chatMessages;
+      this.currentPage = state.currentPage;
+      this.hasEnteredBefore = state.hasEnteredBefore;
+      this.status = state.status;
+      this.clickedCard = state.clickedCard;
+      this.currentChat= state.currentChat;
+      this.next = state.next;
+    }
   }
   
   // @action async fetchChatMessages(req: Request ){

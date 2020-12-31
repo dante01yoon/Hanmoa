@@ -1,47 +1,73 @@
-import { computed, makeObservable, action, observable } from "mobx"; 
+import { computed, makeObservable, action, observable, runInAction } from "mobx"; 
 import RootStore from "./RootStore";
-import {http} from "@apis/httpModule";
 import {UserPayload} from "src/payload/user";
 import BasicStore from "./BasicStore"; 
 import { Request } from "express";
-
+import { setCookie } from "@utils/cookie";
 class SessionStore extends BasicStore{
-  @observable curUserCode: string | null;
-  @observable waitingForServer: boolean;
+  @observable curUserCode: string | null | undefined = null;
+  @observable waitingForServer: boolean = false;
+  @observable user: UserPayload["profile"] | undefined | null = null; 
 
-  constructor(reducedStore: RootStore,){
-    super(reducedStore); 
+  constructor({root, state}:{root: RootStore, state: SessionStore}){
+    super({root}); 
     makeObservable(this);
-    this.curUserCode = null;
-    this.waitingForServer = false;
-  }
-
-  @action
-  async fetch(req: Request){
-    this.api.GET<UserPayload>(`/users/token`, {
-      cookies: req.cookies,
-    })
-  }
-  @action
-  async fetchSignIn(accessCode: string){
-    const [_, fetchSignInResult] = await this.signIn(accessCode);
-    if(fetchSignInResult){
-      this.curUserCode = fetchSignInResult?.data.id; 
-      
+    if(state){
+      this.curUserCode = state.curUserCode;
+      this.waitingForServer = state.waitingForServer;
+      this.user = state.user;
     }
   }
 
-  @computed
-  get isSignedIn(){
+  async fetch(req?: Request){
+    try{
+      const [error, response] = await this.api.GET<UserPayload>(`/users/me`,{},{
+        headers: {
+          cookie: req && JSON.stringify(req.cookies),
+        }
+      });
+      if(error){
+        console.log("error in await fetch : ", error);
+      }
+      console.log("response: ", response);
+      if(response){
+        this.feedFetch(response.data);
+      }
+      if(error){
+        throw new Error(error.error);
+      }
+    } catch(e){
+      console.log("e in fetch:", e);
+      throw new Error(e.error);
+    }
+  }
+  
+  @computed get isSignedIn(){
     return !!this.curUserCode; 
   }
   
-  async signIn(accessCode: string){
-    return await this.api.POST<UserPayload>('/users/signIn',{
+  @action feedFetch(currentUser: UserPayload){
+    this.user = currentUser.profile;
+    this.curUserCode = currentUser.profile.id;
+  };
+  
+  async fetchSignIn(accessCode: string){
+    const [error, result] = await this.api.POST<UserPayload>('/users/signIn',{
       code: accessCode,
     },{
       withCredentials: true
     });
+    if(result){
+      this.feedFetch(result.data);
+    }
+    if(error){
+      throw Error(error.error);
+    }
+  }
+
+  @action async fetchSignOut(){
+    setCookie("_hm_guit", "");
+    this.curUserCode = null;
   }
   
   @action
@@ -52,10 +78,10 @@ class SessionStore extends BasicStore{
         
       })
       if( error ){
-        throw new Error(error.error_message);
+        throw new Error(error.error);
       }
       if(response){
-        this.curUserCode = response.data.id
+        runInAction(() => {this.curUserCode = response.data.profile.id});
       };
     } catch(e){
       throw new Error(e); 
@@ -63,4 +89,4 @@ class SessionStore extends BasicStore{
   } 
 }
 
-export default SessionStore;``
+export default SessionStore;

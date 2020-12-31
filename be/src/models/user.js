@@ -1,3 +1,4 @@
+import { string } from "@withvoid/make-validation/lib/validationTypes";
 import { v4 as uuidv4 } from "uuid";
 const mongoose = require("mongoose");
 const {generateToken} = require("lib/token");
@@ -10,11 +11,15 @@ const User = new Schema({
     default: () => uuidv4().replace(/\-/g, ""),
   },
   profile: {
-    id: String, 
+    id: {
+      type: String,
+      default: () => uuidv4().replace(/\-/g, ""),
+    }, 
     name: String,
     studentNumber: String,
     picture: {type: String, default: '/static/images/default_profile.png'},
     email: { type: String},
+    token: String,
   },
   hostRoomNumber: Number,
   social: {
@@ -40,7 +45,6 @@ const User = new Schema({
  * @param {string} studentNumber
  * @param {string} picture
  * @param {string} email
- * @param {string} token
  */
 
 User.statics.createUser = async function(args){
@@ -53,7 +57,6 @@ User.statics.createUser = async function(args){
         studentNumber,
         picture,
         email,
-        token,
       }
     });
     return user;
@@ -66,7 +69,7 @@ User.statics.findByStudentNumber = async function(studentNumber) {
   try {
     const user = await this.findOne({'profile.studentNumber' : studentNumber});
     if(!user){
-      throw ({error: "No user with this studentNumber"});
+      return null;
     } 
     return user;
   } catch(error){

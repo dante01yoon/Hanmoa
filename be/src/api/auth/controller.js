@@ -133,7 +133,11 @@ exports.loginAndRegister = async (ctx) => {
     ctx.throw(500,e);
   }
 
-  ctx.cookies.set("_hm_guit", token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7});
+  ctx.cookies.set("_hm_guit", token, {
+    httpOnly: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60 * 24 * 7},
+    );
   ctx.body = {
     data: user.profile,
   }

@@ -80,24 +80,47 @@ const onGetUserByEmail = async (ctx) => {
 };
 
 const onGetUserByStudentNumber = async (ctx) => {
-  const { request : req, response: res } = ctx;
-  if(!req.query){
-    res.status = 400;
-    res.body = {
+  const { request } = ctx;
+  const id = request.params.id;
+
+  if(id === "me"){
+    try {
+      const user = await User.findByStudentNumber(ctx.request.studentNumber);
+      ctx.status = 200;
+      ctx.body = {
+        id: user.id,
+        success: true,
+        status_code: 200,
+        data: user,
+      }
+    } catch (error){
+      ctx.status = 500; 
+      ctx.body = {
+        success: false,
+        status_code: 500,
+        error: error.error
+      }
+    }
+    return;
+  }
+  if(!ctx.request.query){
+    ctx.status = 400;
+    ctx.body = {
+      success: false,
       error: "올바른 req.query를 넣어주세요",
-      status: 400,
+      status_code: 400,
     }
     return;
   }
   try {
     const user = await User.findByStudentNumber(req.query.studentNumber);
-    res.status = 200;
-    res.body = user;
+    ctx.status = 200;
+    ctx.body = user;
     return;
   } catch (error) {
     console.error("in onGetUserByStudentNumber:")
-    res.status = 500;
-    res.body = error;
+    ctx.status = 500;
+    ctx.body = error;
     return;
   }
 }
@@ -144,7 +167,7 @@ const onDeleteUserById = async ({request, response}) => {
     response.status = 200;
     response.body = {
       success: true,
-      ...user,
+      data: user,
     }
     return;
   } catch (error){
@@ -152,17 +175,26 @@ const onDeleteUserById = async ({request, response}) => {
     response.status = 500;
     response.body = {
       error,
-      success: false
+      success: false,
+      status_code: 500,
     }
   }
 }
 
 const postLogin = async(ctx) => {
-  const {state, cookies} = ctx;
+  const {state} = ctx;
   
+  ctx.req.authToken = state.authToken;
+  ctx.status = 200;
   ctx.body = {
+    id: ctx.state.id,
     success: true,
-    authorization: state.authToken,
+    status_code: 200,
+    data: {
+      profile: {
+        ...ctx.state.user
+      },
+    }
   };
 };
 
