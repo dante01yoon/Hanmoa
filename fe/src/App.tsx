@@ -5,11 +5,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import GlobalLayout from '@components/gnb/layout';
 import {renderRoutes}  from '@components/route/route';
-import { Provider } from "mobx-react";
+import { Provider as MobxProvider} from "mobx-react";
 import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider } from '@store/index'; 
 import { ReducedStore } from "@store/u";
-
+import { observer } from "mobx-react";
 export interface IRootRouter {
   router?: ReactElement;
 }
@@ -35,8 +35,8 @@ export const App:FC<AppProps> = ({
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
-        <Provider {...store}>
-          <ReduxProvider>
+        <ReduxProvider>
+          <MobxProvider {...store}>
             <ModalProvider>
               <GlobalLayout>
                 {renderRoutes()}
@@ -49,9 +49,9 @@ export const App:FC<AppProps> = ({
                 </GlobalLayout>
               ),)} */}
             </ModalProvider>
-          </ReduxProvider>
-        </Provider>
+          </MobxProvider>
+        </ReduxProvider>
     </HanmoaTheme>
   )
 }
-export default App;
+export default observer(App);

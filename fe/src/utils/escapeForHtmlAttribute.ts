@@ -4,6 +4,7 @@ const ESCAPED_CHARS: { [key: string]: string} = {
   '"': "&quot;",
   "&": "&amp;",
   "<": "&lt;",
+  ">": "&gt;",
 };
 
 function escapeUnsafeChar(unsafeChar: string): string{

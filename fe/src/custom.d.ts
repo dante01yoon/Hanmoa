@@ -5,6 +5,12 @@ declare module '*.svg' {
   export default content;
 }
 
+interface Window {
+  ROOT_DATA: {
+    [key: string]: string;
+  }
+}
+
 // jpg
 declare module '*.jpg';
 // png

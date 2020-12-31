@@ -6,9 +6,12 @@ class BasicStore {
   api: typeof http;
   rootStore: RootStore;
 
-  constructor(rootStore: RootStore, ){
+  constructor({root, state}: {
+    root: RootStore;
+    state?: any
+  } ){
     this.api = http;
-    this.rootStore = rootStore; 
+    this.rootStore = root; 
   }
 }
 

@@ -14,14 +14,15 @@ export const initStores = async (
   storeSpec: StoreSpecType,
   req: Request
 ) => {
-  const stores = createStore(storeSpec);
-  console.log("store in initStores: ", stores);
+  const stores = createStore({storeSpec});
+  console.log("req.headers", req.headers);
   try {
     if(req.cookies[cookie.COOKIE_NAME.SESSION]){
-      await stores.sessionStore?.update(req);
+      console.log("----- in req.cookies ------")
+      await stores.sessionStore?.fetch(req);
     }
   } catch(_){}
-  
+  console.log("stores.sessionStore: ", stores.sessionStore);
   return stores;
 }
 
@@ -58,12 +59,12 @@ const renderHtml = ({
           id="root"
           data-initial-state="${escapeForHtmlAttribute(JSON.stringify(
             {...stores},
-            (key, value) => {
-              if(key && value && typeof value  === "object" && value.serializable){
-                return value.serializable
-              }
-              return value;
-            }
+            (key, value) =>
+              (key &&
+                value &&
+                typeof value === "object" &&
+                value.serializable) ||
+              value,
           ))}"
         >${componentHtml}</div>
       </body>

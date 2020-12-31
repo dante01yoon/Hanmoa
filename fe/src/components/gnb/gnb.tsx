@@ -1,9 +1,11 @@
 import React, { 
   FC, 
   useState, 
-  createRef 
+  createRef,
+  useEffect,
 } from 'react';
 import * as Styled from './style';
+import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores"; 
 import { SmartLink } from '@components/smartlink';
 import { Portal } from '@components/portal';
@@ -27,12 +29,14 @@ const {
     TopicList,
     Topic,     
 } = Styled;
-export const Gnb:FC = () => {
+
+const Gnb:FC = () => {
     const [loginModal, setLoginModal] = useState(false);
     const [visible, setVisible] = useState<boolean>(false); 
     const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
-
+    const {sessionStore} = useMobxStores();
+    
     const checkContain = (e: MouseEvent) => {
       if(e.target instanceof HTMLElement){
         if(!topicRef.current?.contains( e.target )){
@@ -40,6 +44,11 @@ export const Gnb:FC = () => {
         }
       }      
     };
+
+    useEffect(() => {
+      console.log("isSignedIn in Gnb: ", sessionStore.isSignedIn);
+    });
+
     const toggleTopicList = () => {
       setVisible((visible) => !visible);
     }
@@ -52,56 +61,77 @@ export const Gnb:FC = () => {
       setLoginModal(false); 
     }
     
-    return (
-        <Header>
-            <Nav>
-                <ItemContainer>
-                    <LeftItemContainer>
-                            <SmartLink href={"/"}>
-                                <ItemBox
-                                    url={hanmoa_logo}
-                                    width={192}
-                                />
-                            </SmartLink>
-                            <ItemBox>
-                                <TopicButton
-                                  onClick={toggleTopicList}
-                                >
+    const handleLogoutClick = () => {
+      sessionStore.fetchSignOut();
+    }
 
-                                    <TopicTitle>토픽</TopicTitle>
-                                </TopicButton>
-                                { visible && 
-                                  <TopicBox
-                                    ref={topicRef}
-                                  >
-                                    {topicList}
-                                  </TopicBox>
-                                }
-                            </ItemBox>
-                    </LeftItemContainer>
-                    <RightItemContainer>
-                        <ItemList>{
-                          <>
-                            <Item >
-                                <SmartLink href="login">
-                                로그인
-                                </SmartLink>
-                            </Item>
-                            <Item>
-                                <SmartLink href={'signup'}>
-                                회원가입
-                                </SmartLink>    
-                            </Item> 
-                          </>
-                      }</ItemList>
-                    </RightItemContainer>
-                    { loginModal &&
-                        <Portal>
-                            <LoginModal closeModal={closeLoginModal}/>
-                        </Portal>
-                    }
-                </ItemContainer>
-            </Nav>
-        </Header>
+    const renderRightNav = () => {
+      console.log("isSignedIn in renderRightNav:", sessionStore.isSignedIn);
+      if(sessionStore.isSignedIn){
+        return(
+          <>
+            <Item>마이페이지</Item>
+            <Item onClick={handleLogoutClick}>로그아웃</Item>
+          </>
+        )
+      }
+      else {
+        return(
+          <>
+            <Item >
+              <SmartLink href="login">
+                로그인
+              </SmartLink>
+            </Item>
+            <Item onClick={() => sessionStore.fetch()}>
+              회원가입
+              {/* <SmartLink href={'signup'}>
+                회원가입
+              </SmartLink>     */}
+            </Item> 
+          </>
+        )
+      }
+    }
+
+    return (
+      <Header>
+        <Nav>
+          <ItemContainer>
+            <LeftItemContainer>
+              <SmartLink href={"/"}>
+                <ItemBox
+                    url={hanmoa_logo}
+                    width={192}
+                />
+              </SmartLink>
+              <ItemBox>
+                <TopicButton
+                  onClick={toggleTopicList}
+                >
+                  <TopicTitle>토픽</TopicTitle>
+                </TopicButton>
+                { visible && 
+                  <TopicBox
+                    ref={topicRef}
+                  >
+                    {topicList}
+                  </TopicBox>
+                }
+              </ItemBox>
+            </LeftItemContainer>
+            <RightItemContainer>
+              <ItemList>{renderRightNav()}</ItemList>
+            </RightItemContainer>
+            { loginModal &&
+              <Portal>
+                  <LoginModal closeModal={closeLoginModal}/>
+              </Portal>
+            }
+          </ItemContainer>
+        </Nav>
+      </Header>
     )
 };
+
+export default observer(Gnb);

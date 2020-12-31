@@ -2,7 +2,7 @@ import React,  { FC, useEffect, useState } from 'react';
 import styled from "styled-components";
 import { useMobxStores } from "@utils/store/useStores";
 import google_auth from "src/asset/google_auth.svg";
-
+import {observer} from "mobx-react";
 interface AuthResponse {
   authUser: string;
   code: string;
@@ -69,13 +69,16 @@ const StyledIcon = styled.div<{
   margin-right: 16px;
 `;
 
-const LoginPage: FC =( ) =>{
+const LoginPage: FC = () =>{
   const [gapiReady, setGapiReady] = useState(false);
-  const { sessionStore, api } = useMobxStores();
+  const {sessionStore} = useMobxStores();
 
   useEffect(() => {
-    console.log("sessionStore: ", sessionStore); 
-    console.log("apiStore: ", api);
+    console.log("sessionStore in LoginPage: ", sessionStore); 
+    
+  });
+
+  useEffect(() => {
     window.gapi.load('auth2', () => {
       setGapiReady(true); 
     })
@@ -91,10 +94,6 @@ const LoginPage: FC =( ) =>{
           response_type: process.env.RESPONSE_TYPE,
           hosted_domain: "handong.edu",
         },(response: gapi.auth2.AuthorizeResponse & {hd?: string} ) => {
-          console.log(response);
-          if(!response.hd){
-            alert('handong@edu 이메일이 아닙니다.')
-          }
           accessCode = response.code;
           resolve(accessCode);
         })
@@ -103,17 +102,11 @@ const LoginPage: FC =( ) =>{
     return new Promise(resolve => resolve("error"));
   }
   
-  const onAfterGetGoogleAuthCode = async (accessCode: string | null) => {
-    if(accessCode){
-      const response = await sessionStore.fetchSignIn(accessCode);
-      console.log("response:", response);
-    }
-  }
-
-  const handleGoogleLoginClick = async() => {
+  const handleGoogleLoginClick = async () => {
     const accessCode = await openGoogleAuth();
-    console.log(accessCode); 
-    const wow = await onAfterGetGoogleAuthCode(accessCode);
+    if(accessCode){
+      sessionStore.fetchSignIn(accessCode)
+    }
   }
   
   return(
@@ -129,4 +122,4 @@ const LoginPage: FC =( ) =>{
   )
 }
 
-export default LoginPage;
+export default observer(LoginPage);

@@ -50,7 +50,7 @@ export const renderFullPage: RenderFullPage = ({
           id="root"
           data-initial-state="${escapeForHtmlAttribute(JSON.stringify(
             {...stores}
-          ))}
+          ))}"
         >
           ${html}
         </div>

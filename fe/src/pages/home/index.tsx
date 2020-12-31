@@ -14,7 +14,7 @@ import { ICardData } from "src/models/card";
 import { useModal } from "@utils/modal/useModal";
 import { pathExtractor } from "@utils/topic/pathExtractor";
 import {useMobxStores} from "@utils/store/useStores"; 
-
+import {observer} from "mobx-react";
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
 import netflix from "src/asset/netflix.jpg";
@@ -26,7 +26,7 @@ const HomePage = withRouter(({ location: { pathname } }) => {
   const homeRef = useRef<HTMLUListElement>(null);
   const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const dispatch = useDispatch();
-  const { sessionStore } = useMobxStores();
+  const { sessionStore, chatStore } = useMobxStores();
 
   
   useEffect(() => {
@@ -76,4 +76,4 @@ const HomePage = withRouter(({ location: { pathname } }) => {
   );
 });
 
-export default HomePage;
+export default observer(HomePage);

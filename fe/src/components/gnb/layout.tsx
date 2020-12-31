@@ -1,7 +1,7 @@
-import React , { FC } from 'react';
-import { observer } from "mobx-react-lite";
+import React , { FC, useEffect } from 'react';
+import { observer } from "mobx-react";
 import * as Styled from './style';
-import { Gnb } from './gnb';
+import Gnb from './gnb';
 
 const { 
     Main,
@@ -12,11 +12,13 @@ const {
 const GlobalLayout:FC = ({
     children
 }) => {
-  
+  useEffect(() => {
+    console.log("rerender in Layout");
+  })
   return(
   <>
     <Gnb/>
-      <Dummy/>
+    <Dummy/>
     <Main>
       <MainContainer >
         {children}

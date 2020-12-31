@@ -11,14 +11,20 @@ export interface ReducedStore {
 }
 
 
-export const createStore = (storeSpecList: StoreSpecType): ReducedStore => {
+export const createStore = ({
+  storeSpec: storeSpecList,
+  state = {},
+}: {
+  storeSpec: StoreSpecType,
+  state?: any
+}): ReducedStore => {
   
   const rootStore = new RootStore(storeSpecList);
-
   const reducedStore = storeSpecList.reduce((reducedSpec, singleSpec) => {
-    reducedSpec[singleSpec.key] = new singleSpec.class(rootStore);
+    
+    reducedSpec[singleSpec.key] = new singleSpec.class({root: rootStore, state: state[singleSpec.key]});
     return reducedSpec; 
   },{} as ReducedStore);
-
+  console.log("reducedStore: ", reducedStore);
   return {...reducedStore}
 }
