@@ -35,6 +35,7 @@ export const encode = async (ctx, next) => {
       httpOnly: true, 
       maxAge: 1000 * 60 * 60 * 24 * 7
     });
+
     await next();
   } catch(error){
     console.log(error);

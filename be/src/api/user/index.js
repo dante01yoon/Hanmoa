@@ -11,14 +11,10 @@ userRouter.get("/token",
   jwt.decode,
   userController.onGetUserByToken
 );
-<<<<<<< HEAD
 userRouter.get("/:id",
   jwt.decode,
   userController.onGetUserByStudentNumber
 );
-=======
-userRouter.get("/", userController.onGetUserByStudentNumber);
->>>>>>> 7b1a554... Update: POST signIn 작성 -오류 없음
 userRouter.get("/all", userController.onGetAllUsers);
 userRouter.post("/signIn",
   getProfileFromGoogle,
