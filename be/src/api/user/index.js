@@ -21,6 +21,7 @@ userRouter.post("/signIn",
   jwt.encode,
   userController.postLogin
 );
+userRouter.post("/signOut", userController.postLogout);
 userRouter.post("/signUp", userController.onCreateUser);
 userRouter.delete("/:id", userController.onDeleteUserById);
 export default userRouter;
