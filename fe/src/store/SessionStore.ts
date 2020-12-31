@@ -52,7 +52,7 @@ class SessionStore extends BasicStore{
   };
   
   async fetchSignIn(accessCode: string){
-    const [error, result] = await this.api.POST<UserPayload>('/users/signIn',{
+    const [error, result] = await this.api.POST<UserPayload>("/users/signIn",{
       code: accessCode,
     },{
       withCredentials: true
@@ -65,9 +65,9 @@ class SessionStore extends BasicStore{
     }
   }
 
-  @action async fetchSignOut(){
-    setCookie("_hm_guit", "");
-    this.curUserCode = null;
+  async fetchSignOut(){
+    await this.api.POST<UserPayload>("/users/signOut");
+    location.replace("/");
   }
   
   @action

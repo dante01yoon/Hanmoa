@@ -198,6 +198,19 @@ const postLogin = async(ctx) => {
   };
 };
 
+const postLogout = async(ctx) => {
+  const { cookies } = ctx;
+  cookies.set("_hm_guit", null, {
+    httpOnly: true, 
+  });
+
+  ctx.status = 200;
+  ctx.body = {
+    success: true,
+    status_code: 200,
+  }
+}
+
 export default {
   onGetUserByToken,
   onCreateUser,
@@ -206,4 +219,5 @@ export default {
   onGetAllUsers,
   onDeleteUserById,
   postLogin,
+  postLogout,
 }
