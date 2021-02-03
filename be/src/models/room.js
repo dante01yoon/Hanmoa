@@ -1,9 +1,7 @@
-const mongoose = require("mongoose");
-const User = require("./user");
-const { Schema } = mongoose;
+import mongoose, { Schema } from "mongoose";
 import createUUID from "../lib/uuid";
 
-const Chat = new Schema({
+const Room = new Schema({
   id: {
     type: String,
     default: createUUID,
@@ -17,10 +15,18 @@ const Chat = new Schema({
     type: Date,
     default: Date.now,
   },
-  writer: {
+  join: [{
     type: Schema.Types.ObjectId,
     ref: "User",
-  }
+  }],
+  host: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  messages: [{
+    type: Schema.Types.ObjectId,
+    ref: "Chat",
+  }],
 });
 
-export default mongoose.model("Chat", Chat);
+export default mongoose.model("Room", Room);

@@ -1,4 +1,3 @@
-import { string } from "@withvoid/make-validation/lib/validationTypes";
 import { v4 as uuidv4 } from "uuid";
 const mongoose = require("mongoose");
 const {generateToken} = require("lib/token");
@@ -28,8 +27,17 @@ const User = new Schema({
       accessToken: String 
     }
   },
-  joinIn: [Number],
-  hostIn: [Number],
+  joinIn: [{
+    type: Schema.Types.ObjectId,
+    ref: "Chat",
+    markedAt: {
+      type: Date,
+    }
+  }],
+  hostIn: [{
+    type: Schema.Types.ObjectId,
+    ref: "Chat",
+  }],
   createdAt: {
     type: Date,
     default: Date.now

@@ -3,6 +3,7 @@ export interface ChatMessage{
   message: string;
   time: string;
   writer: string;
+  image?: string;
 }
 
 export type ChatBox = ChatMessage[];
