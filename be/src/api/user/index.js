@@ -1,5 +1,4 @@
 import Router from "koa-router";
-import compose from "koa-compose";
 import userController from "./controller";
 import * as authController from "../auth/controller";
 import jwt from "../../middlewares/jwt";

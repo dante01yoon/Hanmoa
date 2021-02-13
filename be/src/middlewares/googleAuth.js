@@ -84,14 +84,12 @@ const fetchProfileFromGoogle = async (access_token) => {
 
 export const getProfileFromGoogle = async (ctx, next) => {
   const { code } = ctx.request.body;
-  
   // 클라이언트에서 받은 코드를 google Oauth2 의 access_token으로 교환 
   // { access_token, refresh_token, expires_in, token_type }
   const { access_token } = await fetchExchangeTokenWithCode(code);
   
   // access_token을 사용해 유저 프로필 정보 받기 
   let user = await fetchProfileFromGoogle(access_token)
-  
   const { email, name, picture, sub, hd } = user; 
   
   let studentNumber = (email && email.split("@")[0]) ?? "";

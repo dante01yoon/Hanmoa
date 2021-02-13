@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import room from "./room";
 const mongoose = require("mongoose");
 const {generateToken} = require("lib/token");
 
@@ -28,11 +29,8 @@ const User = new Schema({
     }
   },
   joinIn: [{
-    type: Schema.Types.ObjectId,
-    ref: "Chat",
-    markedAt: {
-      type: Date,
-    }
+    roomId: String,
+    markedAt: Date,
   }],
   hostIn: [{
     type: Schema.Types.ObjectId,
@@ -78,7 +76,7 @@ User.statics.findByStudentNumber = async function(studentNumber) {
     const user = await this.findOne({'profile.studentNumber' : studentNumber});
     if(!user){
       return null;
-    } 
+  }
     return user;
   } catch(error){
     throw error;
@@ -156,8 +154,18 @@ User.statics.updateByStudentNumber = async function(studentNumber,params) {
     
     return user;
   }catch(error){
-    console.log("error in User.methods.update");
+    console.log("error in User.methods.updateByStudentNumber");
     throw error;
+  }
+}
+
+User.statics.findRoomChatHistory = async function(roomId){
+  try {
+    const room = await this.findOne({joinIn: { roomId }})
+    console.log("room in User.statics.findRoomChatHistory: ", room);
+    return room;
+  } catch(error){
+    console.log("error in User.methods.findRoomChatHistory");
   }
 }
 
