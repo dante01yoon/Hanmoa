@@ -5,7 +5,6 @@ import api from "./api";
 import HanmoaMongoDB from "./lib/mongoose";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
-import logger from "morgan";
 const { jwtMiddleware } = require("./lib/token");
 
 dotenv.config(); 
