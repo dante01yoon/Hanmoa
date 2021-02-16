@@ -51,6 +51,7 @@ export const encode = async (ctx, next) => {
 
 export const decode = async( ctx, next ) => {
   const { req, request , response } = ctx;
+  try {
   const accessTokenObject = JSON.parse(ctx.headers.cookie);
   const accessToken = accessTokenObject["_hm_guit"];
   
@@ -61,7 +62,15 @@ export const decode = async( ctx, next ) => {
       message: "No sessoin cookie provided",
     }
   }
-  
+  }
+  catch (error){
+    console.log("error in jwt decode");
+    console.error(error);
+    response.body = {
+      success: false,
+      message: "cannot parse JSON.parse(ctx.headers.cookie)"
+    }
+  }
   try {
     const decoded = await jwt.verify(accessToken, SECRET_KEY);
     ctx.request.studentName = decoded.name;

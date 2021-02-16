@@ -45,10 +45,11 @@ const Room = new Schema({
  * @param {studentNumber: string} args 
  */
 Room.statics.createRoom = async function(args){
-  const { studentNumber } = args;
+  const { studentNumber, title } = args;
   try {
     const user = await User.findByStudentNumber(studentNumber);
     const room = await this.create({
+      title,
       host: user,
       join: [user]
     })
@@ -59,10 +60,27 @@ Room.statics.createRoom = async function(args){
   }
 }
 
+Room.statics.findRoomById = async function(args) {
+  const { id } = args;
+  const room = await this.findOne({id});
+  return room;
+}
+
+Room.statics.getRoomUsers = async function(args) {
+  const { id } = args;
+  try { 
+    const {join} = await this.findOne({id});
+    return join;
+  } catch (error) {
+    console.log("error in Room.statics.getRoomUsers");
+    console.error(error);
+  }
+}
+
 Room.statics.getLatestChat = async function(args) {
   const { page, id } = args;
   try {
-    const chats = Room.findOne({id})
+    const chats = await this.findOne({id})
       .messages
       .sort({createdAt: -1})
       .skip(page * 200)
