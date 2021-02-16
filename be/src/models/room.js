@@ -11,6 +11,10 @@ const Room = new Schema({
     type: String,
     default: "etc",
   },
+  title: {
+    type: String,
+    required: true,
+  },
   image: {
     data: Buffer,
     contentType: String,
@@ -43,7 +47,7 @@ const Room = new Schema({
 Room.statics.createRoom = async function(args){
   const { studentNumber } = args;
   try {
-    const user = User.findByStudentNumber(studentNumber);
+    const user = await User.findByStudentNumber(studentNumber);
     const room = await this.create({
       host: user,
       join: [user]

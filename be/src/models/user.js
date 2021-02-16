@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import room from "./room";
+
 const mongoose = require("mongoose");
 const {generateToken} = require("lib/token");
 
@@ -79,6 +79,7 @@ User.statics.findByStudentNumber = async function(studentNumber) {
   }
     return user;
   } catch(error){
+    console.log("error in User.statics.findByStudentNumber");
     throw error;
   }
 };
@@ -178,4 +179,4 @@ User.methods.generateToken = async function() {
   return await generateToken(payload, 'account');
 };
 
-module.exports = mongoose.model("User", User);
+export default mongoose.model("User", User);
