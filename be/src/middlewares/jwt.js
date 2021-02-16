@@ -79,6 +79,7 @@ export const decode = async( ctx, next ) => {
     return next();
   } catch (error) {
     console.log("error in jwt.decode");
+    console.error(error);
     response.status = 401; 
     response.body = {
       success: false,
