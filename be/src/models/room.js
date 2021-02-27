@@ -26,9 +26,6 @@ const Room = new Schema({
   join: [{
     type: Schema.Types.ObjectId,
     ref: "User",
-    markedAt: {
-      type: Date,
-    }
   }],
   host: {
     type: Schema.Types.ObjectId,
@@ -102,7 +99,6 @@ Room.statics.loadUserChat = async function(roomId, studentNumber){
       .populate("join", "joinIn")
       .exec((err, doc) => {
         const joinedRoom = doc.findOne({roomId});
-        console.log("joinedRoom: ", joinedRoom);
       });
     return joinedUser
   } catch (error) {

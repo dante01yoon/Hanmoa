@@ -1,6 +1,5 @@
 import Router from "koa-router";
 import userController from "./controller";
-import * as authController from "../auth/controller";
 import jwt from "../../middlewares/jwt";
 import { getProfileFromGoogle } from "../../middlewares/googleAuth";
 
@@ -15,6 +14,7 @@ userRouter.get("/:id",
   userController.onGetUserByStudentNumber
 );
 userRouter.get("/all", userController.onGetAllUsers);
+userRouter.post("/create", userController.onCreateUser);
 userRouter.post("/signIn",
   getProfileFromGoogle,
   jwt.encode,

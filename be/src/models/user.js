@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import createUUID from "../lib/uuid";
 
 const mongoose = require("mongoose");
 const {generateToken} = require("lib/token");
@@ -6,14 +7,10 @@ const {generateToken} = require("lib/token");
 const { Schema } = mongoose; 
 
 const User = new Schema({
-  _id: {
-    type: String,
-    default: () => uuidv4().replace(/\-/g, ""),
-  },
   profile: {
     id: {
       type: String,
-      default: () => uuidv4().replace(/\-/g, ""),
+      default: createUUID,
     }, 
     name: String,
     studentNumber: String,

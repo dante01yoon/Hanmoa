@@ -9,6 +9,12 @@ import { isNil } from "lodash";
 
 
 type ChatDataStatus = "pending" | "done";
+interface CreateChatParams{
+  roomId: string;
+  message: string;
+  image?: string;
+  writer: string;
+}
 
 class ChatStore extends BasicStore{
   @observable chatMessages: ISingleChat[] = [];
@@ -32,19 +38,24 @@ class ChatStore extends BasicStore{
       this.next = state.next;
     }
   }
+
+  @action
+  feedChatMessages(chat: any){
+    this.chatMessages = [...this.chatMessages,chat];
+  }
   
-  // @action async fetchChatMessages(req: Request ){
-  //   const [error, response] = await this.api.GET<ChatBox>("/chat",{
-  //     id: 1,
-  //     pages: 1,
-  //   });
-  //   if(error){
-  //     throw Error(error.error_message);
-  //   }
-  //   if(response){
-  //     this.chatMessages = response.data
-  //   }
-  // }
+  async fetchCreateChat(params: CreateChatParams){
+    try { 
+      const [error, result] = await this.api.POST("/chat/create", {
+        ...params
+      });
+      console.log("result: ", result);
+      return result;
+    } catch(error){
+      console.error("error in fetchCreateChat: ", error);
+      throw Error(error);
+    }
+  }
 
   @action
   clickChatCard(cardCode: string){

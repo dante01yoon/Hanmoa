@@ -60,6 +60,7 @@ class SessionStore extends BasicStore{
       this.feedFetch(result.data);
     }
     if(error){
+      console.error("error in fetchSignIn");
       throw Error(error.error);
     }
   }

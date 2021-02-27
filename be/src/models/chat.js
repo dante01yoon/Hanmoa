@@ -11,8 +11,9 @@ const Chat = new Schema({
   },
   message: String,
   room: {
-    type: Schema.Types.ObjectId,
-    ref: "Room",
+    type: String,
+    // type: Schema.Types.ObjectId,
+    // ref: "Room",
   },
   image: {
     data: Buffer,
@@ -37,8 +38,11 @@ Chat.statics.createChat = async function(args){
       writer: user,
       message,
       image,
-      room: room,
+      room: room.id,
     })
+    room.messages.push(chat);
+    console.log("room: ", room);
+    await room.save();
     return chat;
   } catch(error){
     console.error("error in Chat.statics.createChat");

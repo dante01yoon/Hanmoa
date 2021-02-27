@@ -1,5 +1,6 @@
 import makeValidation from "@withvoid/make-validation";
 import Chat from "../../models/chat";
+import Room from "../../models/room";
 
 export const onGetChat = async (ctx, next) => {
   const {request: {query: {id}}} = ctx;
@@ -21,7 +22,6 @@ export const onGetChat = async (ctx, next) => {
     }
 
     const chat = await Chat.findChatById({id});
-    console.log("chat: ", chat);
     ctx.status = 200;
     ctx.body = {
       success: true,
@@ -64,7 +64,7 @@ export const onPostCreateChat = async (ctx, next) => {
     }
   }
   try {
-    const chat = Chat.createChat({ writer, message, image, roomId});
+    const chat = await Chat.createChat({ writer, message, image, roomId});
     ctx.status = 200;
     ctx.body = {
       success: true,
@@ -73,6 +73,7 @@ export const onPostCreateChat = async (ctx, next) => {
     return await next();
   } catch(error) {
     console.error("error in onPostCreateChat");
+    console.error(error);
     ctx.status = 500;
     ctx.body = {
       success: false,
