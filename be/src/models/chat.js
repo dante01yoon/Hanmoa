@@ -41,7 +41,6 @@ Chat.statics.createChat = async function(args){
       room: room.id,
     })
     room.messages.push(chat);
-    console.log("room: ", room);
     await room.save();
     return chat;
   } catch(error){

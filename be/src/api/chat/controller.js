@@ -1,6 +1,5 @@
 import makeValidation from "@withvoid/make-validation";
 import Chat from "../../models/chat";
-import Room from "../../models/room";
 
 export const onGetChat = async (ctx, next) => {
   const {request: {query: {id}}} = ctx;
