@@ -27,15 +27,14 @@ class SessionStore extends BasicStore{
         }
       });
       if(error){
-        console.log("error in await fetch : ", error);
+        console.error("error in await fetch : ", error);
+        throw new Error(error.error);
       }
       console.log("response: ", response);
       if(response){
         this.feedFetch(response.data);
       }
-      if(error){
-        throw new Error(error.error);
-      }
+      
     } catch(e){
       console.log("e in fetch:", e);
       throw new Error(e.error);

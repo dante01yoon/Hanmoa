@@ -2,7 +2,7 @@ import React,  { FC, useEffect, useState } from 'react';
 import styled from "styled-components";
 import { useMobxStores } from "@utils/store/useStores";
 import google_auth from "src/asset/google_auth.svg";
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 interface AuthResponse {
   authUser: string;
   code: string;
@@ -103,10 +103,14 @@ const LoginPage: FC = () =>{
   }
   
   const handleGoogleLoginClick = async () => {
+    try {
     const accessCode = await openGoogleAuth();
     if(accessCode){
       await sessionStore.fetchSignIn(accessCode);
-      window.location.replace("/");
+      // window.location.replace("/");
+    }
+    } catch (error) {
+      console.error(error);
     }
   }
   

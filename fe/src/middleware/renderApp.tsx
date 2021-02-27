@@ -15,14 +15,13 @@ export const initStores = async (
   req: Request
 ) => {
   const stores = createStore({storeSpec});
-  console.log("req.headers", req.headers);
   try {
     if(req.cookies[cookie.COOKIE_NAME.SESSION]){
+
       console.log("----- in req.cookies ------")
       await stores.sessionStore?.fetch(req);
     }
   } catch(_){}
-  console.log("stores.sessionStore: ", stores.sessionStore);
   return stores;
 }
 

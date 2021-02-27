@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, RefObject } from 'react'
+import { useEffect, useState, RefObject } from 'react'
 import debounce from "lodash/debounce";
 
 /***
@@ -19,7 +19,7 @@ const useResize: (ref: RefObject<HTMLElement>) => number  = (
       return [elementWidth, elementHeight]; 
     })()
   );
-  useLayoutEffect(() => {
+  useEffect(() => {
     const updateSize = () => {
       setSize([ref.current!.offsetWidth, ref.current!.offsetHeight]);
     };

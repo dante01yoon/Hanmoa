@@ -4,8 +4,6 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 import { ChunkExtractor } from '@loadable/server';
 import { renderFullPage } from './server/renderFullPage';
 import { ServerStyleSheet } from 'styled-components';
@@ -53,14 +51,12 @@ app.get('*', async (req,res) => {
   const context = {};
 
   // initialize store. 
-  // const store = createStore();
   let mobxStores = {} as ReducedStore;
 
   try {
     mobxStores = await initMobxStores(storeSpec, req);
-    console.log("mobxStores: ", mobxStores);
   } catch(error){
-    console.log(error);
+    console.error("error in using initMobxStores: ", error);
     throw Error(error);
   }
   // server side data fetch in page component 
