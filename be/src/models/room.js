@@ -106,7 +106,8 @@ Room.statics.loadUserChat = async function(roomId, studentNumber){
       });
     return joinedUser
   } catch (error) {
-    console.log("error in Room.statics.loadUserChat");
+    console.error("error in Room.statics.loadUserChat");
+    console.error("error: ", error);
   }
 }
 

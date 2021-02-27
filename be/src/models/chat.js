@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
-const User = require("./user");
 const { Schema } = mongoose;
 import createUUID from "../lib/uuid";
+import Room from "./room";
+import User from "./user";
 
 const Chat = new Schema({
   id: {
@@ -9,6 +10,10 @@ const Chat = new Schema({
     default: createUUID,
   },
   message: String,
+  room: {
+    type: Schema.Types.ObjectId,
+    ref: "Room",
+  },
   image: {
     data: Buffer,
     contentType: String,
@@ -23,5 +28,50 @@ const Chat = new Schema({
   }
 });
 
+Chat.statics.createChat = async function(args){
+  const { writer: writerStudentId, message, image, roomId, } = args;
+  try {
+    const user = await User.findByStudentNumber(writerStudentId);
+    const room = await Room.findRoomById({id: roomId});
+    const chat = await this.create({
+      writer: user,
+      message,
+      image,
+      room: room,
+    })
+    return chat;
+  } catch(error){
+    console.error("error in Chat.statics.createChat");
+    console.error("error: ", error);
+  }
+}
+
+Chat.statics.findChatById = async function(args){
+  const { id: chatId } = args; 
+  try{
+    const chat = await this.findOne({ id: chatId }) ?? null;
+    return chat;
+  } catch(error){
+    console.error("error in Chat.statics.findChatById");
+    console.error("error:", error);
+  }
+}
+
+Chat.statics.deleteChatById = async function(args){
+  const { id: chatId } = args;
+  try {
+    const chat = await this.findOne({ id: chatId });
+    if(!chat){
+      return null;
+    }
+    const deletedChat = await this.deleteOne({ id: chat.id });
+    return deletedChat;
+  } catch (error) {
+    console.error("error: ",error);
+    console.error("error in Chat.statics.deleteChatId");
+  }
+}
+
 export default mongoose.model("Chat", Chat);
+
 

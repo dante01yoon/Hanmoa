@@ -73,11 +73,11 @@ export const onGetRoom = async (ctx, next) => {
       room,
     };
   } catch(error){
-    console.log("room controller onGetRoom emits error");
+    console.error("error in onGetRoom");
     ctx.status = 500;
     ctx.body = {
       success: false,
-      message: "error occurred in room model",
+      message: "500 server error",
     }
     console.error(error);
   }
