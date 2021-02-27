@@ -105,7 +105,8 @@ const LoginPage: FC = () =>{
   const handleGoogleLoginClick = async () => {
     const accessCode = await openGoogleAuth();
     if(accessCode){
-      sessionStore.fetchSignIn(accessCode)
+      await sessionStore.fetchSignIn(accessCode);
+      window.location.replace("/");
     }
   }
   

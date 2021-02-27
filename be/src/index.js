@@ -5,24 +5,12 @@ import api from "./api";
 import HanmoaMongoDB from "./lib/mongoose";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
-import logger from "morgan";
 const { jwtMiddleware } = require("./lib/token");
 
 dotenv.config(); 
 // mongoose 연결
 const hanmoaMongoDB = new HanmoaMongoDB();
 hanmoaMongoDB.run();
-// mongoose.Promise = global.Promise;
-// mongoose.connect(process.env.MONGO_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// }).then(
-//   (response) => {
-//     console.log('Successfully connected to mongodb');
-//   }
-// ).catch(e => {
-//   console.error(e);
-// });
 
 const app = new Koa();
 const router = new Router(); 

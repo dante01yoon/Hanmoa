@@ -65,11 +65,15 @@ const Gnb:FC = () => {
       sessionStore.fetchSignOut();
     }
 
+    const handleCreateRoom = () => {
+      
+    }
+  
     const renderRightNav = () => {
-      console.log("isSignedIn in renderRightNav:", sessionStore.isSignedIn);
       if(sessionStore.isSignedIn){
         return(
           <>
+            <Item>방 만들기</Item>
             <Item>마이페이지</Item>
             <Item onClick={handleLogoutClick}>로그아웃</Item>
           </>
