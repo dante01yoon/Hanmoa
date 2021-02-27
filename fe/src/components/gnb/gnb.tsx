@@ -68,12 +68,14 @@ const Gnb:FC = () => {
     const handleCreateRoom = () => {
       
     }
-  
+    
     const renderRightNav = () => {
       if(sessionStore.isSignedIn){
         return(
           <>
-            <Item>방 만들기</Item>
+            <Item>
+              <SmartLink href="/createRoom">방 만들기</SmartLink>
+            </Item>
             <Item>마이페이지</Item>
             <Item onClick={handleLogoutClick}>로그아웃</Item>
           </>

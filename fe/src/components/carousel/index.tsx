@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useRef } from 'react';
+import React, { FC, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Indicator } from './indicator'; 
 import useResize from '@utils/carousel/windowResize';
@@ -48,7 +48,6 @@ const Slider = styled.div<{
   transition: transform ease-out ${p => p.transition}s;
   overflow:hidden;
 `;
-
 
 type StateProps = {
   activeIndex: number; 

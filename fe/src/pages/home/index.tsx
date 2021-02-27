@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll"
 import { RootState } from "@store/index";
 import { getTopicActions } from "@store/actions";
 import * as Styled from "./style";

@@ -1,7 +1,7 @@
 import { useContext } from "react"; 
 import { useSelector,  } from "react-redux";
 import { MobXProviderContext } from "mobx-react"; 
-import {RootState} from "src/store";
+import { RootState } from "src/store";
 
 const useStores = (selectedState : keyof RootState):RootState[typeof selectedState] => useSelector((state:RootState) => state[selectedState]);
 

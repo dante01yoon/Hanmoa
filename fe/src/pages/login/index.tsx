@@ -107,7 +107,7 @@ const LoginPage: FC = () =>{
     const accessCode = await openGoogleAuth();
     if(accessCode){
       await sessionStore.fetchSignIn(accessCode);
-      // window.location.replace("/");
+      window.location.replace("/");
     }
     } catch (error) {
       console.error(error);

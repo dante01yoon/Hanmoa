@@ -25,7 +25,9 @@ const TopicPage = loadable(() =>
 const LoginTestPage = loadable(() =>
   import(/* webpackChunkName: "LoginTestPage" */ "../../pages/LoginTest")
 );
-
+const CreateRoomPage = loadable(() =>
+  import(/* webpackChunkName: "CreateRoomPage" */ "../../pages/createRoom")
+)
 interface HanmoaPageComponentStaticMethod {
   initStoreOnServer?: Function;
 }
@@ -48,6 +50,11 @@ export const routes: RouteType[] = [
     path: "/signup",
     exact: true,
     component: SignUpPage,
+  },
+  {
+    path: "/createRoom",
+    exact: true,
+    component: CreateRoomPage,
   },
   {
     path: "/login",
