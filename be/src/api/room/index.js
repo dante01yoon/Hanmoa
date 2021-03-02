@@ -7,12 +7,17 @@ const {
   onCreateRoom,
   onGetRoom,
   onGetLatestMessages,
+  onGetRooms,
 } = RoomController;
 
 roomRouter.post("/create",
   jwt.decode,
   onCreateRoom,
 );
+
+roomRouter.get("/",
+  onGetRooms,
+)
 
 roomRouter.get("/:id",
   onGetRoom,

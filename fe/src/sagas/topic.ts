@@ -9,6 +9,10 @@ const dummyTopicData = Object.assign({
   data: dummyData(),
 });
 
+const fetchAllTopicRooms = () => {
+    
+}
+
 const topicDummy = <TopicData>(): Promise<TopicData> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => resolve(dummyTopicData), 700);

@@ -7,8 +7,9 @@ const Room = new Schema({
     type: String,
     default: createUUID,
   },
-  category: {
-    type: String,
+  topic: {
+    type: Schema.Types.ObjectId,
+    ref: "Topic",
     default: "etc",
   },
   title: {
@@ -55,6 +56,15 @@ Room.statics.createRoom = async function(args){
     console.log("error in Room.statics.createRoom");
     throw error;
   }
+}
+
+Room.statics.getRooms = async function(args) {
+  const { page = 0 } = args;
+  const rooms = await this.find({})
+    .sort({"time": -1})
+    .skip(page * 10)
+    .limit(10);
+  return rooms;
 }
 
 Room.statics.findRoomById = async function(args) {

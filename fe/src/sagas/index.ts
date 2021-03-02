@@ -1,6 +1,5 @@
 export * from "./type";
 
-//
 import { all } from "redux-saga/effects";
 import { topicSaga } from "./topic";
 import { loginSaga } from "./user";

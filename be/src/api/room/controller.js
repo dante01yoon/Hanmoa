@@ -21,6 +21,27 @@ export const onGetRoomUsers = async (ctx) => {
   }
 }
 
+export const onGetRooms = async(ctx) => {
+  const { request: {query: {page}}} = ctx;
+  
+  try {
+    const rooms = await Room.getRooms({page});
+    ctx.status = 200;
+    ctx.body = {
+      success: true,
+      rooms,
+    }
+  } catch (error) {
+    console.error("error in onGetRooms");
+    console.error(error);
+    ctx.status = 500;
+    ctx.body = {
+      success: false,
+      message: "500 server error",
+    }
+  }
+}
+
 export const onGetLatestMessages = async (ctx) => {
   const { request, response } = ctx;
   const { id } = request.params;
@@ -52,7 +73,7 @@ export const onGetRoom = async (ctx, next) => {
   try{
     const validation = makeValidation(types =>  ({
       payload: id,
-      checkes: {
+      checks: {
         id: { type: types.string}
       }
     }))
