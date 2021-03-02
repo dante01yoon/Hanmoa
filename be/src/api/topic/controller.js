@@ -25,7 +25,9 @@ export const onGetTopic = async(ctx, next) => {
     const topic = await Topic.findTopic({category});
     ctx.status = 200;
     ctx.body = {
-      topic,
+      data: {
+        topic,
+      },
       success: true,
     }
   } catch(error){
@@ -48,7 +50,9 @@ export const onGetTopicList = async(ctx, next) => {
     ctx.status = 200;
     ctx.body = {
       success: true,
-      topicList: refinedTopicList,
+      data: {
+        topicList: refinedTopicList,
+      },
     }
   } catch(error) {
     console.error("error in onGetTopicList");
@@ -86,7 +90,9 @@ export const onPostTopic = async(ctx, next) => {
     ctx.status = 200;
     ctx.body = {
       success: true,
-      topic,
+      data: {
+        topic,
+      },
     }
   } catch(error) {
     console.error("error in onPostTopic");

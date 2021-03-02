@@ -38,7 +38,6 @@ const renderHtml = ({
   helmet: { title: string; meta: any;},
   stores: ReturnType<typeof createStore>
 }) => {
-  console.log("stores: ", stores);
   return (`
     <!DOCTYPE html>
     <html>

@@ -1,7 +1,7 @@
 import ApiStore from "./ApiStore";
 import SessionStore from "./SessionStore";
 import { SingleStoreObject, StoreSpecType } from "./storeSpec";
-import { ReducedStore } from "./u";
+import type { ReducedStore } from "./u";
 
 class RootStore {
   reducedStore: ReducedStore;
