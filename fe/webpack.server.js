@@ -6,7 +6,7 @@ module.exports = {
   target: 'node',
   node: false, // it enables '__dirname' in files. If is not, '__dirname' always return '/'.
   entry: {
-    server: './src/server.tsx',
+    server: './src/server.js',
   },
   output: {
     path: path.resolve(__dirname, './dist'),

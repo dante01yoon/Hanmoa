@@ -9,7 +9,7 @@ const useStores = (selectedState : keyof RootState):RootState[typeof selectedSta
 
 export default useStores;
 
-interface MobxStores {
+export interface MobxStores {
   chatStore: ReducedStore["chatStore"];
   topicStore: ReducedStore["TopicStore"];
   sessionStore: ReducedStore["sessionStore"];

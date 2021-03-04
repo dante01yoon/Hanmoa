@@ -35,7 +35,9 @@ export const renderFullPage: RenderFullPage = ({
   collectedWeb, 
   html, 
   stores 
-}) => `
+}) => {
+  console.log("stores in renderFullPage: ", stores);
+  return (`
   <!DOCTYPE html>
     <html lang="ko">
       <head>
@@ -58,4 +60,4 @@ export const renderFullPage: RenderFullPage = ({
         ${collectedWeb.script}
       </body>
     </html>
-`
+`)}

@@ -1,34 +1,45 @@
 import React, { ElementType} from "react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 import { Dispatch } from "redux";
-import loadable, { LoadableComponent } from "@loadable/component";
+import loadable, {  } from "@loadable/component";
 import { Request } from "express";
+import { 
+  HomePage,
+  SignUpPage,
+  CreateRoomPage,
+  LoginPage,
+  RoomPage,
+  TopicPage,
+  LoginTestPage,
+  ErrorPage,
+} from "@pages/index";
 
-const HomePage = loadable(() =>
+const LoadableHomePage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/home")
 );
-const SignUpPage = loadable(() =>
+const LoadableSignUpPage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/signup")
 );
-const LoginPage = loadable(() =>
+const LodabaleLoginPage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/login")
 );
-const RoomPage = loadable(() =>
+const LodabaleRoomPage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/room")
 );
-const ErrorPage = loadable(() =>
+const LodabaleErrorPage = loadable(() =>
   import(/* webpackChunkName: "ErrorPage" */ "../../pages/error")
 );
-const TopicPage = loadable(() =>
+const LodabaleTopicPage = loadable(() =>
   import(/* webpackChunkName: "TopicPage" */ "../../pages/topic")
 );
-const LoginTestPage = loadable(() =>
+const LodabaleLoginTestPage = loadable(() =>
   import(/* webpackChunkName: "LoginTestPage" */ "../../pages/LoginTest")
 );
-const CreateRoomPage = loadable(() =>
+const LodabaleCreateRoomPage = loadable(() =>
   import(/* webpackChunkName: "CreateRoomPage" */ "../../pages/createRoom")
 )
-interface HanmoaPageComponentStaticMethod {
+
+export interface HanmoaPageComponentStaticMethod {
   initStoreOnServer?: Function;
 }
 
@@ -38,46 +49,48 @@ type RouteType = {
   path?: string;
   exact?: boolean;
   component?: HanmoaPageComponent;
-  fetchInitialData?: (req?: Request) => Dispatch;
+  fetchInitialData?: HanmoaPageComponentStaticMethod["initStoreOnServer"];
 };
+
 export const routes: RouteType[] = [
   {
     path: "/",
     exact: true,
-    component: HomePage,
+    component: LoadableHomePage,
+    fetchInitialData: HomePage.initStoreOnServer,
   },
   {
     path: "/signup",
     exact: true,
-    component: SignUpPage,
+    component: LoadableSignUpPage,
   },
   {
     path: "/createRoom",
     exact: true,
-    component: CreateRoomPage,
+    component: LodabaleCreateRoomPage,
   },
   {
     path: "/login",
     exact: true,
-    component: LoginPage,
+    component: LodabaleLoginPage,
   },
   {
     path: "/room/:id",
     exact: false,
-    component: RoomPage,
+    component: LodabaleRoomPage,
   },
   {
     path: "/topic/:id",
     exact: false,
-    component: TopicPage,
+    component: LodabaleTopicPage,
   },
   {
     path: "/test/login",
     exact: true,
-    component: LoginTestPage,
+    component: LodabaleLoginTestPage,
   },
   {
-    component: ErrorPage,
+    component: LodabaleErrorPage,
   }
 ];
 

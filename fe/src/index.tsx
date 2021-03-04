@@ -12,7 +12,7 @@ import { http } from "@apis/httpModule";
     storeSpec,
     state: getRootData("initial-state"),
   });
-
+  
   const extraModules = {
     api: http,
   }

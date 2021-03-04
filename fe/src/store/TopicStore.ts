@@ -12,12 +12,19 @@ class TopicStore extends BasicStore{
     this.topicList = state?.topicList ?? [];
   }
   
-  @action
   async fetchTopicList() {
-    const [error, response] = await http.GET<GetTopicListPayload>("")
+    const [error, response] = await http.GET<GetTopicListPayload>("/topic/list")
     if(response){
-      this.topicList = response.data.topicList;
+      this.update(response.data);
     }
+    if(error){
+      throw Error(error.error);
+    }    
+  }
+
+  @action
+  update({topicList}: GetTopicListPayload){
+    this.topicList = topicList;
   }
 }
 
