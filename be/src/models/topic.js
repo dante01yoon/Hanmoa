@@ -15,6 +15,10 @@ const Topic = new Schema({
     default: "etc",
     unique: true,
   },
+  url: {
+    type: String,
+    required: true,
+  },
   time: {
     type: Date,
     default: Date.now,
@@ -32,6 +36,7 @@ Topic.statics.findTopic = async function(args){
   } catch (error){
     console.error("error in room.statics.findTopic");
     console.error(error);
+    throw Error(error);
   }
 }
 
@@ -39,15 +44,17 @@ Topic.statics.findTopic = async function(args){
  * @param {category} args 
  */
 Topic.statics.createTopic = async function(args){
-  const { category } = args;
+  const { category, url } = args;
   try {
     const newDocument = await this.create({
       category,
+      url
     });
     return newDocument;
   } catch(error){
     console.error("error in room.statics.createTopic");
     console.error(error);
+    throw Error(error);
   }
 }
 
@@ -57,7 +64,8 @@ Topic.statics.getTopicList = async function(){
     return topics;
   } catch(error){
     console.error("error in room.statics.getTopicList");
-    console.error(error);  
+    console.error(error);
+    throw Error(error);
   }
 }
 

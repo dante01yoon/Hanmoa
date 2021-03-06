@@ -45,7 +45,10 @@ export const onGetTopic = async(ctx, next) => {
 export const onGetTopicList = async(ctx, next) => {
   try {
     const topicList = await Topic.getTopicList();
-    const refinedTopicList = topicList.map(topic => topic.category);
+    const refinedTopicList = topicList.map(({category, url}) => ({
+      category,
+      url
+    }));
     
     ctx.status = 200;
     ctx.body = {
@@ -67,13 +70,19 @@ export const onGetTopicList = async(ctx, next) => {
 }
 
 export const onPostTopic = async(ctx, next) => {
-  const { request: {body: {category}}} = ctx;
+  const { request: {body: {category, url}}} = ctx;
   const validation = makeValidation(types => ({
-    payloads: category,
+    payloads: {
+      category,
+      url,
+    },
     checks: {
       category: {
         types: types.string,
       },
+      url: {
+        types: types.string,
+      }
     },
   }));
 
@@ -86,7 +95,7 @@ export const onPostTopic = async(ctx, next) => {
     }
   }
   try {
-    const topic = await Topic.createTopic({category});
+    const topic = await Topic.createTopic({category, url});
     ctx.status = 200;
     ctx.body = {
       success: true,

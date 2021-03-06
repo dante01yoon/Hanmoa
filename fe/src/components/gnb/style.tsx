@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import hamburger from 'src/asset/hamburger.svg';
+import { Link } from "react-router-dom";
 
 export const Main = styled.main`
     both: clear;
@@ -106,22 +107,22 @@ export const TopicBox = styled.div<{
   max-width: 528px;
   max-height:216px;
   overflow-y: auto; 
-  
 `;
 export const TopicList = styled.div`
   display:flex;
 `;
-export const Topic = styled.div`
+export const Topic = styled(Link)`
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   font-size: 12px;
-  padding: 8px 0; 
+  line-height: initial;
   width: 108px;
   height: 40px;
+  padding: 8px 0; 
   cursor: pointer; 
+  
   &:hover, :focus {
     background-color: ${p=>p.theme.colors.gray_100};
   }
-  line-height: initial;
 `;

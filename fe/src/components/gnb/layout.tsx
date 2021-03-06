@@ -15,7 +15,6 @@ const GlobalLayout:FC = ({
 }) => {
   const { topicStore } = useMobxStores();
   useEffect(() => {
-    console.log("topicStore: ", topicStore);
     if(!topicStore.topicList){
       topicStore.fetchTopicList();
     }

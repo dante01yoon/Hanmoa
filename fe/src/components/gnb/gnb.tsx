@@ -2,6 +2,7 @@ import React, {
   FC, 
   useState, 
   createRef,
+  useCallback,
   useEffect,
 } from 'react';
 import * as Styled from './style';
@@ -10,9 +11,8 @@ import { useMobxStores } from "@utils/store/useStores";
 import { SmartLink } from '@components/smartlink';
 import { Portal } from '@components/portal';
 import LoginModal from '@components/login';
-import { topicDummy } from '@models/gnb';
-import { buildTopicList } from '@utils/topic/buildtopicList';
 import hanmoa_logo from 'src/asset/logo/hanmoa_horizontal.svg';
+import { Topic } from 'src/payload';
 
 const { 
     Header,
@@ -31,7 +31,7 @@ const {
 } = Styled;
 
 interface GnbProps {
-  topicList: any[];
+  topicList: Topic[];
 }
 
 const Gnb:FC<GnbProps> = ({
@@ -50,11 +50,7 @@ const Gnb:FC<GnbProps> = ({
       }      
     };
 
-    useEffect(() => {
-      console.log("topicList: ", topicList);
-    });
-
-    const toggleTopicList = () => {
+    const handleToggleTopicList = () => {
       setVisible((visible) => !visible);
     }
 
@@ -74,6 +70,14 @@ const Gnb:FC<GnbProps> = ({
       
     }
     
+    const renderTopicList = useCallback(() => {
+      const topicJSXList = topicList.map((topic) => {
+        console.log(topic);
+        return <Topic key={topic.url} to={topic.url}>{topic.category}</Topic>
+      })
+      return <TopicList>{topicJSXList}</TopicList>
+    },[topicList])
+
     const renderRightNav = () => {
       if(sessionStore.isSignedIn){
         return(
@@ -118,7 +122,7 @@ const Gnb:FC<GnbProps> = ({
               </SmartLink>
               <ItemBox>
                 <TopicButton
-                  onClick={toggleTopicList}
+                  onClick={handleToggleTopicList}
                 >
                   <TopicTitle>토픽</TopicTitle>
                 </TopicButton>
@@ -126,7 +130,7 @@ const Gnb:FC<GnbProps> = ({
                   <TopicBox
                     ref={topicRef}
                   >
-                    {topicList}
+                    {renderTopicList()}
                   </TopicBox>
                 }
               </ItemBox>
