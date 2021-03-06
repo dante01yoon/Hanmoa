@@ -71,11 +71,26 @@ const Gnb:FC<GnbProps> = ({
     }
     
     const renderTopicList = useCallback(() => {
-      const topicJSXList = topicList.map((topic) => {
-        console.log(topic);
-        return <Topic key={topic.url} to={topic.url}>{topic.category}</Topic>
-      })
-      return <TopicList>{topicJSXList}</TopicList>
+      const topicRowGroup = [] as JSX.Element[];
+      
+      for( let i = 0; i< topicList.length / 3+1; i+=1 ){
+        const start = i*3;
+        const end = (start + 2 < topicList.length -1 ) ? 
+          start + 3 :
+          undefined; 
+        
+        topicRowGroup.push(
+          <TopicList>
+          {
+            topicList.slice(i*3,end).map((topic) => (
+              <Topic key={topic.url} to={topic.url}>{topic.category}</Topic>
+            ))
+          }
+          </TopicList>
+        )
+      }
+      
+      return topicRowGroup;
     },[topicList])
 
     const renderRightNav = () => {
@@ -98,12 +113,6 @@ const Gnb:FC<GnbProps> = ({
                 로그인
               </SmartLink>
             </Item>
-            <Item onClick={() => sessionStore.fetch()}>
-              회원가입
-              {/* <SmartLink href={'signup'}>
-                회원가입
-              </SmartLink>     */}
-            </Item> 
           </>
         )
       }
