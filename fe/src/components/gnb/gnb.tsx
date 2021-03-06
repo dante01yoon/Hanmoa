@@ -30,10 +30,15 @@ const {
     Topic,     
 } = Styled;
 
-const Gnb:FC = () => {
+interface GnbProps {
+  topicList: any[];
+}
+
+const Gnb:FC<GnbProps> = ({
+  topicList,
+}) => {
     const [loginModal, setLoginModal] = useState(false);
     const [visible, setVisible] = useState<boolean>(false); 
-    const [topicList, setTopicList ] = useState(buildTopicList(topicDummy,setVisible));
     const topicRef = createRef<HTMLDivElement>();
     const {sessionStore} = useMobxStores();
     
@@ -46,7 +51,7 @@ const Gnb:FC = () => {
     };
 
     useEffect(() => {
-      console.log("isSignedIn in Gnb: ", sessionStore.isSignedIn);
+      console.log("topicList: ", topicList);
     });
 
     const toggleTopicList = () => {

@@ -2,11 +2,13 @@ import {StoreSpecType} from "./storeSpec";
 import BasicStore from "./BasicStore";
 import RootStore from "./RootStore";
 import SessionStore from "./SessionStore";
+import TopicStore from "./TopicStore";
 import ChatStore from "./ChatStore";
 
 export interface ReducedStore {
   sessionStore: SessionStore; 
   chatStore: ChatStore;
+  TopicStore: TopicStore;
   [key: string]: BasicStore | null;
 }
 

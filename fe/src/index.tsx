@@ -6,18 +6,23 @@ import { App } from './App';
 import { createStore } from "@store/u"
 import storeSpec from "@store/storeSpec";
 import getRootData from "@utils/store/getRootData";
+import { http } from "@apis/httpModule";
 
   const store = createStore({
     storeSpec,
     state: getRootData("initial-state"),
   });
+  
+  const extraModules = {
+    api: http,
+  }
 
   loadableReady( () => { // CSR일때
     const rootElement = document.getElementById('root');
 
     hydrate(
       <BrowserRouter>
-        <App store={store}/>
+        <App store={store} extraModules={extraModules}/>
       </BrowserRouter>,
       rootElement
     )

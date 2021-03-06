@@ -2,7 +2,6 @@ import BasicStore from "@store/BasicStore";
 import { makeObservable, observable, action, flow } from "mobx";
 import RootStore from "@store/RootStore";
 import { Request } from "express";
-import { ChatBox } from "@payload/chat";
 import {createDummyChatData} from "@pages/room/dummy";
 import { ISingleChat } from "src/models/chat";
 import { isNil } from "lodash";

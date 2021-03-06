@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useEffect, useRef, FC } from "react";
+import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@store/index";
 import { getTopicActions } from "@store/actions";
@@ -12,20 +12,27 @@ import { Modal } from "src/components/modal";
 import { ICardData } from "src/models/card";
 import { useModal } from "@utils/modal/useModal";
 import { pathExtractor } from "@utils/topic/pathExtractor";
-import {useMobxStores} from "@utils/store/useStores"; 
+import {useMobxStores, MobxStores} from "@utils/store/useStores"; 
 import {observer} from "mobx-react";
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
 import netflix from "src/asset/netflix.jpg";
-
+import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 const { RoomContainer } = Styled;
 
-const HomePage = withRouter(({ location: { pathname } }) => {
+interface HomePageInitStoreOnServer {
+  initStoreOnServer: InitStoreOnServer<{
+    topicStore: MobxStores["topicStore"];
+  }>
+}
+
+const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   const [isModal, setModal] = useModal();
+  const { pathname } = useLocation();
   const homeRef = useRef<HTMLUListElement>(null);
   const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const dispatch = useDispatch();
-  const { sessionStore, chatStore } = useMobxStores();
+  const { sessionStore, chatStore, topicStore } = useMobxStores();
 
   
   useEffect(() => {
@@ -73,6 +80,12 @@ const HomePage = withRouter(({ location: { pathname } }) => {
       </section>
     </>
   );
-});
+};
 
+HomePage.initStoreOnServer = (_,{ topicStore }) => {
+  return Promise.all([
+    topicStore.fetchTopicList(),
+  ])
+}
 export default observer(HomePage);
+

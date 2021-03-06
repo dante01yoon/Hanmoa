@@ -16,6 +16,7 @@ export interface IRootRouter {
 
 export interface AppProps extends IRootRouter {
   store?: ReducedStore
+  extraModules?: Record<string,any>;
 }
 const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
   return React.cloneElement(
@@ -28,15 +29,15 @@ const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
 export const App:FC<AppProps> = ({
   router,
   store,
+  extraModules = null,
 }) => {
-  console.log("store: ", store);
   return (
     <HanmoaTheme> 
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
         <ReduxProvider>
-          <MobxProvider {...store}>
+          <MobxProvider {...extraModules} {...store}>
             <ModalProvider>
               <GlobalLayout>
                 {renderRoutes()}
