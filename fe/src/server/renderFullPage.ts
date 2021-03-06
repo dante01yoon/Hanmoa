@@ -36,12 +36,6 @@ export const renderFullPage: RenderFullPage = ({
   html, 
   stores 
 }) => {
-  console.log("stores in renderFullPage: ", stores);
-  const something = JSON.stringify(
-    {...stores}
-  );
-
-  console.log("something: ", something);
   return (`
   <!DOCTYPE html>
     <html lang="ko">

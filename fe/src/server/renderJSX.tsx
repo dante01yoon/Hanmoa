@@ -24,16 +24,16 @@ export const initStore = async (req: Request) => {
   }
 
   // server side data fetch in page component 
-  routes.filter((value) => {
+  const promiseArr = routes.filter((value) => {
     if(value.path){
       return value.path.includes(req.path)
     }
-  }).forEach(async (value) => {
+  }).map((value) => {
     if(value.component && value.fetchInitialData){
-      await value.fetchInitialData(req,mobxStores);
+      return value.fetchInitialData(req,mobxStores);
     }
   })
-
+  await Promise.all(promiseArr);
   return mobxStores;
 }
 
@@ -57,7 +57,6 @@ export const buildJSX = (req: Request, {...params}: {
       <App store={store}/>
     </StaticRouter>
   )
-  console.log("store in buildJSX: ", store);
   const sheet = new ServerStyleSheet();
   const html = renderToString(sheet.collectStyles(jsx));
   const helmet = Helmet.renderStatic();
