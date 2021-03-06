@@ -13,6 +13,7 @@ import {
   LoginTestPage,
   ErrorPage,
 } from "@pages/index";
+import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 
 const LoadableHomePage = loadable(() =>
   import(/* webpackChunkName: "HomePage" */ "../../pages/home")
@@ -40,7 +41,7 @@ const LodabaleCreateRoomPage = loadable(() =>
 )
 
 export interface HanmoaPageComponentStaticMethod {
-  initStoreOnServer?: Function;
+  initStoreOnServer?: InitStoreOnServer<any>;
 }
 
 type HanmoaPageComponent = React.ComponentType<any>  & HanmoaPageComponentStaticMethod;

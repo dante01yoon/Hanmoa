@@ -17,12 +17,9 @@ import {observer} from "mobx-react";
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
 import netflix from "src/asset/netflix.jpg";
-
+import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 const { RoomContainer } = Styled;
 
-type InitStoreOnServer<S = Partial<MobxStores> > = (req: Express.Request, stores: S) => {
-  
-}
 interface HomePageInitStoreOnServer {
   initStoreOnServer: InitStoreOnServer<{
     topicStore: MobxStores["topicStore"];

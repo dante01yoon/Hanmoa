@@ -16,7 +16,7 @@ export const initStore = async (req: Request) => {
   try {
     mobxStores = await initMobxStores(storeSpec, req) 
     if(req.cookies && req.cookies["_hm_guit"]){
-      mobxStores.sessionStore.fetch(req);
+      await mobxStores.sessionStore.fetch(req);
     }
   } catch (error){
     console.error("error in using initMobxStores: ", error);
@@ -28,7 +28,7 @@ export const initStore = async (req: Request) => {
     if(value.path){
       return value.path.includes(req.path)
     }
-  }).map(async (value) => {
+  }).forEach(async (value) => {
     if(value.component && value.fetchInitialData){
       await value.fetchInitialData(req,mobxStores);
     }

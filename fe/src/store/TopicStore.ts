@@ -9,12 +9,17 @@ class TopicStore extends BasicStore{
   constructor({root, state}: {root: RootStore, state: TopicStore}) {
     super({root});
     makeObservable(this);
+    console.log("state: ", state);
     this.topicList = state?.topicList ?? [];
   }
   
   async fetchTopicList() {
-    const [error, response] = await http.GET<GetTopicListPayload>("/topic/list")
+    console.log("response before api.GET: ",);
+
+    const [error, response] = await this.api.GET<GetTopicListPayload>("/topic/list")
+    console.log("response after api.GET: ", response);
     if(response){
+      console.log("response.data: ", response.data);
       this.update(response.data);
     }
     if(error){

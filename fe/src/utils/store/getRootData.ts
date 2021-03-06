@@ -13,7 +13,7 @@ const getRootData = (dataName: string): any => {
       window.ROOT_DATA[dataName] = rootAttribute ?
         JSON.parse(rootAttribute) :
         null;
-      rootEl.removeAttribute(attrName);
+      // rootEl.removeAttribute(attrName);
     }
   }
 
