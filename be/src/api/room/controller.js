@@ -101,17 +101,22 @@ export const onGetRoom = async (ctx, next) => {
       message: "500 server error",
     }
     console.error(error);
+    throw Error(error);
   }
 }
 
 export const onCreateRoom = async(ctx) => {
   const { request, response } = ctx;
-  const { studentNumber, title } = request.body;
+  const { studentNumber, title, subTitle, imageUrl, category } = request.body;
+  
   try {
     const validation = makeValidation(types => ({
       payload: request.body,
       checks: {
         studentNumber: { type: types.string },
+        title: { type: types.string },
+        subTitle: { type: types.string },
+        category: { type: types.string },
       }
     }));
 
@@ -123,7 +128,10 @@ export const onCreateRoom = async(ctx) => {
     
     const room = await Room.createRoom({
       studentNumber,
-      title
+      title,
+      subTitle,
+      imageUrl: imageUrl ?? "",
+      category,
     });
 
     response.status = 200;

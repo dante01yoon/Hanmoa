@@ -9,11 +9,10 @@ const getRootData = (dataName: string): any => {
     if(rootEl){
       const rootAttribute = rootEl.getAttribute(attrName);
       const test =  rootAttribute && JSON.parse(rootAttribute)
-      console.log("JSON.parse: ",test);
       window.ROOT_DATA[dataName] = rootAttribute ?
         JSON.parse(rootAttribute) :
         null;
-      // rootEl.removeAttribute(attrName);
+      rootEl.removeAttribute(attrName);
     }
   }
 

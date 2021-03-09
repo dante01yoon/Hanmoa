@@ -1,6 +1,8 @@
+import { string } from "@withvoid/make-validation/lib/validationTypes";
 import mongoose, { Schema } from "mongoose";
 import createUUID from "../lib/uuid";
 import User from "./user";
+import Topic from "./topic";
 
 const Room = new Schema({
   id: {
@@ -16,9 +18,13 @@ const Room = new Schema({
     type: String,
     required: true,
   },
-  image: {
-    data: Buffer,
-    contentType: String,
+  subTitle: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
+    type: String,
+    default: "",
   },
   time: {
     type: Date,
@@ -43,14 +49,19 @@ const Room = new Schema({
  * @param {studentNumber: string} args 
  */
 Room.statics.createRoom = async function(args){
-  const { studentNumber, title } = args;
+  const { studentNumber, title, subTitle, imageUrl, category } = args;
   try {
+    const topic = await Topic.findTopic({category});
     const user = await User.findByStudentNumber(studentNumber);
     const room = await this.create({
       title,
+      subTitle,
       host: user,
-      join: [user]
+      join: [user],
+      imageUrl,
+      topic,
     })
+    
     return room;
   } catch(error){
     console.log("error in Room.statics.createRoom");
@@ -59,8 +70,13 @@ Room.statics.createRoom = async function(args){
 }
 
 Room.statics.getRooms = async function(args) {
-  const { page = 0 } = args;
-  const rooms = await this.find({})
+  const { page = 0 , category } = args;
+  let topic;
+  if(category){
+    topic = await Topic.findTopic({category});
+  }
+  const findArgs = topic ? {topic: topic._id} : {};
+  const rooms = await this.find(findArgs)
     .sort({"time": -1})
     .skip(page * 10)
     .limit(10);
@@ -69,8 +85,18 @@ Room.statics.getRooms = async function(args) {
 
 Room.statics.findRoomById = async function(args) {
   const { id } = args;
-  const room = await this.findOne({id});
-  return room;
+  try {
+    const room = await this
+      .findOne({id})
+      .populate("messages")
+      .populate("join")
+      
+    return room;
+  } catch(error) {
+    console.error("error in Room.statics.findRoomById");
+    console.error(error);
+    throw Error(error);
+  }
 }
 
 Room.statics.getRoomUsers = async function(args) {
