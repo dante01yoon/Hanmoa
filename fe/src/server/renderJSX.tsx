@@ -26,6 +26,8 @@ export const initStore = async (req: Request) => {
   // server side data fetch in page component 
   const promiseArr = routes.filter((value) => {
     if(value.path){
+      console.log("req.path: ", req.path);
+      console.log("value.path: ", value.path);
       return value.path.includes(req.path)
     }
   }).map((value) => {
@@ -34,6 +36,7 @@ export const initStore = async (req: Request) => {
     }
   })
   await Promise.all(promiseArr);
+  console.log("mobxStores: ", mobxStores);
   return mobxStores;
 }
 

@@ -79,7 +79,7 @@ Room.statics.getRooms = async function(args) {
   const rooms = await this.find(findArgs)
     .sort({"time": -1})
     .skip(page * 10)
-    .limit(10);
+    .limit(12);
   return rooms;
 }
 

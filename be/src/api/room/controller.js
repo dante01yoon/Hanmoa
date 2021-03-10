@@ -8,7 +8,9 @@ export const onGetRoomUsers = async (ctx) => {
     ctx.status = 200;
     ctx.body ={
       success: true,
-      join: join ?? [],
+      data: {
+        join: join ?? [],
+      }
     }
   } catch (error) {
     console.log("error in onGetRoomUsers");
@@ -22,14 +24,15 @@ export const onGetRoomUsers = async (ctx) => {
 }
 
 export const onGetRooms = async(ctx) => {
-  const { request: {query: {page}}} = ctx;
-  
+  const { request: {query: {page}, params: {category}}} = ctx;
   try {
-    const rooms = await Room.getRooms({page});
+    const rooms = await Room.getRooms({page, category});
     ctx.status = 200;
     ctx.body = {
       success: true,
-      rooms,
+      data: {
+        rooms,
+      },
     }
   } catch (error) {
     console.error("error in onGetRooms");
@@ -91,7 +94,9 @@ export const onGetRoom = async (ctx, next) => {
     ctx.status = 200;
     ctx.body = {
       success: true,
-      room,
+      data: {
+        room,
+      },
     };
   } catch(error){
     console.error("error in onGetRoom");
@@ -137,7 +142,9 @@ export const onCreateRoom = async(ctx) => {
     response.status = 200;
     response.body = {
       success: true,
-      room
+      data: {
+        room,
+      },
     };
   } catch(error){
     console.log("error in onCreateRoom");

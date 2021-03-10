@@ -3,7 +3,7 @@ import { IMember } from "./member";
 export interface ICardData {
   id: number; //방 고유 아이디
   title: string; //방 제목
-  description: string; // 방 내용
+  subTitle: string; // 방 내용
   host: IMember; // 방장
   author: IMember; // 방 만든 사람
   createdAt: string; // 생성 날짜

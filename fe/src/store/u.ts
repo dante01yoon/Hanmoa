@@ -4,11 +4,12 @@ import RootStore from "./RootStore";
 import SessionStore from "./SessionStore";
 import TopicStore from "./TopicStore";
 import ChatStore from "./ChatStore";
-
+import RoomStore from "./RoomStore";
 export interface ReducedStore {
   sessionStore: SessionStore; 
   chatStore: ChatStore;
   TopicStore: TopicStore;
+  roomStore: RoomStore;
   [key: string]: BasicStore | null;
 }
 
@@ -27,6 +28,5 @@ export const createStore = ({
     reducedSpec[singleSpec.key] = new singleSpec.class({root: rootStore, state: state[singleSpec.key]});
     return reducedSpec; 
   },{} as ReducedStore);
-  console.log("reducedStore: ", reducedStore);
   return {...reducedStore}
 }

@@ -5,7 +5,7 @@ export const singleDummy: ICardData = {
   id: 1, //방 고유 아이디
   title:
     "오래 볼 분만 제발 오래 볼 문만 제발제발제발 오랫동안 같이 볼 분들만 들어와주세요 제발요.", //방 제목
-  description: "this is test room", // 방 내용
+  subTitle: "this is test room", // 방 내용
   host: {
     id: nanoid(),
     image: "",

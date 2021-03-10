@@ -34,7 +34,7 @@ export const Card: FC<Props> = ({ width, height, data, handleClick }) => {
   const {
     imgUrl,
     title,
-    description,
+    subTitle,
     host,
     members,
     full,

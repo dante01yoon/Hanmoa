@@ -81,9 +81,10 @@ export const routes: RouteType[] = [
     component: LodabaleRoomPage,
   },
   {
-    path: "/topic/:id",
+    path: "/topic/:category",
     exact: false,
     component: LodabaleTopicPage,
+    fetchInitialData: TopicPage.initStoreOnServer,
   },
   {
     path: "/test/login",

@@ -13,6 +13,7 @@ export interface MobxStores {
   chatStore: ReducedStore["chatStore"];
   topicStore: ReducedStore["TopicStore"];
   sessionStore: ReducedStore["sessionStore"];
+  roomStore: ReducedStore["roomStore"];
   http: typeof http;
 }
 
