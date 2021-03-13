@@ -41,7 +41,6 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
     if(!roomStore.homeRoomList){
      roomStore.fetchRooms()
       .then(({rooms}:{ rooms: any}) => {
-        console.log("rooms: ", rooms);
         setRoomList(rooms);
         setIsLoading(false);
       }) 
