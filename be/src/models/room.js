@@ -39,6 +39,11 @@ const Room = new Schema({
     ref: "User",
     required: true,
   },
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   messages: [{
     type: Schema.Types.ObjectId,
     ref: "Chat",
@@ -49,7 +54,7 @@ const Room = new Schema({
  * @param {studentNumber: string} args 
  */
 Room.statics.createRoom = async function(args){
-  const { studentNumber, title, subTitle, imageUrl, category } = args;
+  const { studentNumber, title, subTitle, imageUrl, category, createdBy } = args;
   try {
     const topic = await Topic.findTopic({category});
     const user = await User.findByStudentNumber(studentNumber);

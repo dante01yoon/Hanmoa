@@ -1,9 +1,11 @@
 import BasicStore from "@store/BasicStore";
 import { action, observable, makeObservable } from "mobx";
 import RootStore from "@store/RootStore";
+import { GetRoomPayload, GetRoomsPayload } from "@payload/index";
+
 
 export default class RoomStore extends BasicStore {
-  @observable roomList: Array<any> | null;
+  @observable roomList: GetRoomsPayload["rooms"] | null;
   @observable currentRoom: Record<string,any>;
   
   constructor({root, state}: { root: RootStore, state: RoomStore}){
@@ -14,38 +16,38 @@ export default class RoomStore extends BasicStore {
   }
 
   async fetchRooms(category: string = "etc"){
-    const [error,response] = await this.api.GET<any>(`/room/${category}`);
+    const [error,response] = await this.api.GET<GetRoomsPayload>(`/room/${category}`);
     if(error){
       throw Error(error.error)
     }
-    if(response){
+    if(response && response.success){
       const { data } = response
-      this.feedFetchRooms(data?.rooms)
+      this.feedFetchRooms(data.rooms)
       return response.data;
     }
     return Promise.resolve();
   }
 
   async fetchRoom(id: string){
-    const [error,response] = await this.api.GET<any>(`/room/only/${id}`);
+    const [error,response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`);
     if(error){
       throw Error(error.error);
     }
-    if(response){
+    if(response && response.success){
       const { data } = response
-      this.feedFetchRoom(data?.room);
+      this.feedFetchRoom(data.room);
       return response.data;
     }
     return Promise.resolve();
   }
 
   @action.bound
-  feedFetchRooms(rooms: Array<any>){
+  feedFetchRooms(rooms: GetRoomsPayload["rooms"]){
     this.roomList = rooms;
   }
   
   @action.bound
-  feedFetchRoom(room: any){
+  feedFetchRoom(room: GetRoomPayload["room"]){
     this.currentRoom = room;
   }
 

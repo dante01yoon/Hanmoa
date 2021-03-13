@@ -83,7 +83,7 @@ const Gnb:FC<GnbProps> = ({
           <TopicList>
           {
             topicList.slice(i*3,end).map((topic) => (
-              <Topic key={topic.url} to={topic.url}>{topic.category}</Topic>
+              <Topic key={topic.url} to={`/topic/${topic.url}`}>{topic.category}</Topic>
             ))
           }
           </TopicList>

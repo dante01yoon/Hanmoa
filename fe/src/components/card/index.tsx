@@ -5,6 +5,7 @@ import category_tv from "src/asset/monitor-tv.svg";
 import share from "src/asset/share.svg";
 import heart from "src/asset/heart_not_checked.svg";
 import heart_filled from "src/asset/heart_checked.svg";
+import batman from "src/asset/batman.jpg"
 import * as Styled from "./style";
 
 const {
@@ -43,7 +44,7 @@ export const Card: FC<Props> = ({ width, height, data, handleClick }) => {
     url,
     block,
   } = data;
-  const extractedUrl = imgUrl ?? "none";
+  const extractedUrl = imgUrl ?? batman;
 
   const handleHeartClick = (e: React.BaseSyntheticEvent<MouseEvent>): void => {
     if (checkHeartClick()) {
