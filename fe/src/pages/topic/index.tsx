@@ -4,8 +4,7 @@ import { useMobxStores, MobxStores } from "@utils/store/useStores";
 import { observer } from "mobx-react";
 import type { RouteComponentProps } from "react-router";
 import { RoomContainer } from "@pages/home/style";
-import { Card } from "@components/card";
-import isNil from "lodash/isNil";
+import Card from "@components/card";
 import SkeletonCard from "@components/skeleton/home";
 
 interface TopicPageInitStoreOnServer {
@@ -49,11 +48,11 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
               .map((_, index) => {
                 return <SkeletonCard key={`skeleton::${index}`} />;
               })
-            : roomStore.roomList?.map((roomData: any,index: number) => 
+            : roomStore.roomList?.map((room: any,index: number) => 
               <Card
-                data={roomData}
+                room={room}
                 key={`$::${index}-${category ?? "etc"}`}
-                handleClick={() => handleClick(roomData)}
+                handleClick={() => handleClick(room)}
               />
             )
         }

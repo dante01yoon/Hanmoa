@@ -6,16 +6,18 @@ import { GetRoomPayload, GetRoomsPayload } from "@payload/index";
 
 export default class RoomStore extends BasicStore {
   @observable roomList: GetRoomsPayload["rooms"] | null;
-  @observable currentRoom: Record<string,any>;
-  
+  @observable currentRoom: GetRoomPayload["room"];
+  @observable homeRoomList: GetRoomsPayload["rooms"] | null;
+
   constructor({root, state}: { root: RootStore, state: RoomStore}){
     super({root});
     makeObservable(this);
+    this.homeRoomList = state?.homeRoomList ?? null;
     this.roomList = state?.roomList ?? null;
     this.currentRoom = state?.currentRoom;
   }
 
-  async fetchRooms(category: string = "etc"){
+  async fetchRooms(category?: string){
     const [error,response] = await this.api.GET<GetRoomsPayload>(`/room/${category}`);
     if(error){
       throw Error(error.error)

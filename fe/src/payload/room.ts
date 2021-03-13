@@ -5,7 +5,7 @@ import {
 } from "./index"
 
 export interface Room {
-  roomId: string;
+  id: string;
   topic: Topic["category"];
   category: string;
   title: string;
@@ -20,11 +20,11 @@ export interface Room {
 
 // GET /room/only/${id}
 export interface GetRoomPayload  {
-  room: Room;
+  room: Room | null;
 };
 
 // GET /room/:category
 
 export interface GetRoomsPayload {
-  rooms: Array<Room>;
+  rooms: Array<Room> | null;
 }

@@ -1,5 +1,4 @@
-import { ICardData } from "./card";
 export interface ModalProps {
-  data: ICardData;
+  data: any;
   visible: boolean;
 }

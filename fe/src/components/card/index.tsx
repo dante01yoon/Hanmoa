@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect, SyntheticEvent } from "react";
 import { ICardData } from "src/models/card";
 import { Icon } from "src/components/icon";
+import { observer } from "mobx-react";
+import { GetRoomPayload } from "@payload/index";
 import category_tv from "src/asset/monitor-tv.svg";
 import share from "src/asset/share.svg";
 import heart from "src/asset/heart_not_checked.svg";
@@ -22,36 +24,34 @@ const {
   IconBox,
 } = Styled;
 
-interface Props {
+interface CardProps {
+  
   width?: number;
   height?: number;
-  data: ICardData;
+  room: GetRoomPayload["room"];
   handleClick: (e: SyntheticEvent) => void;
 }
 
-export const Card: FC<Props> = ({ width, height, data, handleClick }) => {
+const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
   const [like, setLike] = useState<boolean>(false);
-
   const {
-    imgUrl,
+    imageUrl,
     title,
     subTitle,
     host,
-    members,
-    full,
-    current,
     category,
-    url,
-    block,
-  } = data;
-  const extractedUrl = imgUrl ?? batman;
+    join,
+  } = room!;
+  const extractedUrl = imageUrl || batman;
 
   const handleHeartClick = (e: React.BaseSyntheticEvent<MouseEvent>): void => {
     if (checkHeartClick()) {
       setLike(!like);
     }
   };
-
+  const renderCurrentMemberStatus = () => {
+    
+  }
   const checkHeartClick = (): boolean => {
     return true;
   };
@@ -63,8 +63,7 @@ export const Card: FC<Props> = ({ width, height, data, handleClick }) => {
         <CategoryBox>
           <IconBox src={category_tv} />
           <Category>{category}</Category>
-          <MemberCount block={block}>
-            {current}/{full}
+          <MemberCount block={false}>
           </MemberCount>
         </CategoryBox>
         <TitleBox>
@@ -81,3 +80,5 @@ export const Card: FC<Props> = ({ width, height, data, handleClick }) => {
     </Container>
   );
 };
+
+export default observer(Card);

@@ -1,28 +1,29 @@
-import React, { useEffect, useRef, FC } from "react";
+import React, { useEffect, useRef, FC, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@store/index";
-import { getTopicActions } from "@store/actions";
 import * as Styled from "./style";
 import { Carousel } from "@components/carousel";
 import { Slide } from "@components/carousel/slide";
-import { Card } from "@components/card";
+import Card from "@components/card";
 import SkeletonCard from "@components/skeleton/home";
 import { Modal } from "src/components/modal";
 import { ICardData } from "src/models/card";
 import { useModal } from "@utils/modal/useModal";
-import { pathExtractor } from "@utils/topic/pathExtractor";
 import {useMobxStores, MobxStores} from "@utils/store/useStores"; 
 import {observer} from "mobx-react";
+import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
+import { GetRoomsPayload, GetRoomPayload } from "@payload/index";
+import isNil from "lodash/isNil";
+
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
 import netflix from "src/asset/netflix.jpg";
-import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
+
 const { RoomContainer } = Styled;
 
 interface HomePageInitStoreOnServer {
   initStoreOnServer: InitStoreOnServer<{
     topicStore: MobxStores["topicStore"];
+    roomStore: MobxStores["roomStore"];
   }>
 }
 
@@ -30,17 +31,24 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   const [isModal, setModal] = useModal();
   const { pathname } = useLocation();
   const homeRef = useRef<HTMLUListElement>(null);
-  const { data, isLoading } = useSelector((state: RootState) => state.topic);
-  const dispatch = useDispatch();
-  const { sessionStore, chatStore, topicStore } = useMobxStores();
+  // TODO 나중에 Saga 로 roomStore을 교체시 사용 
+  // const { data, isLoading } = useSelector((state: RootState) => state.topic);
+  const { sessionStore, chatStore, topicStore, roomStore } = useMobxStores();
+  const [roomList, setRoomList] = useState<GetRoomsPayload["rooms"]>(roomStore.homeRoomList)
+  const [isLoading, setIsLoading ] = useState(isNil(roomList));
 
-  
   useEffect(() => {
-    const [include, exclude] = pathExtractor(pathname);
-    dispatch(getTopicActions.REQUEST());
-  }, []);
-  
-  const handleClick: (data: ICardData) => void = (data) => {
+    if(!roomStore.homeRoomList){
+     roomStore.fetchRooms()
+      .then(({rooms}:{ rooms: any}) => {
+        console.log("rooms: ", rooms);
+        setRoomList(rooms);
+        setIsLoading(false);
+      }) 
+    }
+  },[]);
+
+  const handleClick: (data: GetRoomPayload["room"]) => void = (data) => {
     setModal({
       type: "OPEN",
       payload: {
@@ -67,12 +75,12 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
                 .map((_, index) => {
                   return <SkeletonCard key={`skeleton::${index}`} />;
                 })
-            : data.map((value) => {
+            : roomList?.map((room) => {
                 return (
                   <Card
-                    data={value}
-                    key={value.id}
-                    handleClick={() => handleClick(value)}
+                    room={room}
+                    key={room.id}
+                    handleClick={() => handleClick(room)}
                   />
                 );
               })}
@@ -82,10 +90,12 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   );
 };
 
-HomePage.initStoreOnServer = (_,{ topicStore }) => {
+HomePage.initStoreOnServer = (_,{ topicStore, roomStore }) => {
   return Promise.all([
     topicStore.fetchTopicList(),
+    roomStore.fetchRooms(),
   ])
 }
+
 export default observer(HomePage);
 
