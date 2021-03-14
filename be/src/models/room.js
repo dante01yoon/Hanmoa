@@ -34,6 +34,10 @@ const Room = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   }],
+  capability:{
+    type: Number,
+    required: true,
+  },
   host: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -54,7 +58,7 @@ const Room = new Schema({
  * @param {studentNumber: string} args 
  */
 Room.statics.createRoom = async function(args){
-  const { studentNumber, title, subTitle, imageUrl, category, createdBy } = args;
+  const { studentNumber, title, subTitle, imageUrl, category, capability } = args;
   try {
     const topic = await Topic.findTopic({category})
     const user = await User.findByStudentNumber(studentNumber);
@@ -65,6 +69,8 @@ Room.statics.createRoom = async function(args){
       join: [user],
       imageUrl,
       topic,
+      createdBy: user,
+      capability,
     })
     
     return room;

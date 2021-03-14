@@ -29,10 +29,12 @@ export const onGetRooms = async(ctx) => {
   try {
     const rooms = await Room.getRooms({page, category});
     const refinedRooms = rooms.map((room) => {
+      const copiedRoom = room.toObject;
       const refinedTopic = pick(room.topic,["category", "url"]);
       return {
-        ...room.toObject(),
+        ...copiedRoom,
         topic: refinedTopic,
+        current: copiedRoom.join.length,
       }
     });
 
@@ -121,9 +123,14 @@ export const onGetRoom = async (ctx, next) => {
 
 export const onCreateRoom = async(ctx) => {
   const { request, response } = ctx;
-  const { studentNumber, title, subTitle, imageUrl, category } = request.body;
+  const { studentNumber, title, subTitle, imageUrl, category, capability } = request.body;
   
   try {
+    if(["watcha", "netflix"].includes(category)){
+      if(capability !== 4){
+        throw Error("category watcha or netflix capabilitycan't be any number except 4");
+      }
+    }
     const validation = makeValidation(types => ({
       payload: request.body,
       checks: {
@@ -139,13 +146,14 @@ export const onCreateRoom = async(ctx) => {
       response.body = validation;
       return;
     }
-    
+        
     const room = await Room.createRoom({
       studentNumber,
       title,
       subTitle,
       imageUrl: imageUrl ?? "",
       category,
+      capability,
     });
 
     response.status = 200;
