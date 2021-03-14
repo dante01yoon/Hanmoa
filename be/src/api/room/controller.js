@@ -29,8 +29,10 @@ export const onGetRooms = async(ctx) => {
   try {
     const rooms = await Room.getRooms({page, category});
     const refinedRooms = rooms.map((room) => {
-      const copiedRoom = room.toObject;
+      const copiedRoom = room.toObject();
+      console.log(copiedRoom);
       const refinedTopic = pick(room.topic,["category", "url"]);
+      console.log("copiedRoom.join.length: ", copiedRoom.join);
       return {
         ...copiedRoom,
         topic: refinedTopic,
@@ -154,6 +156,7 @@ export const onCreateRoom = async(ctx) => {
       imageUrl: imageUrl ?? "",
       category,
       capability,
+      createdBy,
     });
 
     response.status = 200;

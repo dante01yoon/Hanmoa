@@ -25,16 +25,18 @@ export const Modal: FC<ModalProps> = ({
   join,
   host,
   createdBy,
+  current,
   topic,
+  capability,
  }) => {
   const enter: (e: SyntheticEvent) => void = () => {};
   const close = useModalDispatch();
   const buildMemberList = () =>
     join.map((value, index) => {
       return (
-        <Member key={index}>
-          <StudentNumber>{host.studentNumber}</StudentNumber>
-          <StudentName>{host.name}</StudentName>
+        <Member key={`$${index}value.profile.id`}>
+          <StudentNumber>{value.profile.studentNumber}</StudentNumber>
+          <StudentName>{value.profile.name}</StudentName>
         </Member>
       );
     });
@@ -50,7 +52,7 @@ export const Modal: FC<ModalProps> = ({
         <Description>{topic.category}</Description>
       </Row>
       <Row>
-        <Name>인원:</Name>
+        <Name>인원:&nbsp;{current}/{capability}</Name>
         <MemberList>{buildMemberList()}</MemberList>
       </Row>
       <Row>
