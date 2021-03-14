@@ -56,7 +56,7 @@ const Room = new Schema({
 Room.statics.createRoom = async function(args){
   const { studentNumber, title, subTitle, imageUrl, category, createdBy } = args;
   try {
-    const topic = await Topic.findTopic({category});
+    const topic = await Topic.findTopic({category})
     const user = await User.findByStudentNumber(studentNumber);
     const room = await this.create({
       title,
@@ -82,6 +82,9 @@ Room.statics.getRooms = async function(args) {
   }
   const findArgs = topic ? {topic: topic._id} : {};
   const rooms = await this.find(findArgs)
+    .populate("topic")
+    .populate("join")
+    .populate("host")
     .sort({"time": -1})
     .skip(page * 10)
     .limit(12);

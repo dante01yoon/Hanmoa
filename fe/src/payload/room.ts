@@ -6,8 +6,7 @@ import {
 
 export interface Room {
   id: string;
-  topic: Topic["category"];
-  category: string;
+  topic: Topic;
   title: string;
   subTitle: string;
   // TODO 더미 이미지는 지금은 클라에서 처리하나 앞으로 서버에서 보내주는걸로

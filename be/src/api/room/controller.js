@@ -1,5 +1,6 @@
 import makeValidation from "@withvoid/make-validation";
 import Room from "../../models/room";
+import pick from "lodash/pick";
 
 export const onGetRoomUsers = async (ctx) => {
   const { request: { params: {id}}} = ctx;
@@ -27,11 +28,19 @@ export const onGetRooms = async(ctx) => {
   const { request: {query: {page}, params: {category}}} = ctx;
   try {
     const rooms = await Room.getRooms({page, category});
+    const refinedRooms = rooms.map((room) => {
+      const refinedTopic = pick(room.topic,["category", "url"]);
+      return {
+        ...room.toObject(),
+        topic: refinedTopic,
+      }
+    });
+
     ctx.status = 200;
     ctx.body = {
       success: true,
       data: {
-        rooms,
+        rooms: refinedRooms,
       },
     }
   } catch (error) {

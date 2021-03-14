@@ -1,13 +1,13 @@
 import { computed, makeObservable, action, observable, runInAction } from "mobx"; 
 import RootStore from "./RootStore";
-import { Profile } from "src/payload";
+import { Profile, User, GetUserPayload, PostUserPayload } from "src/payload";
 import BasicStore from "./BasicStore"; 
 import { Request } from "express";
 
 class SessionStore extends BasicStore{
   @observable curUserCode: string | null | undefined = null;
   @observable waitingForServer: boolean = false;
-  @observable user: Profile["profile"] | undefined | null = null; 
+  @observable userProfile: Profile | undefined | null = null; 
 
   constructor({root, state}:{root: RootStore, state: SessionStore}){
     super({root}); 
@@ -15,13 +15,13 @@ class SessionStore extends BasicStore{
     if(state){
       this.curUserCode = state.curUserCode;
       this.waitingForServer = state.waitingForServer;
-      this.user = state.user;
+      this.userProfile = state.userProfile;
     }
   }
 
   async fetch(req?: Request){
     try{
-      const [error, response] = await this.api.GET<Profile>(`/users/me`,{},{
+      const [error, response] = await this.api.GET<GetUserPayload>(`/users/me`,{},{
         headers: {
           cookie: req && JSON.stringify(req.cookies),
         }
@@ -44,13 +44,13 @@ class SessionStore extends BasicStore{
     return !!this.curUserCode; 
   }
   
-  @action feedFetch(currentUser: Profile){
-    this.user = currentUser.profile;
+  @action feedFetch(currentUser: GetUserPayload){
+    this.userProfile = currentUser.profile;
     this.curUserCode = currentUser.profile.id;
   };
   
   async fetchSignIn(accessCode: string){
-    const [error, result] = await this.api.POST<Profile>("/users/signIn",{
+    const [error, result] = await this.api.POST<PostUserPayload>("/users/signIn",{
       code: accessCode,
     },{
       withCredentials: true
@@ -72,7 +72,7 @@ class SessionStore extends BasicStore{
   @action
   async update(req: Request | null = null){
     try {
-      const [error, response] = await this.api.POST<Profile>('/auth/update',{
+      const [error, response] = await this.api.POST<PostUserPayload>('/auth/update',{
       },{
         
       })

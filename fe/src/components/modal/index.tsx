@@ -1,7 +1,7 @@
 import React, { FC, useEffect, SyntheticEvent } from "react";
 import { Route } from "react-router-dom";
 import * as Styled from "./style";
-import { ICardData } from "src/models/card";
+import type { Room } from "@payload/index";
 import { BaseButton } from "@components/button";
 import { useModalDispatch } from "@utils/modal/useModal";
 const {
@@ -16,19 +16,25 @@ const {
   ButtonWrapper,
 } = Styled;
 
-interface Props {
-  data: ICardData;
+interface ModalProps extends Room{
 }
-export const Modal: FC<Props> = ({ data }) => {
-  const { title, host, members, full, current, category, url, block } = data;
+export const Modal: FC<ModalProps> = ({ 
+  title,
+  subTitle,
+  id,
+  join,
+  host,
+  createdBy,
+  topic,
+ }) => {
   const enter: (e: SyntheticEvent) => void = () => {};
   const close = useModalDispatch();
   const buildMemberList = () =>
-    members.map((value, index) => {
+    join.map((value, index) => {
       return (
         <Member key={index}>
-          <StudentNumber>{value.studentNumber}</StudentNumber>
-          <StudentName>{value.name}</StudentName>
+          <StudentNumber>{host.studentNumber}</StudentNumber>
+          <StudentName>{host.name}</StudentName>
         </Member>
       );
     });
@@ -41,7 +47,7 @@ export const Modal: FC<Props> = ({ data }) => {
       </Row>
       <Row>
         <Name>카테고리:</Name>
-        <Description>{category}</Description>
+        <Description>{topic.category}</Description>
       </Row>
       <Row>
         <Name>인원:</Name>
@@ -55,7 +61,7 @@ export const Modal: FC<Props> = ({ data }) => {
                 background={"#28D84F"}
                 clickHandler={() => {
                   close({ type: "CLOSE" });
-                  history.push(`room/${url}`);
+                  history.push(`room/${id}`);
                 }}
               >
                 입장

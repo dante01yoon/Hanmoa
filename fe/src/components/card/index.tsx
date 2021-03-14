@@ -39,7 +39,7 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
     title,
     subTitle,
     host,
-    category,
+    topic,
     join,
   } = room!;
   const extractedUrl = imageUrl || batman;
@@ -62,7 +62,7 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
       <ContentBox>
         <CategoryBox>
           <IconBox src={category_tv} />
-          <Category>{category}</Category>
+          <Category>{topic.category}</Category>
           <MemberCount block={false}>
           </MemberCount>
         </CategoryBox>

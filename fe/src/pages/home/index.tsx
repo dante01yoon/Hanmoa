@@ -33,7 +33,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   const homeRef = useRef<HTMLUListElement>(null);
   // TODO 나중에 Saga 로 roomStore을 교체시 사용 
   // const { data, isLoading } = useSelector((state: RootState) => state.topic);
-  const { sessionStore, chatStore, topicStore, roomStore } = useMobxStores();
+  const { roomStore } = useMobxStores();
   const [roomList, setRoomList] = useState<GetRoomsPayload["rooms"]>(roomStore.homeRoomList)
   const [isLoading, setIsLoading ] = useState(isNil(roomList));
 
@@ -65,7 +65,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
           <Slide url={netflix_phone} />
         </Carousel>
       </section>
-      <section>{isModal.visible && <Modal data={isModal.data} />}</section>
+      <section>{isModal.visible && <Modal {...isModal.data} />}</section>
       <section >
         <RoomContainer ref={homeRef}>
           {isLoading
