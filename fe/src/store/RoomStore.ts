@@ -8,6 +8,7 @@ export default class RoomStore extends BasicStore {
   @observable roomList: GetRoomsPayload["rooms"] | null;
   @observable currentRoom: GetRoomPayload["room"];
   @observable homeRoomList: GetRoomsPayload["rooms"] | null;
+  @observable currentTopic: string | null;
 
   constructor({root, state}: { root: RootStore, state: RoomStore}){
     super({root});
@@ -15,6 +16,7 @@ export default class RoomStore extends BasicStore {
     this.homeRoomList = state?.homeRoomList ?? null;
     this.roomList = state?.roomList ?? null;
     this.currentRoom = state?.currentRoom;
+    this.currentTopic = state?.currentTopic;
   }
 
   async fetchRooms(category?: string){
@@ -25,6 +27,7 @@ export default class RoomStore extends BasicStore {
     if(response && response.success){
       const { data } = response
       this.feedFetchRooms(data.rooms)
+      category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
       return response.data;
     }
     return Promise.resolve();
@@ -41,6 +44,11 @@ export default class RoomStore extends BasicStore {
       return response.data;
     }
     return Promise.resolve();
+  }
+
+  @action.bound
+  setCurrentTopic(topic: string | null){
+    this.currentTopic = topic;
   }
 
   @action.bound

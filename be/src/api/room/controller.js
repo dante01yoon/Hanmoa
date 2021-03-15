@@ -32,7 +32,6 @@ export const onGetRooms = async(ctx) => {
       const copiedRoom = room.toObject();
       console.log(copiedRoom);
       const refinedTopic = pick(room.topic,["category", "url"]);
-      console.log("copiedRoom.join.length: ", copiedRoom.join);
       return {
         ...copiedRoom,
         topic: refinedTopic,

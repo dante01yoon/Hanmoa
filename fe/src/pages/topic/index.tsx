@@ -20,10 +20,10 @@ interface TopicPageProps extends RouteComponentProps<{category: string}>{
 const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
   const { roomStore } = useMobxStores();
   const { category } = match.params;
-  const [isLoading, setIsLoading] = useState(false);
-//isNil(roomStore.roomList)
+  const [isLoading, setIsLoading] = useState((roomStore.topic !== category) && roomStore.roomList);
+
   useEffect(() => {
-    if( !roomStore.roomList){
+    if(!roomStore.roomList || (roomStore.topic !== category)){
       roomStore.fetchRooms(category)
         .then(
           (data: any) => {console.log(data)
@@ -31,9 +31,7 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
         })
     }
   },[])
-  useEffect(() => {
-    console.log("roomList: ", roomStore.roomList);
-  },[roomStore.roomList])
+
   const handleClick = (value: any) => {
     
   }
