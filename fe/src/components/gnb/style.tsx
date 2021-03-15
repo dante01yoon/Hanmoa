@@ -111,7 +111,7 @@ export const TopicBox = styled.div<{
 export const TopicList = styled.div`
   display:flex;
 `;
-export const Topic = styled(Link)`
+export const TopicLink = styled(Link)`
   display:flex;
   justify-content:center;
   align-items:center;

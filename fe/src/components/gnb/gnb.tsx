@@ -27,7 +27,7 @@ const {
     TopicTitle,
     TopicBox,
     TopicList,
-    Topic,     
+    TopicLink,     
 } = Styled;
 
 interface GnbProps {
@@ -51,8 +51,12 @@ const Gnb:FC<GnbProps> = ({
     };
 
     const handleToggleTopicList = () => {
-      setVisible((visible) => !visible);
+      setVisible(!visible);
     }
+
+    useEffect(() => {
+      console.log("visible: ", visible);
+    },[visible])
 
     const openloginModal = () => {
       setLoginModal(true); 
@@ -83,7 +87,7 @@ const Gnb:FC<GnbProps> = ({
           <TopicList>
           {
             topicList.slice(i*3,end).map((topic) => (
-              <Topic key={topic.url} to={`/topic/${topic.url}`}>{topic.category}</Topic>
+              <TopicLink key={topic.url} to={`/topic/${topic.url}`}>{topic.category}</TopicLink>
             ))
           }
           </TopicList>
@@ -135,12 +139,13 @@ const Gnb:FC<GnbProps> = ({
                 >
                   <TopicTitle>토픽</TopicTitle>
                 </TopicButton>
-                { visible && 
-                  <TopicBox
-                    ref={topicRef}
-                  >
-                    {renderTopicList()}
-                  </TopicBox>
+                { visible && (
+                    <TopicBox
+                      ref={topicRef}
+                    >
+                      {renderTopicList()}
+                    </TopicBox>
+                  )
                 }
               </ItemBox>
             </LeftItemContainer>

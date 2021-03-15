@@ -24,13 +24,14 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
 
   useEffect(() => {
     if(!roomStore.roomList || (roomStore.topic !== category)){
+      setIsLoading(true);
       roomStore.fetchRooms(category)
         .then(
           (data: any) => {console.log(data)
           setIsLoading(false);
         })
     }
-  },[])
+  },[category])
 
   const handleClick = (value: any) => {
     
