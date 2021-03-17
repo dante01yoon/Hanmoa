@@ -14,11 +14,13 @@ const GlobalLayout:FC = ({
     children
 }) => {
   const { topicStore } = useMobxStores();
+
   useEffect(() => {
-    if(!topicStore.topicList){
+    if(!topicStore.topicList.length){
       topicStore.fetchTopicList();
     }
   },[]);
+  
   const renderGnb = () => {
     return (
       <Gnb topicList={topicStore.topicList}/>

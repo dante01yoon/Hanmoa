@@ -6,7 +6,6 @@ import { Slide } from "@components/carousel/slide";
 import Card from "@components/card";
 import SkeletonCard from "@components/skeleton/home";
 import { Modal } from "src/components/modal";
-import { ICardData } from "src/models/card";
 import { useModal } from "@utils/modal/useModal";
 import {useMobxStores, MobxStores} from "@utils/store/useStores"; 
 import {observer} from "mobx-react";
@@ -22,7 +21,6 @@ const { RoomContainer } = Styled;
 
 interface HomePageInitStoreOnServer {
   initStoreOnServer: InitStoreOnServer<{
-    topicStore: MobxStores["topicStore"];
     roomStore: MobxStores["roomStore"];
   }>
 }
@@ -89,9 +87,8 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   );
 };
 
-HomePage.initStoreOnServer = (_,{ topicStore, roomStore }) => {
+HomePage.initStoreOnServer = (_,{ roomStore }) => {
   return Promise.all([
-    topicStore.fetchTopicList(),
     roomStore.fetchRooms(),
   ])
 }

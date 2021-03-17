@@ -37,24 +37,29 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
     
   }
 
-  return(
-    <section>
-      <RoomContainer>
-        {
-          isLoading
-            ? Array(10)
+  const renderCardList = () => {
+    if(isLoading) {
+      return Array(10)
               .fill(0)
               .map((_, index) => {
                 return <SkeletonCard key={`skeleton::${index}`} />;
               })
-            : roomStore.roomList?.map((room: any,index: number) => 
-              <Card
-                room={room}
-                key={`$::${index}-${category ?? "etc"}`}
-                handleClick={() => handleClick(room)}
-              />
-            )
-        }
+    } else if(roomStore.roomList?.length > 0){
+      return roomStore.roomList.map((room: any,index: number) => 
+        <Card
+          room={room}
+          key={`$::${index}-${category ?? "etc"}`}
+          handleClick={() => handleClick(room)}
+        />
+      )
+    }
+    return <h2>앗! 만들어진 참여방이 없네요. {category}주제로 방을 만들어보세요! </h2>
+  }
+
+  return(
+    <section>
+      <RoomContainer>
+        {renderCardList()}
       </RoomContainer>
     </section>
   )

@@ -18,6 +18,7 @@ export const initStore = async (req: Request) => {
     if(req.cookies && req.cookies["_hm_guit"]){
       await mobxStores.sessionStore.fetch(req);
     }
+    await mobxStores.topicStore.fetchTopicList();
   } catch (error){
     console.error("error in using initMobxStores: ", error);
     throw Error(error);

@@ -11,7 +11,7 @@
 [x] typescript
 [x] express
 [x] SSR / code splitting
-[ ] MongoDB
+[x] MongoDB
 [ ] jest
 [ ] cypress
 [ ] storybook

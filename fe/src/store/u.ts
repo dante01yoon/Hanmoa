@@ -8,7 +8,7 @@ import RoomStore from "./RoomStore";
 export interface ReducedStore {
   sessionStore: SessionStore; 
   chatStore: ChatStore;
-  TopicStore: TopicStore;
+  topicStore: TopicStore;
   roomStore: RoomStore;
   [key: string]: BasicStore | null;
 }
