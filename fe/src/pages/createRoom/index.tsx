@@ -3,8 +3,11 @@ import { observer } from "mobx-react";
 import styled from "styled-components";
 import { useMobxStores } from "@utils/store/useStores";
 import { Topic } from "src/payload";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
+import yup from "yup";
+import Field from "@components/form/field";
 import Loading from "@components/loading";
+
 interface CreateRoomPageProps {
   
 }
@@ -114,10 +117,13 @@ const HiddenImageInput = styled.input`
 `;
 
 const FormContainer = styled.div`
-  width: 270px;
-  height: 332px;
-  border: box-sizing;
+  width: 352px;
+  height: 300px;
+  box-sizing: border-box;
+  padding: 24px 41px;
+  border: 1px solid;
   border-color: ${({theme}) => theme.colors.gray_white};
+  border-radius: 9px;
 `;
 
 const StyledFormUl = styled.ul`
@@ -314,9 +320,9 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
                         <StyledInputTag>카테고리:</StyledInputTag>
                         <Field 
                           name="category" 
-                          as={StyledInput} 
                           disabled
                           value={topicState.category}
+                          as={StyledInput} 
                         />
                       </StyledFormList>
                       <StyledFormList>
@@ -336,7 +342,11 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
                       </StyledFormList>
                       
                     </StyledFormUl>
-                    <StyledSubmitButton type="submit" disabled={isSubmitting}>생성</StyledSubmitButton>
+                    <StyledSubmitButton type="submit" disabled={isSubmitting}>{
+                      isSubmitting ? 
+                      <Loading width="15px" height="15px"/> :
+                      "생성"
+                    }</StyledSubmitButton>
                   </form>
                 )
               }
@@ -345,7 +355,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
           </StyledFormWrapper>
         </StyledArticle>
         <StyledArticle>
-          
+          <StyledTitle>'{topicState.category}' 토픽에 대한 멤버를 구하고 있어요!</StyledTitle>
         </StyledArticle>
       </StyledSection>
     </StyledSelf>
