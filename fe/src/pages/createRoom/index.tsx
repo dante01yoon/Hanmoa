@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useMobxStores } from "@utils/store/useStores";
 import { Topic } from "src/payload";
 import { Formik } from "formik";
-import yup from "yup";
+import * as yup from "yup";
 import Field from "@components/form/field";
 import Loading from "@components/loading";
 
@@ -165,6 +165,24 @@ const StyledSubmitButton =styled.button`
   cursor: pointer;
 `;
 
+const validationSchema = yup.object().shape({
+  title: yup.string()
+    .min(2, "제목은 최소 2자 이상이어야 합니다.")
+    .max(30, "30자 이내로 작성해 주세요."),
+  content: yup.string()
+    .max(100, "100자 이내로 작성해 주세요."),
+  member: yup.number()
+    .min(2)
+    .max(100)
+})
+
+interface InitialValues {
+  title: string;
+  category: string;
+  content: string;
+  member: number,
+}
+
 const CreateRoomPage: FC<CreateRoomPageProps> = ({
   
 }) => {
@@ -301,6 +319,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
             </ImageFormContainer>
             <FormContainer>
               <Formik
+                validationSchema={validationSchema}
                 initialValues={{
                   title: "",
                   category: topicState.category,
