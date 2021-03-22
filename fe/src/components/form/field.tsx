@@ -22,14 +22,16 @@ const StyledErrorField = styled.div`
 `;
 
 const Field: FC<CustomFieldProps> = ({
-  errors,
   ...restProps
 }) => {
-  const { name, touched } = restProps;
+  const { name, touched, errors } = restProps;
+  console.log("name: ", name);
+  console.log("touched: ", touched);
+  console.log("errors: ", errors);
   return (
     <>
       <FormikField {...restProps} as={StyledInput}/>
-      {errors[name] && touched && <StyledErrorField>{errors[name]}</StyledErrorField>}
+      {errors && errors[name] && touched && <StyledErrorField>{errors[name]}</StyledErrorField>}
     </>
   )
 }
