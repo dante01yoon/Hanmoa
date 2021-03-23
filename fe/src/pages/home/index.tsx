@@ -4,8 +4,11 @@ import * as Styled from "./style";
 import { Carousel } from "@components/carousel";
 import { Slide } from "@components/carousel/slide";
 import Card from "@components/card";
+import styled from "styled-components";
 import SkeletonCard from "@components/skeleton/home";
-import { Modal } from "src/components/modal";
+import { Modal } from "@components/modal";
+import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
+import InfiniteScroll from "@components/infiniteScroll";
 import { useModal } from "@utils/modal/useModal";
 import {useMobxStores, MobxStores} from "@utils/store/useStores"; 
 import {observer} from "mobx-react";
@@ -29,11 +32,21 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   const [isModal, setModal] = useModal();
   const { pathname } = useLocation();
   const homeRef = useRef<HTMLUListElement>(null);
+  const infiniteScrollTargetRef = useRef<HTMLDivElement>(null);
   // TODO 나중에 Saga 로 roomStore을 교체시 사용 
   // const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const { roomStore } = useMobxStores();
   const [roomList, setRoomList] = useState<GetRoomsPayload["rooms"]>(roomStore.homeRoomList)
   const [isLoading, setIsLoading ] = useState(isNil(roomList));
+
+  const handleLoadMore = () => {
+    console.log("hello world")
+  }
+
+  useInfiniteScroll({
+    target: infiniteScrollTargetRef,
+    cb: handleLoadMore,
+  });
 
   useEffect(() => {
     if(!roomStore.homeRoomList){
@@ -82,6 +95,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
                 );
               })}
         </RoomContainer>
+        <InfiniteScroll targetRef={infiniteScrollTargetRef}/>
       </section>
     </>
   );

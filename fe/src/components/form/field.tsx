@@ -31,7 +31,7 @@ const Field: FC<CustomFieldProps> = ({
   return (
     <>
       <FormikField {...restProps} as={StyledInput}/>
-      {errors && errors[name] && touched && <StyledErrorField>{errors[name]}</StyledErrorField>}
+      {errors && errors[name] && <StyledErrorField>{errors[name]}</StyledErrorField>}
     </>
   )
 }
