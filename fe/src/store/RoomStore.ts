@@ -9,6 +9,7 @@ export default class RoomStore extends BasicStore {
   @observable currentRoom: GetRoomPayload["room"];
   @observable homeRoomList: GetRoomsPayload["rooms"] | null;
   @observable currentTopic: string | null;
+  @observable page: number | null;
 
   constructor({root, state}: { root: RootStore, state: RoomStore}){
     super({root});
@@ -17,16 +18,18 @@ export default class RoomStore extends BasicStore {
     this.roomList = state?.roomList ?? null;
     this.currentRoom = state?.currentRoom;
     this.currentTopic = state?.currentTopic;
+    this.page = state?.page;
   }
 
-  async fetchRooms(category?: string){
-    const [error,response] = await this.api.GET<GetRoomsPayload>(`/room/${category}`);
+  async fetchRooms(category?: string, page:number = 0){
+    const [error,response] = await this.api.GET<GetRoomsPayload>(`/room/${category}?page=${page}`);
     if(error){
       throw Error(error.error)
     }
     if(response && response.success){
       const { data } = response
       this.feedFetchRooms(data.rooms)
+      this.setPage(page++);
       category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
       return response.data;
     }
@@ -47,13 +50,21 @@ export default class RoomStore extends BasicStore {
   }
 
   @action.bound
+  setPage(page: number){
+    this.page = page;
+  }
+
+  @action.bound
   setCurrentTopic(topic: string | null){
     this.currentTopic = topic;
   }
 
   @action.bound
   feedFetchRooms(rooms: GetRoomsPayload["rooms"]){
-    this.roomList = rooms;
+    if(rooms){
+      console.log("rooms: ", rooms);
+      this.roomList = this.roomList ? [...this.roomList, ...rooms] : this.roomList;
+    }
   }
   
   @action.bound

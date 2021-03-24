@@ -79,7 +79,7 @@ Room.statics.createRoom = async function(args){
     throw error;
   }
 }
-
+const roomsCache = new Map();
 Room.statics.getRooms = async function(args) {
   const { page = 0 , category } = args;
   let topic;
@@ -87,13 +87,19 @@ Room.statics.getRooms = async function(args) {
     topic = await Topic.findTopic({category});
   }
   const findArgs = topic ? {topic: topic._id} : {};
-  const rooms = await this.find(findArgs)
+  let rooms = await this.find(findArgs)
     .populate("topic")
     .populate("join")
     .populate("host")
     .sort({"time": -1})
     .skip(page * 10)
     .limit(12);
+  if(!rooms.length){
+    roomsCache.set(page, rooms);
+  } else {
+    rooms = page > 0 ? roomsCache.get(page-1) : rooms;
+  }
+  console.log("rooms: ", rooms);
   return rooms;
 }
 

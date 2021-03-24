@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, FC, useState } from "react";
+import React, { useEffect, useRef, FC, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import * as Styled from "./style";
 import { Carousel } from "@components/carousel";
@@ -15,6 +15,7 @@ import {observer} from "mobx-react";
 import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 import { GetRoomsPayload, GetRoomPayload } from "@payload/index";
 import isNil from "lodash/isNil";
+import throttle from "lodash/throttle";
 
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
@@ -36,12 +37,16 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   // TODO 나중에 Saga 로 roomStore을 교체시 사용 
   // const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const { roomStore } = useMobxStores();
-  const [roomList, setRoomList] = useState<GetRoomsPayload["rooms"]>(roomStore.homeRoomList)
+  const [roomList, setRoomList] = useState<GetRoomsPayload["rooms"]>(roomStore.roomList)
   const [isLoading, setIsLoading ] = useState(isNil(roomList));
-
+  
   const handleLoadMore = () => {
-    console.log("hello world")
+    throttleFetch();
   }
+
+  const throttleFetch = useCallback(throttle(() => {
+    roomStore.fetchRooms()
+  },500),[]);
 
   useInfiniteScroll({
     target: infiniteScrollTargetRef,
@@ -67,6 +72,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
       },
     });
   };
+
   return (
     <>
       <section>
@@ -85,7 +91,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
                 .map((_, index) => {
                   return <SkeletonCard key={`skeleton::${index}`} />;
                 })
-            : roomList?.map((room) => {
+            : roomStore.roomList?.map((room: any) => {
                 return (
                   <Card
                     room={room}

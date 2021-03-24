@@ -30,7 +30,6 @@ export const onGetRooms = async(ctx) => {
     const rooms = await Room.getRooms({page, category});
     const refinedRooms = rooms.map((room) => {
       const copiedRoom = room.toObject();
-      console.log(copiedRoom);
       const refinedTopic = pick(room.topic,["category", "url"]);
       return {
         ...copiedRoom,
