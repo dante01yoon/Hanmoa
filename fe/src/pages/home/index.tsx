@@ -4,7 +4,6 @@ import * as Styled from "./style";
 import { Carousel } from "@components/carousel";
 import { Slide } from "@components/carousel/slide";
 import Card from "@components/card";
-import styled from "styled-components";
 import SkeletonCard from "@components/skeleton/home";
 import { Modal } from "@components/modal";
 import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
@@ -67,7 +66,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
 
   useEffect(() => {
     console.log("roomStore.homeRoomList changed: ", roomStore.homeRoomList);
-  })
+  },[])
 
   const handleClick: (data: GetRoomPayload["room"]) => void = (data) => {
     setModal({

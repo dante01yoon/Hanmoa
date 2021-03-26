@@ -1,5 +1,4 @@
 import React, {useState, useRef, useEffect,Dispatch, SetStateAction, RefObject, ReactNode } from "react";
-import isNil from "lodash/isNil";
 
 export interface IIntersectionOptions{
   root?: React.ReactNode;
