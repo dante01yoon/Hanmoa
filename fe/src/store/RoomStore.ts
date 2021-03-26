@@ -1,5 +1,5 @@
 import BasicStore from "@store/BasicStore";
-import { action, observable, makeObservable } from "mobx";
+import { action, observable, makeObservable, runInAction } from "mobx";
 import RootStore from "@store/RootStore";
 import { GetRoomPayload, GetRoomsPayload } from "@payload/index";
 import isNil from "lodash/isNil";
@@ -11,7 +11,7 @@ export default class RoomStore extends BasicStore {
   @observable currentTopic: string | null;
 
   constructor({root, state}: { root: RootStore, state: RoomStore}){
-    super({root});
+    super({root, state});
     makeObservable(this);
     this.homeRoomList = state?.homeRoomList ?? null;
     this.roomList = state?.roomList ?? null;
@@ -65,8 +65,12 @@ export default class RoomStore extends BasicStore {
   @action.bound
   feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]){
     if(rooms){
-      console.log("in rooms: ", rooms);
-      this.homeRoomList = this.homeRoomList ? [...this.homeRoomList, ...rooms] : this.homeRoomList;
+      if( this.homeRoomList) {
+        this.homeRoomList = [...this.homeRoomList, ...rooms];
+      }
+      else {
+        this.homeRoomList = rooms;
+      }
     }  
   }
 

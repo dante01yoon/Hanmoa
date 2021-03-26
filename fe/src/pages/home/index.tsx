@@ -57,12 +57,17 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
     if(!roomStore.homeRoomList){
      roomStore.fetchRooms()
       .then(({rooms}:{ rooms: any}) => {
+        console.log("rooms: ", rooms)
         console.log("homeRoomList:", roomStore.homeRoomList);
         setIsLoading(false);
       }) 
     }
     console.log("roomStore.homeRoomList: ", roomStore);
   },[]);
+
+  useEffect(() => {
+    console.log("roomStore.homeRoomList changed: ", roomStore.homeRoomList);
+  })
 
   const handleClick: (data: GetRoomPayload["room"]) => void = (data) => {
     setModal({
