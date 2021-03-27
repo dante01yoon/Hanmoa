@@ -7,12 +7,14 @@ import Card from "@components/card";
 import SkeletonCard from "@components/skeleton/home";
 import { Modal } from "@components/modal";
 import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
+import Loading from "@components/loading";
 import InfiniteScroll from "@components/infiniteScroll";
+import PageLoading from "@components/loading/PageLoading";
 import { useModal } from "@utils/modal/useModal";
 import {useMobxStores, MobxStores} from "@utils/store/useStores"; 
 import { observer } from "mobx-react";
 import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
-import { GetRoomsPayload, GetRoomPayload } from "@payload/index";
+import { GetRoomPayload } from "@payload/index";
 import isNil from "lodash/isNil";
 import throttle from "lodash/throttle";
 
@@ -36,16 +38,20 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   // TODO 나중에 Saga 로 roomStore을 교체시 사용 
   // const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const { roomStore } = useMobxStores();
-  const [roomList, setRoomList] = useState<GetRoomsPayload["rooms"]>(roomStore.homeRoomList)
-  const [isLoading, setIsLoading ] = useState(isNil(roomList));
+  const [isLoading, setIsLoading ] = useState(isNil(roomStore.homeRoomList));
+  const [isHandleLoadMoreLoading, setIsHandleLoadMoreLoading] = useState(false); 
   
   const handleLoadMore = () => {
+    setIsHandleLoadMoreLoading(true);
     throttleFetch();
   }
 
   const throttleFetch = useCallback(throttle(() => {
     roomStore.fetchRooms()
-  },500),[]);
+      .then(() => {
+        setIsHandleLoadMoreLoading(false);
+      })
+  },1200),[]);
 
   useInfiniteScroll({
     target: infiniteScrollTargetRef,
@@ -64,10 +70,6 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
     console.log("roomStore.homeRoomList: ", roomStore);
   },[]);
 
-  useEffect(() => {
-    console.log("roomStore.homeRoomList changed: ", roomStore.homeRoomList);
-  },[])
-
   const handleClick: (data: GetRoomPayload["room"]) => void = (data) => {
     setModal({
       type: "OPEN",
@@ -77,6 +79,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
       },
     });
   };
+
   return (
     <>
       <section>
@@ -104,8 +107,12 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
                   />
                 );
               })}
+          {isHandleLoadMoreLoading && (
+            <PageLoading width="30px"/>
+          )}
         </RoomContainer>
         <InfiniteScroll targetRef={infiniteScrollTargetRef}/>
+          
       </section>
     </>
   );
