@@ -1,39 +1,51 @@
 import BasicStore from "@store/BasicStore";
-import { action, observable, makeObservable } from "mobx";
+import { action, observable, makeObservable, runInAction } from "mobx";
 import RootStore from "@store/RootStore";
 import { GetRoomPayload, GetRoomsPayload } from "@payload/index";
-
+import isNil from "lodash/isNil";
 
 export default class RoomStore extends BasicStore {
   @observable roomList: GetRoomsPayload["rooms"] | null;
   @observable currentRoom: GetRoomPayload["room"];
   @observable homeRoomList: GetRoomsPayload["rooms"] | null;
   @observable currentTopic: string | null;
+  @observable next: boolean = false; 
 
   constructor({root, state}: { root: RootStore, state: RoomStore}){
-    super({root});
+    super({root, state});
     makeObservable(this);
     this.homeRoomList = state?.homeRoomList ?? null;
     this.roomList = state?.roomList ?? null;
-    this.currentRoom = state?.currentRoom;
-    this.currentTopic = state?.currentTopic;
+    this.currentRoom = state?.currentRoom ?? null;
+    this.currentTopic = state?.currentTopic ?? null;
   }
 
-  async fetchRooms(category?: string){
-    const [error,response] = await this.api.GET<GetRoomsPayload>(`/room/${category}`);
+  async fetchRooms(category?: string, page: number = 0, clear: boolean = false){
+    
+    const [error,response] = await this.api.GET<GetRoomsPayload>(`/room/${category}?page=${page}`);
     if(error){
       throw Error(error.error)
     }
     if(response && response.success){
       const { data } = response
-      this.feedFetchRooms(data.rooms)
+      if(isNil(category)){
+        if(clear){
+          this.clearHomeRooms();
+        }
+        this.feedFetchHomeRooms(data.rooms);
+      }else {
+        if(clear){
+          this.clearRooms();
+        }
+        this.feedFetchRooms(data.rooms)
+      }
       category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
       return response.data;
     }
     return Promise.resolve();
   }
 
-  async fetchRoom(id: string){
+  async fetchRoom(id: string, clear: boolean = false){
     const [error,response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`);
     if(error){
       throw Error(error.error);
@@ -53,9 +65,33 @@ export default class RoomStore extends BasicStore {
 
   @action.bound
   feedFetchRooms(rooms: GetRoomsPayload["rooms"]){
-    this.roomList = rooms;
+    if(rooms){
+      this.roomList = this.roomList ? [...this.roomList, ...rooms] : rooms;
+    }
   }
   
+  @action.bound
+  clearRooms(){
+    this.roomList = null;
+  }
+
+  @action.bound
+  feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]){
+    if(rooms){
+      if( this.homeRoomList) {
+        this.homeRoomList = [...this.homeRoomList, ...rooms];
+      }
+      else {
+        this.homeRoomList = rooms;
+      }
+    }  
+  }
+
+  @action.bound
+  clearHomeRooms(){
+    this.homeRoomList = null;
+  }
+
   @action.bound
   feedFetchRoom(room: GetRoomPayload["room"]){
     this.currentRoom = room;

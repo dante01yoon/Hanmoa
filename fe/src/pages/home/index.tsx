@@ -1,17 +1,21 @@
-import React, { useEffect, useRef, FC, useState } from "react";
+import React, { useEffect, useRef, FC, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import * as Styled from "./style";
 import { Carousel } from "@components/carousel";
 import { Slide } from "@components/carousel/slide";
 import Card from "@components/card";
 import SkeletonCard from "@components/skeleton/home";
-import { Modal } from "src/components/modal";
+import { Modal } from "@components/modal";
+import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
+import InfiniteScroll from "@components/infiniteScroll";
+import PageLoading from "@components/loading/PageLoading";
 import { useModal } from "@utils/modal/useModal";
 import {useMobxStores, MobxStores} from "@utils/store/useStores"; 
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
-import { GetRoomsPayload, GetRoomPayload } from "@payload/index";
+import { GetRoomPayload } from "@payload/index";
 import isNil from "lodash/isNil";
+import throttle from "lodash/throttle";
 
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
@@ -29,17 +33,34 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   const [isModal, setModal] = useModal();
   const { pathname } = useLocation();
   const homeRef = useRef<HTMLUListElement>(null);
+  const infiniteScrollTargetRef = useRef<HTMLDivElement>(null);
   // TODO 나중에 Saga 로 roomStore을 교체시 사용 
   // const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const { roomStore } = useMobxStores();
-  const [roomList, setRoomList] = useState<GetRoomsPayload["rooms"]>(roomStore.homeRoomList)
-  const [isLoading, setIsLoading ] = useState(isNil(roomList));
+  const [isLoading, setIsLoading ] = useState(isNil(roomStore.homeRoomList));
+  const [isHandleLoadMoreLoading, setIsHandleLoadMoreLoading] = useState(false); 
+
+  const throttleFetch = useCallback(throttle(() => {
+    roomStore.fetchRooms()
+      .then(() => {
+        setIsHandleLoadMoreLoading(false);
+      })
+  },1200),[]);
+
+  const handleLoadMore = () => {
+    setIsHandleLoadMoreLoading(true);
+    throttleFetch();
+  }
+  
+  useInfiniteScroll({
+    target: infiniteScrollTargetRef,
+    cb: handleLoadMore,
+  });
 
   useEffect(() => {
-    if(!roomStore.homeRoomList){
+    if(isNil(roomStore.homeRoomList)){
      roomStore.fetchRooms()
       .then(({rooms}:{ rooms: any}) => {
-        setRoomList(rooms);
         setIsLoading(false);
       }) 
     }
@@ -54,6 +75,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
       },
     });
   };
+
   return (
     <>
       <section>
@@ -66,13 +88,13 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
       <section>{isModal.visible && <Modal {...isModal.data} />}</section>
       <section >
         <RoomContainer ref={homeRef}>
-          {isLoading
+          {isLoading || isNil(roomStore.homeRoomList)
             ? Array(10)
                 .fill(0)
                 .map((_, index) => {
                   return <SkeletonCard key={`skeleton::${index}`} />;
                 })
-            : roomList?.map((room) => {
+            : roomStore.homeRoomList?.map((room: any) => {
                 return (
                   <Card
                     room={room}
@@ -81,7 +103,12 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
                   />
                 );
               })}
+          {isHandleLoadMoreLoading && (
+            <PageLoading width="30px"/>
+          )}
         </RoomContainer>
+        <InfiniteScroll targetRef={infiniteScrollTargetRef}/>
+          
       </section>
     </>
   );
@@ -94,4 +121,3 @@ HomePage.initStoreOnServer = (_,{ roomStore }) => {
 }
 
 export default observer(HomePage);
-

@@ -39,7 +39,7 @@ const StyledSelf = styled.div<{
     width: ${({width}) => width ? width : "100%"};
     height: ${({height}) => height ? height : "100%"};
     border-radius: 50%;
-    border: 6px solid ${({theme}) => theme.colors.blue};
+    border: 3px solid ${({theme}) => theme.colors.blue};
     border-color: ${({theme}) => theme.colors.blue} transparent ${({theme}) => theme.colors.blue} transparent;
     animation: ${rotateAnimation} 1.2s infinite linear;
     transform: translate(-50%, 0);
@@ -47,7 +47,7 @@ const StyledSelf = styled.div<{
 `;
 
 
-interface LoadingProps {
+export interface LoadingProps {
   isLoading?: boolean; 
   width?: string;
   height?: string;
@@ -60,10 +60,6 @@ const Loading: FC<LoadingProps> = ({
   height,
   position,
 }) => {
-  
-  useEffect(() => {
-
-  },[]);
   
   return(
     <StyledSelf 
