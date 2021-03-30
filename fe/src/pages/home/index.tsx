@@ -7,7 +7,6 @@ import Card from "@components/card";
 import SkeletonCard from "@components/skeleton/home";
 import { Modal } from "@components/modal";
 import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
-import Loading from "@components/loading";
 import InfiniteScroll from "@components/infiniteScroll";
 import PageLoading from "@components/loading/PageLoading";
 import { useModal } from "@utils/modal/useModal";
@@ -40,11 +39,6 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   const { roomStore } = useMobxStores();
   const [isLoading, setIsLoading ] = useState(isNil(roomStore.homeRoomList));
   const [isHandleLoadMoreLoading, setIsHandleLoadMoreLoading] = useState(false); 
-  
-  const handleLoadMore = () => {
-    setIsHandleLoadMoreLoading(true);
-    throttleFetch();
-  }
 
   const throttleFetch = useCallback(throttle(() => {
     roomStore.fetchRooms()
@@ -53,21 +47,23 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
       })
   },1200),[]);
 
+  const handleLoadMore = () => {
+    setIsHandleLoadMoreLoading(true);
+    throttleFetch();
+  }
+  
   useInfiniteScroll({
     target: infiniteScrollTargetRef,
     cb: handleLoadMore,
   });
 
   useEffect(() => {
-    if(!roomStore.homeRoomList){
+    if(isNil(roomStore.homeRoomList)){
      roomStore.fetchRooms()
       .then(({rooms}:{ rooms: any}) => {
-        console.log("rooms: ", rooms)
-        console.log("homeRoomList:", roomStore.homeRoomList);
         setIsLoading(false);
       }) 
     }
-    console.log("roomStore.homeRoomList: ", roomStore);
   },[]);
 
   const handleClick: (data: GetRoomPayload["room"]) => void = (data) => {

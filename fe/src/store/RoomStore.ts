@@ -9,6 +9,7 @@ export default class RoomStore extends BasicStore {
   @observable currentRoom: GetRoomPayload["room"];
   @observable homeRoomList: GetRoomsPayload["rooms"] | null;
   @observable currentTopic: string | null;
+  @observable next: boolean = false; 
 
   constructor({root, state}: { root: RootStore, state: RoomStore}){
     super({root, state});
@@ -19,7 +20,8 @@ export default class RoomStore extends BasicStore {
     this.currentTopic = state?.currentTopic ?? null;
   }
 
-  async fetchRooms(category?: string, page:number = 0){
+  async fetchRooms(category?: string, page: number = 0, clear: boolean = false){
+    
     const [error,response] = await this.api.GET<GetRoomsPayload>(`/room/${category}?page=${page}`);
     if(error){
       throw Error(error.error)
@@ -27,8 +29,14 @@ export default class RoomStore extends BasicStore {
     if(response && response.success){
       const { data } = response
       if(isNil(category)){
+        if(clear){
+          this.clearHomeRooms();
+        }
         this.feedFetchHomeRooms(data.rooms);
       }else {
+        if(clear){
+          this.clearRooms();
+        }
         this.feedFetchRooms(data.rooms)
       }
       category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
@@ -37,7 +45,7 @@ export default class RoomStore extends BasicStore {
     return Promise.resolve();
   }
 
-  async fetchRoom(id: string){
+  async fetchRoom(id: string, clear: boolean = false){
     const [error,response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`);
     if(error){
       throw Error(error.error);
@@ -58,10 +66,15 @@ export default class RoomStore extends BasicStore {
   @action.bound
   feedFetchRooms(rooms: GetRoomsPayload["rooms"]){
     if(rooms){
-      this.roomList = this.roomList ? [...this.roomList, ...rooms] : this.roomList;
+      this.roomList = this.roomList ? [...this.roomList, ...rooms] : rooms;
     }
   }
   
+  @action.bound
+  clearRooms(){
+    this.roomList = null;
+  }
+
   @action.bound
   feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]){
     if(rooms){
@@ -72,6 +85,11 @@ export default class RoomStore extends BasicStore {
         this.homeRoomList = rooms;
       }
     }  
+  }
+
+  @action.bound
+  clearHomeRooms(){
+    this.homeRoomList = null;
   }
 
   @action.bound

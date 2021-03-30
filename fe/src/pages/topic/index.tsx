@@ -1,11 +1,16 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef, useCallback } from 'react';
+import throttle from "lodash/throttle";
+import isNil from "lodash/isNil";
 import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 import { useMobxStores, MobxStores } from "@utils/store/useStores";
 import { observer } from "mobx-react";
 import type { RouteComponentProps } from "react-router";
 import { RoomContainer } from "@pages/home/style";
 import Card from "@components/card";
+import PageLoading from "@components/loading/PageLoading";
 import SkeletonCard from "@components/skeleton/home";
+import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
+import InfiniteScroll from "@components/infiniteScroll";
 
 interface TopicPageInitStoreOnServer {
   initStoreOnServer: InitStoreOnServer<{
@@ -21,11 +26,30 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
   const { roomStore } = useMobxStores();
   const { category } = match.params;
   const [isLoading, setIsLoading] = useState((roomStore.topic !== category) && roomStore.roomList);
+  const [isScrollLoading, setIsScrollLoading] = useState(false);
+  const infiniteScrollRef = useRef<HTMLDivElement>(null);
+
+  const throttleFetch = useCallback(throttle(() => {
+    setIsScrollLoading(true);
+    roomStore.fetchRooms(category)
+      .then(() => {
+        setIsScrollLoading(false);
+      })
+  },1200),[]);
+
+  const handleLoadMore = () => {
+    throttleFetch()
+  }
+
+  useInfiniteScroll({
+    target: infiniteScrollRef,
+    cb: handleLoadMore,
+  });
 
   useEffect(() => {
-    if(!roomStore.roomList || (roomStore.topic !== category)){
+    if(!isNil(roomStore.roomList) || (roomStore.currentTopic !== category)){
       setIsLoading(true);
-      roomStore.fetchRooms(category)
+      roomStore.fetchRooms(category,0,true)
         .then(
           (data: any) => {console.log(data)
           setIsLoading(false);
@@ -57,11 +81,15 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
   }
 
   return(
-    <section>
-      <RoomContainer>
-        {renderCardList()}
-      </RoomContainer>
-    </section>
+    <>
+      <section>
+        <RoomContainer>
+          {renderCardList()}
+        </RoomContainer>
+        {roomStore.next && isScrollLoading && <PageLoading width="30px"/>}
+      </section>
+      {roomStore.next && <InfiniteScroll targetRef={infiniteScrollRef}/>}
+    </>
   )
 }
 
