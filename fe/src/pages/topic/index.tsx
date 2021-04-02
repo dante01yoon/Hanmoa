@@ -7,10 +7,13 @@ import { observer } from "mobx-react";
 import type { RouteComponentProps } from "react-router";
 import { RoomContainer } from "@pages/home/style";
 import Card from "@components/card";
+import { Modal } from "@components/modal";
 import PageLoading from "@components/loading/PageLoading";
 import SkeletonCard from "@components/skeleton/home";
 import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
 import InfiniteScroll from "@components/infiniteScroll";
+import { GetRoomPayload } from "@payload/index";
+import { useModal } from "@utils/modal/useModal"; 
 
 interface TopicPageInitStoreOnServer {
   initStoreOnServer: InitStoreOnServer<{
@@ -28,6 +31,7 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
   const [isLoading, setIsLoading] = useState((roomStore.topic !== category) && roomStore.roomList);
   const [isScrollLoading, setIsScrollLoading] = useState(false);
   const infiniteScrollRef = useRef<HTMLDivElement>(null);
+  const [isModal, setModal] = useModal();
 
   const throttleFetch = useCallback(throttle(() => {
     setIsScrollLoading(true);
@@ -57,9 +61,15 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
     }
   },[category])
 
-  const handleClick = (value: any) => {
-    
-  }
+  const handleClick: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void = (data) => (e) => {
+    setModal({
+      type: "OPEN",
+      payload: {
+        data,
+        visible: true,
+      },
+    });
+  };
 
   const renderCardList = () => {
     if(isLoading) {
@@ -73,7 +83,7 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
         <Card
           room={room}
           key={`$::${index}-${category ?? "etc"}`}
-          handleClick={() => handleClick(room)}
+          handleClick={handleClick(room)}
         />
       )
     }
@@ -88,6 +98,7 @@ const TopicPage:FC<TopicPageProps> & TopicPageInitStoreOnServer = ({match}) =>{
         </RoomContainer>
         {roomStore.next && isScrollLoading && <PageLoading width="30px"/>}
       </section>
+      <section>{isModal.visible && <Modal {...isModal.data}/>}</section>
       {roomStore.next && <InfiniteScroll targetRef={infiniteScrollRef}/>}
     </>
   )

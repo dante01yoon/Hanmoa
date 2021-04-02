@@ -63,7 +63,7 @@ export const Modal: FC<ModalProps> = ({
                 background={"#28D84F"}
                 clickHandler={() => {
                   close({ type: "CLOSE" });
-                  history.push(`room/${id}`);
+                  history.push(`/room/${id}`);
                 }}
               >
                 입장
