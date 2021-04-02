@@ -66,7 +66,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
     }
   },[]);
 
-  const handleClick: (data: GetRoomPayload["room"]) => void = (data) => {
+  const handleClick: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void = (data) => (e) => {
     setModal({
       type: "OPEN",
       payload: {
@@ -99,7 +99,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
                   <Card
                     room={room}
                     key={room.id}
-                    handleClick={() => handleClick(room)}
+                    handleClick={handleClick(room)}
                   />
                 );
               })}

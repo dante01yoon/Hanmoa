@@ -29,7 +29,7 @@ interface CardProps {
   width?: number;
   height?: number;
   room: GetRoomPayload["room"];
-  handleClick: (e: SyntheticEvent) => void;
+  handleClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
