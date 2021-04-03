@@ -6,7 +6,7 @@ export const Container = styled.li<{
 }>`
   width: ${p => p.width ? `${p.width}` : 296}px;
   height: ${p => p.height ? `${p.height}` : 280}px;
-  margin: 16px 24px;
+  margin: 16px 8px;
   display: inline-block;
   :hover {
     box-shadow: 0 0 24px 0 #bbb;

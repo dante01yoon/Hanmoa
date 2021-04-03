@@ -2,6 +2,7 @@ import { Colors } from './interface/colors';
 export const colors: Colors = {
     blue: '#007bff',
     background_blue: "#2879D8",
+    background_black: "#2c2d2e",
     dark_sky_blue: '#9bbbd4',	
     indigo: '#6610f2',
     purple: '#6f42c1',
