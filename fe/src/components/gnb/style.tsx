@@ -3,17 +3,17 @@ import hamburger from 'src/asset/hamburger.svg';
 import { Link } from "react-router-dom";
 
 export const Main = styled.main`
-    both: clear;
+  clear: both;
 `;
 export const Dummy = styled.div`
-    height: 64px;
+  height: 64px;
 `;
 export const Header = styled.header`
+    background-color: ${p=> p.theme.colors.background_black};
     z-index: 500; 
     position: fixed;
     top: 0;
     width:100%;
-    background-color: ${p=> p.theme.colors.white};
     ${p=>p.theme.typography._16Bold};
 `
 export const Nav = styled.nav`
@@ -37,9 +37,10 @@ export const ItemBox = styled.div<{
     }
 `;
 export const Item = styled.li`
-    padding: 0 8px;
+    color: ${({theme}) => theme.colors.gray_white};
     text-transform: uppercase;
-    cursor:pointer; 
+    padding: 0 8px;
+cursor:pointer; 
 `;
 export const ItemList= styled.ul`
     & > ${Item} {

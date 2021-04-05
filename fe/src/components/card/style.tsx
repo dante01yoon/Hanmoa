@@ -4,12 +4,13 @@ export const Container = styled.li<{
   width?: number,
   height?: number 
 }>`
+  display: inline-block;
   width: ${p => p.width ? `${p.width}` : 296}px;
   height: ${p => p.height ? `${p.height}` : 280}px;
   margin: 16px 8px;
-  display: inline-block;
+
   :hover {
-    box-shadow: 0 0 24px 0 #bbb;
+    box-shadow: 0 0 24px 0 #999;
   }
 
 `;
@@ -25,13 +26,12 @@ export const ImgBox = styled.div<{
   border-radius: 8px 8px 0 0;
 `
 export const ContentBox = styled.div`
+  background-color: ${p => p.theme.colors.card};
   width: 100%;
   height:120px;
-  margin: 0 auto;
   padding: 16px;
-  background-color: ${p => p.theme.colors.yellow_white};
+  margin: 0 auto;
   border-radius: 0 0 8px 8px;
-
 `
 export const CategoryBox = styled.div`
   width: 248px;
@@ -46,6 +46,7 @@ export const CategoryIcon = styled.div<{
   background-size: cover; 
 ` 
 export const Category = styled.div`
+  color: ${({theme}) => theme.colors.gray_white};
   line-height:24px;
   font-size: 18px;
   font-weight: 700;
@@ -69,22 +70,24 @@ export const MemberCount = styled.div<{
   line-height: 24px;
 `
 export const TitleBox = styled.div`
-  margin-top: 16px;
+  display: flex;
+  color: ${({theme}) => theme.colors.gray_white};
   width: 248px;
   height: 40px;
-  display: flex;
+  margin-top: 16px;
 `
 export const Title = styled.div`
   display: block; /* Fallback for non-webkit */ 
   display: -webkit-box;
-  width: 152px;
-  margin: 0 24px;
-  -webkit-line-clamp: 2;
-  height: 40px; /* Fallback for non-webkit */
-  -webkit-box-orient: vertical;
-  line-height: 20px; /* Fallback for non-webkit ugly :( any idea?  */   
   overflow: hidden;
+  color: ${({theme}) => theme.colors.gray_white};
+  line-height: 20px; /* Fallback for non-webkit ugly :( any idea?  */   
+  width: 152px;
+  height: 40px; /* Fallback for non-webkit */
+  margin: 0 24px;
   text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
 export const TitleIcons = styled.div`
   width: 64px;

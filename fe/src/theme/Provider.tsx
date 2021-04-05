@@ -79,7 +79,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-
+        background-color: ${theme.colors.background_black};
         line-height: 1;
 
     }

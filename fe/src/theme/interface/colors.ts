@@ -2,6 +2,7 @@ export interface Colors{
     blue:string,
     background_blue: string,
     background_black: string,
+    card: string,
     dark_sky_blue:string,
     indigo:string,
     purple:string
