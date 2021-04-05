@@ -31,10 +31,22 @@ const Button = styled.button`
 
 // parent covering Slider
 const SliderContainer = styled.div` 
-  width: 100%;
-  overflow: hidden;
   position:relative;
+  overflow: hidden;
   margin: 0 auto;
+
+  @media (min-width: 344px ){
+    width: 344px;
+  }
+  @media (min-width: 624px){
+    width: 624px;
+  }
+  @media(min-width: 950px){
+    width: 950px;
+  }
+  @media(min-width: 1280px){
+    width: 1280px;
+  }
 `;
 
 const Slider = styled.div<{

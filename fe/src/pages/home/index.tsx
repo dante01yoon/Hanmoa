@@ -21,7 +21,7 @@ import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
 import netflix from "src/asset/netflix.jpg";
 
-const { RoomContainer } = Styled;
+const { RoomWrapper, RoomContainer } = Styled;
 
 interface HomePageInitStoreOnServer {
   initStoreOnServer: InitStoreOnServer<{
@@ -87,27 +87,29 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
       </section>
       <section>{isModal.visible && <Modal {...isModal.data} />}</section>
       <section >
-        <RoomContainer ref={homeRef}>
-          {isLoading || isNil(roomStore.homeRoomList)
-            ? Array(10)
-                .fill(0)
-                .map((_, index) => {
-                  return <SkeletonCard key={`skeleton::${index}`} />;
-                })
-            : roomStore.homeRoomList?.map((room: any) => {
-                return (
-                  <Card
-                    room={room}
-                    key={room.id}
-                    handleClick={handleClick(room)}
-                  />
-                );
-              })}
-          {isHandleLoadMoreLoading && (
-            <PageLoading width="30px"/>
-          )}
-        </RoomContainer>
-        <InfiniteScroll targetRef={infiniteScrollTargetRef}/>
+        <RoomWrapper>
+          <RoomContainer ref={homeRef}>
+            {isLoading || isNil(roomStore.homeRoomList)
+              ? Array(10)
+                  .fill(0)
+                  .map((_, index) => {
+                    return <SkeletonCard key={`skeleton::${index}`} />;
+                  })
+              : roomStore.homeRoomList?.map((room: any) => {
+                  return (
+                    <Card
+                      room={room}
+                      key={room.id}
+                      handleClick={handleClick(room)}
+                    />
+                  );
+                })}
+            {isHandleLoadMoreLoading && (
+              <PageLoading width="30px"/>
+            )}
+          </RoomContainer>
+        </RoomWrapper>
+        {/* <InfiniteScroll targetRef={infiniteScrollTargetRef}/> */}
           
       </section>
     </>
