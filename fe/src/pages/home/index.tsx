@@ -10,7 +10,7 @@ import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
 import InfiniteScroll from "@components/infiniteScroll";
 import PageLoading from "@components/loading/PageLoading";
 import { useModal } from "@utils/modal/useModal";
-import {useMobxStores, MobxStores} from "@utils/store/useStores"; 
+import { useMobxStores, MobxStores } from "@utils/store/useStores";
 import { observer } from "mobx-react";
 import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 import { GetRoomPayload } from "@payload/index";
@@ -21,7 +21,7 @@ import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
 import netflix from "src/asset/netflix.jpg";
 
-const { RoomWrapper, RoomContainer } = Styled;
+const { RoomWrapper, StyledRoomContainer } = Styled;
 
 interface HomePageInitStoreOnServer {
   initStoreOnServer: InitStoreOnServer<{
@@ -29,7 +29,7 @@ interface HomePageInitStoreOnServer {
   }>
 }
 
-const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
+const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
   const [isModal, setModal] = useModal();
   const { pathname } = useLocation();
   const homeRef = useRef<HTMLUListElement>(null);
@@ -37,34 +37,34 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
   // TODO 나중에 Saga 로 roomStore을 교체시 사용 
   // const { data, isLoading } = useSelector((state: RootState) => state.topic);
   const { roomStore } = useMobxStores();
-  const [isLoading, setIsLoading ] = useState(isNil(roomStore.homeRoomList));
-  const [isHandleLoadMoreLoading, setIsHandleLoadMoreLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(isNil(roomStore.homeRoomList));
+  const [isHandleLoadMoreLoading, setIsHandleLoadMoreLoading] = useState(false);
 
   const throttleFetch = useCallback(throttle(() => {
     roomStore.fetchRooms()
       .then(() => {
         setIsHandleLoadMoreLoading(false);
       })
-  },1200),[]);
+  }, 1200), []);
 
   const handleLoadMore = () => {
     setIsHandleLoadMoreLoading(true);
     throttleFetch();
   }
-  
+
   useInfiniteScroll({
     target: infiniteScrollTargetRef,
     cb: handleLoadMore,
   });
 
   useEffect(() => {
-    if(isNil(roomStore.homeRoomList)){
-     roomStore.fetchRooms()
-      .then(({rooms}:{ rooms: any}) => {
-        setIsLoading(false);
-      }) 
+    if (isNil(roomStore.homeRoomList)) {
+      roomStore.fetchRooms()
+        .then(({ rooms }: { rooms: any }) => {
+          setIsLoading(false);
+        })
     }
-  },[]);
+  }, []);
 
   const handleClick: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void = (data) => (e) => {
     setModal({
@@ -88,35 +88,34 @@ const HomePage: FC & HomePageInitStoreOnServer = ({}) => {
       <section>{isModal.visible && <Modal {...isModal.data} />}</section>
       <section >
         <RoomWrapper>
-          <RoomContainer ref={homeRef}>
+          <StyledRoomContainer ref={homeRef}>
             {isLoading || isNil(roomStore.homeRoomList)
               ? Array(10)
-                  .fill(0)
-                  .map((_, index) => {
-                    return <SkeletonCard key={`skeleton::${index}`} />;
-                  })
+                .fill(0)
+                .map((_, index) => {
+                  return <SkeletonCard key={`skeleton::${index}`} />;
+                })
               : roomStore.homeRoomList?.map((room: any) => {
-                  return (
-                    <Card
-                      room={room}
-                      key={room.id}
-                      handleClick={handleClick(room)}
-                    />
-                  );
-                })}
+                return (
+                  <Card
+                    room={room}
+                    key={room.id}
+                    handleClick={handleClick(room)}
+                  />
+                );
+              })}
             {isHandleLoadMoreLoading && (
-              <PageLoading width="30px"/>
+              <PageLoading width="30px" />
             )}
-          </RoomContainer>
+          </StyledRoomContainer>
         </RoomWrapper>
-        {/* <InfiniteScroll targetRef={infiniteScrollTargetRef}/> */}
-          
+        <InfiniteScroll targetRef={infiniteScrollTargetRef} />
       </section>
     </>
   );
 };
 
-HomePage.initStoreOnServer = (_,{ roomStore }) => {
+HomePage.initStoreOnServer = (_, { roomStore }) => {
   return Promise.all([
     roomStore.fetchRooms(),
   ])

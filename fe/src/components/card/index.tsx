@@ -25,7 +25,7 @@ const {
 } = Styled;
 
 interface CardProps {
-  
+
   width?: number;
   height?: number;
   room: GetRoomPayload["room"];
@@ -50,7 +50,7 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
     }
   };
   const renderCurrentMemberStatus = () => {
-    
+
   }
   const checkHeartClick = (): boolean => {
     return true;

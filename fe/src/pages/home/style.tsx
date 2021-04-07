@@ -7,7 +7,7 @@ export const RoomWrapper = styled.div`
   
 `;
 
-export const RoomContainer = styled.ul`
+export const StyledRoomContainer = styled.ul`
   min-height: 70vh;
   margin: 0 auto;
 
@@ -23,4 +23,4 @@ export const RoomContainer = styled.ul`
   @media( min-width: 1280px){
     width: calc(312px*4);
   }
-`  
+`
