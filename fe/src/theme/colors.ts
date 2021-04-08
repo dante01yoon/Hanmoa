@@ -4,7 +4,7 @@ export const colors: Colors = {
     background_blue: "#2879D8",
     background_black: "#262738",
     card: "#454A4c",
-    dark_sky_blue: '#9bbbd4',	
+    dark_sky_blue: '#9bbbd4',
     indigo: '#6610f2',
     purple: '#6f42c1',
     pink: '#e83e8c',
@@ -30,7 +30,7 @@ export const colors: Colors = {
     disable: '#00aacc',
     light: '#f7f7f7',
     dark: '#333',
-    gray_white: '#E5E5E5', 
+    gray_white: '#E5E5E5',
     gray_100: '#f7f7f7',
     gray_200: '#eee',
     gray_300: '#dbdbdb',
@@ -60,4 +60,15 @@ export const colors: Colors = {
     breakpoint_sm: '576px',
     breakpoint_md: '768px',
     breakpoint_lg: '992px',
+    gradient: {
+        yellow: "linear-gradient(90deg, rgba(251,244,63,0.9990371148459384) 0%, rgba(180,158,70,1) 100%)",
+        blue: "linear-gradient(90deg, rgba(77,63,251,0.7105217086834734) 0%, rgba(70,104,180,1) 100%)",
+        green: 'linear-gradient(90deg, rgba(147,251,63,1) 14%, rgba(70,252,166,1) 100%)',
+        red: "linear-gradient(90deg, rgba(251,77,63,1) 0%, rgba(143,67,41,1) 100%)",
+        pink: "linear-gradient(90deg, rgba(251,63,138,0.5984768907563025) 0%, rgba(255,48,172,1) 100%)",
+        purple: "linear-gradient(90deg, rgba(251,63,207,1) 0%, rgba(132,41,143,1) 100%)",
+        orange: "linear-gradient(90deg, rgba(251,153,63,0.9990371148459384) 0%, rgba(255,213,48,1) 100%)",
+        skyBlue: "linear-gradient(90deg, rgba(63,245,251,0.7105217086834734) 0%, rgba(70,141,180,1) 100%)",
+        gray: "linear-gradient(90deg, rgba(65,75,75,0.7105217086834734) 0%, rgba(197,206,212,1) 100%)",
+    }
 }

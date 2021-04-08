@@ -2,17 +2,23 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   position: fixed;
-  top: 30%;
+  top: calc(50% - 32px);
   left: 50%;
-  transform: translateX(-50%) translateY(-30%);
-  display: flex;
-  flex-direction: column;
-  border-radius: 8px;
-  padding: 32px;
+  background-color: ${(p) => p.theme.colors.yellow_white};
+  transform: translate(-50%, -50%);
   font-weight: 500;
   font-size: 16px;
-  background-color: ${(p) => p.theme.colors.yellow_white};
+  margin: 30px 0;
   width: 383px;
+  border-radius: 8px;
+  
+`;
+
+export const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+
   @media (max-width: 344px) {
     width: 296px;
   }
@@ -20,9 +26,11 @@ export const Wrapper = styled.div`
 
 export const Row = styled.div`
   display: flex;
+  line-height: 20px;
   width: 100%;
   margin: 8px 0;
 `;
+
 export const Name = styled.div`
   white-space: nowrap;
   width: inline-block;
