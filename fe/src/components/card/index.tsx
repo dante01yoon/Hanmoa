@@ -17,6 +17,7 @@ const {
   CategoryBox,
   CategoryIcon,
   Category,
+  GradientBox,
   MemberCount,
   TitleBox,
   Title,
@@ -25,7 +26,6 @@ const {
 } = Styled;
 
 interface CardProps {
-
   width?: number;
   height?: number;
   room: GetRoomPayload["room"];
@@ -38,6 +38,7 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
     imageUrl,
     title,
     subTitle,
+    gradient,
     host,
     topic,
     join,
@@ -58,7 +59,12 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
 
   return (
     <Container>
-      <ImgBox imgUrl={extractedUrl} onClick={handleClick} />
+      <GradientBox
+        gradient={gradient}
+        onClick={handleClick}
+      >
+        <ImgBox imgUrl={extractedUrl} onClick={handleClick} />
+      </GradientBox>
       <ContentBox>
         <CategoryBox>
           <IconBox src={category_tv} />

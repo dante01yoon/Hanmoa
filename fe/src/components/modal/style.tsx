@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   position: fixed;
+  z-index: 999;
   top: calc(50% - 32px);
   left: 50%;
   background-color: ${(p) => p.theme.colors.yellow_white};

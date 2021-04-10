@@ -1,4 +1,4 @@
-import { 
+import {
   Topic,
   Profile,
   ChatMessage,
@@ -11,16 +11,17 @@ export interface Room {
   subTitle: string;
   // TODO 더미 이미지는 지금은 클라에서 처리하나 앞으로 서버에서 보내주는걸로
   imageUrl: string | null; // string 
-  join: Array<{profile: Profile}>;
+  join: Array<{ profile: Profile }>;
   host: Profile;
   createdBy: Profile;
   messages: Array<ChatMessage> | null;
   current: number;
   capability: number;
+  gradient: string;
 }
 
 // GET /room/only/${id}
-export interface GetRoomPayload  {
+export interface GetRoomPayload {
   room: Room | null;
 };
 

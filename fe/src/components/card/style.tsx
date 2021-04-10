@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.li<{
   width?: number,
-  height?: number 
+  height?: number
 }>`
   display: inline-block;
   width: ${p => p.width ? `${p.width}` : 296}px;
@@ -15,16 +15,30 @@ export const Container = styled.li<{
 
 `;
 
-export const ImgBox = styled.div<{
-  imgUrl?: string 
+export const GradientBox = styled.div<{
+  gradient: string;
 }>`
-  cursor: pointer;
+  position: relative;
+  background: ${({ gradient }) => gradient};
   width: 100%;
+  border-radius: 8px 8px 0 0;
   height: 168px;
+  cursor: pointer;
+`
+
+export const ImgBox = styled.div<{
+  imgUrl?: string;
+}>`
+  position: absolute;
+  bottom: -36px;
+  right: 32px;
   background: url(${p => p.imgUrl}) no-repeat center;
   background-size: cover;
-  border-radius: 8px 8px 0 0;
-`
+  width: 70px;
+  border-radius: 50%;
+  height: 70px;
+`;
+
 export const ContentBox = styled.div`
   background-color: ${p => p.theme.colors.card};
   width: 100%;
@@ -33,20 +47,23 @@ export const ContentBox = styled.div`
   margin: 0 auto;
   border-radius: 0 0 8px 8px;
 `
+
 export const CategoryBox = styled.div`
   width: 248px;
   height: 24px;
   display:flex; 
 `;
+
 export const CategoryIcon = styled.div<{
 }>`
   width: 24px;
   height: 100%;
   background: url() no-repeat center;
   background-size: cover; 
-` 
+`
+
 export const Category = styled.div`
-  color: ${({theme}) => theme.colors.gray_white};
+  color: ${({ theme }) => theme.colors.gray_white};
   line-height:24px;
   font-size: 18px;
   font-weight: 700;
@@ -59,28 +76,31 @@ export const Category = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 `
+
 export const MemberCount = styled.div<{
   block?: boolean
 }>`
-  ${p=> p.block && css`color: ${p.theme.colors.gray_400}`};
+  ${p => p.block && css`color: ${p.theme.colors.gray_400}`};
   text-align:right;
   float:right;
   width: 96px; 
   margin-right: 8px;
   line-height: 24px;
 `
+
 export const TitleBox = styled.div`
   display: flex;
-  color: ${({theme}) => theme.colors.gray_white};
+  color: ${({ theme }) => theme.colors.gray_white};
   width: 248px;
   height: 40px;
   margin-top: 16px;
 `
+
 export const Title = styled.div`
   display: block; /* Fallback for non-webkit */ 
   display: -webkit-box;
   overflow: hidden;
-  color: ${({theme}) => theme.colors.gray_white};
+  color: ${({ theme }) => theme.colors.gray_white};
   line-height: 20px; /* Fallback for non-webkit ugly :( any idea?  */   
   width: 152px;
   height: 40px; /* Fallback for non-webkit */
@@ -89,6 +109,7 @@ export const Title = styled.div`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `
+
 export const TitleIcons = styled.div`
   width: 64px;
   height: 100%;
@@ -96,6 +117,7 @@ export const TitleIcons = styled.div`
   justify-content: center; 
   align-items: center;
 `
+
 export const IconBox = styled.div<{
   src: string
 }>`
