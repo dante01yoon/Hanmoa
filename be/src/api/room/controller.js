@@ -3,11 +3,11 @@ import Room from "../../models/room";
 import pick from "lodash/pick";
 
 export const onGetRoomUsers = async (ctx) => {
-  const { request: { params: {id}}} = ctx;
+  const { request: { params: { id } } } = ctx;
   try {
-    const join = await Room.getRoomUsers({id});
+    const join = await Room.getRoomUsers({ id });
     ctx.status = 200;
-    ctx.body ={
+    ctx.body = {
       success: true,
       data: {
         join: join ?? [],
@@ -24,13 +24,13 @@ export const onGetRoomUsers = async (ctx) => {
   }
 }
 
-export const onGetRooms = async(ctx) => {
-  const { request: {query: {page}, params: {category}}} = ctx;
+export const onGetRooms = async (ctx) => {
+  const { request: { query: { page }, params: { category } } } = ctx;
   try {
-    const rooms = await Room.getRooms({page, category});
+    const rooms = await Room.getRooms({ page, category });
     const refinedRooms = rooms.map((room) => {
       const copiedRoom = room.toObject();
-      const refinedTopic = pick(room.topic,["category", "url"]);
+      const refinedTopic = pick(room.topic, ["category", "url"]);
       return {
         ...copiedRoom,
         topic: refinedTopic,
@@ -62,37 +62,37 @@ export const onGetLatestMessages = async (ctx) => {
   const { page } = request.query;
 
   try {
-    const messages = Room.getLatestChat({page,id});
+    const messages = Room.getLatestChat({ page, id });
     response.status = 200;
     response.body = messages;
     return;
-  } catch(error){
+  } catch (error) {
     console.log("error in onGetLatestMessages");
     throw error;
   }
- }
+}
 
 export const onGetRoom = async (ctx, next) => {
-  const {request: {params: {id}, query: {only}}} = ctx;
-  if(only){
-    switch(only){
+  const { request: { params: { id }, query: { only } } } = ctx;
+  if (only) {
+    switch (only) {
       case "join":
         await onGetRoomUsers(ctx);
         return next();
         break;
       default:
         return next();
-    }  
+    }
   }
-  try{
-    const validation = makeValidation(types =>  ({
+  try {
+    const validation = makeValidation(types => ({
       payload: id,
       checks: {
-        id: { type: types.string}
+        id: { type: types.string }
       }
     }))
 
-    if(!validation){
+    if (!validation) {
       ctx.status = 400;
       ctx.body = {
         success: false,
@@ -101,7 +101,7 @@ export const onGetRoom = async (ctx, next) => {
       }
     }
 
-    const room = await Room.findRoomById({id});
+    const room = await Room.findRoomById({ id });
     ctx.status = 200;
     ctx.body = {
       success: true,
@@ -109,7 +109,7 @@ export const onGetRoom = async (ctx, next) => {
         room,
       },
     };
-  } catch(error){
+  } catch (error) {
     console.error("error in onGetRoom");
     ctx.status = 500;
     ctx.body = {
@@ -121,13 +121,13 @@ export const onGetRoom = async (ctx, next) => {
   }
 }
 
-export const onCreateRoom = async(ctx) => {
+export const onCreateRoom = async (ctx) => {
   const { request, response } = ctx;
   const { studentNumber, title, subTitle, imageUrl, category, capability } = request.body;
-  
+
   try {
-    if(["watcha", "netflix"].includes(category)){
-      if(capability !== 4){
+    if (["watcha", "netflix"].includes(category)) {
+      if (capability !== 4) {
         throw Error("category watcha or netflix capabilitycan't be any number except 4");
       }
     }
@@ -141,12 +141,12 @@ export const onCreateRoom = async(ctx) => {
       }
     }));
 
-    if(!validation.success) {
+    if (!validation.success) {
       response.status = 400;
       response.body = validation;
       return;
     }
-        
+
     const room = await Room.createRoom({
       studentNumber,
       title,
@@ -154,7 +154,6 @@ export const onCreateRoom = async(ctx) => {
       imageUrl: imageUrl ?? "",
       category,
       capability,
-      createdBy,
     });
 
     response.status = 200;
@@ -164,7 +163,7 @@ export const onCreateRoom = async(ctx) => {
         room,
       },
     };
-  } catch(error){
+  } catch (error) {
     console.log("error in onCreateRoom");
     throw error;
   }

@@ -1,8 +1,10 @@
-import { string } from "@withvoid/make-validation/lib/validationTypes";
 import mongoose, { Schema } from "mongoose";
 import createUUID from "../lib/uuid";
 import User from "./user";
 import Topic from "./topic";
+import { GradientFilter } from "../lib";
+
+const Gradient = new GradientFilter();
 
 const Room = new Schema({
   id: {
@@ -34,7 +36,7 @@ const Room = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   }],
-  capability:{
+  capability: {
     type: Number,
     required: true,
   },
@@ -52,15 +54,19 @@ const Room = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Chat",
   }],
+  gradient: {
+    type: String,
+    required: true,
+  }
 });
 
 /**
  * @param {studentNumber: string} args 
  */
-Room.statics.createRoom = async function(args){
+Room.statics.createRoom = async function (args) {
   const { studentNumber, title, subTitle, imageUrl, category, capability } = args;
   try {
-    const topic = await Topic.findTopic({category})
+    const topic = await Topic.findTopic({ category })
     const user = await User.findByStudentNumber(studentNumber);
     const room = await this.create({
       title,
@@ -71,58 +77,60 @@ Room.statics.createRoom = async function(args){
       topic,
       createdBy: user,
       capability,
+      gradient: Gradient.setSingleGradient(category).getGradientSingleColor(category)
     })
-    
+
     return room;
-  } catch(error){
+  } catch (error) {
     console.log("error in Room.statics.createRoom");
     throw error;
   }
 }
+
 const roomsCache = new Map();
-Room.statics.getRooms = async function(args) {
-  const { page = 0 , category } = args;
+Room.statics.getRooms = async function (args) {
+  const { page = 0, category } = args;
   let topic;
-  if(category){
-    topic = await Topic.findTopic({category});
+  if (category) {
+    topic = await Topic.findTopic({ category });
   }
-  const findArgs = topic ? {topic: topic._id} : {};
+  const findArgs = topic ? { topic: topic._id } : {};
   let rooms = await this.find(findArgs)
     .populate("topic")
     .populate("join")
     .populate("host")
-    .sort({"time": -1})
+    .sort({ "time": -1 })
     .skip(page * 10)
     .limit(12);
-  if(!rooms.length){
+  if (!rooms.length) {
     roomsCache.set(page, rooms);
   } else {
-    rooms = page > 0 ? roomsCache.get(page-1) : rooms;
+    rooms = page > 0 ? roomsCache.get(page - 1) : rooms;
   }
   console.log("rooms: ", rooms);
   return rooms;
 }
 
-Room.statics.findRoomById = async function(args) {
+Room.statics.findRoomById = async function (args) {
   const { id } = args;
   try {
     const room = await this
-      .findOne({id})
+      .findOne({ id })
       .populate("messages")
       .populate("join")
-      
+
     return room;
-  } catch(error) {
+  } catch (error) {
     console.error("error in Room.statics.findRoomById");
     console.error(error);
     throw Error(error);
   }
 }
 
-Room.statics.getRoomUsers = async function(args) {
+Room.statics.getRoomUsers = async function (args) {
   const { id } = args;
-  try { 
-    const {join} = await this.findOne({id});
+  try {
+    const { join } = await this.findOne({ id });
     return join;
   } catch (error) {
     console.log("error in Room.statics.getRoomUsers");
@@ -130,12 +138,12 @@ Room.statics.getRoomUsers = async function(args) {
   }
 }
 
-Room.statics.getLatestChat = async function(args) {
+Room.statics.getLatestChat = async function (args) {
   const { page, id } = args;
   try {
-    const chats = await this.findOne({id})
+    const chats = await this.findOne({ id })
       .messages
-      .sort({createdAt: -1})
+      .sort({ createdAt: -1 })
       .skip(page * 200)
       .limit(200);
     return chats;
@@ -149,12 +157,12 @@ Room.statics.getLatestChat = async function(args) {
  * @param {string} roomId 
  * @param {string} studentNumber 
  */
-Room.statics.loadUserChat = async function(roomId, studentNumber){
-  try{
-    const joinedUser = await this.findOne({id: roomId})
+Room.statics.loadUserChat = async function (roomId, studentNumber) {
+  try {
+    const joinedUser = await this.findOne({ id: roomId })
       .populate("join", "joinIn")
       .exec((err, doc) => {
-        const joinedRoom = doc.findOne({roomId});
+        const joinedRoom = doc.findOne({ roomId });
       });
     return joinedUser
   } catch (error) {

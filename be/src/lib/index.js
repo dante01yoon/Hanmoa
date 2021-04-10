@@ -1,0 +1,1 @@
+export { default as GradientFilter } from "./gradientFilter";
