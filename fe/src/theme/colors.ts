@@ -63,7 +63,7 @@ export const colors: Colors = {
     gradient: {
         yellow: "linear-gradient(90deg, rgba(251,244,63,0.9990371148459384) 0%, rgba(180,158,70,1) 100%)",
         blue: "linear-gradient(90deg, rgba(77,63,251,0.7105217086834734) 0%, rgba(70,104,180,1) 100%)",
-        green: 'linear-gradient(90deg, rgba(147,251,63,1) 14%, rgba(70,252,166,1) 100%)',
+        green: "linear-gradient(90deg, rgba(147,251,63,1) 14%, rgba(70,252,166,1) 100%)",
         red: "linear-gradient(90deg, rgba(251,77,63,1) 0%, rgba(143,67,41,1) 100%)",
         pink: "linear-gradient(90deg, rgba(251,63,138,0.5984768907563025) 0%, rgba(255,48,172,1) 100%)",
         purple: "linear-gradient(90deg, rgba(251,63,207,1) 0%, rgba(132,41,143,1) 100%)",
