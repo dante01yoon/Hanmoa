@@ -26,7 +26,7 @@ app.use(bodyParser());
 // jwtMiddleware 적용 
 app.use(jwtMiddleware);
 
-// cors
+// cors 
 function verifyOrigin(ctx) {
   const origin = ctx.headers.origin;
   const allowedOrigins = ["http://localhost:5000", "http://localhost:3000"];
@@ -38,6 +38,7 @@ function verifyOrigin(ctx) {
   return origin;
 }
 
+// cors 세팅
 app.use(cors({
   origin: verifyOrigin,
   credentials: true,
