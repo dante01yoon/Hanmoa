@@ -25,8 +25,8 @@ export const Nav = styled.nav`
 `;
 
 export const ItemBox = styled.div<{
-    url?: string
-    width?: number
+  url?: string
+  width?: number
 }>`
   display:flex;
   align-items:center;
@@ -74,7 +74,6 @@ export const RightItemContainer = styled.div`
 
 export const MainContainer = styled.div`
   max-width: 1280px;
-  height:100vh;
   margin: 0 auto;
   position:relative;
 `;

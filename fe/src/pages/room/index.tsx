@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import {RootState} from "src/store";
+import { RootState } from "src/store";
 import { useHistory } from "react-router-dom"
 import styled from "styled-components";
 import ChatCard from "@components/chat/card";
@@ -9,7 +9,7 @@ import SkeletonCard from "@components/skeleton/card";
 import { ISingleChat } from "src/models/chat";
 import makeFetchStoreOnServer from "@utils/makeFetchStoreOnServer";
 import ChatStore from "@store/ChatStore";
-import {Request} from "express";
+import { Request } from "express";
 import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores";
 import getRoomCode from "@utils/chat/getCode";
@@ -31,7 +31,7 @@ const StyledArticle = styled.article`
 
 const RoomPage: FC & {
   initStoreOnServer: Function;
-} = ({}) => {
+} = ({ }) => {
   const { chatStore } = useMobxStores();
   console.log("chatStore: ", chatStore);
   const chatRoomRef = useRef<HTMLElement>(null);
@@ -41,14 +41,14 @@ const RoomPage: FC & {
   // 2. response 오면 state 변경 ->
   // 3. RoomPage Container state propagation
 
-  const {user: {studentId}} = useSelector((state: RootState) => state.user);
-  
+  const { user: { studentId } } = useSelector((state: RootState) => state.user);
+
   const fetchDummyData = async (code: string) => {
     await chatStore.fetchNewChatMessage();
   };
 
   const history = useHistory();
-  
+
   useEffect(() => {
     console.log("history", history);
     fetchDummyData(getRoomCode(history.location.pathname));
@@ -57,31 +57,31 @@ const RoomPage: FC & {
   useEffect(() => {
     ioRef.current = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(entry.intersectionRatio === 1 ) {
-          if( targetRef && targetRef.current) {
+        if (entry.intersectionRatio === 1) {
+          if (targetRef && targetRef.current) {
             targetRef.current.scrollTop + targetRef.current.offsetTop >= targetRef.current.scrollHeight * 0.8;
           }
-        } 
+        }
       });
-    },{
+    }, {
       root: chatRoomRef.current,
-      threshold: 0,      
+      threshold: 0,
     });
-    if(!targetRef || !targetRef.current ){
-      return ;
-    } else{
+    if (!targetRef || !targetRef.current) {
+      return;
+    } else {
       ioRef.current.observe(targetRef.current);
     }
 
     return () => {
-      if(ioRef.current && targetRef && targetRef.current){
+      if (ioRef.current && targetRef && targetRef.current) {
         ioRef.current.unobserve(targetRef.current);
       }
     }
 
-    
 
-  },[]);
+
+  }, []);
 
   const renderChatContent = (): ReactNode => {
     console.log("in RenderChatContent")
@@ -108,7 +108,7 @@ const RoomPage: FC & {
             <ChatCard
               code={value.chatCardId}
               ref={index === 0 ? targetRef : undefined}
-              align={studentId ? 'right': 'left'}
+              align={studentId ? 'right' : 'left'}
               key={`single_chat_card::${chatCardId}`}
               event={"none"}
               {...rest}
@@ -118,7 +118,7 @@ const RoomPage: FC & {
       </>
     );
   };
- 
+
   return (
     <StyledSelf>
       <StyledArticle ref={chatRoomRef}>
@@ -129,7 +129,7 @@ const RoomPage: FC & {
   );
 };
 
-RoomPage.initStoreOnServer = makeFetchStoreOnServer((req: Request, {chatStore}: {chatStore: ChatStore}) => {
+RoomPage.initStoreOnServer = makeFetchStoreOnServer((req: Request, { chatStore }: { chatStore: ChatStore }) => {
   // Promise.resolve(chatStore.fetchNewChatMessage());
 });
 

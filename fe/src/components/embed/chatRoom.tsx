@@ -1,9 +1,9 @@
 import React, { FC, ReactNode, useRef, useEffect, useState } from "react";
-import { useFormik } from "formik";
+import { useFormik, FormikHelpers } from "formik";
 import styled from "styled-components";
 import { css } from "styled-components";
 import * as yup from "yup";
-
+import { useMobxStores } from "@utils/store/useStores";
 import link from "src/asset/link.svg";
 import upload from "src/asset/upload.svg";
 const StyledSelf = styled.div`
@@ -53,7 +53,7 @@ const StyledTextArea = styled.textarea`
 
 const StyledToolBox = styled.div`
   display: flex;
-  background: ${({theme}) => theme.colors.gray_200};
+  background: ${({ theme }) => theme.colors.gray_200};
   width: 100%;
   height: 48px;
 `;
@@ -64,7 +64,7 @@ const StyledImageInput = styled.input`
 
 const iconButtonStyle = (props: any) => css`
   display: flex;
-  background: ${ props.clicked ? props.theme.colors.gray_300: "none"};
+  background: ${props.clicked ? props.theme.colors.gray_300 : "none"};
   justify-content: center;
   align-items: center;
   width: 48px;
@@ -77,7 +77,7 @@ const iconButtonStyle = (props: any) => css`
       height: 24px;
       background: url(${props.icon}) center/100%;
   }
-`; 
+`;
 
 const StyledLinkButton = styled.div<{
   icon: string;
@@ -102,10 +102,10 @@ const StyledSubmitButtonWrapper = styled.div`
 `;
 
 const StyledSubmitButton = styled.button<{ clicked: boolean }>`
-  background: ${({theme}) => theme.colors.gray_200};
+  background: ${({ theme }) => theme.colors.gray_200};
   width: 100%;
   height: 100%;
-  border: 1px solid ${({theme}) => theme.colors.gray_200};
+  border: 1px solid ${({ theme }) => theme.colors.gray_200};
 `;
 
 interface IEmbedChatProps {
@@ -116,7 +116,7 @@ interface IChatValues {
 }
 
 interface IRefObject {
-  textareaRef: React.RefObject<HTMLTextAreaElement>;
+  textAreaRef: React.RefObject<HTMLTextAreaElement>;
 }
 
 const INITIAL_TEXTAREA_VALUE = "Write your message..." as const;
@@ -125,18 +125,29 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   // const [hasFocused, setHasFocused] = useState(false);
   const [isFocusing, setIsFocusing] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const textAreaScrollBlockRef = useRef(true);
   const inputImageRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const { chatStore } = useMobxStores();
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleSetClick = () => {
+  const handleSetClick = (callback?: () => void) => {
     setClicked(true);
+    if (callback) {
+      callback();
+    }
   };
 
-  const handleSubmit = (values: IChatValues) => {
-    console.log(values.chat);
-    handleSetClick();
-  };
+  const handleSubmit
+    = (values: IChatValues, { resetForm }: Pick<FormikHelpers<IChatValues>, "resetForm">) => {
+      console.log(values.chat);
+      resetForm({
+        values: {
+          chat: "",
+        }
+      });
+
+      handleSetClick();
+    };
 
   const validationSchema = yup.object().shape({
     chat: yup.string()
@@ -149,13 +160,20 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
     initialValues: {
       chat: "",
     },
-    onSubmit: (values) => handleSubmit(values),
+    onSubmit: handleSubmit,
   });
-  
+
+  const formikRef = useRef(formik.values);
+
   useEffect(() => {
     formik.validateForm();
-  },[]);
-  
+  }, []);
+
+  // formikRef 업데이트
+  useEffect(() => {
+    formikRef.current = formik.values;
+  }, [formik.values]);
+
   const textareaFocusHandler = (e: FocusEvent): void => {
     setIsFocusing(true);
   };
@@ -167,32 +185,71 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   const isTextValid = () => {
     return !!formik.errors.chat && !formik.isSubmitting;
   };
-  useEffect(() => {
-    console.log(formik.errors.chat);
-  })
-  const handleTextArea = () => {
-    if (textareaRef.current) {
-      const refObject = {
-        textareaRef,
-      };
 
-      //ugly :(
-      textareaRef.current.addEventListener(
-        "focusin",
-        textareaFocusHandler.bind(refObject)
-      );
-      textareaRef.current.addEventListener("blur", textareaBlurHandler);
-      textareaRef.current.focus();
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!event.shiftKey && event.key === "Enter") {
+      handleSubmit(formikRef.current, { resetForm: formik.resetForm });
+      event.preventDefault();
     }
   };
 
-  const uploadHandler = (e: React.MouseEvent<HTMLButtonElement>) => {};
+  const handleScroll = (event: Event) => {
+    if (textAreaRef && textAreaRef.current) {
+      const isScrollBlock = textAreaScrollBlockRef.current;
+      const textArea = textAreaRef.current;
+      if (
+        isScrollBlock
+        &&
+        !(textArea.scrollTop === textArea.scrollHeight - textArea.offsetHeight)
+      ) {
+        textAreaScrollBlockRef.current = false;
+      }
+      else if (
+        !isScrollBlock
+        &&
+        (textArea.scrollTop === textArea.scrollHeight - textArea.offsetHeight)
+      ) {
+        textAreaScrollBlockRef.current = true;
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (textAreaScrollBlockRef.current && textAreaRef.current) {
+      textAreaRef.current.scrollTop = textAreaRef.current.scrollHeight - textAreaRef.current.offsetHeight
+    }
+  }, [chatStore.chatMessages.length]);
+
+  const handleTextArea = () => {
+    if (textAreaRef.current) {
+      const refObject = {
+        textAreaRef,
+      };
+
+
+      //ugly :(
+      textAreaRef.current.addEventListener(
+        "focusin",
+        textareaFocusHandler.bind(refObject)
+      );
+      textAreaRef.current.addEventListener("blur", textareaBlurHandler);
+      textAreaRef.current.focus();
+    }
+  };
+
+  const uploadHandler = (e: React.MouseEvent<HTMLButtonElement>) => { };
+
   useEffect(() => {
     handleTextArea();
 
+    if (textAreaRef && textAreaRef.current) {
+      textAreaRef.current.addEventListener("keydown", handleKeyDown.bind(formik));
+    }
+
     return () => {
-      textareaRef.current?.removeEventListener("focusin", textareaFocusHandler);
-      textareaRef.current?.removeEventListener("blur", textareaBlurHandler);
+      textAreaRef.current?.removeEventListener("keydown", handleKeyDown);
+      textAreaRef.current?.removeEventListener("focusin", textareaFocusHandler);
+      textAreaRef.current?.removeEventListener("blur", textareaBlurHandler);
     };
   }, []);
 
@@ -202,7 +259,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
         <StyledChatContainer>{children}</StyledChatContainer>
       </StyledSelf>
       <StyledToolBox>
-        <StyledUploadButton 
+        <StyledUploadButton
           clicked
           icon={upload}
         />
@@ -214,11 +271,12 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
         <form onSubmit={formik.handleSubmit}>
           <StyledTextArea
             name="chat"
-            ref={textareaRef}
+            ref={textAreaRef}
             onChange={formik.handleChange}
             placeholder={
               isTextValid() && !isFocusing ? INITIAL_TEXTAREA_VALUE : ""
             }
+            value={formik.values.chat}
           />
           <StyledSubmitButtonWrapper>
             <StyledSubmitButton
