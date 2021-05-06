@@ -1,11 +1,14 @@
 import React, { FC, ReactNode, useRef, useEffect, useState } from "react";
 import { useFormik, FormikHelpers } from "formik";
-import styled from "styled-components";
-import { css } from "styled-components";
+import styled, { css } from "styled-components";
+import { observer } from "mobx-react-lite";
 import * as yup from "yup";
-import { useMobxStores } from "@utils/store/useStores";
+import { useParams } from "react-router-dom";
+import { useMobxStores, useSocket } from "@utils/store/useStores";
 import link from "src/asset/link.svg";
 import upload from "src/asset/upload.svg";
+import { nanoid } from "nanoid";
+
 const StyledSelf = styled.div`
   background-color: ${(p) => p.theme.colors.dark_sky_blue};
   height: 75vh;
@@ -121,39 +124,35 @@ interface IRefObject {
 
 const INITIAL_TEXTAREA_VALUE = "Write your message..." as const;
 
+const validationSchema = yup.object().shape({
+  chat: yup.string()
+    .max(200, "too long")
+    .required("required"),
+})
+
 const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   // const [hasFocused, setHasFocused] = useState(false);
   const [isFocusing, setIsFocusing] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const textAreaScrollBlockRef = useRef(true);
+  const scrollElementScrollBlockRef = useRef(true);
   const inputImageRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const { chatStore } = useMobxStores();
+  const scrollElementRef = useRef<HTMLDivElement>(null);
+  const { chatStore, sessionStore } = useMobxStores();
+  const { id: roomId } = useParams<{ id: string }>();
+  const { io } = useSocket();
 
-  const handleSetClick = (callback?: () => void) => {
-    setClicked(true);
-    if (callback) {
-      callback();
-    }
+  const handleSubmit = (values: IChatValues, { resetForm }: Pick<FormikHelpers<IChatValues>, "resetForm">) => {
+    console.log(values.chat);
+    io.emit("sendMessage", ({ roomId, message: values.chat }));
+    resetForm({
+      values: {
+        chat: "",
+      }
+    });
+
+    handleSetClick();
   };
-
-  const handleSubmit
-    = (values: IChatValues, { resetForm }: Pick<FormikHelpers<IChatValues>, "resetForm">) => {
-      console.log(values.chat);
-      resetForm({
-        values: {
-          chat: "",
-        }
-      });
-
-      handleSetClick();
-    };
-
-  const validationSchema = yup.object().shape({
-    chat: yup.string()
-      .max(200, "too long")
-      .required("required"),
-  })
 
   const formik = useFormik<IChatValues>({
     validationSchema,
@@ -162,11 +161,33 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
     },
     onSubmit: handleSubmit,
   });
-
   const formikRef = useRef(formik.values);
+
+  const handleSetClick = (callback?: () => void) => {
+    setClicked(true);
+    if (callback) {
+      callback();
+    }
+  };
 
   useEffect(() => {
     formik.validateForm();
+
+    // socket 핸들러 관련 로직
+    io.on("connect", () => {
+      io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
+    });
+    io.on("sentMessage", ({ roomId, message }) => {
+      console.log(roomId, message);
+      const { name = "Kim", studentNumber = 21300492 } = sessionStore;
+      chatStore.feedChatMessages({
+        chatCardId: nanoid(),
+        chatData: message,
+        writtenAt: new Date().toISOString(),
+        studentNumber,
+        name,
+      })
+    })
   }, []);
 
   // formikRef 업데이트
@@ -194,28 +215,29 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   };
 
   const handleScroll = (event: Event) => {
-    if (textAreaRef && textAreaRef.current) {
-      const isScrollBlock = textAreaScrollBlockRef.current;
-      const textArea = textAreaRef.current;
+    if (scrollElementRef && scrollElementRef.current) {
+      const isScrollBlock = scrollElementScrollBlockRef.current;
+      const scrollElement = scrollElementRef.current;
       if (
         isScrollBlock
         &&
-        !(textArea.scrollTop === textArea.scrollHeight - textArea.offsetHeight)
+        !(scrollElement.scrollTop === scrollElement.scrollHeight - scrollElement.offsetHeight)
       ) {
-        textAreaScrollBlockRef.current = false;
+        scrollElementScrollBlockRef.current = false;
       }
       else if (
         !isScrollBlock
         &&
-        (textArea.scrollTop === textArea.scrollHeight - textArea.offsetHeight)
+        (scrollElement.scrollTop === scrollElement.scrollHeight - scrollElement.offsetHeight)
       ) {
-        textAreaScrollBlockRef.current = true;
+        scrollElementScrollBlockRef.current = true;
       }
     }
   }
 
+  // 스크롤 블럭 관련 로직
   useEffect(() => {
-    if (textAreaScrollBlockRef.current && textAreaRef.current) {
+    if (scrollElementScrollBlockRef.current && textAreaRef.current) {
       textAreaRef.current.scrollTop = textAreaRef.current.scrollHeight - textAreaRef.current.offsetHeight
     }
   }, [chatStore.chatMessages.length]);
@@ -225,7 +247,6 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
       const refObject = {
         textAreaRef,
       };
-
 
       //ugly :(
       textAreaRef.current.addEventListener(
@@ -246,6 +267,9 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
       textAreaRef.current.addEventListener("keydown", handleKeyDown.bind(formik));
     }
 
+    if (scrollElementRef && scrollElementRef.current) {
+      scrollElementRef.current.addEventListener("scroll", handleScroll);
+    }
     return () => {
       textAreaRef.current?.removeEventListener("keydown", handleKeyDown);
       textAreaRef.current?.removeEventListener("focusin", textareaFocusHandler);
@@ -255,7 +279,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
 
   return (
     <>
-      <StyledSelf>
+      <StyledSelf ref={scrollElementRef}>
         <StyledChatContainer>{children}</StyledChatContainer>
       </StyledSelf>
       <StyledToolBox>
@@ -293,4 +317,4 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   );
 };
 
-export default EmbedChatRoom;
+export default observer(EmbedChatRoom);

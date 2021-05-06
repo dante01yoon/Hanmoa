@@ -1,24 +1,25 @@
-import React , { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { HanmoaTheme } from './theme/Provider';
-import {StaticRouter} from "react-router";
+import { StaticRouter } from "react-router";
 import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import GlobalLayout from '@components/gnb/layout';
-import {renderRoutes}  from '@components/route/route';
-import { Provider as MobxProvider} from "mobx-react";
+import { renderRoutes } from '@components/route/route';
+import { Provider as MobxProvider } from "mobx-react";
 import { ModalProvider } from 'src/store/modal';
-import { ReduxProvider } from '@store/index'; 
+import { ReduxProvider, SocketProvider } from '@store/index';
 import { ReducedStore } from "@store/u";
 import { observer } from "mobx-react";
+
 export interface IRootRouter {
   router?: ReactElement;
 }
 
 export interface AppProps extends IRootRouter {
   store?: ReducedStore
-  extraModules?: Record<string,any>;
+  extraModules?: Record<string, any>;
 }
-const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
+const renderGrandRouter = (router: ReactElement, children: ReactElement) => {
   return React.cloneElement(
     router ? router : typeof window === "undefined" ? <StaticRouter /> : <BrowserRouter />,
     undefined,
@@ -26,18 +27,19 @@ const renderGrandRouter =  (router: ReactElement,children: ReactElement) => {
   )
 }
 
-export const App:FC<AppProps> = ({
+export const App: FC<AppProps> = ({
   router,
   store,
   extraModules = null,
 }) => {
   return (
-    <HanmoaTheme> 
+    <HanmoaTheme>
       <Helmet>
         <title>Hanmoa - grouping your team!</title>
       </Helmet>
-        <ReduxProvider>
-          <MobxProvider {...extraModules} {...store}>
+      <ReduxProvider>
+        <MobxProvider {...extraModules} {...store}>
+          <SocketProvider>
             <ModalProvider>
               <GlobalLayout>
                 {renderRoutes()}
@@ -50,8 +52,9 @@ export const App:FC<AppProps> = ({
                 </GlobalLayout>
               ),)} */}
             </ModalProvider>
-          </MobxProvider>
-        </ReduxProvider>
+          </SocketProvider>
+        </MobxProvider>
+      </ReduxProvider>
     </HanmoaTheme>
   )
 }

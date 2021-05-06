@@ -4,6 +4,7 @@ import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { loginReducer, topicReducer } from "@store/reducers";
 import rootSaga from "src/sagas";
+import { default as SocketProvider } from "./SocketStore";
 
 export type TRootReducerKey = "topic" | "user";
 
@@ -41,4 +42,8 @@ const rootStore = configureStore();
 
 export const ReduxProvider: FC = ({ children }) => {
   return <Provider store={rootStore}>{children}</Provider>;
+};
+
+export {
+  SocketProvider,
 };

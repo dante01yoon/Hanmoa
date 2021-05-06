@@ -151,8 +151,8 @@ const ChatCard: FC<IChatModelProps> = ({
     if (!description) {
       return (
         <StyledChatContainer>
-          <ContentBox 
-            data={chatData} 
+          <ContentBox
+            data={chatData}
             onClickCard={handleClickCard}
           />
           <small>{processingDate}</small>
@@ -168,7 +168,7 @@ const ChatCard: FC<IChatModelProps> = ({
       );
     }
   };
-  const isMyChatBox = (studentNumber: number) => {};
+  const isMyChatBox = (studentNumber: number) => { };
   const renderListGroup = (event: "join" | "leave" | "none"): JSX.Element => {
     const renderResult = !classifyEvent(event) ? (
       <>
