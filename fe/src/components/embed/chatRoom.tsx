@@ -237,8 +237,9 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
 
   // 스크롤 블럭 관련 로직
   useEffect(() => {
-    if (scrollElementScrollBlockRef.current && textAreaRef.current) {
-      textAreaRef.current.scrollTop = textAreaRef.current.scrollHeight - textAreaRef.current.offsetHeight
+    if (scrollElementScrollBlockRef.current && scrollElementRef.current) {
+      const scrollElement = scrollElementRef.current;
+      scrollElement.scrollTop = scrollElement.scrollHeight;
     }
   }, [chatStore.chatMessages.length]);
 
