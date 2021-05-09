@@ -23,7 +23,7 @@ const initSocket = (io) => {
 
     // leaveRoom 이벤트
     socket.on("leaveRoom", ({ roomId }) => {
-      socket.leave(roomId)
+      socket.leave(roomId);
     })
   })
 }

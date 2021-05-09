@@ -28,7 +28,6 @@ roomRouter.get("/only/:id",
   onGetRoom,
 )
 
-
 roomRouter.get("/chat/:id",
   onGetLatestMessages,
 )

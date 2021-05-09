@@ -188,6 +188,10 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
         name,
       })
     })
+
+    return () => {
+      io.emit("leaveRoom", { roomId });
+    }
   }, []);
 
   // formikRef 업데이트
