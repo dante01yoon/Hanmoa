@@ -1,6 +1,7 @@
 import makeValidation from "@withvoid/make-validation";
 import Room from "../../models/room";
 import pick from "lodash/pick";
+import cloneDeep from "lodash/cloneDeep";
 
 export const onGetRoomUsers = async (ctx) => {
   const { request: { params: { id } } } = ctx;
@@ -29,12 +30,13 @@ export const onGetRooms = async (ctx) => {
   try {
     const rooms = await Room.getRooms({ page, category });
     const refinedRooms = rooms.map((room) => {
-      const copiedRoom = room.toObject();
+      const copiedRoom = cloneDeep(room.toObject());
       const refinedTopic = pick(room.topic, ["category", "url"]);
       return {
         ...copiedRoom,
         topic: refinedTopic,
         current: copiedRoom.join.length,
+        joinPossible: copiedRoom.join.length < copiedRoom.capability,
       }
     });
 
@@ -121,6 +123,27 @@ export const onGetRoom = async (ctx, next) => {
   }
 }
 
+export const onPostLeaveRoom = async (ctx) => {
+  const { request, response } = ctx;
+  const { roomId, studentNumber } = request.body;
+
+  try {
+    const joinedUsers = Room.leaveUser(roomId, studentNumber);
+    response.status = 200;
+    response.body = {
+      success: true,
+      join: joinedUsers,
+    }
+  } catch (error) {
+    response.status = 500;
+    response.body = {
+      success: false,
+    }
+    console.error("error exist in onPostLeaveRoom")
+    throw (error);
+  }
+}
+
 export const onCreateRoom = async (ctx) => {
   const { request, response } = ctx;
   const { studentNumber, title, subTitle, imageUrl, category, capability } = request.body;
@@ -165,6 +188,76 @@ export const onCreateRoom = async (ctx) => {
     };
   } catch (error) {
     console.log("error in onCreateRoom");
+    response.body = {
+      success: false,
+    }
     throw error;
+  }
+}
+
+export const onPostRoomPasswordCheck = async (ctx) => {
+  const { request, response } = ctx;
+  const { roomId, password } = request.body;
+
+  try {
+    const room = await Room.findRoomById({
+      id: roomId,
+      password,
+    });
+
+    response.status = 200;
+    response.body = {
+      success: true,
+      data: room,
+    }
+  } catch (error) {
+    console.log("error in onPostRoomPasswordCheck");
+    response.body = {
+      success: false,
+    }
+    throw Error(error);
+  }
+}
+
+export const onPutJoinRoom = async (ctx) => {
+  const { request, response } = ctx;
+  const { roomId, studentNumber } = request.body;
+
+  try {
+    const room = await Room.joinUser(roomId, studentNumber);
+
+    response.status = 200;
+    response.body = {
+      success: true,
+      data: room,
+    };
+  } catch (error) {
+    response.status = 500;
+    response.body = {
+      success: false,
+    }
+    console.error("error in onPutJoinRoom");
+    throw Error(error);
+  }
+}
+
+export const onPutLeaveRoom = async (ctx) => {
+  const { request, response } = ctx;
+  const { roomId, studentNumber } = request.body;
+
+  try {
+    const room = await Room.leaveUser(roomId, studentNumber);
+
+    response.status = 200;
+    response.body = {
+      success: true,
+      data: room,
+    }
+  } catch (error) {
+    console.error("error in onPutLeaveRoom");
+    response.status = 500;
+    response.body = {
+      success: false,
+    }
   }
 }

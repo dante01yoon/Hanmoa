@@ -9,6 +9,9 @@ const {
   onGetRoom,
   onGetLatestMessages,
   onGetRooms,
+  onPostRoomPasswordCheck,
+  onPutJoinRoom,
+  onPutLeaveRoom,
 } = RoomController;
 
 roomRouter.post("/create",
@@ -30,6 +33,18 @@ roomRouter.get("/only/:id",
 
 roomRouter.get("/chat/:id",
   onGetLatestMessages,
+)
+
+roomRouter.post("/chat/:id/check",
+  onPostRoomPasswordCheck,
+)
+
+roomRouter.put("/join",
+  onPutJoinRoom
+);
+
+roomRouter.put("/leave",
+  onPutLeaveRoom
 )
 
 export default roomRouter;

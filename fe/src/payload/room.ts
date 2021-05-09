@@ -18,6 +18,8 @@ export interface Room {
   current: number;
   capability: number;
   gradient: string;
+  joinPossible: boolean;
+  hasPassword: boolean;
 }
 
 // GET /room/only/${id}

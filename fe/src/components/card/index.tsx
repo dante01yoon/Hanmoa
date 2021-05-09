@@ -9,6 +9,7 @@ import heart from "src/asset/heart_not_checked.svg";
 import heart_filled from "src/asset/heart_checked.svg";
 import batman from "src/asset/batman.jpg"
 import * as Styled from "./style";
+import noop from "lodash/noop";
 
 const {
   Container,
@@ -42,6 +43,7 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
     host,
     topic,
     join,
+    joinPossible,
   } = room!;
   const extractedUrl = imageUrl || batman;
 
@@ -60,10 +62,11 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
   return (
     <Container>
       <GradientBox
+        isJoinPossible={joinPossible}
         gradient={gradient}
-        onClick={handleClick}
+        onClick={joinPossible ? handleClick : noop}
       >
-        <ImgBox imgUrl={extractedUrl} onClick={handleClick} />
+        <ImgBox imgUrl={extractedUrl} onClick={joinPossible ? handleClick : noop} isJoinPossible={joinPossible} />
       </GradientBox>
       <ContentBox>
         <CategoryBox>
@@ -77,7 +80,7 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
           <TitleIcons>
             <IconBox src={share} />
             <IconBox
-              onClick={handleHeartClick}
+              onClick={joinPossible ? handleHeartClick : noop}
               src={like ? heart_filled : heart}
             />
           </TitleIcons>

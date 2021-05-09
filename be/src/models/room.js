@@ -3,6 +3,7 @@ import createUUID from "../lib/uuid";
 import User from "./user";
 import Topic from "./topic";
 import { GradientFilter } from "../lib";
+import { isNil } from "lodash";
 
 const Gradient = new GradientFilter();
 
@@ -57,14 +58,22 @@ const Room = new Schema({
   gradient: {
     type: String,
     required: true,
-  }
+  },
+  hasPassword: {
+    type: Boolean,
+    default: false,
+  },
+  password: {
+    type: String,
+  },
 });
 
 /**
  * @param {studentNumber: string} args 
  */
 Room.statics.createRoom = async function (args) {
-  const { studentNumber, title, subTitle, imageUrl, category, capability } = args;
+  const { studentNumber, title, subTitle, imageUrl, category, capability, hasPassword = false, password } = args;
+
   try {
     const topic = await Topic.findTopic({ category })
     const user = await User.findByStudentNumber(studentNumber);
@@ -77,6 +86,8 @@ Room.statics.createRoom = async function (args) {
       topic,
       createdBy: user,
       capability,
+      hasPassword,
+      password,
       gradient: Gradient.setSingleGradient(category).getGradientSingleColor(category)
     })
 
@@ -88,6 +99,7 @@ Room.statics.createRoom = async function (args) {
 }
 
 const roomsCache = new Map();
+
 Room.statics.getRooms = async function (args) {
   const { page = 0, category } = args;
   let topic;
@@ -112,14 +124,31 @@ Room.statics.getRooms = async function (args) {
 }
 
 Room.statics.findRoomById = async function (args) {
-  const { id } = args;
+  const { id, password } = args;
+  console.log("id:", id);
   try {
     const room = await this
       .findOne({ id })
       .populate("messages")
       .populate("join")
 
-    return room;
+    if (isNil(room)) {
+      return null;
+    }
+
+    if (room.hasPassword) {
+      if (room.password === password) {
+        return {
+          validate: true,
+          room,
+        };
+      }
+      return {
+        validate: false,
+      }
+    } else {
+      return room;
+    }
   } catch (error) {
     console.error("error in Room.statics.findRoomById");
     console.error(error);
@@ -167,6 +196,43 @@ Room.statics.loadUserChat = async function (roomId, studentNumber) {
     return joinedUser
   } catch (error) {
     console.error("error in Room.statics.loadUserChat");
+    console.error("error: ", error);
+  }
+}
+
+/**
+ * @param { roomId } string
+ * @param { studentNumber } string
+ */
+Room.statics.leaveUser = async function (roomId, studentNumber) {
+  try {
+    const room = await this.findOne({ id: roomId });
+    const student = await User.findByStudentNumber(studentNumber);
+    joinUser = room.join.filter(user => user !== student._id)
+    room.join = joinUser;
+    room.save();
+    return room;
+  } catch (error) {
+    console.error("error in Room.statics.leaveUser");
+    console.error("error: ", error);
+  }
+}
+
+/**
+ * @param { studentNumber } string
+ */
+Room.statics.joinUser = async function (roomId, studentNumber) {
+  try {
+    const room = await this.findOne({ id: roomId });
+    const student = await User.findByStudentNumber(studentNumber);
+    if (room.capability > room.join.length) {
+      room.join.push(student);
+      room.save();
+      return room;
+    }
+    return false;
+  } catch (error) {
+    console.error("error in Room.statics.joinUser");
     console.error("error: ", error);
   }
 }

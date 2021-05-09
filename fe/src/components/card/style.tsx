@@ -17,17 +17,19 @@ export const Container = styled.li<{
 
 export const GradientBox = styled.div<{
   gradient: string;
+  isJoinPossible: boolean;
 }>`
   position: relative;
-  background: ${({ gradient }) => gradient};
+  background: ${({ isJoinPossible, gradient }) => isJoinPossible ? gradient : "#d4d9d5"};
   width: 100%;
   border-radius: 8px 8px 0 0;
   height: 168px;
-  cursor: pointer;
+  cursor: ${({ isJoinPossible }) => isJoinPossible ? "pointer" : "none"};
 `
 
 export const ImgBox = styled.div<{
   imgUrl?: string;
+  isJoinPossible: boolean;
 }>`
   position: absolute;
   bottom: -36px;
@@ -37,6 +39,7 @@ export const ImgBox = styled.div<{
   width: 70px;
   border-radius: 50%;
   height: 70px;
+  cursor: ${({ isJoinPossible }) => isJoinPossible ? "pointer" : "none"};
 `;
 
 export const ContentBox = styled.div`

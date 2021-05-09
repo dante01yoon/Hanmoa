@@ -11,7 +11,7 @@ type ModalDispatch = Dispatch<Action>;
 export const StateContext = createContext<ModalProps | null>(null);
 export const DispatchContext = createContext<ModalDispatch | null>(null);
 
-const { Provider, Consumer } = StateContext;
+const { Provider } = StateContext;
 
 function modalReducer(state: ModalState, action: Action) {
   switch (action.type) {

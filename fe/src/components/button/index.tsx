@@ -1,34 +1,37 @@
 import React, { FC, SyntheticEvent } from 'react';
+import { noop } from 'rxjs';
 import * as Styled from './style';
 
 const {
   Wrapper,
   Button
-} = Styled; 
+} = Styled;
 
-interface ButtonProps{
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: string,
-  size?: number ,
+  size?: number,
   background?: string,
-  clickHandler: (e: SyntheticEvent) => void 
+  clickHandler?: (e: SyntheticEvent) => void
 }
-export const BaseButton:FC<ButtonProps> = ({
+export const BaseButton: FC<ButtonProps> = ({
   clickHandler,
-  color='#ffffff',
-  background='#FDF9F9',
+  color = '#ffffff',
+  background = '#FDF9F9',
   children,
-  size
+  size,
+  ...restProps
 }) => {
-  return(
+  return (
     <Wrapper>
-      <Button 
-        onClick={clickHandler}
+      <Button
+        onClick={clickHandler ?? noop}
         background={background}
         color={color}
         size={size}
+        {...restProps}
       >
         {children}
       </Button>
     </Wrapper>
-  )  
+  )
 }

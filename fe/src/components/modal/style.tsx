@@ -49,18 +49,28 @@ export const MemberList = styled.ul`
   min-height: 24px;
   max-height: 64px;
 `;
+
 export const Member = styled.li`
   display: flex;
 `;
+
 export const StudentNumber = styled.div`
   font-weight: 700;
   line-height: 16px;
   margin-right: 8px;
 `;
+
 export const StudentName = styled.div`
   line-height: 16px;
 `;
+
 export const ButtonWrapper = styled.div`
   margin: 8px auto;
   display: flex;
+`;
+
+export const StyledInput = styled.input`
+  font-size: 16px;
+  line-height: 16px;
+  padding: 2px;
 `;
