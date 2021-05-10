@@ -1,14 +1,14 @@
 import makeValidation from "@withvoid/make-validation";
 import User from "../../models/user";
 
-export const onGetUserByToken = async(ctx) => {
+export const onGetUserByToken = async (ctx) => {
   const { request, response } = ctx;
 
   try {
     const user = await User.findByToken(request.body.token);
     response.status = 200;
     response.body = {
-      success:true,
+      success: true,
       user,
     };
   } catch (error) {
@@ -21,7 +21,7 @@ export const onGetUserByToken = async(ctx) => {
 }
 
 export const onCreateUser = async (ctx) => {
-  const { request : req, response: res } = ctx;
+  const { request: req, response: res } = ctx;
 
   try {
     const validation = makeValidation(types => ({
@@ -29,18 +29,18 @@ export const onCreateUser = async (ctx) => {
       checks: {
         name: { type: types.string },
         studentNumber: { type: types.string },
-        email: { type: types.string }, 
+        email: { type: types.string },
       }
     }));
-    
-    if(!validation.success) {
+
+    if (!validation.success) {
       res.status = 400;
       res.body = validation;
       return;
     }
 
-    const { name, email, picture, studentNumber  } = req.body;    
-    
+    const { name, email, picture, studentNumber } = req.body;
+
     const user = await User.createUser({
       name,
       email,
@@ -54,7 +54,7 @@ export const onCreateUser = async (ctx) => {
       ...user,
     }
     return;
-  } catch (error){
+  } catch (error) {
     console.error("in onCreateUser:")
     res.status = 500;
     res.body = {
@@ -66,13 +66,13 @@ export const onCreateUser = async (ctx) => {
 }
 
 const onGetUserByEmail = async (ctx) => {
-  const { request : req, response: res } = ctx;
+  const { request: req, response: res } = ctx;
   try {
     const user = await User.findByEmail(req.param.email);
     res.status = 200;
     res.body = user;
     return;
-  } catch(error){
+  } catch (error) {
     res.status = 500;
     res.body = error;
     return;
@@ -81,9 +81,9 @@ const onGetUserByEmail = async (ctx) => {
 
 const onGetUserByStudentNumber = async (ctx) => {
   const { request } = ctx;
-  const id = request.params.id;
-
-  if(id === "me"){
+  const id = request.query.studentNumber;
+  console.log(id);
+  if (id === "me") {
     try {
       const user = await User.findByStudentNumber(ctx.request.studentNumber);
       ctx.status = 200;
@@ -93,8 +93,8 @@ const onGetUserByStudentNumber = async (ctx) => {
         status_code: 200,
         data: user,
       }
-    } catch (error){
-      ctx.status = 500; 
+    } catch (error) {
+      ctx.status = 500;
       ctx.body = {
         success: false,
         status_code: 500,
@@ -103,7 +103,7 @@ const onGetUserByStudentNumber = async (ctx) => {
     }
     return;
   }
-  if(!ctx.request.query){
+  if (!ctx.request.query) {
     ctx.status = 400;
     ctx.body = {
       success: false,
@@ -113,22 +113,23 @@ const onGetUserByStudentNumber = async (ctx) => {
     return;
   }
   try {
-    const user = await User.findByStudentNumber(req.query.studentNumber);
+    const user = await User.findByStudentNumber(request.query.studentNumber);
     ctx.status = 200;
     ctx.body = user;
     return;
   } catch (error) {
     console.error("in onGetUserByStudentNumber:")
+    console.error(error);
     ctx.status = 500;
     ctx.body = error;
     return;
   }
 }
 
-const onGetAllUsers = async function({request: req, response: res}){
-  
+const onGetAllUsers = async function ({ request: req, response: res }) {
+
   const { query } = req;
-  if(!query){
+  if (!query) {
     res.status = 400;
     res.body = {
       error: "파라메터 없음",
@@ -144,7 +145,7 @@ const onGetAllUsers = async function({request: req, response: res}){
       success: true,
     };
     return;
-  }catch (error) {
+  } catch (error) {
     console.error("in onGetAllUsers:")
     res.status = 500;
     res.body = {
@@ -154,10 +155,10 @@ const onGetAllUsers = async function({request: req, response: res}){
   }
 }
 
-const onDeleteUserById = async ({request, response}) => {
+const onDeleteUserById = async ({ request, response }) => {
   try {
     const user = await User.deleteById(request.params.id);
-    if(!user){
+    if (!user) {
       response.status = 400;
       response.body = {
         success: false,
@@ -170,7 +171,7 @@ const onDeleteUserById = async ({request, response}) => {
       data: user,
     }
     return;
-  } catch (error){
+  } catch (error) {
     console.error("in onDeleteUserById:")
     response.status = 500;
     response.body = {
@@ -181,9 +182,9 @@ const onDeleteUserById = async ({request, response}) => {
   }
 }
 
-const postLogin = async(ctx) => {
-  const {state} = ctx;
-  
+const postLogin = async (ctx) => {
+  const { state } = ctx;
+
   ctx.req.authToken = state.authToken;
   ctx.status = 200;
   ctx.body = {
@@ -198,10 +199,10 @@ const postLogin = async(ctx) => {
   };
 };
 
-const postLogout = async(ctx) => {
+const postLogout = async (ctx) => {
   const { cookies } = ctx;
   cookies.set("_hm_guit", null, {
-    httpOnly: true, 
+    httpOnly: true,
   });
 
   ctx.status = 200;

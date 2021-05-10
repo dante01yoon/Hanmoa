@@ -8,6 +8,10 @@ import { isNil } from "lodash";
 const Gradient = new GradientFilter();
 
 const Room = new Schema({
+  _id: {
+    type: Schema.ObjectId,
+    auto: true
+  },
   id: {
     type: String,
     default: createUUID,
@@ -15,7 +19,6 @@ const Room = new Schema({
   topic: {
     type: Schema.Types.ObjectId,
     ref: "Topic",
-    default: "etc",
   },
   title: {
     type: String,
@@ -129,8 +132,8 @@ Room.statics.findRoomById = async function (args) {
   try {
     const room = await this
       .findOne({ id })
-      .populate("messages")
       .populate("join")
+    // .populate("messages")
 
     if (isNil(room)) {
       return null;
@@ -171,10 +174,14 @@ Room.statics.getLatestChat = async function (args) {
   const { page, id } = args;
   try {
     const chats = await this.findOne({ id })
-      .messages
-      .sort({ createdAt: -1 })
-      .skip(page * 200)
-      .limit(200);
+      .populate({
+        path: "messages",
+        options: {
+          limit: 200,
+          skip: page * 200,
+          sort: { "createdAt": -1 }
+        }
+      })
     return chats;
   } catch (error) {
     console.log("error in Room.statics.getLatestChat");
@@ -225,12 +232,23 @@ Room.statics.joinUser = async function (roomId, studentNumber) {
   try {
     const room = await this.findOne({ id: roomId });
     const student = await User.findByStudentNumber(studentNumber);
+
+    if (isNil(student) || isNil(room)) {
+      return {
+        code: 422,
+        message: "No Content"
+      };
+    }
+
     if (room.capability > room.join.length) {
-      room.join.push(student);
-      room.save();
+      if (!room.join.includes(student._id)) {
+        console.log(student._id);
+        room.join.push(student);
+      }
+      await room.save();
       return room;
     }
-    return false;
+
   } catch (error) {
     console.error("error in Room.statics.joinUser");
     console.error("error: ", error);

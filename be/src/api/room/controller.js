@@ -64,10 +64,12 @@ export const onGetLatestMessages = async (ctx) => {
   const { page } = request.query;
 
   try {
-    const messages = Room.getLatestChat({ page, id });
+    const messages = await Room.getLatestChat({ page, id });
     response.status = 200;
-    response.body = messages;
-    return;
+    response.body = {
+      success: true,
+      body: messages,
+    };
   } catch (error) {
     console.log("error in onGetLatestMessages");
     throw error;
@@ -225,6 +227,16 @@ export const onPutJoinRoom = async (ctx) => {
 
   try {
     const room = await Room.joinUser(roomId, studentNumber);
+
+    // 데이터베이스에 데이터가 없을 때
+    if (room && room.code === 422) {
+      response.status = 422;
+      response.body = {
+        success: false,
+        data: room,
+      }
+      return;
+    }
 
     response.status = 200;
     response.body = {

@@ -5,7 +5,7 @@ import { getProfileFromGoogle } from "../../middlewares/googleAuth";
 
 const userRouter = new Router();
 
-userRouter.get("/token", 
+userRouter.get("/token",
   jwt.decode,
   userController.onGetUserByToken
 );
@@ -13,6 +13,7 @@ userRouter.get("/:id",
   jwt.decode,
   userController.onGetUserByStudentNumber
 );
+userRouter.get("/single", userController.onGetUserByStudentNumber);
 userRouter.get("/all", userController.onGetAllUsers);
 userRouter.post("/create", userController.onCreateUser);
 userRouter.post("/signIn",

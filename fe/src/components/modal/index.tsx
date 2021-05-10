@@ -108,7 +108,7 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <Wrapper>
-      { hasPassword
+      { !hasPassword
         ? (
           <StyledContainer>
             <Row>

@@ -5,6 +5,10 @@ import Room from "./room";
 import User from "./user";
 
 const Chat = new Schema({
+  _id: {
+    type: Schema.ObjectId,
+    auto: true
+  },
   id: {
     type: String,
     default: createUUID,
@@ -29,11 +33,11 @@ const Chat = new Schema({
   }
 });
 
-Chat.statics.createChat = async function(args){
+Chat.statics.createChat = async function (args) {
   const { writer: writerStudentId, message, image, roomId, } = args;
   try {
     const user = await User.findByStudentNumber(writerStudentId);
-    const room = await Room.findRoomById({id: roomId});
+    const room = await Room.findRoomById({ id: roomId });
     const chat = await this.create({
       writer: user,
       message,
@@ -43,34 +47,34 @@ Chat.statics.createChat = async function(args){
     room.messages.push(chat);
     await room.save();
     return chat;
-  } catch(error){
+  } catch (error) {
     console.error("error in Chat.statics.createChat");
     console.error("error: ", error);
   }
 }
 
-Chat.statics.findChatById = async function(args){
-  const { id: chatId } = args; 
-  try{
+Chat.statics.findChatById = async function (args) {
+  const { id: chatId } = args;
+  try {
     const chat = await this.findOne({ id: chatId }) ?? null;
     return chat;
-  } catch(error){
+  } catch (error) {
     console.error("error in Chat.statics.findChatById");
     console.error("error:", error);
   }
 }
 
-Chat.statics.deleteChatById = async function(args){
+Chat.statics.deleteChatById = async function (args) {
   const { id: chatId } = args;
   try {
     const chat = await this.findOne({ id: chatId });
-    if(!chat){
+    if (!chat) {
       return null;
     }
     const deletedChat = await this.deleteOne({ id: chat.id });
     return deletedChat;
   } catch (error) {
-    console.error("error: ",error);
+    console.error("error: ", error);
     console.error("error in Chat.statics.deleteChatId");
   }
 }

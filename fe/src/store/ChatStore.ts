@@ -22,6 +22,7 @@ class ChatStore extends BasicStore {
   @observable status: ChatDataStatus = "pending";
   @observable clickedCard: string = "";
   @observable currentChat?: ISingleChat = undefined;
+  @observable currentCode: string | null = null;
   @observable next: boolean = false;
 
   constructor({ root, state }: { root: RootStore, state: ChatStore }) {
@@ -35,7 +36,14 @@ class ChatStore extends BasicStore {
       this.clickedCard = state.clickedCard;
       this.currentChat = state.currentChat;
       this.next = state.next;
+      this.currentCode = state.currentCode;
     }
+  }
+
+  @action
+  resetChatOption() {
+    this.currentPage = 0;
+    this.chatMessages = [];
   }
 
   @action
@@ -71,11 +79,13 @@ class ChatStore extends BasicStore {
     } else {
       try {
         const dummyChatMessage = createDummyChatData();
-        const foundDummyChatMessage = dummyChatMessage.find(item => item.chatCardId === chatCardId);
-        const targetMessage = yield new Promise<ISingleChat>((resolve) => {
-          setTimeout(() => resolve(foundDummyChatMessage ?? dummyChatMessage[0]), 500);
-        });
+        // const foundDummyChatMessage = dummyChatMessage.find(item => item.chatCardId === chatCardId);
+        // const targetMessage = yield new Promise<ISingleChat>((resolve) => {
+        //   setTimeout(() => resolve(foundDummyChatMessage ?? dummyChatMessage[0]), 500);
+        // });
+        const targetMessage = yield this.api.GET("/")
         this.currentChat = targetMessage;
+        return targetMessage;
       } catch (error) {
         console.error(error);
       } finally {
@@ -84,24 +94,29 @@ class ChatStore extends BasicStore {
     }
   })
 
+  @action
   fetchNewChatMessage = flow(function* (
     roomCode: string,
   ) {
     this.status = "pending";
 
     try {
-      const newMessages = yield new Promise<ReturnType<typeof createDummyChatData>>(
-        (resolve) => setTimeout(() => { resolve(createDummyChatData()) }, 600)
-      );
+      const newMessages = yield this.api.GET(`/room/chat/${roomCode}`, {
+        page: 0,
+      })
+      this.currentPage = 1;
       this.chatMessages = newMessages;
+      this.currentCode = roomCode;
       this.next = false;
+      this.status = "done";
+
+      return newMessages;
     } catch (error) {
       console.error(error);
-    } finally {
-      this.status = "done";
     }
   })
 
+  @action
   fetchPreviousChatMessage = flow(function* () {
     this.status = "pending";
 

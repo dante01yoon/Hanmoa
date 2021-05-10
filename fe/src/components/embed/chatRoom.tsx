@@ -177,15 +177,23 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
     io.on("connect", () => {
       io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
     });
-    io.on("sentMessage", ({ roomId, message }) => {
+    io.on("sentMessage", async ({ roomId, message, image }) => {
       console.log(roomId, message);
       const { name = "Kim", studentNumber = 21300492 } = sessionStore;
+
       chatStore.feedChatMessages({
         chatCardId: nanoid(),
         chatData: message,
         writtenAt: new Date().toISOString(),
         studentNumber,
         name,
+      })
+
+      await chatStore.fetchCreateChat({
+        roomId,
+        message,
+        writer: studentNumber,
+        image,
       })
     })
 

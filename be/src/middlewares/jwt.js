@@ -15,9 +15,9 @@ export const encode = async (ctx, next) => {
       email: user.profile.email,
     }
     const authToken = jwt.sign(payload, SECRET_KEY);
-    
+
     await User.updateByStudentNumber(studentNumber, {
-      profile: {token: authToken},
+      profile: { token: authToken },
     });
 
     ctx.state = {
@@ -32,12 +32,12 @@ export const encode = async (ctx, next) => {
     };
 
     cookies.set("_hm_guit", ctx.state.authToken, {
-      httpOnly: true, 
+      httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7
     });
 
     await next();
-  } catch(error){
+  } catch (error) {
     console.log(error);
     console.log("error in jwt.encode");
     response.status = 400;
@@ -49,18 +49,28 @@ export const encode = async (ctx, next) => {
   }
 }
 
-export const decode = async( ctx, next ) => {
+export const decode = async (ctx, next) => {
   const { response } = ctx;
+  console.log("ctx.headers.cookie: ", ctx.headers.cookie);
   const accessTokenObject = JSON.parse(ctx.headers.cookie);
+  // JSON.parse(JSON.stringify(ctx.headers.cookie))
+  //   .split(";")
+  //   .reduce((acc, curr) => {
+  //     const [key, value] = curr.split("=");
+  //     acc[key] = value;
+  //     return acc;
+  //   }, {});
+  console.log("accessTokenObject: ", accessTokenObject);
   const accessToken = accessTokenObject["_hm_guit"];
-  if(!accessToken){
+  console.log("accessToken: ", accessToken);
+  if (!accessToken) {
     response.status = 401;
     response.body = {
       success: false,
       message: "No sessoin cookie provided",
     }
   }
- 
+
   try {
     const decoded = await jwt.verify(accessToken, SECRET_KEY);
     ctx.request.studentName = decoded.name;
@@ -70,10 +80,10 @@ export const decode = async( ctx, next ) => {
   } catch (error) {
     console.log("error in jwt.decode");
     console.error(error);
-    response.status = 401; 
+    response.status = 401;
     response.body = {
       success: false,
-      status: 401, 
+      status: 401,
       error: error.message,
     };
     return;
