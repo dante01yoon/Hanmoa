@@ -81,7 +81,7 @@ const onGetUserByEmail = async (ctx) => {
 
 const onGetUserByStudentNumber = async (ctx) => {
   const { request } = ctx;
-  const id = request.query.studentNumber;
+  const id = request.params.id;
   console.log(id);
   if (id === "me") {
     try {

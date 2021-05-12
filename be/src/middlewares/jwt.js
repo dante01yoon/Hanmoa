@@ -67,7 +67,7 @@ export const decode = async (ctx, next) => {
     response.status = 401;
     response.body = {
       success: false,
-      message: "No sessoin cookie provided",
+      message: "No session cookie provided",
     }
   }
 

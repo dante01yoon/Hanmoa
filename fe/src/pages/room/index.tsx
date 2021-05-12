@@ -12,7 +12,6 @@ import ChatStore from "@store/ChatStore";
 import { Request } from "express";
 import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores";
-import getRoomCode from "@utils/chat/getCode";
 
 const StyledSelf = styled.section`
   display: flex;
