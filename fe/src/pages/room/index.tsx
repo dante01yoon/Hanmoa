@@ -94,7 +94,7 @@ const RoomPage: FC<RoomPageProps> & {
 
   const renderChatContent = (): ReactNode => {
     console.log("in RenderChatContent")
-    if (!chatStore || !chatStore.chatMessages.length) {
+    if (!chatStore.chatMessages.length) {
       const dummyArray = new Array(10).fill(0);
       return (
         <>
@@ -109,6 +109,8 @@ const RoomPage: FC<RoomPageProps> & {
     *  20개 미만이라는 말은 더 이상 렌더링 할 채팅 데이터가 디비에 없다는 뜻.
     */
     // 
+    console.log(chatStore.chatMessages);
+    debugger;
     return (
       <>
         {chatStore.chatMessages?.map((value: ISingleChat, index: number) => {

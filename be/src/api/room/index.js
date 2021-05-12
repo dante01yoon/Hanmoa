@@ -35,7 +35,7 @@ roomRouter.get("/chat/:id",
   onGetLatestMessages,
 )
 
-roomRouter.post("/chat/:id/check",
+roomRouter.post("/check/:id",
   onPostRoomPasswordCheck,
 )
 
