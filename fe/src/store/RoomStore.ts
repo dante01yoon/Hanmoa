@@ -21,13 +21,15 @@ export default class RoomStore extends BasicStore {
   }
 
   async fetchRooms(category?: string, page: number = 0, clear: boolean = false) {
-
     const [error, response] = await this.api.GET<GetRoomsPayload>(`/room/${category}?page=${page}`);
+
     if (error) {
       throw Error(error.error)
     }
+
     if (response && response.success) {
       const { data } = response
+
       if (isNil(category)) {
         if (clear) {
           this.clearHomeRooms();

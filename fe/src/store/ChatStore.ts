@@ -1,11 +1,9 @@
 import BasicStore from "@store/BasicStore";
 import { makeObservable, observable, action, flow } from "mobx";
 import RootStore from "@store/RootStore";
-import { Request } from "express";
+import { ChatMessagePayload, ChatMessage } from "@payload/.";
 import { createDummyChatData } from "@pages/room/dummy";
-import { ISingleChat } from "src/models/chat";
-import { isNil } from "lodash";
-
+import { APIResponse } from "@apis/types";
 
 type ChatDataStatus = "pending" | "done";
 interface CreateChatParams {
@@ -16,18 +14,19 @@ interface CreateChatParams {
 }
 
 class ChatStore extends BasicStore {
-  @observable chatMessages: ISingleChat[] = [];
+  @observable chatMessages: ChatMessage[] = [];
   @observable currentPage: number | null = 0;
   @observable hasEnteredBefore: boolean = false;
   @observable status: ChatDataStatus = "pending";
   @observable clickedCard: string = "";
-  @observable currentChat?: ISingleChat = undefined;
+  @observable currentChat?: ChatMessage = undefined;
   @observable currentCode: string | null = null;
   @observable next: boolean = false;
 
   constructor({ root, state }: { root: RootStore, state: ChatStore }) {
     super({ root });
-    makeObservable(this,);
+    makeObservable(this);
+
     if (state) {
       this.chatMessages = state.chatMessages;
       this.currentPage = state.currentPage;
@@ -47,16 +46,16 @@ class ChatStore extends BasicStore {
   }
 
   @action
-  feedChatMessages(chat: ISingleChat) {
+  feedChatMessages(chat: ChatMessage) {
     this.chatMessages = [...this.chatMessages, chat];
   }
 
   async fetchCreateChat(params: CreateChatParams) {
     try {
-      const [error, result] = await this.api.POST("/chat/create", {
+      const [_, result] = await this.api.POST("/chat/create", {
         ...params
       });
-      console.log("result: ", result);
+
       return result;
     } catch (error) {
       console.error("error in fetchCreateChat: ", error);
@@ -69,49 +68,47 @@ class ChatStore extends BasicStore {
     this.clickedCard = cardCode;
   };
 
-  fetchSingleMessage = flow(function* (chatCardId: ISingleChat["chatCardId"]) {
-    this.status = "pending";
+  // fetchSingleMessage = flow(function* (chatCardId: ChatMessage["chatCardId"]) {
+  //   this.status = "pending";
 
-    const cachedChat = this.chatMessages.find((item: ISingleChat) => item.chatCardId === chatCardId)
+  //   const cachedChat = this.chatMessages.find((item: ChatMessage) => item.chatCardId === chatCardId)
 
-    if (!isNil(cachedChat)) {
-      this.currentChat = cachedChat;
-    } else {
-      try {
-        const dummyChatMessage = createDummyChatData();
-        // const foundDummyChatMessage = dummyChatMessage.find(item => item.chatCardId === chatCardId);
-        // const targetMessage = yield new Promise<ISingleChat>((resolve) => {
-        //   setTimeout(() => resolve(foundDummyChatMessage ?? dummyChatMessage[0]), 500);
-        // });
-        const targetMessage = yield this.api.GET("/")
-        this.currentChat = targetMessage;
-        return targetMessage;
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.status = "done";
-      }
-    }
-  })
+  //   if (!isNil(cachedChat)) {
+  //     this.currentChat = cachedChat;
+  //   } else {
+  //     try {
+  //       const targetMessage = yield this.api.GET("/")
+  //       this.currentChat = targetMessage;
+  //       return targetMessage;
+  //     } catch (error) {
+  //       console.error(error);
+  //     } finally {
+  //       this.status = "done";
+  //     }
+  //   }
+  // })
 
   @action
   fetchNewChatMessage = flow(function* (
     roomCode: string,
   ) {
-    this.status = "pending";
-
     try {
-      const newMessages = yield this.api.GET(`/room/chat/${roomCode}`, {
+      this.status = "pending";
+      const [_, response]: APIResponse<ChatMessagePayload> = yield this.api.GET(`/room/chat/${roomCode}`, {
         page: 0,
       })
-      this.currentPage = 1;
-      this.chatMessages = newMessages;
-      this.currentCode = roomCode;
-      this.next = false;
-      this.status = "done";
 
-      return newMessages;
+      if (response && response.success) {
+        this.currentPage = 1;
+        this.chatMessages = response.data.messages;
+        this.currentCode = roomCode;
+        this.status = "done";
+        return response.data.messages;
+      } else {
+        throw Error(`error in /room/chat/${roomCode}`)
+      }
     } catch (error) {
+      this.status = "done";
       console.error(error);
     }
   })

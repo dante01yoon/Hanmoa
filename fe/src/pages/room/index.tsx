@@ -1,14 +1,14 @@
 import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
-import { RouteComponentProps, useHistory } from "react-router-dom"
+import { RouteComponentProps } from "react-router-dom"
 import styled from "styled-components";
 import ChatCard from "@components/chat/card";
 import EmbedChatRoom from "@components/embed/chatRoom";
 import SkeletonCard from "@components/skeleton/card";
-import { ISingleChat } from "src/models/chat";
 import makeFetchStoreOnServer from "@utils/makeFetchStoreOnServer";
 import ChatStore from "@store/ChatStore";
+import { ChatMessage } from "@payload/.";
 import { Request } from "express";
 import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores";
@@ -33,9 +33,10 @@ interface RoomPageProps extends RouteComponentProps<{ id: string }> {
 
 const RoomPage: FC<RoomPageProps> & {
   initStoreOnServer: Function;
-} = ({ history }) => {
+} = ({ match }) => {
+  const roomId = match.params.id;
   const { chatStore } = useMobxStores();
-  const codeRef = useRef<string | null>(chatStore.currentCode || history.location.pathname)
+  const codeRef = useRef<string | null>(chatStore.currentCode || roomId)
   const chatRoomRef = useRef<HTMLElement>(null);
   const ioRef = useRef<IntersectionObserver>();
   const targetRef = useRef<HTMLElement>(null);
@@ -46,17 +47,11 @@ const RoomPage: FC<RoomPageProps> & {
   const { user: { studentId } } = useSelector((state: RootState) => state.user);
 
   // csr 에서 바로 다른 페이지로 넘어갔을 때
-  useEffect(() => {
-    if (chatStore.currentCode !== codeRef.current) {
-      codeRef.current = chatStore.currentCode;
-      chatStore.resetChatOption();
-    }
-  }, [chatStore.currentCode]);
+
 
   useEffect(() => {
-    console.log("chatStore.chatMessages: ", chatStore.chatMessages);
     if (!chatStore.chatMessages.length) {
-      chatStore.fetchNewChatMessage(history.location.pathname);
+      chatStore.fetchNewChatMessage(roomId);
     }
 
     return () => {
@@ -93,8 +88,8 @@ const RoomPage: FC<RoomPageProps> & {
   }, []);
 
   const renderChatContent = (): ReactNode => {
-    console.log("in RenderChatContent")
-    if (!chatStore.chatMessages.length) {
+    console.log("chatStore.chatMessages.length: ", chatStore.chatMessages.length);
+    if (chatStore.chatMessages.length === 0) {
       const dummyArray = new Array(10).fill(0);
       return (
         <>
@@ -109,18 +104,16 @@ const RoomPage: FC<RoomPageProps> & {
     *  20개 미만이라는 말은 더 이상 렌더링 할 채팅 데이터가 디비에 없다는 뜻.
     */
     // 
-    console.log(chatStore.chatMessages);
-    debugger;
     return (
       <>
-        {chatStore.chatMessages?.map((value: ISingleChat, index: number) => {
-          const { chatCardId, ...rest } = value;
+        {chatStore.chatMessages?.map((value: ChatMessage, index: number) => {
+          const { id, ...rest } = value;
           return (
             <ChatCard
-              code={value.chatCardId}
+              code={id}
               ref={index === 0 ? targetRef : undefined}
               align={studentId ? 'right' : 'left'}
-              key={`single_chat_card::${chatCardId}`}
+              key={`single_chat_card::${id}`}
               event={"none"}
               {...rest}
             />
@@ -140,8 +133,8 @@ const RoomPage: FC<RoomPageProps> & {
 };
 
 RoomPage.initStoreOnServer = makeFetchStoreOnServer((req: Request<{ id: string }>, { chatStore }: { chatStore: ChatStore }) => {
-  const promises = [Promise.resolve()];
-  promises.push(chatStore.fetchNewChatMessage(req.params.id,));
+  const promises: Array<Promise<any>> = [Promise.resolve()];
+  promises.push(chatStore.fetchNewChatMessage(req.params.id));
   return Promise.all(promises);
 });
 

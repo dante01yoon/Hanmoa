@@ -173,9 +173,12 @@ Room.statics.getRoomUsers = async function (args) {
 Room.statics.getLatestChat = async function (args) {
   const { page, id } = args;
   try {
-    const chats = await this.findOne({ id })
+    const chats = await this.findOne({ id }, "messages")
       .populate({
         path: "messages",
+        populate: {
+          path: "writer",
+        },
         options: {
           limit: 200,
           skip: page * 200,

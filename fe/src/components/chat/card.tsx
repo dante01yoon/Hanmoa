@@ -1,8 +1,8 @@
 import React, { FC, useMemo, ReactNode } from "react";
 import styled from "styled-components";
 import ProfileImg from "src/asset/profile.svg";
-import { ISingleChat } from "@models/chat";
 import timeSlice from "@utils/chat/timeSlice";
+import { ChatMessage } from "@payload/.";
 import ContentBox from "./contentBox";
 import { useMobxStores } from "@utils/store/useStores";
 
@@ -74,6 +74,7 @@ const StyledChatContainer = styled.div`
     width: 56px;
   }
 `;
+
 const StyledChatContentBox = styled.p`
   padding: 16px;
   background-color: ${(p) => p.theme.colors.whiteGray};
@@ -90,8 +91,9 @@ const StyledDescription = styled.p`
 type TEventType = {
   event: "join" | "leave" | "none";
 };
-interface IChatModelProps extends Omit<ISingleChat, "chatCardId"> {
-  code: ISingleChat["chatCardId"];
+
+interface IChatModelProps extends Omit<ChatMessage, "id"> {
+  code: ChatMessage["id"];
   align: "left" | "right";
   event: "join" | "leave" | "none";
   ref: React.RefObject<HTMLElement> | undefined;
@@ -101,16 +103,19 @@ const ChatCard: FC<IChatModelProps> = ({
   ref,
   align,
   code,
-  chatData,
-  writtenAt,
-  studentNumber,
-  name,
   image,
   event,
+  time,
+  message,
+  ...props
 }) => {
+
   const { chatStore } = useMobxStores();
+  const { writer: { profile: { name, email, studentNumber, picture } } } = props;
+  console.log("name: ", name, "studentNumber: ", studentNumber);
   const processingNumberAndName = useMemo(() => {
     // 학번, 이름
+    debugger;
     return [studentNumber.toString().slice(1, 3), name];
   }, [studentNumber, name]);
 
@@ -126,7 +131,7 @@ const ChatCard: FC<IChatModelProps> = ({
 
   const processingDate: string = useMemo(() => {
     // "2020-05-18T16:00:00Z"
-    const { hours, minutes, AMOrPM } = timeSlice(writtenAt);
+    const { hours, minutes, AMOrPM } = timeSlice(time);
     const parsedTime = `${hours}:${minutes}`;
     return `${AMOrPM} ${hours}:${minutes}`;
   }, []);
@@ -152,7 +157,7 @@ const ChatCard: FC<IChatModelProps> = ({
       return (
         <StyledChatContainer>
           <ContentBox
-            data={chatData}
+            data={message}
             onClickCard={handleClickCard}
           />
           <small>{processingDate}</small>
@@ -168,12 +173,12 @@ const ChatCard: FC<IChatModelProps> = ({
       );
     }
   };
-  const isMyChatBox = (studentNumber: number) => { };
+
   const renderListGroup = (event: "join" | "leave" | "none"): JSX.Element => {
     const renderResult = !classifyEvent(event) ? (
       <>
         <StyledList>
-          <StyledImage image={image} />
+          <StyledImage image={picture} />
         </StyledList>
         <StyledList>
           <h3>{renderNumberAndName()}</h3>

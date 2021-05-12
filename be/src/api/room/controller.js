@@ -61,14 +61,13 @@ export const onGetRooms = async (ctx) => {
 export const onGetLatestMessages = async (ctx) => {
   const { request, response } = ctx;
   const { id } = request.params;
-  const { page } = request.query;
-
+  const { page = 0 } = request.query;
   try {
     const messages = await Room.getLatestChat({ page, id });
     response.status = 200;
     response.body = {
       success: true,
-      body: messages,
+      data: messages,
     };
   } catch (error) {
     console.log("error in onGetLatestMessages");
