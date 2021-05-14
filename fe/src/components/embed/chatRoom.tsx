@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import * as yup from "yup";
 import { useParams } from "react-router-dom";
 import { useMobxStores, useSocket } from "@utils/store/useStores";
+import Chat from "src/utils/chat/chatClass";
 import link from "src/asset/link.svg";
 import upload from "src/asset/upload.svg";
 import { nanoid } from "nanoid";
@@ -143,8 +144,8 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
   const { io } = useSocket();
 
   const handleSubmit = (values: IChatValues, { resetForm }: Pick<FormikHelpers<IChatValues>, "resetForm">) => {
-    console.log(values.chat);
-    io.emit("sendMessage", ({ roomId, message: values.chat }));
+    console.log("values.chat: ", values.chat);
+    io.emit("sendMessage", ({ ioId: io.id, roomId, message: values.chat, time: new Date().toISOString() }));
     resetForm({
       values: {
         chat: "",
@@ -172,33 +173,38 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
 
   useEffect(() => {
     formik.validateForm();
-
     // socket 핸들러 관련 로직
     io.on("connect", () => {
+      console.log("io.id in useEffect: ", io.id);
+      console.log("io connected");
       io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
     });
-    io.on("sentMessage", async ({ roomId, message, image }) => {
-      console.log(roomId, message);
-      const { name = "Kim", studentNumber = 21300492 } = sessionStore;
+    io.on("sentMessage", async ({ roomId, message, image, time }) => {
+      console.log("io.id: ", io.id, "roomId: ", roomId, "message: ", message, "image: ", image, "time: ", time);
 
-      chatStore.feedChatMessages({
-        chatCardId: nanoid(),
-        chatData: message,
-        writtenAt: new Date().toISOString(),
-        studentNumber,
-        name,
-      })
-
-      await chatStore.fetchCreateChat({
-        roomId,
-        message,
-        writer: studentNumber,
-        image,
-      })
+      // 로그인 확인 후 채팅 넣어주기
+      if (sessionStore.isSignedIn) {
+        const chatCard = new Chat({
+          sessionStore,
+          id: nanoid(),
+          roomId,
+          time,
+          message,
+          image,
+        })
+        chatStore.feedChatMessages(chatCard.getChatMessage)
+        await chatStore.fetchCreateChat({
+          roomId,
+          message,
+          writer: sessionStore.userProfile.studentNumber,
+          image,
+        })
+      }
     })
 
     return () => {
       io.emit("leaveRoom", { roomId });
+      io.disconnect();
     }
   }, []);
 
@@ -221,6 +227,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (!event.shiftKey && event.key === "Enter") {
+      console.log("enter");
       handleSubmit(formikRef.current, { resetForm: formik.resetForm });
       event.preventDefault();
     }
@@ -284,6 +291,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
       scrollElementRef.current.addEventListener("scroll", handleScroll);
     }
     return () => {
+      console.log("useEffect cleanUp function called");
       textAreaRef.current?.removeEventListener("keydown", handleKeyDown);
       textAreaRef.current?.removeEventListener("focusin", textareaFocusHandler);
       textAreaRef.current?.removeEventListener("blur", textareaBlurHandler);

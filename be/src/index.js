@@ -54,7 +54,6 @@ router.use('/api', api.routes()); // api 라우트를 '/api'  경로 하위 라�
 
 app.use(router.routes()).use(router.allowedMethods());
 
-// io.attach(app);
 initSocket(io);
 
 const port = process.env.PORT || 5001;

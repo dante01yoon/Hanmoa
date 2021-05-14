@@ -1,11 +1,7 @@
 import { Profile } from "./user";
 
 export interface Writer {
-  writer: {
-    profile: Profile
-    createdAt: string;
-    [key: string]: any;
-  };
+  profile: Profile
   [key: string]: any;
 }
 

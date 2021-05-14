@@ -128,7 +128,6 @@ Room.statics.getRooms = async function (args) {
 
 Room.statics.findRoomById = async function (args) {
   const { id, password } = args;
-  console.log("id:", id);
   try {
     const room = await this
       .findOne({ id })

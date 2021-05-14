@@ -50,7 +50,7 @@ const StyledName = styled.small`
 `;
 
 const StyledImage = styled.p<{
-  image: string | null;
+  image?: string | null;
 }>`
     display:inline-block;
     content: "";
@@ -115,7 +115,6 @@ const ChatCard: FC<IChatModelProps> = ({
   console.log("name: ", name, "studentNumber: ", studentNumber);
   const processingNumberAndName = useMemo(() => {
     // 학번, 이름
-    debugger;
     return [studentNumber.toString().slice(1, 3), name];
   }, [studentNumber, name]);
 

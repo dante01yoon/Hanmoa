@@ -2,16 +2,16 @@ import makeValidation from "@withvoid/make-validation";
 import Chat from "../../models/chat";
 
 export const onGetChat = async (ctx, next) => {
-  const {request: {query: {id}}} = ctx;
+  const { request: { query: { id } } } = ctx;
   try {
     const validation = makeValidation(types => ({
       payload: id,
       checkes: {
-        id: { type: types.string}
+        id: { type: types.string }
       }
     }));
-    
-    if(!validation) {
+
+    if (!validation) {
       ctx.status = 400;
       ctx.body = {
         success: false,
@@ -20,11 +20,11 @@ export const onGetChat = async (ctx, next) => {
       };
     }
 
-    const chat = await Chat.findChatById({id});
+    const chat = await Chat.findChatById({ id });
     ctx.status = 200;
     ctx.body = {
       success: true,
-      chat, 
+      chat,
     }
     return await next();
   } catch (error) {
@@ -39,12 +39,15 @@ export const onGetChat = async (ctx, next) => {
 }
 
 export const onPostCreateChat = async (ctx, next) => {
-  const { request: {body: { writer, message, image, roomId}}} = ctx;
+  /**
+   * @param {writer studentNumber}
+   */
+  const { request: { body: { writer, message, image, roomId } } } = ctx;
 
   const validation = makeValidation(types => ({
     payload: {
       writer,
-      message, 
+      message,
       roomId,
     },
     checks: {
@@ -53,24 +56,24 @@ export const onPostCreateChat = async (ctx, next) => {
       roomId: { type: types.string },
     }
   }));
-  
-  if(!validation){
+
+  if (!validation) {
     ctx.status = 400;
     ctx.body = {
       success: false,
       message: "validation error",
-      validation, 
+      validation,
     }
   }
   try {
-    const chat = await Chat.createChat({ writer, message, image, roomId});
+    const chat = await Chat.createChat({ writer, message, image, roomId });
     ctx.status = 200;
     ctx.body = {
       success: true,
       chat,
     }
     return await next();
-  } catch(error) {
+  } catch (error) {
     console.error("error in onPostCreateChat");
     console.error(error);
     ctx.status = 500;
@@ -82,16 +85,16 @@ export const onPostCreateChat = async (ctx, next) => {
 }
 
 export const onDeleteChat = async (ctx, next) => {
-  const { request: {params: {id}}} = ctx;
+  const { request: { params: { id } } } = ctx;
   try {
     const validation = makeValidation(types => ({
       payload: id,
       checkes: {
-        id: { type: types.string}
+        id: { type: types.string }
       },
     }));
 
-    if(!validation){
+    if (!validation) {
       ctx.status = 400;
       ctx.body = {
         success: false,
@@ -99,14 +102,14 @@ export const onDeleteChat = async (ctx, next) => {
         validation,
       }
     }
-    const chat = Chat.deleteChatById({id});
+    const chat = Chat.deleteChatById({ id });
     ctx.status = 200;
     ctx.body = {
       success: true,
       chat,
     }
     return await next();
-  } catch(error) {
+  } catch (error) {
     console.error("error in onGetDeleteChat");
     console.error("error: ", error);
     ctx.status = 500;

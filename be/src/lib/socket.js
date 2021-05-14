@@ -16,15 +16,18 @@ const initSocket = (io) => {
     });
 
     // sendMessage 이벤트
-    socket.on("sendMessage", ({ roomId, message }) => {
-      console.log("roomId: ", roomId, "message: ", message);
-      io.to(roomId).emit("sentMessage", { roomId, message });
+    socket.on("sendMessage", ({ ioId, roomId, message, time }) => {
+      console.log("socket.id: ", socket.id);
+      console.log("ioId: ", ioId);
+      console.log("roomId: ", roomId, "message: ", message, "time: ", time);
+      io.to(roomId).emit("sentMessage", { roomId, message, time });
     })
 
     // leaveRoom 이벤트
     socket.on("leaveRoom", ({ roomId }) => {
       socket.leave(roomId);
     })
+
   })
 }
 

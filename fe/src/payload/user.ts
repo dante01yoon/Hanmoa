@@ -1,16 +1,16 @@
 export interface Profile {
-    id: string;
-    name: string;
-    email: string;
-    studentNumber: string;
-    picture: number;
-    token?: string;
+  id: string;
+  name: string;
+  email: string;
+  studentNumber: string;
+  picture: string;
+  token?: string;
 }
 
 export interface User {
   profile: Profile;
 }
 
-export interface GetUserPayload extends User{}
+export interface GetUserPayload extends User { }
 
-export interface PostUserPayload extends User{};
+export interface PostUserPayload extends User { };

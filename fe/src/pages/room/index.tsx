@@ -88,7 +88,6 @@ const RoomPage: FC<RoomPageProps> & {
   }, []);
 
   const renderChatContent = (): ReactNode => {
-    console.log("chatStore.chatMessages.length: ", chatStore.chatMessages.length);
     if (chatStore.chatMessages.length === 0) {
       const dummyArray = new Array(10).fill(0);
       return (
