@@ -204,17 +204,11 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
     formik.validateForm();
     // socket 핸들러 관련 로직
     io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
-    // io.on("connect", () => {
-    //   console.log("io.id in useEffect: ", io.id);
-    //   console.log("io connected");
-    //   io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
-    // });
     io.on("sentMessage", sentMessageHandler)
 
     return () => {
       io.emit("leaveRoom", { roomId });
       io.off("sentMessage", sentMessageHandler);
-
     }
   }, []);
 
@@ -294,7 +288,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
     handleTextArea();
 
     if (textAreaRef && textAreaRef.current) {
-      textAreaRef.current.addEventListener("keydown", handleKeyDown.bind(formik));
+      textAreaRef.current.addEventListener("keydown", handleKeyDown);
     }
 
     if (scrollElementRef && scrollElementRef.current) {

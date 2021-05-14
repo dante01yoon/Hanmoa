@@ -5,7 +5,11 @@ import { ChatMessagePayload, ChatMessage } from "@payload/.";
 import { createDummyChatData } from "@pages/room/dummy";
 import { APIResponse } from "@apis/types";
 
-type ChatDataStatus = "pending" | "done";
+export enum ChatDataStatus {
+  PENDING = "pending",
+  DONE = "done",
+}
+
 interface CreateChatParams {
   roomId: string;
   message: string;
@@ -17,7 +21,7 @@ class ChatStore extends BasicStore {
   @observable chatMessages: ChatMessage[] = [];
   @observable currentPage: number | null = 0;
   @observable hasEnteredBefore: boolean = false;
-  @observable status: ChatDataStatus = "pending";
+  @observable status: ChatDataStatus = ChatDataStatus.PENDING;
   @observable clickedCard: string = "";
   @observable currentChat?: ChatMessage = undefined;
   @observable currentCode: string | null = null;
@@ -93,7 +97,7 @@ class ChatStore extends BasicStore {
     roomCode: string,
   ) {
     try {
-      this.status = "pending";
+      this.status = ChatDataStatus.PENDING;
       const [_, response]: APIResponse<ChatMessagePayload> = yield this.api.GET(`/room/chat/${roomCode}`, {
         page: 0,
       })
@@ -102,21 +106,20 @@ class ChatStore extends BasicStore {
         this.currentPage = 1;
         this.chatMessages = response.data.messages;
         this.currentCode = roomCode;
-        this.status = "done";
+
         return response.data.messages;
       } else {
         throw Error(`error in /room/chat/${roomCode}`)
       }
     } catch (error) {
-      this.status = "done";
       console.error(error);
+    } finally {
+      this.status = ChatDataStatus.DONE;
     }
   })
 
   @action
   fetchPreviousChatMessage = flow(function* () {
-    this.status = "pending";
-
     try {
       const newMessages = yield new Promise<ReturnType<typeof createDummyChatData>>(
         (resolve) => setTimeout(() => { resolve(createDummyChatData()) }, 600)
@@ -124,8 +127,6 @@ class ChatStore extends BasicStore {
       this.chatMessages = [...newMessages, ...this.chatMessages,];
     } catch (e) {
       console.error(e);
-    } finally {
-      this.status = "done";
     }
   });
 

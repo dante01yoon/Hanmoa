@@ -12,6 +12,7 @@ import { ChatMessage } from "@payload/.";
 import { Request } from "express";
 import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores";
+import { ChatDataStatus } from "@store/ChatStore";
 
 const StyledSelf = styled.section`
   display: flex;
@@ -45,9 +46,6 @@ const RoomPage: FC<RoomPageProps> & {
   // 2. response 오면 state 변경 ->
   // 3. RoomPage Container state propagation
   const { user: { studentId } } = useSelector((state: RootState) => state.user);
-
-  // csr 에서 바로 다른 페이지로 넘어갔을 때
-
 
   useEffect(() => {
     if (!chatStore.chatMessages.length) {
@@ -88,7 +86,7 @@ const RoomPage: FC<RoomPageProps> & {
   }, []);
 
   const renderChatContent = (): ReactNode => {
-    if (chatStore.chatMessages.length === 0) {
+    if (chatStore.status === ChatDataStatus.PENDING) {
       const dummyArray = new Array(10).fill(0);
       return (
         <>
