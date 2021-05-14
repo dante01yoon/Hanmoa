@@ -145,6 +145,7 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
 
   const handleSubmit = (values: IChatValues, { resetForm }: Pick<FormikHelpers<IChatValues>, "resetForm">) => {
     console.log("values.chat: ", values.chat);
+    console.log("io.id in handleSubmit: ", io.id);
     io.emit("sendMessage", ({ ioId: io.id, roomId, message: values.chat, time: new Date().toISOString() }));
     resetForm({
       values: {
@@ -171,40 +172,49 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
     }
   };
 
+  const sentMessageHandler = async ({ roomId, message, image, time }: {
+    roomId: string;
+    message: string;
+    image: string;
+    time: string;
+  }) => {
+    console.log("io.id: ", io.id, "roomId: ", roomId, "message: ", message, "image: ", image, "time: ", time);
+
+    // 로그인 확인 후 채팅 넣어주기
+    if (sessionStore.isSignedIn) {
+      const chatCard = new Chat({
+        sessionStore,
+        id: nanoid(),
+        roomId,
+        time,
+        message,
+        image,
+      })
+      chatStore.feedChatMessages(chatCard.getChatMessage)
+      await chatStore.fetchCreateChat({
+        roomId,
+        message,
+        writer: sessionStore.userProfile.studentNumber,
+        image,
+      })
+    }
+  }
+
   useEffect(() => {
     formik.validateForm();
     // socket 핸들러 관련 로직
-    io.on("connect", () => {
-      console.log("io.id in useEffect: ", io.id);
-      console.log("io connected");
-      io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
-    });
-    io.on("sentMessage", async ({ roomId, message, image, time }) => {
-      console.log("io.id: ", io.id, "roomId: ", roomId, "message: ", message, "image: ", image, "time: ", time);
-
-      // 로그인 확인 후 채팅 넣어주기
-      if (sessionStore.isSignedIn) {
-        const chatCard = new Chat({
-          sessionStore,
-          id: nanoid(),
-          roomId,
-          time,
-          message,
-          image,
-        })
-        chatStore.feedChatMessages(chatCard.getChatMessage)
-        await chatStore.fetchCreateChat({
-          roomId,
-          message,
-          writer: sessionStore.userProfile.studentNumber,
-          image,
-        })
-      }
-    })
+    io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
+    // io.on("connect", () => {
+    //   console.log("io.id in useEffect: ", io.id);
+    //   console.log("io connected");
+    //   io.emit("roomJoin", ({ roomId, userId: sessionStore.curUserCode }))
+    // });
+    io.on("sentMessage", sentMessageHandler)
 
     return () => {
       io.emit("leaveRoom", { roomId });
-      io.disconnect();
+      io.off("sentMessage", sentMessageHandler);
+
     }
   }, []);
 

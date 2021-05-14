@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 
 const socket = io(process.env.SOCKET_URL || "ws://localhost:5001")
 console.log("after call socket");
-const socketContext = createContext<{ io: typeof socket }>({ io: socket });
+const socketContext = createContext<{ io: typeof socket } | null>(null);
 
 export const useSocketContext = () => {
   const socketState = useContext(socketContext);
