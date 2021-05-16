@@ -132,25 +132,12 @@ Room.statics.findRoomById = async function (args) {
     const room = await this
       .findOne({ id })
       .populate("join")
-    // .populate("messages")
 
     if (isNil(room)) {
       return null;
     }
 
-    if (room.hasPassword) {
-      if (room.password === password) {
-        return {
-          validate: true,
-          room,
-        };
-      }
-      return {
-        validate: false,
-      }
-    } else {
-      return room;
-    }
+    return room;
   } catch (error) {
     console.error("error in Room.statics.findRoomById");
     console.error(error);

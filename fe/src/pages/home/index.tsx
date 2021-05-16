@@ -67,6 +67,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
   }, []);
 
   const handleClick: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void = (data) => (e) => {
+    console.log("date: ", data);
     setModal({
       type: "OPEN",
       payload: {

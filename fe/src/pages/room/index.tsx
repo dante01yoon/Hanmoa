@@ -13,6 +13,7 @@ import { Request } from "express";
 import { observer } from "mobx-react";
 import { useMobxStores } from "@utils/store/useStores";
 import { ChatDataStatus } from "@store/ChatStore";
+import { useModal } from "@utils/modal/useModal";
 
 const StyledSelf = styled.section`
   display: flex;
@@ -41,6 +42,7 @@ const RoomPage: FC<RoomPageProps> & {
   const chatRoomRef = useRef<HTMLElement>(null);
   const ioRef = useRef<IntersectionObserver>();
   const targetRef = useRef<HTMLElement>(null);
+  const [isModal, setModal] = useModal();
 
   // 1. redux - useDispatch fetch method call 어디에다가 모듈화?
   // 2. response 오면 state 변경 ->

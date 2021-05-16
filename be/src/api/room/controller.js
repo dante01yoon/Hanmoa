@@ -2,6 +2,7 @@ import makeValidation from "@withvoid/make-validation";
 import Room from "../../models/room";
 import pick from "lodash/pick";
 import cloneDeep from "lodash/cloneDeep";
+import omit from "lodash/omit";
 
 export const onGetRoomUsers = async (ctx) => {
   const { request: { params: { id } } } = ctx;
@@ -147,12 +148,12 @@ export const onPostLeaveRoom = async (ctx) => {
 
 export const onCreateRoom = async (ctx) => {
   const { request, response } = ctx;
-  const { studentNumber, title, subTitle, imageUrl, category, capability } = request.body;
+  const { studentNumber, title, subTitle, imageUrl, category, capability, hasPassword, password } = request.body;
 
   try {
     if (["watcha", "netflix"].includes(category)) {
       if (capability !== 4) {
-        throw Error("category watcha or netflix capabilitycan't be any number except 4");
+        throw Error("category watcha or netflix capability can't be any number except 4");
       }
     }
     const validation = makeValidation(types => ({
@@ -178,6 +179,8 @@ export const onCreateRoom = async (ctx) => {
       imageUrl: imageUrl ?? "",
       category,
       capability,
+      hasPassword: hasPassword ?? false,
+      password: hasPassword ? password : "",
     });
 
     response.status = 200;
@@ -198,18 +201,33 @@ export const onCreateRoom = async (ctx) => {
 
 export const onPostRoomPasswordCheck = async (ctx) => {
   const { request, response } = ctx;
-  const { roomId, password } = request.body;
+  const { password } = request.body;
+  const { id } = request.params;
 
   try {
     const room = await Room.findRoomById({
-      id: roomId,
-      password,
+      id,
     });
 
-    response.status = 200;
-    response.body = {
-      success: true,
-      data: room,
+    if (room.hasPassword && (room.password !== password)) {
+      response.status = 401;
+      response.body = {
+        success: false,
+        data: {
+          validate: false,
+        }
+      }
+    }
+    else {
+      response.status = 200;
+      response.body = {
+        success: true,
+        data: {
+          ...omit(room.toObject(), ["password"]),
+          validate: true,
+        },
+
+      }
     }
   } catch (error) {
     console.log("error in onPostRoomPasswordCheck");

@@ -6,9 +6,6 @@ export const config = {
 
 const initSocket = (io) => {
   io.on("connection", (socket) => {
-    // room id 확인
-    console.log("socket.id: ", socket.id);
-
     // roomJoin 이벤트
     socket.on("roomJoin", ({ roomId, userId }) => {
       console.log("roomId: ", roomId, "userId: ", userId);
