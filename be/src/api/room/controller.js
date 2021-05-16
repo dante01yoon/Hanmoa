@@ -226,7 +226,6 @@ export const onPostRoomPasswordCheck = async (ctx) => {
           ...omit(room.toObject(), ["password"]),
           validate: true,
         },
-
       }
     }
   } catch (error) {

@@ -74,3 +74,15 @@ export const StyledInput = styled.input`
   line-height: 16px;
   padding: 2px;
 `;
+
+export const ErrorRow = styled.div`
+  display: flex;
+  justify-content: center;
+  line-height: 20px;
+  width: 100%;
+  margin: 8px 0;
+`;
+
+export const ErrorField = styled.div`
+  color: ${({ theme }) => theme.colors.danger};
+`;

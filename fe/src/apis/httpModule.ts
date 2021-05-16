@@ -21,6 +21,14 @@ const request = async<T>(config: AxiosRequestConfig): Promise<APIResponse<T>> =>
     const { data } = await hanmoaAxios.request({ ...config, headers: moreHeaders });
     return [undefined, data];
   } catch (error) {
+    // TODO error type 지정
+    if (error.response) {
+      return [{
+        status: error.response.status,
+        success: error.response.data.success,
+        ...error.response.data.data,
+      }, undefined];
+    }
     return [error, undefined];
   }
 }

@@ -51,16 +51,9 @@ export const encode = async (ctx, next) => {
 
 export const decode = async (ctx, next) => {
   const { response } = ctx;
-  console.log("ctx.headers.cookie: ", ctx.headers.cookie);
   const accessTokenObject = JSON.parse(ctx.headers.cookie);
-  // JSON.parse(JSON.stringify(ctx.headers.cookie))
-  //   .split(";")
-  //   .reduce((acc, curr) => {
-  //     const [key, value] = curr.split("=");
-  //     acc[key] = value;
-  //     return acc;
-  //   }, {});
-  console.log("accessTokenObject: ", accessTokenObject);
+  console.log("ctx.headers.authorization: ", ctx.headers.authorization);
+  console.log("ctx.headers: ", ctx.headers);
   const accessToken = accessTokenObject["_hm_guit"];
   console.log("accessToken: ", accessToken);
   if (!accessToken) {
