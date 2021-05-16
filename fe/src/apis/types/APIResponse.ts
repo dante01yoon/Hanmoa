@@ -5,6 +5,7 @@ export interface APIStatus {
 }
 export interface APIError extends APIStatus {
   error?: string;
+  validate?: boolean; // authenticate 관련 api 필드
 }
 export interface APISuccess extends APIStatus { };
 export interface Response<Data> extends APISuccess {

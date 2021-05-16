@@ -48,25 +48,22 @@ export const Modal: FC<ModalProps> = ({
   capability,
   hasPassword,
 }) => {
-  const { http } = useMobxStores();
+  const { http, roomStore } = useMobxStores();
   const close = useModalDispatch();
   const history = useHistory();
 
   const handleSubmitPassword = async (values: GrantValues, formikHelpers: FormikHelpers<GrantValues>) => {
-    console.log("handleSubmit")
-    const [error, response] = await http.POST(`/room/check/${id}`, {
-      password: values.password
-    });
-    if (error) {
-      console.log(error);
-      if (error.status === 401 && !error.validate) {
+    roomStore.fetchAuthenticate(id, {
+      id,
+      callbackError: () => {
         formikHelpers.setFieldError("validate", "유효하지 않은 비밀번호입니다")
-      }
-    }
-    else {
-      close({ type: "CLOSE" });
-      history.push(`/room/${id}`);
-    }
+      },
+      callbackSuccess: () => {
+        close({ type: "CLOSE" });
+        history.push(`/room/${id}`);
+      },
+      ...values,
+    })
   }
 
   const formik = useFormik<GrantValues>({
@@ -132,7 +129,7 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <Wrapper>
-      { !hasPassword
+      { !hasPassword || roomStore.authenticate[id]
         ? (
           <StyledContainer>
             <Row>
