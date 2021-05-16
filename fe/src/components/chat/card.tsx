@@ -129,10 +129,8 @@ const ChatCard: FC<IChatModelProps> = ({
   };
 
   const processingDate: string = useMemo(() => {
-    // "2020-05-18T16:00:00Z"
-    const { hours, minutes, AMOrPM } = timeSlice(time);
-    const parsedTime = `${hours}:${minutes}`;
-    return `${AMOrPM} ${hours}:${minutes}`;
+    // "2021. 5. 16. 오후 2:51:15"
+    return time.split(".").pop()!.trim();
   }, []);
 
   const classifyEvent = (event: "join" | "leave" | "none") => {

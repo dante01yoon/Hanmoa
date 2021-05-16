@@ -24,8 +24,8 @@ const Chat = new Schema({
     contentType: String,
   },
   time: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: new Date().toLocaleString(),
   },
   writer: {
     type: Schema.Types.ObjectId,

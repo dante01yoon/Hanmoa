@@ -72,26 +72,6 @@ class ChatStore extends BasicStore {
     this.clickedCard = cardCode;
   };
 
-  // fetchSingleMessage = flow(function* (chatCardId: ChatMessage["chatCardId"]) {
-  //   this.status = "pending";
-
-  //   const cachedChat = this.chatMessages.find((item: ChatMessage) => item.chatCardId === chatCardId)
-
-  //   if (!isNil(cachedChat)) {
-  //     this.currentChat = cachedChat;
-  //   } else {
-  //     try {
-  //       const targetMessage = yield this.api.GET("/")
-  //       this.currentChat = targetMessage;
-  //       return targetMessage;
-  //     } catch (error) {
-  //       console.error(error);
-  //     } finally {
-  //       this.status = "done";
-  //     }
-  //   }
-  // })
-
   @action
   fetchNewChatMessage = flow(function* (
     roomCode: string,
