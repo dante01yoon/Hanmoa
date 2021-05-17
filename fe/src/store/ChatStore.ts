@@ -28,10 +28,10 @@ class ChatStore extends BasicStore {
   @observable next: boolean = false;
 
   constructor({ root, state }: { root: RootStore, state: ChatStore }) {
-    super({ root });
+    super({ root, state });
     makeObservable(this);
-
     if (state) {
+      console.log("status: ", state.status);
       this.chatMessages = state.chatMessages;
       this.currentPage = state.currentPage;
       this.hasEnteredBefore = state.hasEnteredBefore;
@@ -84,10 +84,12 @@ class ChatStore extends BasicStore {
 
       if (response && response.success) {
         this.currentPage = 1;
-        this.chatMessages = response.data.messages;
+        console.log("roomCode: ", roomCode);
+        console.log("response in fetchNewChatMessage: ", response);
+        this.chatMessages = response.data?.messages;
         this.currentCode = roomCode;
 
-        return response.data.messages;
+        return response.data?.messages;
       } else {
         throw Error(`error in /room/chat/${roomCode}`)
       }

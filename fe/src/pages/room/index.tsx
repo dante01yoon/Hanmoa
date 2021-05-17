@@ -6,14 +6,17 @@ import styled from "styled-components";
 import ChatCard from "@components/chat/card";
 import EmbedChatRoom from "@components/embed/chatRoom";
 import SkeletonCard from "@components/skeleton/card";
-import makeFetchStoreOnServer from "@utils/makeFetchStoreOnServer";
+import makeFetchStoreOnServer, { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 import ChatStore from "@store/ChatStore";
+import RoomStore from "@store/RoomStore";
 import { ChatMessage } from "@payload/.";
 import { Request } from "express";
 import { observer } from "mobx-react";
-import { useMobxStores } from "@utils/store/useStores";
+import { MobxStores, useMobxStores } from "@utils/store/useStores";
 import { ChatDataStatus } from "@store/ChatStore";
 import { useModal } from "@utils/modal/useModal";
+import blur from "src/asset/blur.png";
+import { reqParser } from "@utils/parser";
 
 const StyledSelf = styled.section`
   display: flex;
@@ -30,14 +33,29 @@ const StyledArticle = styled.article`
   }
 `;
 
+const StyledBlurContainer = styled.div`
+  filter: blur(10px);
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledBlurImage = styled.div`
+
+`;
+
+interface RoomPageInitStoreOnServer {
+  initStoreOnServer: InitStoreOnServer<{
+    roomStore: MobxStores["roomStore"];
+    chatStore: MobxStores["chatStore"];
+  }>
+}
+
 interface RoomPageProps extends RouteComponentProps<{ id: string }> {
 }
 
-const RoomPage: FC<RoomPageProps> & {
-  initStoreOnServer: Function;
-} = ({ match }) => {
+const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   const roomId = match.params.id;
-  const { chatStore } = useMobxStores();
+  const { chatStore, roomStore } = useMobxStores();
   const codeRef = useRef<string | null>(chatStore.currentCode || roomId)
   const chatRoomRef = useRef<HTMLElement>(null);
   const ioRef = useRef<IntersectionObserver>();
@@ -87,16 +105,15 @@ const RoomPage: FC<RoomPageProps> & {
 
   }, []);
 
+  const renderDummyChatContent = () => {
+    return new Array(10)
+      .fill(0)
+      .map((_, key) => <SkeletonCard key={`single_chat_card_skeleton::${key}`} />)
+  }
+
   const renderChatContent = (): ReactNode => {
     if (chatStore.status === ChatDataStatus.PENDING) {
-      const dummyArray = new Array(10).fill(0);
-      return (
-        <>
-          {dummyArray.map((_, key) => {
-            return <SkeletonCard key={`single_chat_card_skeleton::${key}`} />;
-          })}
-        </>
-      );
+      renderDummyChatContent()
     }
     /* 
     *  채팅 데이터가 처음 디비에서 전달해주는 값보다 많을 가능 성이 있을 때 
@@ -121,20 +138,40 @@ const RoomPage: FC<RoomPageProps> & {
       </>
     );
   };
-
+  useEffect(() => {
+    console.log("authenticate: ", roomStore.authenticate)
+    console.log("isAuthenticate: ", roomStore.isAuthenticate(roomId));
+  }, [roomStore.isAuthenticate(roomId)]);
   return (
     <StyledSelf>
       <StyledArticle ref={chatRoomRef}>
-        <EmbedChatRoom>{renderChatContent()}</EmbedChatRoom>
+        <EmbedChatRoom disabled={!roomStore.isAuthenticate(roomId)}>{
+          roomStore.isAuthenticate(roomId)
+            ?
+            renderChatContent()
+            :
+            <StyledBlurContainer>
+              {renderDummyChatContent()}
+            </StyledBlurContainer>
+        }</EmbedChatRoom>
       </StyledArticle>
     </StyledSelf>
   );
 };
 
-RoomPage.initStoreOnServer = makeFetchStoreOnServer((req: Request<{ id: string }>, { chatStore }: { chatStore: ChatStore }) => {
+RoomPage.initStoreOnServer = (req: Request<{ id: string }>, {
+  chatStore,
+  roomStore,
+}: {
+  chatStore: ChatStore;
+  roomStore: RoomStore;
+}) => {
+  const id = reqParser(req, 1);
   const promises: Array<Promise<any>> = [Promise.resolve()];
-  promises.push(chatStore.fetchNewChatMessage(req.params.id));
+  promises.push(roomStore.fetchRoom(id));
+  promises.push(chatStore.fetchNewChatMessage(id));
+
   return Promise.all(promises);
-});
+};
 
 export default observer(RoomPage);

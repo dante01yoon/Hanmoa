@@ -22,12 +22,11 @@ export const createStore = ({
   state = {},
 }: {
   storeSpec: StoreSpecType,
-  state?: any
+  state?: Record<string, any>
 }): ReducedStore => {
 
   const rootStore = new RootStore(storeSpecList);
   const reducedStore = storeSpecList.reduce((reducedSpec, singleSpec) => {
-
     if (!isNil(singleSpec.class)) {
       reducedSpec[singleSpec.key] = new singleSpec.class({ root: rootStore, state: state[singleSpec.key] });
     } else if (!isNil(singleSpec.module)) {

@@ -27,7 +27,7 @@ export const initStore = async (req: Request) => {
   // server side data fetch in page component 
   const promiseArr = routes.filter((value) => {
     if (value.path) {
-      return value.path.includes(req.path)
+      return value.path.split("/")[1] === req.path.split("/")[1]
     }
   }).map((value) => {
     if (value.component && value.fetchInitialData) {
@@ -39,7 +39,6 @@ export const initStore = async (req: Request) => {
   } catch (error) {
     throw Error(error);
   }
-  console.log("mobxStores: ", mobxStores);
   return mobxStores;
 }
 

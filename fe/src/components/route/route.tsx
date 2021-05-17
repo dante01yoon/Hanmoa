@@ -1,9 +1,9 @@
-import React, { ElementType} from "react";
+import React, { ElementType } from "react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 import { Dispatch } from "redux";
-import loadable, {  } from "@loadable/component";
+import loadable, { } from "@loadable/component";
 import { Request } from "express";
-import { 
+import {
   HomePage,
   SignUpPage,
   CreateRoomPage,
@@ -12,7 +12,7 @@ import {
   TopicPage,
   LoginTestPage,
   ErrorPage,
-} from "@pages/index";
+} from "@pages/.";
 import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 
 const LoadableHomePage = loadable(() =>
@@ -44,7 +44,7 @@ export interface HanmoaPageComponentStaticMethod {
   initStoreOnServer?: InitStoreOnServer<any>;
 }
 
-type HanmoaPageComponent = React.ComponentType<any>  & HanmoaPageComponentStaticMethod;
+type HanmoaPageComponent = React.ComponentType<any> & HanmoaPageComponentStaticMethod;
 
 type RouteType = {
   path?: string;
@@ -79,6 +79,7 @@ export const routes: RouteType[] = [
     path: "/room/:id",
     exact: false,
     component: LodabaleRoomPage,
+    fetchInitialData: RoomPage.initStoreOnServer,
   },
   {
     path: "/topic/:category",
@@ -97,19 +98,19 @@ export const routes: RouteType[] = [
 ];
 
 export const renderRoutes = () => {
-  const routeComponents = routes.map(({path,exact, component: Component, ...rest}) => {
-    return(
+  const routeComponents = routes.map(({ path, exact, component: Component, ...rest }) => {
+    return (
       <Route
-        key={path || `$$${Math.random()*1000}`}
+        key={path || `$$${Math.random() * 1000}`}
         path={path}
-        exact={ exact ? exact : true}
+        exact={exact ? exact : true}
         render={(props) => {
           return Component ? <Component {...props} {...rest} /> : null
         }}
       />
     )
   })
-  
+
   return (
     <Switch>
       {routeComponents}
@@ -118,10 +119,10 @@ export const renderRoutes = () => {
 }
 
 const HanmoaRouter = () => {
-  return(
+  return (
     <Switch>
       {renderRoutes()}
-      <Route component={ErrorPage}/>
+      <Route component={ErrorPage} />
     </Switch>
   )
 }

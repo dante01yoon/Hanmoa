@@ -26,7 +26,6 @@ class SessionStore extends BasicStore {
           cookie: req && JSON.stringify(req.cookies),
         }
       });
-      console.log("response: ", response);
 
       if (error) {
         console.error("error in await fetch : ", error);

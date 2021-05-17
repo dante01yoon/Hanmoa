@@ -11,7 +11,7 @@ export default class RoomStore extends BasicStore {
   @observable homeRoomList: GetRoomsPayload["rooms"] | null;
   @observable currentTopic: string | null;
   @observable next: boolean = false;
-  @observable authenticate: Record<string, boolean> = {};
+  @observable authenticate: Record<string, boolean>;
 
   constructor({ root, state }: { root: RootStore, state: RoomStore }) {
     super({ root, state });
@@ -20,6 +20,7 @@ export default class RoomStore extends BasicStore {
     this.roomList = state?.roomList ?? null;
     this.currentRoom = state?.currentRoom ?? null;
     this.currentTopic = state?.currentTopic ?? null;
+    this.authenticate = state?.authenticate ?? {};
   }
 
   async fetchRooms(category?: string, page: number = 0, clear: boolean = false) {

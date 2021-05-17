@@ -114,6 +114,7 @@ const StyledSubmitButton = styled.button<{ clicked: boolean }>`
 
 interface IEmbedChatProps {
   children: ReactNode;
+  disabled: boolean;
 }
 interface IChatValues {
   chat: string;
@@ -123,7 +124,8 @@ interface IRefObject {
   textAreaRef: React.RefObject<HTMLTextAreaElement>;
 }
 
-const INITIAL_TEXTAREA_VALUE = "Write your message..." as const;
+const INITIAL_TEXTAREA_VALUE = "대화에 참여해보세요!" as const;
+const NONE_AUTHORIZED_USER = "대화에 참여하려면 방에 참여해주세요."
 
 const validationSchema = yup.object().shape({
   chat: yup.string()
@@ -131,8 +133,7 @@ const validationSchema = yup.object().shape({
     .required("required"),
 })
 
-const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
-  // const [hasFocused, setHasFocused] = useState(false);
+const EmbedChatRoom: FC<IEmbedChatProps> = ({ children, disabled }) => {
   const [isFocusing, setIsFocusing] = useState(false);
   const [clicked, setClicked] = useState(false);
   const scrollElementScrollBlockRef = useRef(true);
@@ -326,12 +327,13 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children }) => {
               isTextValid() && !isFocusing ? INITIAL_TEXTAREA_VALUE : ""
             }
             value={formik.values.chat}
+            disabled={disabled}
           />
           <StyledSubmitButtonWrapper>
             <StyledSubmitButton
               clicked={clicked}
               type="submit"
-              disabled={isTextValid()}
+              disabled={isTextValid() || disabled}
             >
               입력
             </StyledSubmitButton>
