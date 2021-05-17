@@ -16,7 +16,6 @@ import { observer } from "mobx-react";
 import { MobxStores, useMobxStores } from "@utils/store/useStores";
 import { ChatDataStatus } from "@store/ChatStore";
 import { useModal } from "@utils/modal/useModal";
-import blur from "src/asset/blur.png";
 import { reqParser } from "@utils/parser";
 
 const StyledSelf = styled.section`
