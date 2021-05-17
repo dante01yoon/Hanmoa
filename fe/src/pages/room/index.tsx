@@ -6,7 +6,8 @@ import styled from "styled-components";
 import ChatCard from "@components/chat/card";
 import EmbedChatRoom from "@components/embed/chatRoom";
 import SkeletonCard from "@components/skeleton/card";
-import makeFetchStoreOnServer, { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
+import { Modal } from "@components/modal";
+import { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 import ChatStore from "@store/ChatStore";
 import RoomStore from "@store/RoomStore";
 import { ChatMessage } from "@payload/.";
@@ -70,6 +71,16 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   useEffect(() => {
     if (!chatStore.chatMessages.length) {
       chatStore.fetchNewChatMessage(roomId);
+    }
+
+    if (!roomStore.isAuthenticate(roomId)) {
+      setModal({
+        type: "OPEN",
+        payload: {
+          data: roomStore.currentRoom,
+          visible: true,
+        }
+      })
     }
 
     return () => {
@@ -142,20 +153,28 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
     console.log("authenticate: ", roomStore.authenticate)
     console.log("isAuthenticate: ", roomStore.isAuthenticate(roomId));
   }, [roomStore.isAuthenticate(roomId)]);
+
   return (
-    <StyledSelf>
-      <StyledArticle ref={chatRoomRef}>
-        <EmbedChatRoom disabled={!roomStore.isAuthenticate(roomId)}>{
-          roomStore.isAuthenticate(roomId)
-            ?
-            renderChatContent()
-            :
-            <StyledBlurContainer>
-              {renderDummyChatContent()}
-            </StyledBlurContainer>
-        }</EmbedChatRoom>
-      </StyledArticle>
-    </StyledSelf>
+    <>
+      <section>
+        <StyledSelf>
+          <StyledArticle ref={chatRoomRef}>
+            <EmbedChatRoom disabled={!roomStore.isAuthenticate(roomId)}>{
+              roomStore.isAuthenticate(roomId)
+                ?
+                renderChatContent()
+                :
+                <StyledBlurContainer>
+                  {renderDummyChatContent()}
+                </StyledBlurContainer>
+            }</EmbedChatRoom>
+          </StyledArticle>
+        </StyledSelf>
+      </section>
+      <section>
+        {isModal.visible && <Modal {...isModal.data} />}
+      </section>
+    </>
   );
 };
 

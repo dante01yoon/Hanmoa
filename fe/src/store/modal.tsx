@@ -4,7 +4,7 @@ import { ICardData } from "src/models/card";
 
 type ModalState = ModalProps;
 // action
-type Action = { type: "OPEN"; payload: ModalState } | { type: "CLOSE" };
+export type Action = { type: "OPEN"; payload: ModalState } | { type: "CLOSE" };
 // dispatch
 type ModalDispatch = Dispatch<Action>;
 
