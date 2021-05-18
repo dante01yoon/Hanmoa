@@ -40,10 +40,12 @@ roomRouter.post("/check/:id",
 )
 
 roomRouter.put("/join",
+  jwt.decode,
   onPutJoinRoom
 );
 
 roomRouter.put("/leave",
+  jwt.decode,
   onPutLeaveRoom
 )
 

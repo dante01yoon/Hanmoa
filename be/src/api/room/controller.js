@@ -3,6 +3,8 @@ import Room from "../../models/room";
 import pick from "lodash/pick";
 import cloneDeep from "lodash/cloneDeep";
 import omit from "lodash/omit";
+import isNil from "lodash/isNil";
+import user from "../../models/user";
 
 export const onGetRoomUsers = async (ctx) => {
   const { request: { params: { id } } } = ctx;
@@ -249,16 +251,33 @@ export const onPutJoinRoom = async (ctx) => {
       response.status = 422;
       response.body = {
         success: false,
-        data: room,
+        data: {
+          statusCode: 422,
+          message: "room or user is not exist",
+          room,
+        },
       }
       return;
     }
 
-    response.status = 200;
+    if (!isNil(room)) {
+      response.status = 200;
+      response.body = {
+        success: true,
+        data: room,
+      };
+      return;
+    }
+
+    // 룸이 꽉 찼을 때
+    response.status = 409;
     response.body = {
       success: true,
-      data: room,
-    };
+      data: {
+        statusCode: 409,
+        message: "room is full",
+      }
+    }
   } catch (error) {
     response.status = 500;
     response.body = {
@@ -275,6 +294,18 @@ export const onPutLeaveRoom = async (ctx) => {
 
   try {
     const room = await Room.leaveUser(roomId, studentNumber);
+    if (room && room.code === 422) {
+      response.status = 422;
+      response.body = {
+        success: false,
+        data: {
+          statusCode: 422,
+          message: "room or user is not exist",
+          room,
+        }
+      }
+      return;
+    }
 
     response.status = 200;
     response.body = {
@@ -282,10 +313,10 @@ export const onPutLeaveRoom = async (ctx) => {
       data: room,
     }
   } catch (error) {
-    console.error("error in onPutLeaveRoom");
     response.status = 500;
     response.body = {
       success: false,
     }
+    console.error("error in onPutLeaveRoom");
   }
 }

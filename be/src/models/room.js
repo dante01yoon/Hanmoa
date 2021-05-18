@@ -204,8 +204,15 @@ Room.statics.leaveUser = async function (roomId, studentNumber) {
   try {
     const room = await this.findOne({ id: roomId });
     const student = await User.findByStudentNumber(studentNumber);
-    joinUser = room.join.filter(user => user !== student._id)
-    room.join = joinUser;
+
+    if (isNil(student) || isNil(room)) {
+      return {
+        code: 422,
+        message: "No Content",
+      }
+    }
+
+    room.join.pull({ _id: student._id })
     room.save();
     return room;
   } catch (error) {
@@ -231,13 +238,13 @@ Room.statics.joinUser = async function (roomId, studentNumber) {
 
     if (room.capability > room.join.length) {
       if (!room.join.includes(student._id)) {
-        console.log(student._id);
         room.join.push(student);
+        await room.save();
       }
-      await room.save();
+      // 이미 방에 유저가 있을 때
       return room;
     }
-
+    return null;
   } catch (error) {
     console.error("error in Room.statics.joinUser");
     console.error("error: ", error);

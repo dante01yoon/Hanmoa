@@ -5,6 +5,7 @@ const StyledSelf = styled.p`
     padding: 16px;
     background-color: ${(p) => p.theme.colors.whiteGray};
     min-width: 32px;
+    max-width: 200px;
     min-height: 32px;
     line-height: 1;
     border-radius: 8px;
@@ -22,7 +23,7 @@ const ContentBox: React.FC<ContentBoxProps> = ({
         onClickCard();
     }
 
-    return(
+    return (
         <StyledSelf onClick={handleClickCard}>
             {data}
         </StyledSelf>
