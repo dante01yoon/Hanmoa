@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import createUUID from "../lib/uuid";
+import isNil from "lodash/isNil";
+import Room from "./room";
 
 const mongoose = require("mongoose");
 const { generateToken } = require("lib/token");
@@ -37,6 +39,9 @@ const User = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Chat",
   }],
+  latestCreateRoom: {
+    type: Date,
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -75,8 +80,11 @@ User.statics.createUser = async function (args) {
 User.statics.findByStudentNumber = async function (studentNumber) {
   try {
     const user = await this.findOne({ 'profile.studentNumber': studentNumber });
-    if (!user) {
-      return null;
+    if (isNil(user)) {
+      return {
+        code: 422,
+        message: "No Content",
+      }
     }
     return user;
   } catch (error) {
@@ -158,6 +166,62 @@ User.statics.updateByStudentNumber = async function (studentNumber, params) {
   } catch (error) {
     console.log("error in User.methods.updateByStudentNumber");
     throw error;
+  }
+}
+
+User.statics.joinRoom = async function (studentNumber, roomId) {
+  try {
+    const user = await this.findOne({ 'profile.studentNumber': studentNumber });
+    const room = await this.findOne({ id: roomId });
+
+    if (isNil(user)) {
+      return {
+        code: 422,
+        message: "No Content in User",
+      }
+    }
+
+    if (isNil(room)) {
+      return {
+        code: 422,
+        message: "No Content in Room",
+      }
+    }
+
+    user.joinIn.push(roomId);
+    await user.save();
+    return user;
+  } catch (error) {
+    console.error("error in User.statics.joinRoom");
+    console.error("error: ", error);
+  }
+}
+
+User.statics.leaveRoom = async function (studentNumber, roomId) {
+  try {
+    const user = await this.findOne({ 'profile.studentNumber': studentNumber });
+    const room = await this.findOne({ id: roomId });
+
+    if (isNil(user)) {
+      return {
+        code: 422,
+        message: "No Content in User",
+      }
+    }
+
+    if (isNil(room)) {
+      return {
+        code: 422,
+        message: "No Content in Room",
+      }
+    }
+
+    user.joinIn.pull({ id: roomId });
+    user.save();
+    return user;
+  } catch (error) {
+    console.error("error in User.statics.leaveRoom");
+    console.error("error: ", error);
   }
 }
 

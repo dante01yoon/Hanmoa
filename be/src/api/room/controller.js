@@ -1,10 +1,10 @@
 import makeValidation from "@withvoid/make-validation";
 import Room from "../../models/room";
+import User from "../../models/user";
 import pick from "lodash/pick";
 import cloneDeep from "lodash/cloneDeep";
 import omit from "lodash/omit";
 import isNil from "lodash/isNil";
-import user from "../../models/user";
 
 export const onGetRoomUsers = async (ctx) => {
   const { request: { params: { id } } } = ctx;
@@ -239,13 +239,31 @@ export const onPostRoomPasswordCheck = async (ctx) => {
   }
 }
 
+export const onPutJoinRoomCheck = async (ctx) => {
+  const { request, response } = ctx;
+  const { roomId, studentNumber } = request.body;
+
+}
+
 export const onPutJoinRoom = async (ctx) => {
   const { request, response } = ctx;
   const { roomId, studentNumber } = request.body;
 
   try {
     const room = await Room.joinUser(roomId, studentNumber);
+    const user = await User.findByStudentNumber(studentNumber);
 
+    if (user && user.code === 422) {
+      response.status = 422;
+      response.body = {
+        success: false,
+        data: {
+          statusCode: 422,
+          message: "user is not exist in User",
+        }
+      }
+      return;
+    }
     // 데이터베이스에 데이터가 없을 때
     if (room && room.code === 422) {
       response.status = 422;
@@ -253,7 +271,7 @@ export const onPutJoinRoom = async (ctx) => {
         success: false,
         data: {
           statusCode: 422,
-          message: "room or user is not exist",
+          message: "room or user is not exist in Room",
           room,
         },
       }

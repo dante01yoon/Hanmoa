@@ -199,6 +199,10 @@ Room.statics.loadUserChat = async function (roomId, studentNumber) {
 /**
  * @param { roomId } string
  * @param { studentNumber } string
+ * // TODO
+ *  await 문을 쓰는 줄을 좀 더 세부적으로 나누어 에러 처리를 해야
+ * 나중에 User, Room 테이블 중 한가지 테이블 수정에서만 에러가 나도 
+ * 나머지 테이블의 수정또한 방지할 수 있다. 추후 개선해야 함.
  */
 Room.statics.leaveUser = async function (roomId, studentNumber) {
   try {
@@ -212,8 +216,9 @@ Room.statics.leaveUser = async function (roomId, studentNumber) {
       }
     }
 
-    room.join.pull({ _id: student._id })
-    room.save();
+    room.join.pull({ _id: student._id });
+    await room.save();
+    await User.leaveRoom(studentNumber, roomId);
     return room;
   } catch (error) {
     console.error("error in Room.statics.leaveUser");
@@ -223,6 +228,10 @@ Room.statics.leaveUser = async function (roomId, studentNumber) {
 
 /**
  * @param { studentNumber } string
+ * // TODO
+ * await 문을 쓰는 줄을 좀 더 세부적으로 나누어 에러 처리를 해야
+ * 나중에 User, Room 테이블 중 한가지 테이블 수정에서만 에러가 나도 
+ * 나머지 테이블의 수정또한 방지할 수 있다. 추후 개선해야 함.
  */
 Room.statics.joinUser = async function (roomId, studentNumber) {
   try {
@@ -233,12 +242,13 @@ Room.statics.joinUser = async function (roomId, studentNumber) {
       return {
         code: 422,
         message: "No Content"
-      };
+      }
     }
 
     if (room.capability > room.join.length) {
       if (!room.join.includes(student._id)) {
         room.join.push(student);
+        await User.joinRoom(studentNumber, roomId);
         await room.save();
       }
       // 이미 방에 유저가 있을 때
