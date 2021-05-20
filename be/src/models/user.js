@@ -88,7 +88,8 @@ User.statics.findByStudentNumber = async function (studentNumber) {
     }
     return user;
   } catch (error) {
-    console.log("error in User.statics.findByStudentNumber");
+    console.error("error in User.statics.findByStudentNumber");
+    console.error(error);
     throw error;
   }
 };
@@ -164,7 +165,8 @@ User.statics.updateByStudentNumber = async function (studentNumber, params) {
 
     return user;
   } catch (error) {
-    console.log("error in User.methods.updateByStudentNumber");
+    console.error("error in User.methods.updateByStudentNumber");
+    console.error(error);
     throw error;
   }
 }
@@ -231,7 +233,8 @@ User.statics.findRoomChatHistory = async function (roomId) {
     console.log("room in User.statics.findRoomChatHistory: ", room);
     return room;
   } catch (error) {
-    console.log("error in User.methods.findRoomChatHistory");
+    console.error("error in User.methods.findRoomChatHistory");
+    console.error(error);
   }
 }
 
