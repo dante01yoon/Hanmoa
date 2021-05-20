@@ -1,10 +1,10 @@
 import makeValidation from "@withvoid/make-validation";
 import Room from "../../models/room";
+import User from "../../models/user";
 import pick from "lodash/pick";
 import cloneDeep from "lodash/cloneDeep";
 import omit from "lodash/omit";
 import isNil from "lodash/isNil";
-import user from "../../models/user";
 
 export const onGetRoomUsers = async (ctx) => {
   const { request: { params: { id } } } = ctx;
@@ -22,6 +22,7 @@ export const onGetRoomUsers = async (ctx) => {
     console.error(error);
     ctx.status = 500;
     ctx.body = {
+      statusCode: 500,
       success: false,
       message: error,
     }
@@ -153,11 +154,22 @@ export const onCreateRoom = async (ctx) => {
   const { studentNumber, title, subTitle, imageUrl, category, capability, hasPassword, password } = request.body;
 
   try {
+    // 최대 참가 수가 정해져있는 카테고리
     if (["watcha", "netflix"].includes(category)) {
-      if (capability !== 4) {
-        throw Error("category watcha or netflix capability can't be any number except 4");
+      if (capability > 4) {
+        response.status = 400;
+        response.body = {
+          success: false,
+          data: {
+            statusCode: 400,
+            message: "category watcha or netflix capability can't be any number except 4",
+            reason: "number",
+          }
+        }
+        return;
       }
     }
+
     const validation = makeValidation(types => ({
       payload: request.body,
       checks: {
@@ -170,7 +182,14 @@ export const onCreateRoom = async (ctx) => {
 
     if (!validation.success) {
       response.status = 400;
-      response.body = validation;
+      response.body = {
+        statusCode: 400,
+        reason: "validate",
+        message: "validate error",
+        data: {
+          room: null,
+        }
+      };
       return;
     }
 
@@ -185,10 +204,24 @@ export const onCreateRoom = async (ctx) => {
       password: hasPassword ? password : "",
     });
 
+    if (room && room.code === 403) {
+      response.status = 403;
+      response.body = {
+        statusCode: 403,
+        reason: "shouldBeLimited",
+        message: "user already exist in same category, but another room",
+        data: {
+          room: null,
+        }
+      }
+      return;
+    }
+
     response.status = 200;
     response.body = {
       success: true,
       data: {
+        statusCode: 200,
         room,
       },
     };
@@ -232,11 +265,19 @@ export const onPostRoomPasswordCheck = async (ctx) => {
     }
   } catch (error) {
     console.log("error in onPostRoomPasswordCheck");
+    response.status = 500;
     response.body = {
       success: false,
-    }
+      statusCode: 500,
+    };
     throw Error(error);
   }
+}
+
+export const onPutJoinRoomCheck = async (ctx) => {
+  const { request, response } = ctx;
+  const { roomId, studentNumber } = request.body;
+
 }
 
 export const onPutJoinRoom = async (ctx) => {
@@ -245,7 +286,19 @@ export const onPutJoinRoom = async (ctx) => {
 
   try {
     const room = await Room.joinUser(roomId, studentNumber);
+    const user = await User.findByStudentNumber(studentNumber);
 
+    if (user && user.code === 422) {
+      response.status = 422;
+      response.body = {
+        success: false,
+        data: {
+          statusCode: 422,
+          message: "user is not exist in User",
+        }
+      }
+      return;
+    }
     // 데이터베이스에 데이터가 없을 때
     if (room && room.code === 422) {
       response.status = 422;
@@ -253,7 +306,7 @@ export const onPutJoinRoom = async (ctx) => {
         success: false,
         data: {
           statusCode: 422,
-          message: "room or user is not exist",
+          message: "room or user is not exist in Room",
           room,
         },
       }

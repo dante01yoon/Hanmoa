@@ -52,10 +52,8 @@ export const encode = async (ctx, next) => {
 export const decode = async (ctx, next) => {
   const { response } = ctx;
   const accessTokenObject = JSON.parse(ctx.headers.cookie);
-  console.log("ctx.headers.authorization: ", ctx.headers.authorization);
-  console.log("ctx.headers: ", ctx.headers);
   const accessToken = accessTokenObject["_hm_guit"];
-  console.log("accessToken: ", accessToken);
+
   if (!accessToken) {
     response.status = 401;
     response.body = {

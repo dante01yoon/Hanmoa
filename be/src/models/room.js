@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import createUUID from "../lib/uuid";
 import User from "./user";
 import Topic from "./topic";
-import { GradientFilter } from "../lib";
+import { GradientFilter, roomJoinGuard } from "../lib";
 import { isNil } from "lodash";
 
 const Gradient = new GradientFilter();
@@ -79,8 +79,32 @@ Room.statics.createRoom = async function (args) {
 
   try {
     const topic = await Topic.findTopic({ category })
-    const user = await User.findByStudentNumber(studentNumber);
-    const room = await this.create({
+    const user = await User.findByStudentNumber(studentNumber, true);
+
+    if (isNil(topic) || topic.code) {
+      return {
+        code: 422,
+        message: "No Content in Topic",
+        room: null,
+      }
+    }
+
+    if (isNil(user) || user.code === 422) {
+      return {
+        code: 422,
+        message: "No Content in User",
+        room: null,
+      }
+    }
+
+    if (topic.shouldBeLimited && roomJoinGuard(topic, user)) {
+      return {
+        code: 403, // Forbidden
+        room: null
+      }
+    }
+
+    const createdRoom = await this.create({
       title,
       subTitle,
       host: user,
@@ -94,10 +118,15 @@ Room.statics.createRoom = async function (args) {
       gradient: Gradient.setSingleGradient(category).getGradientSingleColor(category)
     })
 
+    await User.joinRoom(studentNumber, createdRoom.id);
+
+    const room = await this.findOne({ id: createdRoom.id });
+
     return room;
   } catch (error) {
-    console.log("error in Room.statics.createRoom");
-    throw error;
+    console.error("error in Room.statics.createRoom");
+    console.error(error);
+    throw Error(error);
   }
 }
 
@@ -111,9 +140,7 @@ Room.statics.getRooms = async function (args) {
   }
   const findArgs = topic ? { topic: topic._id } : {};
   let rooms = await this.find(findArgs)
-    .populate("topic")
-    .populate("join")
-    .populate("host")
+    .populate("topic join host")
     .sort({ "time": -1 })
     .skip(page * 10)
     .limit(12);
@@ -122,7 +149,6 @@ Room.statics.getRooms = async function (args) {
   } else {
     rooms = page > 0 ? roomsCache.get(page - 1) : rooms;
   }
-  console.log("rooms: ", rooms);
   return rooms;
 }
 
@@ -131,7 +157,7 @@ Room.statics.findRoomById = async function (args) {
   try {
     const room = await this
       .findOne({ id })
-      .populate("join")
+      .populate("join topic")
 
     if (isNil(room)) {
       return null;
@@ -199,6 +225,10 @@ Room.statics.loadUserChat = async function (roomId, studentNumber) {
 /**
  * @param { roomId } string
  * @param { studentNumber } string
+ * // TODO
+ *  await 문을 쓰는 줄을 좀 더 세부적으로 나누어 에러 처리를 해야
+ * 나중에 User, Room 테이블 중 한가지 테이블 수정에서만 에러가 나도 
+ * 나머지 테이블의 수정또한 방지할 수 있다. 추후 개선해야 함.
  */
 Room.statics.leaveUser = async function (roomId, studentNumber) {
   try {
@@ -212,8 +242,9 @@ Room.statics.leaveUser = async function (roomId, studentNumber) {
       }
     }
 
-    room.join.pull({ _id: student._id })
-    room.save();
+    room.join.pull({ _id: student._id });
+    await room.save();
+    await User.leaveRoom(studentNumber, roomId);
     return room;
   } catch (error) {
     console.error("error in Room.statics.leaveUser");
@@ -223,22 +254,28 @@ Room.statics.leaveUser = async function (roomId, studentNumber) {
 
 /**
  * @param { studentNumber } string
+ * // TODO
+ * await 문을 쓰는 줄을 좀 더 세부적으로 나누어 에러 처리를 해야
+ * 나중에 User, Room 테이블 중 한가지 테이블 수정에서만 에러가 나도 
+ * 나머지 테이블의 수정또한 방지할 수 있다. 추후 개선해야 함.
  */
 Room.statics.joinUser = async function (roomId, studentNumber) {
   try {
     const room = await this.findOne({ id: roomId });
     const student = await User.findByStudentNumber(studentNumber);
 
-    if (isNil(student) || isNil(room)) {
-      return {
-        code: 422,
-        message: "No Content"
-      };
-    }
+    if (student)
+      if (isNil(student) || isNil(room)) {
+        return {
+          code: 422,
+          message: "No Content"
+        }
+      }
 
     if (room.capability > room.join.length) {
       if (!room.join.includes(student._id)) {
         room.join.push(student);
+        await User.joinRoom(studentNumber, roomId);
         await room.save();
       }
       // 이미 방에 유저가 있을 때

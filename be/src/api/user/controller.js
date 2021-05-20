@@ -1,4 +1,5 @@
 import makeValidation from "@withvoid/make-validation";
+import isNil from "lodash/isNil";
 import User from "../../models/user";
 
 export const onGetUserByToken = async (ctx) => {
@@ -82,10 +83,22 @@ const onGetUserByEmail = async (ctx) => {
 const onGetUserByStudentNumber = async (ctx) => {
   const { request } = ctx;
   const id = request.params.id;
-  console.log(id);
+
   if (id === "me") {
     try {
       const user = await User.findByStudentNumber(ctx.request.studentNumber);
+      if (user && user.code === 422) {
+        response.status = 422;
+        response.body = {
+          success: false,
+          data: {
+            statusCode: 422,
+            message: "user is not exist",
+            user,
+          }
+        }
+        return;
+      }
       ctx.status = 200;
       ctx.body = {
         id: user.id,
@@ -97,7 +110,7 @@ const onGetUserByStudentNumber = async (ctx) => {
       ctx.status = 500;
       ctx.body = {
         success: false,
-        status_code: 500,
+        statusCode: 500,
         error: error.error
       }
     }
@@ -127,8 +140,8 @@ const onGetUserByStudentNumber = async (ctx) => {
 }
 
 const onGetAllUsers = async function ({ request: req, response: res }) {
-
   const { query } = req;
+
   if (!query) {
     res.status = 400;
     res.body = {
@@ -158,6 +171,7 @@ const onGetAllUsers = async function ({ request: req, response: res }) {
 const onDeleteUserById = async ({ request, response }) => {
   try {
     const user = await User.deleteById(request.params.id);
+
     if (!user) {
       response.status = 400;
       response.body = {
@@ -165,6 +179,7 @@ const onDeleteUserById = async ({ request, response }) => {
       }
       return;
     }
+
     response.status = 200;
     response.body = {
       success: true,

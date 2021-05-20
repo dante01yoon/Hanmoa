@@ -1,8 +1,8 @@
 import makeValidation from "@withvoid/make-validation";
 import Topic from "../../models/topic";
 
-export const onGetTopic = async(ctx, next) => {
-  const { request: {query: {category}}} = ctx;
+export const onGetTopic = async (ctx, next) => {
+  const { request: { query: { category } } } = ctx;
   const validation = makeValidation(types => ({
     payload: category,
     checks: {
@@ -12,7 +12,7 @@ export const onGetTopic = async(ctx, next) => {
     },
   }));
 
-  if(!validation){
+  if (!validation) {
     ctx.status = 400;
     ctx.body = {
       success: false,
@@ -22,7 +22,7 @@ export const onGetTopic = async(ctx, next) => {
   }
 
   try {
-    const topic = await Topic.findTopic({category});
+    const topic = await Topic.findTopic({ category });
     ctx.status = 200;
     ctx.body = {
       data: {
@@ -30,7 +30,7 @@ export const onGetTopic = async(ctx, next) => {
       },
       success: true,
     }
-  } catch(error){
+  } catch (error) {
     console.error("error in onGetTopic");
     console.error(error);
     ctx.status = 500;
@@ -42,14 +42,14 @@ export const onGetTopic = async(ctx, next) => {
   return await next();
 }
 
-export const onGetTopicList = async(ctx, next) => {
+export const onGetTopicList = async (ctx, next) => {
   try {
     const topicList = await Topic.getTopicList();
-    const refinedTopicList = topicList.map(({category, url}) => ({
+    const refinedTopicList = topicList.map(({ category, url }) => ({
       category,
       url
     }));
-    
+
     ctx.status = 200;
     ctx.body = {
       success: true,
@@ -57,7 +57,7 @@ export const onGetTopicList = async(ctx, next) => {
         topicList: refinedTopicList,
       },
     }
-  } catch(error) {
+  } catch (error) {
     console.error("error in onGetTopicList");
     console.error(error);
     ctx.status = 500;
@@ -69,8 +69,8 @@ export const onGetTopicList = async(ctx, next) => {
   return await next();
 }
 
-export const onPostTopic = async(ctx, next) => {
-  const { request: {body: {category, url}}} = ctx;
+export const onPostTopic = async (ctx, next) => {
+  const { request: { body: { category, url, shouldBeLimited = false } } } = ctx;
   const validation = makeValidation(types => ({
     payloads: {
       category,
@@ -86,7 +86,7 @@ export const onPostTopic = async(ctx, next) => {
     },
   }));
 
-  if(!validation){
+  if (!validation) {
     ctx.status = 400;
     ctx.body = {
       success: false,
@@ -94,8 +94,9 @@ export const onPostTopic = async(ctx, next) => {
       validation,
     }
   }
+
   try {
-    const topic = await Topic.createTopic({category, url});
+    const topic = await Topic.createTopic({ category, url, shouldBeLimited });
     ctx.status = 200;
     ctx.body = {
       success: true,
@@ -103,7 +104,7 @@ export const onPostTopic = async(ctx, next) => {
         topic,
       },
     }
-  } catch(error) {
+  } catch (error) {
     console.error("error in onPostTopic");
     console.error(error);
     ctx.status = 500;

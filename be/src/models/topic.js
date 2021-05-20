@@ -19,7 +19,11 @@ const Topic = new Schema({
     type: String,
     required: true,
   },
-  time: {
+  shouldBeLimited: {
+    type: Boolean,
+    default: false,
+  },
+  createdAt: {
     type: Date,
     default: Date.now,
   },
@@ -27,13 +31,13 @@ const Topic = new Schema({
 
 /**
  * @param {category} args 
- */
-Topic.statics.findTopic = async function(args){
+*/
+Topic.statics.findTopic = async function (args) {
   const { category } = args;
   try {
-    const document = await this.findOne({category});
+    const document = await this.findOne({ category });
     return document;
-  } catch (error){
+  } catch (error) {
     console.error("error in room.statics.findTopic");
     console.error(error);
     throw Error(error);
@@ -43,26 +47,36 @@ Topic.statics.findTopic = async function(args){
 /**
  * @param {category} args 
  */
-Topic.statics.createTopic = async function(args){
-  const { category, url } = args;
+Topic.statics.createTopic = async function (args) {
+  const { category, url, shouldBeLimited } = args;
   try {
+    const topicList = await this.find();
+
+    if (topicList.some(topic => topic.category === category)) {
+      return {
+
+      }
+    }
+
     const newDocument = await this.create({
       category,
-      url
+      url,
+      shouldBeLimited,
     });
+
     return newDocument;
-  } catch(error){
+  } catch (error) {
     console.error("error in room.statics.createTopic");
     console.error(error);
     throw Error(error);
   }
 }
 
-Topic.statics.getTopicList = async function(){
+Topic.statics.getTopicList = async function () {
   try {
     const topics = await this.find();
     return topics;
-  } catch(error){
+  } catch (error) {
     console.error("error in room.statics.getTopicList");
     console.error(error);
     throw Error(error);
