@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import createUUID from "../lib/uuid";
 import User from "./user";
 import Topic from "./topic";
-import { GradientFilter } from "../lib";
+import { GradientFilter, roomJoinGuard } from "../lib";
 import { isNil } from "lodash";
 
 const Gradient = new GradientFilter();
@@ -79,8 +79,32 @@ Room.statics.createRoom = async function (args) {
 
   try {
     const topic = await Topic.findTopic({ category })
-    const user = await User.findByStudentNumber(studentNumber);
-    const room = await this.create({
+    const user = await User.findByStudentNumber(studentNumber, true);
+
+    if (isNil(topic)) {
+      return {
+        code: 422,
+        message: "No Content in Topic",
+        room: null,
+      }
+    }
+
+    if (isNil(user)) {
+      return {
+        code: 422,
+        message: "No Content in User",
+        room: null,
+      }
+    }
+
+    if (topic.shouldBeLimited && roomJoinGuard(topic, user)) {
+      return {
+        code: 403, // Forbidden
+        room: null
+      }
+    }
+
+    const createdRoom = await this.create({
       title,
       subTitle,
       host: user,
@@ -94,10 +118,14 @@ Room.statics.createRoom = async function (args) {
       gradient: Gradient.setSingleGradient(category).getGradientSingleColor(category)
     })
 
+    await User.joinRoom(studentNumber, createdRoom.id);
+
+    const room = await this.findOne({ id: createdRoom.id });
+
     return room;
   } catch (error) {
-    console.log("error in Room.statics.createRoom");
-    throw error;
+    console.error("error in Room.statics.createRoom");
+    console.error(error);
   }
 }
 
@@ -111,9 +139,7 @@ Room.statics.getRooms = async function (args) {
   }
   const findArgs = topic ? { topic: topic._id } : {};
   let rooms = await this.find(findArgs)
-    .populate("topic")
-    .populate("join")
-    .populate("host")
+    .populate("topic join host")
     .sort({ "time": -1 })
     .skip(page * 10)
     .limit(12);
@@ -131,7 +157,7 @@ Room.statics.findRoomById = async function (args) {
   try {
     const room = await this
       .findOne({ id })
-      .populate("join")
+      .populate("join topic")
 
     if (isNil(room)) {
       return null;
@@ -238,12 +264,13 @@ Room.statics.joinUser = async function (roomId, studentNumber) {
     const room = await this.findOne({ id: roomId });
     const student = await User.findByStudentNumber(studentNumber);
 
-    if (isNil(student) || isNil(room)) {
-      return {
-        code: 422,
-        message: "No Content"
+    if (student)
+      if (isNil(student) || isNil(room)) {
+        return {
+          code: 422,
+          message: "No Content"
+        }
       }
-    }
 
     if (room.capability > room.join.length) {
       if (!room.join.includes(student._id)) {

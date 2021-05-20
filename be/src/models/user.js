@@ -32,12 +32,14 @@ const User = new Schema({
     }
   },
   joinIn: [{
-    roomId: String,
-    latestChat: Date,
+    // roomId: String,
+    // latestChat: Date,
+    type: Schema.Types.ObjectId,
+    ref: "Room",
   }],
   hostIn: [{
     type: Schema.Types.ObjectId,
-    ref: "Chat",
+    ref: "Room",
   }],
   latestCreateRoom: {
     type: Date,
@@ -77,9 +79,31 @@ User.statics.createUser = async function (args) {
   }
 };
 
-User.statics.findByStudentNumber = async function (studentNumber) {
+/**
+ * 룸을 생성, 조인할 때 topic 중 shouldBeLimited가 참인 경우 제한을 시켜야 하므로 
+ * joinIn, hostIn 은 populate해서 내려준다.
+ * @param {string} studentNumber 
+ * @returns {User | null} user 
+ */
+User.statics.findByStudentNumber = async function (studentNumber, populateDeep = false,) {
   try {
-    const user = await this.findOne({ 'profile.studentNumber': studentNumber });
+    let populateQuery;
+
+    if (populateDeep) {
+      populateQuery = {
+        path: "joinIn hostIn",
+        populate: {
+          path: "topic",
+          model: "Topic",
+        }
+      }
+    } else {
+      populateQuery = "joinIn hostIn";
+    }
+
+    const user = await this.findOne({ 'profile.studentNumber': studentNumber })
+      .populate(populateQuery);
+
     if (isNil(user)) {
       return {
         code: 422,
@@ -173,8 +197,8 @@ User.statics.updateByStudentNumber = async function (studentNumber, params) {
 
 User.statics.joinRoom = async function (studentNumber, roomId) {
   try {
-    const user = await this.findOne({ 'profile.studentNumber': studentNumber });
-    const room = await this.findOne({ id: roomId });
+    const user = await this.findOne({ 'profile.studentNumber': studentNumber }).populate("joinIn hostIn");
+    const room = await Room.findRoomById({ id: roomId });
 
     if (isNil(user)) {
       return {
@@ -190,7 +214,7 @@ User.statics.joinRoom = async function (studentNumber, roomId) {
       }
     }
 
-    user.joinIn.push(roomId);
+    user.joinIn.push(room);
     await user.save();
     return user;
   } catch (error) {
