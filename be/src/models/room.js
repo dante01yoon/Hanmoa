@@ -81,7 +81,7 @@ Room.statics.createRoom = async function (args) {
     const topic = await Topic.findTopic({ category })
     const user = await User.findByStudentNumber(studentNumber, true);
 
-    if (isNil(topic)) {
+    if (isNil(topic) || topic.code) {
       return {
         code: 422,
         message: "No Content in Topic",
@@ -89,7 +89,7 @@ Room.statics.createRoom = async function (args) {
       }
     }
 
-    if (isNil(user)) {
+    if (isNil(user) || user.code === 422) {
       return {
         code: 422,
         message: "No Content in User",
@@ -126,6 +126,7 @@ Room.statics.createRoom = async function (args) {
   } catch (error) {
     console.error("error in Room.statics.createRoom");
     console.error(error);
+    throw Error(error);
   }
 }
 
@@ -148,7 +149,6 @@ Room.statics.getRooms = async function (args) {
   } else {
     rooms = page > 0 ? roomsCache.get(page - 1) : rooms;
   }
-  console.log("rooms: ", rooms);
   return rooms;
 }
 
