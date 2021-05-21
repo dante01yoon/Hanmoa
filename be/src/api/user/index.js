@@ -13,6 +13,7 @@ userRouter.get("/:id",
   jwt.decode,
   userController.onGetUserByStudentNumber
 );
+userRouter.get("/check/join", userController.onGetCheckUserJoin);
 userRouter.get("/single", userController.onGetUserByStudentNumber);
 userRouter.get("/all", userController.onGetAllUsers);
 userRouter.post("/create", userController.onCreateUser);

@@ -32,8 +32,6 @@ const User = new Schema({
     }
   },
   joinIn: [{
-    // roomId: String,
-    // latestChat: Date,
     type: Schema.Types.ObjectId,
     ref: "Room",
   }],
@@ -254,10 +252,29 @@ User.statics.leaveRoom = async function (studentNumber, roomId) {
 User.statics.findRoomChatHistory = async function (roomId) {
   try {
     const room = await this.findOne({ joinIn: { roomId } })
-    console.log("room in User.statics.findRoomChatHistory: ", room);
     return room;
   } catch (error) {
     console.error("error in User.methods.findRoomChatHistory");
+    console.error(error);
+  }
+}
+
+User.statics.findJoinedRoomById = async function (roomId, studentNumber) {
+  try {
+    const joined = await this.findOne({ "profile.studentNumber": studentNumber }, function (err, doc) {
+      Room.findOne({ "id": roomId, join: doc._id }, function (error, joinedRoom) {
+        if (error) {
+          console.error("error in nested function in User.statics.findJoinedRoomById");
+          console.error(error);
+        }
+        if (!isNil(joinedRoom)) {
+          return true;
+        } return false;
+      });
+    });
+    return joined;
+  } catch (error) {
+    console.error("error exists in User.statics.findJoinedRoomById");
     console.error(error);
   }
 }

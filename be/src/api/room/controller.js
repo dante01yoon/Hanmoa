@@ -334,6 +334,7 @@ export const onPutJoinRoom = async (ctx) => {
   } catch (error) {
     response.status = 500;
     response.body = {
+      statusCode: 500,
       success: false,
     }
     console.error("error in onPutJoinRoom");

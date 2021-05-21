@@ -148,10 +148,6 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
       </>
     );
   };
-  useEffect(() => {
-    console.log("authenticate: ", roomStore.authenticate)
-    console.log("isAuthenticate: ", roomStore.isAuthenticate(roomId));
-  }, [roomStore.isAuthenticate(roomId)]);
 
   return (
     <>
