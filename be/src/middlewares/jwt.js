@@ -58,12 +58,11 @@ export const optionalDecode = async (ctx, next) => {
  * 
  * @param {ctx} ctx 
  * @param {next} next 
- * @param {Boolean} forceDecode accessToken이 제공되지 않으면 401 에러를 냄
+ *  accessToken이 제공되지 않아도 에러를 내지 않고 다음 미들웨어로 넘어감
  * @returns 
  */
 export const decode = async (ctx, next) => {
   const { response } = ctx;
-
   const accessTokenObject = (ctx.headers.cookie && JSON.parse(ctx.headers.cookie)) ?? {};
   const accessToken = accessTokenObject["_hm_guit"];
 
@@ -89,9 +88,17 @@ export const decode = async (ctx, next) => {
       };
       return;
     }
+    return next();
   }
 }
 
+/**
+ * 
+ * @param {*} ctx 
+ * @param {*} next
+ *  accessToken이 제공되지 않으면 401 에러를 냄 
+ * @returns 
+ */
 const forceGuardDecode = async (ctx, next) => {
   const { response } = ctx;
 
