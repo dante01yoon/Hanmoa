@@ -259,22 +259,25 @@ User.statics.findRoomChatHistory = async function (roomId) {
   }
 }
 
-User.statics.findJoinedRoomById = async function (roomId, studentNumber) {
+User.statics.checkHasJoinedRoomById = function (roomId, studentNumber) {
   try {
-    const joined = await this.findOne({ "profile.studentNumber": studentNumber }, function (err, doc) {
-      Room.findOne({ "id": roomId, join: doc._id }, function (error, joinedRoom) {
-        if (error) {
-          console.error("error in nested function in User.statics.findJoinedRoomById");
-          console.error(error);
-        }
-        if (!isNil(joinedRoom)) {
-          return true;
-        } return false;
+    const hasJoined = new Promise((resolve) => {
+      this.findOne({ "profile.studentNumber": studentNumber }, function (err, doc) {
+        return Room.findOne({ "id": roomId, join: doc._id }, function (error, joinedRoom) {
+          if (error) {
+            console.error("error in nested function in User.statics.checkHasJoinedRoomById");
+            console.error(error);
+          }
+          if (!isNil(joinedRoom)) {
+            resolve(true);
+          }
+          resolve(false);
+        });
       });
-    });
-    return joined;
+    })
+    return hasJoined;
   } catch (error) {
-    console.error("error exists in User.statics.findJoinedRoomById");
+    console.error("error exists in User.statics.checkHasJoinedRoomById");
     console.error(error);
   }
 }

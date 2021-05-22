@@ -231,14 +231,13 @@ const onGetCheckUserJoin = async (ctx) => {
   const { request, response } = ctx;
   const { roomId, studentNumber } = request.query;
   try {
-    const user = await User.findJoinedRoomById(roomId, studentNumber);
-    const joined = isNil(user) ? false : true;
+    const hasJoined = await User.checkHasJoinedRoomById(roomId, studentNumber);
 
     response.status = 200;
     response.body = {
       statusCode: 200,
       data: {
-        joined,
+        hasJoined,
       },
     }
 
