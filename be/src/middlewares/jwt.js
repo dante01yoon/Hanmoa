@@ -32,6 +32,7 @@ export const encode = async (ctx, next) => {
       },
     };
 
+    console.log("ctx.state.authToken: ", ctx.state.authToken);
     cookies.set("_hm_guit", ctx.state.authToken, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7
@@ -50,10 +51,6 @@ export const encode = async (ctx, next) => {
   }
 }
 
-export const optionalDecode = async (ctx, next) => {
-
-}
-
 /**
  * 
  * @param {ctx} ctx 
@@ -62,9 +59,8 @@ export const optionalDecode = async (ctx, next) => {
  * @returns 
  */
 export const decode = async (ctx, next) => {
-  const { response } = ctx;
-  const accessTokenObject = (ctx.headers.cookie && JSON.parse(ctx.headers.cookie)) ?? {};
-  const accessToken = accessTokenObject["_hm_guit"];
+  const { response, cookies } = ctx;
+  const accessToken = cookies.get("_hm_guit");
 
   if (isNil(accessToken)) {
     return next();
@@ -100,10 +96,8 @@ export const decode = async (ctx, next) => {
  * @returns 
  */
 const forceGuardDecode = async (ctx, next) => {
-  const { response } = ctx;
-
-  const accessTokenObject = (ctx.headers.cookie && JSON.parse(ctx.headers.cookie)) ?? {};
-  const accessToken = accessTokenObject["_hm_guit"];
+  const { response, cookies } = ctx;
+  const accessToken = cookies.get("_hm_guit");
 
   if (isNil(accessToken)) {
     response.status = 401;

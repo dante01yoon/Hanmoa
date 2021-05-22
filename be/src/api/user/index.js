@@ -6,11 +6,11 @@ import { getProfileFromGoogle } from "../../middlewares/googleAuth";
 const userRouter = new Router();
 
 userRouter.get("/token",
-  jwt.decode,
+  jwt.forceGuardDecode,
   userController.onGetUserByToken
 );
 userRouter.get("/:id",
-  jwt.decode,
+  jwt.forceGuardDecode,
   userController.onGetUserByStudentNumber
 );
 userRouter.get("/check/join", userController.onGetCheckUserJoin);

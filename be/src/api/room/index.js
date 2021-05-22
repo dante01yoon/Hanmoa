@@ -20,10 +20,12 @@ roomRouter.post("/create",
 );
 
 roomRouter.get("/",
+  jwt.decode,
   onGetRooms,
 )
 
 roomRouter.get("/:category",
+  jwt.decode,
   onGetRooms,
 )
 
