@@ -80,6 +80,7 @@ export const onGetLatestMessages = async (ctx) => {
 }
 
 export const onGetRoom = async (ctx, next) => {
+  console.log("ctx.request.studentNumber: ", ctx.request.studentNumber);
   const { request: { params: { id }, query: { only } } } = ctx;
   if (only) {
     switch (only) {

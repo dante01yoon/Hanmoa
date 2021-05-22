@@ -15,7 +15,7 @@ const {
 } = RoomController;
 
 roomRouter.post("/create",
-  jwt.decode,
+  jwt.forceGuardDecode,
   onCreateRoom,
 );
 
@@ -28,6 +28,7 @@ roomRouter.get("/:category",
 )
 
 roomRouter.get("/only/:id",
+  jwt.decode,
   onGetRoom,
 )
 
@@ -40,12 +41,12 @@ roomRouter.post("/check/:id",
 )
 
 roomRouter.put("/join",
-  jwt.decode,
+  jwt.forceGuardDecode,
   onPutJoinRoom
 );
 
 roomRouter.put("/leave",
-  jwt.decode,
+  jwt.forceGuardDecode,
   onPutLeaveRoom
 )
 

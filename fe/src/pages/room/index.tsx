@@ -184,7 +184,6 @@ RoomPage.initStoreOnServer = (req: Request<{ id: string }>, {
   const promises: Array<Promise<any>> = [Promise.resolve()];
   promises.push(roomStore.fetchRoom(id));
   promises.push(chatStore.fetchNewChatMessage(id));
-
   return Promise.all(promises);
 };
 

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user";
+import isNil from "lodash/isNil";
 
 const SECRET_KEY = "_g_suit";
 
@@ -49,39 +50,88 @@ export const encode = async (ctx, next) => {
   }
 }
 
+export const optionalDecode = async (ctx, next) => {
+
+}
+
+/**
+ * 
+ * @param {ctx} ctx 
+ * @param {next} next 
+ * @param {Boolean} forceDecode accessToken이 제공되지 않으면 401 에러를 냄
+ * @returns 
+ */
 export const decode = async (ctx, next) => {
   const { response } = ctx;
-  const accessTokenObject = JSON.parse(ctx.headers.cookie);
+
+  const accessTokenObject = (ctx.headers.cookie && JSON.parse(ctx.headers.cookie)) ?? {};
   const accessToken = accessTokenObject["_hm_guit"];
 
-  if (!accessToken) {
+  if (isNil(accessToken)) {
+    return next();
+  } else {
+    try {
+      const decoded = await jwt.verify(accessToken, SECRET_KEY);
+      ctx.request.studentName = decoded.name;
+      ctx.request.studentEmail = decoded.email;
+      ctx.request.studentNumber = decoded.studentNumber;
+    } catch (error) {
+      console.log("error in jwt.decode");
+      console.error(error);
+      response.status = 401;
+      response.body = {
+        success: false,
+        status: 401,
+        body: {
+          validate: false,
+        },
+        message: error.message,
+      };
+      return;
+    }
+  }
+}
+
+const forceGuardDecode = async (ctx, next) => {
+  const { response } = ctx;
+
+  const accessTokenObject = (ctx.headers.cookie && JSON.parse(ctx.headers.cookie)) ?? {};
+  const accessToken = accessTokenObject["_hm_guit"];
+
+  if (isNil(accessToken)) {
     response.status = 401;
     response.body = {
+      statusCode: 401,
       success: false,
       message: "No session cookie provided",
     }
-  }
+  } else {
 
-  try {
-    const decoded = await jwt.verify(accessToken, SECRET_KEY);
-    ctx.request.studentName = decoded.name;
-    ctx.request.studentEmail = decoded.email;
-    ctx.request.studentNumber = decoded.studentNumber;
-    return next();
-  } catch (error) {
-    console.log("error in jwt.decode");
-    console.error(error);
-    response.status = 401;
-    response.body = {
-      success: false,
-      status: 401,
-      error: error.message,
-    };
-    return;
+    try {
+      const decoded = await jwt.verify(accessToken, SECRET_KEY);
+      ctx.request.studentName = decoded.name;
+      ctx.request.studentEmail = decoded.email;
+      ctx.request.studentNumber = decoded.studentNumber;
+    } catch (error) {
+      console.log("error in jwt.decode");
+      console.error(error);
+      response.status = 401;
+      response.body = {
+        success: false,
+        status: 401,
+        body: {
+          validate: false,
+        },
+        message: error.message,
+      };
+      return;
+    }
   }
+  return next();
 }
 
 export default {
   encode,
   decode,
+  forceGuardDecode,
 }

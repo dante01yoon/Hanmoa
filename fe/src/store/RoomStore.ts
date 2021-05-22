@@ -72,12 +72,14 @@ export default class RoomStore extends BasicStore {
       const [error, response] = await http.POST(`/room/check/${id}`, {
         password: args.password
       });
+
       if (error && (error.status === 401 && !error.validate)) {
         const { callbackError } = args;
         if (!isNil(callbackError) && typeof callbackError === "function") {
           callbackError();
         }
       }
+
       if (response?.success) {
         this.setAuthenticate(id, true);
         const { callbackSuccess } = args;
