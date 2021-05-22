@@ -108,8 +108,21 @@ export const onGetRoom = async (ctx, next) => {
         validation
       }
     }
+    let isPossibleJoin = null;
 
-    const room = await Room.findRoomById({ id });
+    if (ctx.request.studentNumber) {
+      isPossibleJoin = await !User.findJoinedRoomById(id, ctx.request.studentNumber);
+      console.log("isPossibleJoin: ", isPossibleJoin);
+    }
+
+    let room = await Room.findRoomById({ id });
+    if (!isNil(isPossibleJoin)) {
+      const refinedRoom = cloneDeep(room.toObject());
+      console.log("refinedRoom: ", refinedRoom);
+      refinedRoom.isPossibleJoin = isPossibleJoin;
+      room = refinedRoom;
+    }
+
     ctx.status = 200;
     ctx.body = {
       success: true,
