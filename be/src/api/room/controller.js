@@ -30,11 +30,19 @@ export const onGetRoomUsers = async (ctx) => {
 }
 
 export const onGetRooms = async (ctx) => {
-  const { request: { query: { page }, params: { category } } } = ctx;
+  const { request: { query: { page }, params: { category }, studentNumber } } = ctx;
+
   try {
-    const rooms = await Room.getRooms({ page, category });
+    const rooms = await Room.getRooms({ page, category, studentNumber });
     const refinedRooms = rooms.map((room) => {
       const copiedRoom = cloneDeep(room.toObject());
+
+      if (room.join.some(joinedUser => joinedUser.profile.studentNumber === studentNumber)) {
+        copiedRoom.hasJoinedRoom = true;
+      } else {
+        copiedRoom.hasJoinedRoom = false;
+      }
+
       const refinedTopic = pick(room.topic, ["category", "url"]);
       return {
         ...copiedRoom,

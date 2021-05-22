@@ -20,6 +20,7 @@ export default class RoomStore extends BasicStore {
     this.roomList = state?.roomList ?? null;
     this.currentRoom = state?.currentRoom ?? null;
     this.currentTopic = state?.currentTopic ?? null;
+    // 비밀번호가 있는 방인지 해당 필드 확인 
     this.authenticate = state?.authenticate ?? {};
   }
 
@@ -115,7 +116,7 @@ export default class RoomStore extends BasicStore {
     if (rooms) {
       this.roomList = this.roomList ? [...this.roomList, ...rooms] : rooms;
       rooms.forEach((room) => {
-        if (!room.hasPassword) {
+        if (!room.hasPassword || room.hasJoinedRoom) {
           this.setAuthenticate(room.id, true);
         }
         else if (isNil(this.authenticate[room.id])) {

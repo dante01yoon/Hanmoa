@@ -155,7 +155,8 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
         <StyledSelf>
           <StyledArticle ref={chatRoomRef}>
             <EmbedChatRoom disabled={!roomStore.isAuthenticate(roomId)}>{
-              roomStore.isAuthenticate(roomId)
+              // 비밀번호가 있으면 입력, 방 멤버인지 확인 후 렌더링
+              roomStore.isAuthenticate(roomId) && roomStore.currentRoom?.hasJoinedRoom
                 ?
                 renderChatContent()
                 :

@@ -23,7 +23,7 @@ class SessionStore extends BasicStore {
     try {
       const [error, response] = await this.api.GET<GetUserPayload>(`/users/me`, {}, {
         headers: {
-          cookie: req && JSON.stringify(req.cookies),
+          cookie: req && req.cookies,
         }
       });
 

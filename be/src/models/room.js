@@ -3,7 +3,8 @@ import createUUID from "../lib/uuid";
 import User from "./user";
 import Topic from "./topic";
 import { GradientFilter, roomJoinGuard } from "../lib";
-import { isNil } from "lodash";
+import isNil from "lodash/isNil";
+import cloneDeep from "lodash/cloneDeep";
 
 const Gradient = new GradientFilter();
 
@@ -139,11 +140,13 @@ Room.statics.getRooms = async function (args) {
     topic = await Topic.findTopic({ category });
   }
   const findArgs = topic ? { topic: topic._id } : {};
+
   let rooms = await this.find(findArgs)
     .populate("topic join host")
     .sort({ "time": -1 })
     .skip(page * 10)
     .limit(12);
+
   if (!rooms.length) {
     roomsCache.set(page, rooms);
   } else {

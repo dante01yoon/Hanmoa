@@ -18,8 +18,9 @@ export interface Room {
   current: number;
   capability: number;
   gradient: string;
-  joinPossible: boolean;
+  joinPossible: boolean; // TODO 방에 참여를 아직 안한건지, 단순히 아직 공석이 있는건지 구분이 안됨.  지금은 후자의 의미로 쓰임
   hasPassword: boolean;
+  hasJoinedRoom: boolean | null;
 }
 
 // GET /room/only/${id}
