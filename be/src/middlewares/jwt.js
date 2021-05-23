@@ -32,10 +32,11 @@ export const encode = async (ctx, next) => {
       },
     };
 
-    console.log("ctx.state.authToken: ", ctx.state.authToken);
     cookies.set("_hm_guit", ctx.state.authToken, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      sameSite: "Lax",
+      // secure: true,
     });
 
     await next();
@@ -59,9 +60,11 @@ export const encode = async (ctx, next) => {
  * @returns 
  */
 export const decode = async (ctx, next) => {
-  const { response, cookies } = ctx;
+  const { response, cookies, request } = ctx;
+  console.log("request.headers in decode", request.headers);
   const accessToken = cookies.get("_hm_guit");
-
+  console.log("cookies in decode: ", cookies);
+  console.log("accessToken in decode: ", accessToken);
   if (isNil(accessToken)) {
     return next();
   } else {
@@ -71,7 +74,7 @@ export const decode = async (ctx, next) => {
       ctx.request.studentEmail = decoded.email;
       ctx.request.studentNumber = decoded.studentNumber;
     } catch (error) {
-      console.log("error in jwt.decode");
+      console.error("error in jwt.decode");
       console.error(error);
       response.status = 401;
       response.body = {
@@ -96,7 +99,7 @@ export const decode = async (ctx, next) => {
  * @returns 
  */
 const forceGuardDecode = async (ctx, next) => {
-  const { response, cookies } = ctx;
+  const { response, cookies, request } = ctx;
   const accessToken = cookies.get("_hm_guit");
 
   if (isNil(accessToken)) {
@@ -107,14 +110,13 @@ const forceGuardDecode = async (ctx, next) => {
       message: "No session cookie provided",
     }
   } else {
-
     try {
       const decoded = await jwt.verify(accessToken, SECRET_KEY);
       ctx.request.studentName = decoded.name;
       ctx.request.studentEmail = decoded.email;
       ctx.request.studentNumber = decoded.studentNumber;
     } catch (error) {
-      console.log("error in jwt.decode");
+      console.error("error in jwt.decode");
       console.error(error);
       response.status = 401;
       response.body = {

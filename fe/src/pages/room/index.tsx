@@ -148,7 +148,10 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
       </>
     );
   };
-
+  useEffect(() => {
+    console.log("roomStore.currentRoom: ", roomStore.currentRoom);
+    console.log(" hasJoinedRoom: ", roomStore.currentRoom?.hasJoinedRoom);
+  }, []);
   return (
     <>
       <section>
@@ -183,7 +186,7 @@ RoomPage.initStoreOnServer = (req: Request<{ id: string }>, {
 }) => {
   const id = reqParser(req, 1);
   const promises: Array<Promise<any>> = [Promise.resolve()];
-  promises.push(roomStore.fetchRoom(id));
+  promises.push(roomStore.fetchRoom(id, req));
   promises.push(chatStore.fetchNewChatMessage(id));
   return Promise.all(promises);
 };

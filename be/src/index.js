@@ -50,7 +50,13 @@ const io = new Server(httpServer, config);
 // next는 다음 미들웨어를 실행시키는 함수
 // 만약 미들웨어에서 next를 호출하지 않으면 요청처리를 완료하고 응답을 하게 됨. 
 // next는 프로미스이다. 
-router.use('/api', api.routes()); // api 라우트를 '/api'  경로 하위 라우트로 설정
+router.use('/api',
+  (ctx, next) => {
+    console.log("ctx.headers in /api: ", ctx.headers);
+    console.log("ctx.cookies in /api: ", ctx.cookies);
+    return next();
+  },
+  api.routes()); // api 라우트를 '/api'  경로 하위 라우트로 설정
 
 app.use(router.routes()).use(router.allowedMethods());
 

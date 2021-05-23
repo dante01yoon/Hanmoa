@@ -88,8 +88,8 @@ export const onGetLatestMessages = async (ctx) => {
 }
 
 export const onGetRoom = async (ctx, next) => {
-  console.log("ctx.request.studentNumber: ", ctx.request.studentNumber);
   const { request: { params: { id }, query: { only } } } = ctx;
+
   if (only) {
     switch (only) {
       case "join":
@@ -100,6 +100,7 @@ export const onGetRoom = async (ctx, next) => {
         return next();
     }
   }
+
   try {
     const validation = makeValidation(types => ({
       payload: id,
@@ -116,13 +117,17 @@ export const onGetRoom = async (ctx, next) => {
         validation
       }
     }
+
     let hasJoinedRoom = null;
+
+    console.log("ctx.request.studentNumber: ", ctx.request.studentNumber);
 
     if (ctx.request.studentNumber) {
       hasJoinedRoom = await User.checkHasJoinedRoomById(id, ctx.request.studentNumber);
     }
 
     let room = await Room.findRoomById({ id });
+
     if (!isNil(hasJoinedRoom)) {
       const refinedRoom = cloneDeep(room.toObject());
       refinedRoom.hasJoinedRoom = hasJoinedRoom;

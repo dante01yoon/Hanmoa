@@ -22,9 +22,7 @@ class SessionStore extends BasicStore {
   async fetch(req?: Request) {
     try {
       const [error, response] = await this.api.GET<GetUserPayload>(`/users/me`, {}, {
-        headers: {
-          cookie: req && req.cookies,
-        }
+        headers: req && req.headers
       });
 
       if (error) {

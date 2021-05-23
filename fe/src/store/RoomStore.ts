@@ -4,6 +4,7 @@ import RootStore from "@store/RootStore";
 import { GetRoomPayload, GetRoomsPayload } from "@payload/index";
 import isNil from "lodash/isNil";
 import { http } from "src/apis/httpModule";
+import { Request } from "express";
 
 export default class RoomStore extends BasicStore {
   @observable roomList: GetRoomsPayload["rooms"] | null;
@@ -51,8 +52,10 @@ export default class RoomStore extends BasicStore {
     return Promise.resolve();
   }
 
-  async fetchRoom(id: string, clear: boolean = false) {
-    const [error, response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`);
+  async fetchRoom(id: string, req?: Request<any>) {
+    const [error, response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`, {
+      headers: req && req.headers,
+    });
     if (error) {
       throw Error(error.error);
     }

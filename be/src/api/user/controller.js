@@ -81,12 +81,25 @@ const onGetUserByEmail = async (ctx) => {
 };
 
 const onGetUserByStudentNumber = async (ctx) => {
-  const { request } = ctx;
+  const { request, response } = ctx;
   const id = request.params.id;
 
   if (id === "me") {
     try {
+      if (isNil(ctx.request.studentNumber)) {
+        response.status = 401;
+        response.body = {
+          success: false,
+          message: "token is not exist",
+          user: {
+            validate: false,
+          }
+        }
+        return;
+      }
+
       const user = await User.findByStudentNumber(ctx.request.studentNumber);
+
       if (user && user.code === 422) {
         response.status = 422;
         response.body = {
@@ -113,6 +126,8 @@ const onGetUserByStudentNumber = async (ctx) => {
         statusCode: 500,
         error: error.error
       }
+      console.error("error in onGetUserByStudentNumber");
+      console.error(error);
     }
     return;
   }
