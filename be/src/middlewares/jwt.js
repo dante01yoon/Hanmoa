@@ -33,10 +33,8 @@ export const encode = async (ctx, next) => {
     };
 
     cookies.set("_hm_guit", ctx.state.authToken, {
-      httpOnly: true,
+      // httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7,
-      sameSite: "Lax",
-      // secure: true,
     });
 
     await next();

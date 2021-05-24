@@ -74,99 +74,99 @@ const TopicSelector = styled.li<{
 `
 
 const ImageFormContainer = styled.div`
-position: relative;
-height: 100 %;
-margin: 0 72px;
+  position: relative;
+  height: 100%;
+  margin: 0 72px;
 `;
 
 const LoadingContainer = styled.div`
-display: flex;
-justify - content: center;
-align - items: center;
-width: 296px;
-height: 162px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 296px;
+  height: 162px;
 `;
 
 const ImagePreview = styled.div<{
   imageUrl: string;
 }>`
-background: url(${({ imageUrl }) => imageUrl})  no - repeat center / 100 %;
-width: 296px;
-height: 168px;
+  background: url(${({ imageUrl }) => imageUrl})  no-repeat center / 100%;
+  width: 296px;
+  height: 168px;
 `;
 
 const ImageFormSelector = styled.label`
-position: absolute;
-left: 50 %;
-bottom: 14px;
-color: #fff;
-background - color: rgba(40, 121, 216, 0.75);
-line - height: 31px;
-font - size: 16px;
-font - weight: 400;
-text - align: center;
-width: 74px;
-height: 31px;
-transform: translate(-50 %, -50 %);
-border - radius: 25px;
-cursor: pointer;
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  color: #fff;
+  background-color: rgba(40, 121, 216, 0.75);
+  line-height: 31px;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  width: 74px;
+  height: 31px;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+  cursor: pointer;
 
   &: hover{
-  background - color: ${({ theme }) => theme.colors.background_blue}
-}
+    background-color: ${({ theme }) => theme.colors.background_blue}
+  }
 `
 
 const HiddenImageInput = styled.input`
-display: none;
+  display: none;
 `;
 
 const FormContainer = styled.div`
-width: 352px;
-height: 300px;
-box - sizing: border - box;
-padding: 24px 41px;
-border: 1px solid;
-border - color: ${({ theme }) => theme.colors.gray_white};
-border - radius: 9px;
+  width: 352px;
+  height: 300px;
+  box-sizing: border-box;
+  padding: 24px 41px;
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.colors.gray_white};
+  border-radius: 9px;
 `;
 
 const StyledFormUl = styled.ul`
 
-  `;
+`;
 
 const StyledFormList = styled.li`
-display: flex;
-justify - content: space - between;
-margin - bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
 `;
 
 const StyledInputTag = styled.div`
-margin - right: 10px;
-line - height: 48px;
+  margin-right: 10px;
+  line-height: 48px;
 `;
 
 const StyledInput = styled.input`
-background - color: ${({ theme }) => theme.colors.whiteGray};
-font - size: 15px;
-width: 195px;
-height: 48px;
-padding: 10px;
-border: 0;
-border - radius: 15px;
+  background-color: ${({ theme }) => theme.colors.whiteGray};
+  font-size: 15px;
+  width: 195px;
+  height: 48px;
+  padding: 10px;
+  border: 0;
+  border-radius: 15px;
 `;
 
 const StyledSubmitButton = styled.button`
-color: ${({ theme }) => theme.colors.white};
-background - color: ${({ theme }) => theme.colors.background_blue};
-float: right;
-clear: right;
-line - height: 31px;
-font - size: 16px;
-width: 74px;
-height: 31px;
-border: 0;
-border - radius: 25px;
-cursor: pointer;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.background_blue};
+  float: right;
+  clear: right;
+  line-height: 31px;
+  font-size: 16px;
+  width: 74px;
+  height: 31px;
+  border: 0;
+  border-radius: 25px;
+  cursor: pointer;
 `;
 
 const validationSchema = yup.object().shape({
