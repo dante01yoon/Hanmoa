@@ -40,7 +40,7 @@ const Gnb: FC<GnbProps> = ({
   const [loginModal, setLoginModal] = useState(false);
   const [visible, setVisible] = useState<boolean>(false);
   const topicRef = createRef<HTMLDivElement>();
-  const { sessionStore } = useMobxStores();
+  const { sessionStore, http, topicStore, roomStore } = useMobxStores();
 
   const checkContain = (e: MouseEvent) => {
     if (e.target instanceof HTMLElement) {
@@ -97,8 +97,14 @@ const Gnb: FC<GnbProps> = ({
     if (sessionStore.isSignedIn) {
       return (
         <>
-          <Item>
-            <SmartLink href="/createRoom">방 만들기</SmartLink>
+          <Item onClick={async () => {
+            // const data = await fetch("http://localhost:5001/api/room/roommate?page=0", { credentials: "include" });
+            const data = await roomStore.fetchRooms("ktx");
+            // const data = await http.GET("http://localhost:5001/api/room/roommate?page=0");
+            console.log(data)
+          }}>
+            테스트
+            {/* <SmartLink href="/createRoom">방 만들기</SmartLink> */}
           </Item>
           <Item>마이페이지</Item>
           <Item onClick={handleLogoutClick}>로그아웃</Item>

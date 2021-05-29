@@ -61,6 +61,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
     if (isNil(roomStore.homeRoomList)) {
       roomStore.fetchRooms()
         .then(({ rooms }: { rooms: any }) => {
+          console.log("roomStore.fetchRooms called");
           setIsLoading(false);
         })
     }

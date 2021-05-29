@@ -6,9 +6,9 @@ import HanmoaMongoDB from "./lib/mongoose";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
 import { createServer } from "http";
+import { https } from "https";
 import socketIo, { Server } from "socket.io";
 import initSocket, { config } from "./lib/socket";
-
 const { jwtMiddleware } = require("./lib/token");
 
 dotenv.config();
@@ -40,7 +40,7 @@ function verifyOrigin(ctx) {
 
 // cors 세팅
 app.use(cors({
-  origin: verifyOrigin,
+  origin: "http://localhost:5000",
   credentials: true,
 }));
 

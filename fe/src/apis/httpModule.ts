@@ -5,13 +5,20 @@ const baseURL = 'http://localhost:5001/api';
 
 const hanmoaAxios: AxiosInstance = axios.create({
   baseURL,
-  headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-  }
+  // headers: {
+  //   "Accept": "application/json",
+  // },
+  withCredentials: true,
 })
 
-hanmoaAxios.defaults.withCredentials = true;
+// hanmoaAxios.defaults.withCredentials = true;
+
+hanmoaAxios.interceptors.request.use((config: any) => {
+  console.log("config: ", config);
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 const request = async<T>(config: AxiosRequestConfig): Promise<APIResponse<T>> => {
   let moreHeaders: {
@@ -20,8 +27,10 @@ const request = async<T>(config: AxiosRequestConfig): Promise<APIResponse<T>> =>
     ...config.headers,
   };
   try {
+    console.log("config in request: ", config);
     // headers: moreHeaders 
-    const { data } = await hanmoaAxios.request({ ...config, });
+    const { data } = await hanmoaAxios.request({ ...config, headers: moreHeaders });
+
     return [undefined, data];
   } catch (error) {
     // TODO error type 지정

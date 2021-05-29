@@ -12,6 +12,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-compose": "^4.1.0",
     "koa-router": "^9.4.0",
+    "koa-sslify": "^5.0.0",
     "koa-websocket": "^6.0.0",
     "lodash": "^4.17.21",
     "mongoose": "^5.10.15",
