@@ -8,12 +8,11 @@ import storeSpec from "@store/storeSpec";
 import getRootData from "@utils/store/getRootData";
 import { http } from "@apis/httpModule";
 
-console.log("initial-state: ", getRootData("initial-state"));
 const store = createStore({
   storeSpec,
   state: getRootData("initial-state"),
 });
-console.log("store after createStore: ", store);
+
 const extraModules = {
   api: http,
 }

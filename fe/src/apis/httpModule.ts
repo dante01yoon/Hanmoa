@@ -5,9 +5,10 @@ const baseURL = 'http://localhost:5001/api';
 
 const hanmoaAxios: AxiosInstance = axios.create({
   baseURL,
-  // headers: {
-  //   "Accept": "application/json",
-  // },
+  headers: {
+    "Accept": "application/json",
+    "X-My-Custom-Header": "Header-Value",
+  },
   withCredentials: true,
 })
 
