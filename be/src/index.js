@@ -52,8 +52,9 @@ const io = new Server(httpServer, config);
 // next는 프로미스이다. 
 router.use('/api',
   (ctx, next) => {
-    console.log("ctx.headers in /api: ", ctx.headers);
-    console.log("ctx.cookies in /api: ", ctx.cookies);
+    console.log("ctx.request:", ctx.request);
+    // console.log("ctx.headers in /api: ", ctx.headers);
+    // console.log("ctx.cookies in /api: ", ctx.cookies);
     return next();
   },
   api.routes()); // api 라우트를 '/api'  경로 하위 라우트로 설정

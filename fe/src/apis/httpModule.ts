@@ -7,7 +7,6 @@ const hanmoaAxios: AxiosInstance = axios.create({
   baseURL,
   headers: {
     "Accept": "application/json",
-    "X-My-Custom-Header": "Header-Value",
   },
   withCredentials: true,
 })
