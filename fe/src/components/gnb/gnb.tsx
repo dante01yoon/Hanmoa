@@ -106,6 +106,9 @@ const Gnb: FC<GnbProps> = ({
             테스트
             {/* <SmartLink href="/createRoom">방 만들기</SmartLink> */}
           </Item>
+          <Item>
+            <SmartLink href="/createRoom">방 만들기</SmartLink>
+          </Item>
           <Item>마이페이지</Item>
           <Item onClick={handleLogoutClick}>로그아웃</Item>
         </>

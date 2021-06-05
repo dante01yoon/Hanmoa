@@ -121,8 +121,6 @@ const HiddenImageInput = styled.input`
 `;
 
 const FormContainer = styled.div`
-  width: 352px;
-  height: 300px;
   box-sizing: border-box;
   padding: 24px 41px;
   border: 1px solid;
@@ -143,6 +141,7 @@ const StyledFormList = styled.li`
 const StyledInputTag = styled.div`
   margin-right: 10px;
   line-height: 48px;
+  white-space: nowrap;
 `;
 
 const StyledInput = styled.input`

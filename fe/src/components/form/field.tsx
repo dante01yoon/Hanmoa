@@ -7,8 +7,11 @@ interface CustomFieldProps extends FieldAttributes<any> {
   isError?: boolean;
 }
 
+const StyledFieldWrapper = styled.div`
+`;
+
 const StyledInput = styled.input`
-  background-color: ${({theme}) => theme.colors.whiteGray};
+  background-color: ${({ theme }) => theme.colors.whiteGray};
   font-size: 15px;
   width: 195px;
   height: 48px;
@@ -18,7 +21,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledErrorField = styled.div`
-  margin-top: 2px;
+  margin-top: 5px;
 `;
 
 const Field: FC<CustomFieldProps> = ({
@@ -29,10 +32,10 @@ const Field: FC<CustomFieldProps> = ({
   console.log("touched: ", touched);
   console.log("errors: ", errors);
   return (
-    <>
-      <FormikField {...restProps} as={StyledInput}/>
+    <StyledFieldWrapper>
+      <FormikField {...restProps} as={StyledInput} />
       {errors && errors[name] && <StyledErrorField>{errors[name]}</StyledErrorField>}
-    </>
+    </StyledFieldWrapper>
   )
 }
 

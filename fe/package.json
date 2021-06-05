@@ -43,6 +43,7 @@
     "socket.io-client": "^4.0.1",
     "styled-components": "^5.1.1",
     "styled-reset": "^4.1.5",
+    "stylelint-order": "^4.1.0",
     "typescript": "^3.9.3",
     "yup": "^0.32.8"
   },
@@ -95,7 +96,7 @@
     "prettier": "^2.0.5",
     "react-hot-loader": "^4.12.21",
     "serve-favicon": "^2.5.0",
-    "stylelint": "^13.5.0",
+    "stylelint": "^13.13.1",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.10.0",
