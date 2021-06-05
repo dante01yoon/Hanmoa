@@ -1,8 +1,8 @@
-import React, {FC, useEffect} from "react";
-import styled, {keyframes} from "styled-components";
+import React, { FC, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
 import type { Theme } from "@theme/interface/theme";
 
-const rotateAnimation = (props: {theme: Theme}) => keyframes`
+const rotateAnimation = (props: { theme: Theme }) => keyframes`
    0%{
      transform: rotate(0deg);
    }
@@ -20,38 +20,38 @@ const rotateAnimation = (props: {theme: Theme}) => keyframes`
 const StyledSelf = styled.div<{
   width?: string;
   height?: string;
-  position?: Record<string,any>;
+  position?: Record<string, any>;
 }>`
-  position: relative;
   display: inline-block;
+  position: relative;
   width: 100%;
   height: 100%;
 
   &:after {
-    position: absolute;
-    left: ${({position}) => (position && position.left) ?? "0"};
-    right: ${({position}) => (position && position.right) ?? "0"};
-    top: ${({position}) => (position && position.top) ?? "auto"};
-    bottom: ${({position}) => (position && position.bottom) ?? "auto"};
-    margin: auto;
     content: "";
     display: block;
-    width: ${({width}) => width ? width : "100%"};
-    height: ${({height}) => height ? height : "100%"};
+    position: absolute;
+    top: ${({ position }) => (position && position.top) ?? "auto"};
+    right: ${({ position }) => (position && position.right) ?? "0"};
+    bottom: ${({ position }) => (position && position.bottom) ?? "auto"};
+    left: ${({ position }) => (position && position.left) ?? "0"};
+    transform: translate(-50%, -50%);
+    width: ${({ width }) => width ? width : "100%"};
+    height: ${({ height }) => height ? height : "100%"};
+    border: 3px solid ${({ theme }) => theme.colors.blue};
+    border-color: ${({ theme }) => theme.colors.blue} transparent ${({ theme }) => theme.colors.blue} transparent;
     border-radius: 50%;
-    border: 3px solid ${({theme}) => theme.colors.blue};
-    border-color: ${({theme}) => theme.colors.blue} transparent ${({theme}) => theme.colors.blue} transparent;
+    margin: auto;
     animation: ${rotateAnimation} 1.2s infinite linear;
-    transform: translate(-50%, 0);
   }
 `;
 
 
 export interface LoadingProps {
-  isLoading?: boolean; 
+  isLoading?: boolean;
   width?: string;
   height?: string;
-  position?: Record<string,any>;
+  position?: Record<string, any>;
 }
 
 const Loading: FC<LoadingProps> = ({
@@ -60,10 +60,10 @@ const Loading: FC<LoadingProps> = ({
   height,
   position,
 }) => {
-  
-  return(
-    <StyledSelf 
-      width={width} 
+
+  return (
+    <StyledSelf
+      width={width}
       height={height}
       position={position}
     />

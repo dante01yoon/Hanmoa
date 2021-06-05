@@ -8,6 +8,7 @@ interface CustomFieldProps extends FieldAttributes<any> {
 }
 
 const StyledFieldWrapper = styled.div`
+  max-width: 195px;
 `;
 
 const StyledInput = styled.input`
@@ -21,7 +22,8 @@ const StyledInput = styled.input`
 `;
 
 const StyledErrorField = styled.div`
-  margin-top: 5px;
+  color: ${({ theme }) => theme.colors.light_red};
+  margin-top: 15px;
 `;
 
 const Field: FC<CustomFieldProps> = ({

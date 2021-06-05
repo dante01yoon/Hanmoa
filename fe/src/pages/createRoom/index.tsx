@@ -100,7 +100,7 @@ const ImageFormSelector = styled.label`
   left: 50%;
   bottom: 14px;
   color: #fff;
-  background-color: rgba(40, 121, 216, 0.75);
+  background-color: ${({ theme }) => theme.colors.blue};
   line-height: 31px;
   font-size: 16px;
   font-weight: 400;
@@ -111,7 +111,7 @@ const ImageFormSelector = styled.label`
   border-radius: 25px;
   cursor: pointer;
 
-  &: hover{
+  &:hover{
     background-color: ${({ theme }) => theme.colors.background_blue}
   }
 `
@@ -139,6 +139,7 @@ const StyledFormList = styled.li`
 `;
 
 const StyledInputTag = styled.div`
+  color: ${({ theme }) => theme.colors.gray_white};
   margin-right: 10px;
   line-height: 48px;
   white-space: nowrap;
@@ -156,7 +157,7 @@ const StyledInput = styled.input`
 
 const StyledSubmitButton = styled.button`
   color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.background_blue};
+  background-color: ${({ theme }) => theme.colors.blue};
   float: right;
   clear: right;
   line-height: 31px;
@@ -166,6 +167,10 @@ const StyledSubmitButton = styled.button`
   border: 0;
   border-radius: 25px;
   cursor: pointer;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.background_blue};
+  }
 `;
 
 const validationSchema = yup.object().shape({
@@ -301,7 +306,8 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
                         width={"40px"}
                         height={"40px"}
                         position={{
-                          top: "25px",
+                          top: "50%",
+                          bottom: "50%",
                         }}
                       />
                     </LoadingContainer>
