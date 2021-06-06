@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import Field from "@components/form/field";
 import Loading from "@components/loading";
+import CreationCarousel from "@components/carousel/creationCarousel";
 
 interface CreateRoomPageProps {
 
@@ -58,7 +59,7 @@ const TopicSelector = styled.li<{
   align-items: center;
   justify-content: center;
   color: ${({ theme, isSelected }) => isSelected
-    ? theme.colors.black
+    ? theme.colors.background_black
     : theme.colors.gray_white};
   background-color: ${({ theme, isSelected }) => isSelected ? theme.colors.gray_white : "transparent"};
   font-size: 15px;
@@ -68,7 +69,7 @@ const TopicSelector = styled.li<{
   cursor: pointer;
 
   &: hover{
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.background_black};
     background-color: #E5E5E5;
 }
 `
@@ -395,6 +396,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
         </StyledArticle>
         <StyledArticle>
           <StyledTitle>'{topicState.category}' 토픽에 대한 멤버를 구하고 있어요!</StyledTitle>
+          <CreationCarousel />
         </StyledArticle>
       </StyledSection>
     </StyledSelf>
