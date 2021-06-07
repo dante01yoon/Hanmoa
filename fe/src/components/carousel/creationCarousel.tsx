@@ -1,6 +1,8 @@
 import React, { FC, useRef, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import styled, { css } from "styled-components";
+import Card from "@components/card";
+import CreationSlider from "./creationSlider";
 
 const breakPoints = [360, 600, 1100];
 
@@ -10,6 +12,7 @@ const StyledWrapper = styled.div`
 
 const buttonStyle = () => css`
   position: absolute;
+  z-index: 1;
   background-color: ${({ theme }) => theme.colors.gray};
   line-height: 70px;
   text-align: center;
@@ -33,11 +36,11 @@ const StyledRightButton = styled.div`
 const StyledLeftButton = styled.div`
   ${buttonStyle}
   top: 50%;
-  left: 0;
+  left: 8px;
   transform: translateY(-50%);
 `;
 
-const StyledSlider = styled.div`
+const StyledContainer = styled.div`
   
 `;
 
@@ -60,7 +63,7 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
 
   const renderContents = (): Array<React.ReactNode> | React.ReactNode => {
     if (contents.length > 0) {
-      return null;
+      return contents.map((room: any, idx: number) => <Card key={`$::${idx}`} room={room} handleClick={console.log} />);
     }
     return null;
   }
@@ -69,7 +72,11 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
     <StyledWrapper>
       <StyledLeftButton onClick={handleClickButton("left")}>{'<'}</StyledLeftButton>
       <StyledRightButton onClick={handleClickButton("right")}>{'>'}</StyledRightButton>
-      <StyledSlider>{renderContents}</StyledSlider>
+      <StyledContainer>
+        <CreationSlider>
+          {renderContents()}
+        </CreationSlider>
+      </StyledContainer>
     </StyledWrapper>
   )
 }

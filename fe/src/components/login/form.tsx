@@ -1,16 +1,16 @@
 import useContactForm from '@utils/form/useContactForm';
-import {useFormik, FormikProps } from 'formik';
+import { useFormik, FormikProps } from 'formik';
 import React, { FC, useState, useRef, useEffect } from 'react';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import CheckIcon from 'src/asset/check.svg'; 
+import CheckIcon from 'src/asset/check.svg';
 
 const StyledFormList = styled.ul`
   
 `;
 
 const StyledList = styled.li<{
-  
+
 }>`
  & > label {
    display: inline-block;
@@ -23,12 +23,12 @@ const StyledList = styled.li<{
 const StyledIcon = styled.p<{
   valid: boolean
 }>`
+  background-size: cover;
+  background-position: center; 
   width: 64px;
   height: 64px; 
   ${p => `background: url(${'src/asset/check.svg'})`};
-  background-size: cover;
-  background-position: center; 
-`; 
+`;
 const StyledInput = styled.input<{
   focus: boolean
 }>`
@@ -39,18 +39,20 @@ const StyledInput = styled.input<{
 `;
 const StyledButtonContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  
   & > button {
-    border-radius: 8px;
-    margin: 8px;
+    background-color: transparent; 
     width: 72px;
     height: 32px;
-    border: 1px solid ${p => p.theme.colors.gray700};
-    background-color: transparent; 
+    border: 1px solid ${p => p.theme.colors.gray_700};
+    border-radius: 8px;
+    margin: 8px;
     transition: all ease-in 0.2ms;  
+    
     :hover {
-      background-color: ${p=>p.theme.colors.cyan};
+      background-color: ${p => p.theme.colors.cyan};
       color: ${p => p.theme.colors.white};
       box-shadow: 
     }
@@ -58,10 +60,10 @@ const StyledButtonContainer = styled.div`
 `;
 const StyledSubmitButton = styled.button`
 
-`;  
-interface IFormValues  {
+`;
+interface IFormValues {
   email: string;
-  password: string; 
+  password: string;
 }
 
 interface IErrors {
@@ -70,10 +72,10 @@ interface IErrors {
 
 interface IFormProps {
   message: string;
-  onSubmit: (e:React.FormEvent<HTMLFormElement>) => void
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-interface IFocusState { 
+interface IFocusState {
   email: boolean
   password: boolean
 }
@@ -81,14 +83,14 @@ interface IFocusState {
 type TFocusedState = "email" | "password" | "none";
 
 const Form: FC<IFormProps> = ({
-  message, 
+  message,
   onSubmit
 }) => {
   const [focus, setFocus] = useState<IFocusState>({
     email: false,
     password: false
   });
-  const [focused, setFocused ] = useState("none");
+  const [focused, setFocused] = useState("none");
 
   const { initialValues, handleSubmit } = useContactForm();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -96,11 +98,11 @@ const Form: FC<IFormProps> = ({
     initialValues,
     onSubmit: handleSubmit
   });
-  
-  const setFocusExtend = ( param: IFocusState) => {
+
+  const setFocusExtend = (param: IFocusState) => {
     const { email, password } = param;
     setFocus(param);
-    if( email === true){
+    if (email === true) {
       setFocused("email");
     } else {
       setFocused("password");
@@ -109,48 +111,48 @@ const Form: FC<IFormProps> = ({
 
 
   useEffect(() => {
-    if( inputRef.current ){
+    if (inputRef.current) {
       inputRef.current.focus();
       setFocusExtend({
         email: true,
         password: false
       })
     }
-   },[])
+  }, [])
   const renderField = () => {
-    return(
-        <>
-          <StyledList key={`_field::email`}>
-            <label htmlFor="email">이메일</label>
-            <StyledInput
-              required 
-              ref={inputRef}
-              onChange={formik.handleChange}
-              name={"email"}
-              value={formik.values.email}
-              type={"email"}
-              focus={focused === "email"}
-              onClick={() => setFocused("email")}
-              onKeyDown={()=> setFocused("email")}
-            />
-          </StyledList>
-          <StyledList key={`_field::password`}>
-            <label htmlFor="password">비밀번호</label>
-            <StyledInput
-              required
-              onChange={formik.handleChange}
-              name={"password"}
-              value={formik.values.password}
-              type={"password"}
-              focus={focused === "password"}
-              onClick={() => setFocused("password")} 
-              onKeyDown={()=> setFocused("password")}
-            />
-          </StyledList>
-        </>
-      )
+    return (
+      <>
+        <StyledList key={`_field::email`}>
+          <label htmlFor="email">이메일</label>
+          <StyledInput
+            required
+            ref={inputRef}
+            onChange={formik.handleChange}
+            name={"email"}
+            value={formik.values.email}
+            type={"email"}
+            focus={focused === "email"}
+            onClick={() => setFocused("email")}
+            onKeyDown={() => setFocused("email")}
+          />
+        </StyledList>
+        <StyledList key={`_field::password`}>
+          <label htmlFor="password">비밀번호</label>
+          <StyledInput
+            required
+            onChange={formik.handleChange}
+            name={"password"}
+            value={formik.values.password}
+            type={"password"}
+            focus={focused === "password"}
+            onClick={() => setFocused("password")}
+            onKeyDown={() => setFocused("password")}
+          />
+        </StyledList>
+      </>
+    )
   }
-  return(
+  return (
     <form onSubmit={formik.handleSubmit}>
       <article>
         <StyledFormList>
@@ -158,7 +160,7 @@ const Form: FC<IFormProps> = ({
         </StyledFormList>
       </article>
       <article>
-        <StyledButtonContainer> 
+        <StyledButtonContainer>
           <StyledSubmitButton type="submit"> 등록 </StyledSubmitButton>
           <StyledSubmitButton type="button"> 회원가입 </StyledSubmitButton>
         </StyledButtonContainer>
@@ -167,4 +169,4 @@ const Form: FC<IFormProps> = ({
   )
 }
 
-export default Form; 
+export default Form;

@@ -174,6 +174,10 @@ const StyledSubmitButton = styled.button`
   }
 `;
 
+const StyledCarouselWrapper = styled.div`
+  margin-top: 20px;
+`;
+
 const validationSchema = yup.object().shape({
   title: yup.string()
     .min(2, "제목은 최소 2자 이상이어야 합니다.")
@@ -289,6 +293,85 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
 
   }
 
+  const dummy = {
+    "imageUrl": "",
+    "join": [
+      {
+        "profile": {
+          "picture": "/static/images/default_profile.png",
+          "name": "RU Who",
+          "studentNumber": "21500492",
+          "email": "21500492@handong.edu",
+          "id": "85ed6"
+        },
+        "joinIn": [
+          "60a64c06d19616367780fe84"
+        ],
+        "hostIn": [],
+        "_id": "60a64bf9d19616367780fe83",
+        "createdAt": "2021-05-20T11:46:01.543Z",
+        "updatedAt": "2021-05-20T11:46:14.750Z",
+        "__v": 1
+      },
+      {
+        "profile": {
+          "picture": "/static/images/default_profile.png",
+          "name": "jaewon Yoon",
+          "studentNumber": "21300492",
+          "email": "21300492@handong.edu",
+          "id": "b6e15"
+        },
+        "joinIn": [
+          "60a64c06d19616367780fe84"
+        ],
+        "hostIn": [],
+        "_id": "60a64a51746f8a341b436b73",
+        "createdAt": "2021-05-20T11:38:57.476Z",
+        "updatedAt": "2021-05-21T13:33:42.013Z",
+        "__v": 1
+      }
+    ],
+    "messages": [
+      "60a64c5fa386e836a1c80d5c",
+      "60a7b1698df759e65ff6140c"
+    ],
+    "hasPassword": true,
+    "_id": "60a64c06d19616367780fe84",
+    "title": "auth 룸 조인 테스트",
+    "subTitle": "3명 구합니다",
+    "host": {
+      "profile": {
+        "picture": "/static/images/default_profile.png",
+        "name": "RU Who",
+        "studentNumber": "21500492",
+        "email": "21500492@handong.edu",
+        "id": "85ed6"
+      },
+      "joinIn": [
+        "60a64c06d19616367780fe84"
+      ],
+      "hostIn": [],
+      "_id": "60a64bf9d19616367780fe83",
+      "createdAt": "2021-05-20T11:46:01.543Z",
+      "updatedAt": "2021-05-20T11:46:14.750Z",
+      "__v": 1
+    },
+    "topic": {
+      "category": "netflix",
+      "url": "netflix"
+    },
+    "createdBy": "60a64bf9d19616367780fe83",
+    "capability": 4,
+    "password": "1234",
+    "gradient": "linear-gradient(90deg, rgba(65,75,75,0.7105217086834734) 0%, rgba(197,206,212,1) 100%)",
+    "id": "32dc0",
+    "time": "2021-05-20T11:46:14.349Z",
+    "__v": 3,
+    "hasJoinedRoom": true,
+    "current": 2,
+    "joinPossible": true
+  }
+  const dummyContents = new Array(10).fill(dummy);
   return (
     <StyledSelf>
       <StyledSection>
@@ -396,7 +479,9 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
         </StyledArticle>
         <StyledArticle>
           <StyledTitle>'{topicState.category}' 토픽에 대한 멤버를 구하고 있어요!</StyledTitle>
-          <CreationCarousel />
+          <StyledCarouselWrapper>
+            <CreationCarousel contents={dummyContents} />
+          </StyledCarouselWrapper>
         </StyledArticle>
       </StyledSection>
     </StyledSelf>

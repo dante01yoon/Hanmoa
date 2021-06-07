@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { Indicator } from './indicator'; 
+import { Indicator } from './indicator';
 import useResize from '@utils/carousel/windowResize';
 /***
  * @component
@@ -11,13 +11,14 @@ import useResize from '@utils/carousel/windowResize';
  */
 
 const Button = styled.button`
-  height:100%;
-  bottom: 0;
   position: absolute;
-  background-color: ${p => p.theme.colors.transparent};
-  cursor: pointer;
+  bottom: 0;
+  background-color: transparent;
+  height:100%;
   opacity: 0;
+  cursor: pointer;
   transition: all 0.5s ease;
+  
   &:hover {
     opacity:0.5; 
   }
@@ -32,8 +33,8 @@ const Button = styled.button`
 // parent covering Slider
 const SliderContainer = styled.div` 
   position:relative;
-  overflow: hidden;
   margin: 0 auto;
+  overflow: hidden;
 
   @media (min-width: 344px ){
     width: 344px;
@@ -50,78 +51,78 @@ const SliderContainer = styled.div`
 `;
 
 const Slider = styled.div<{
-  parentWidth: number 
+  parentWidth: number
   transition: number
-  translation: number 
+  translation: number
 }>` 
   display: flex;
-  width: ${p => p.parentWidth}px; 
   transform: translateX(-${p => p.translation}px);
-  transition: transform ease-out ${p => p.transition}s;
+  width: ${p => p.parentWidth}px; 
   overflow:hidden;
+  transition: transform ease-out ${p => p.transition}s;
 `;
 
 type StateProps = {
-  activeIndex: number; 
-  transition: number; 
-  translate: number; 
+  activeIndex: number;
+  transition: number;
+  translate: number;
 }
 
 export const Carousel: FC = ({
   children
 }) => {
-  const parentRef = useRef<HTMLDivElement>(null); 
-  const [state, setState ] = useState<StateProps>({
+  const parentRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState<StateProps>({
     activeIndex: 0,
     translate: 0,
     transition: 0.25
-})
+  })
   const parentWidth = useResize(parentRef);
   const { activeIndex, translate, transition } = state;
-  const total = React.Children.count(children); 
+  const total = React.Children.count(children);
   const nextSlide = () => {
-    if( activeIndex < total -1 ){ 
-      setState({ 
-        transition: 0.5,
-        translate: (activeIndex + 1) * parentWidth ,
-        activeIndex: activeIndex +1 
-       });
-    } else if( activeIndex === total-1 ){
+    if (activeIndex < total - 1) {
       setState({
-        transition: 0, 
+        transition: 0.5,
+        translate: (activeIndex + 1) * parentWidth,
+        activeIndex: activeIndex + 1
+      });
+    } else if (activeIndex === total - 1) {
+      setState({
+        transition: 0,
         translate: 0,
         activeIndex: 0
       })
     }
   }
-  
+
   const prevSlide = () => {
-    if( activeIndex > 0 ){
+    if (activeIndex > 0) {
       setState({
         transition: 0.5,
-        translate: (activeIndex -1) * parentWidth,
-        activeIndex: activeIndex -1
+        translate: (activeIndex - 1) * parentWidth,
+        activeIndex: activeIndex - 1
       })
-    } else if( activeIndex === 0 ){
+    } else if (activeIndex === 0) {
       setState({
         transition: 0,
-        translate: (total-1) * parentWidth,
-        activeIndex: total-1 
+        translate: (total - 1) * parentWidth,
+        activeIndex: total - 1
       })
     }
   }
-  return(
+  return (
     <SliderContainer ref={parentRef}>
       <Slider
         translation={translate}
         transition={transition}
         parentWidth={parentWidth * total}
       >
-        {children}        
-      </Slider>   
-      <Indicator now={activeIndex+1} total={total}/>
+        {children}
+      </Slider>
+      <Indicator now={activeIndex + 1} total={total} />
       <Button onClick={prevSlide}>left</Button>
       <Button onClick={nextSlide}>right</Button>
     </SliderContainer>
   )
-} 
+}
