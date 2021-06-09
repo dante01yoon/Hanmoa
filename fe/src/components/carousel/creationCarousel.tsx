@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect } from "react";
+import React, { FC, useRef, useEffect, useState, } from "react";
 import { observer } from "mobx-react-lite";
 import styled, { css } from "styled-components";
 import Card from "@components/card";
@@ -51,10 +51,12 @@ interface CreationCarouselProps {
 const CreationCarousel: FC<CreationCarouselProps> = ({
   contents = [],
 }) => {
+  const [firstCardIndex, setFirstCardIndex] = useState(0)
 
   const handleClickButton = (direction: "left" | "right") => () => {
     if (direction === "left") {
       // left button action 
+
     } else {
       // right button action
     }
@@ -73,7 +75,7 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
       <StyledLeftButton onClick={handleClickButton("left")}>{'<'}</StyledLeftButton>
       <StyledRightButton onClick={handleClickButton("right")}>{'>'}</StyledRightButton>
       <StyledContainer>
-        <CreationSlider>
+        <CreationSlider firstCardIndex={firstCardIndex}>
           {renderContents()}
         </CreationSlider>
       </StyledContainer>

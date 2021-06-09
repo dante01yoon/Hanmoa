@@ -11,12 +11,13 @@ const StyledSliderContainer = styled.div`
 `;
 
 interface CreationSliderProps {
+  firstCardIndex: number;
 }
 
 const CreationSlider: FC<CreationSliderProps> = ({
   children,
+  firstCardIndex,
 }) => {
-
   return (
     <StyledSliderWrapper>
       <StyledSliderContainer>
