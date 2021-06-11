@@ -12,20 +12,23 @@ const StyledSliderContainer = styled.div<{
 }>`
   transform: ${({ vectorX }) => `translateX(${vectorX}px)`};
   white-space: nowrap;
+  transition: transform ease-in 0.3s;
 `;
 
 interface CreationSliderProps {
   firstCardIndex: number;
+  vectorX: number;
 }
 
 const CreationSlider: FC<CreationSliderProps> = ({
   children,
   firstCardIndex,
+  vectorX
 }) => {
 
   return (
     <StyledSliderWrapper>
-      <StyledSliderContainer vectorX={-120}>
+      <StyledSliderContainer vectorX={vectorX}>
         {children}
       </StyledSliderContainer>
     </StyledSliderWrapper>

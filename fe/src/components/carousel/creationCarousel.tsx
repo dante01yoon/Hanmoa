@@ -52,13 +52,17 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
   contents = [],
 }) => {
   const [firstCardIndex, setFirstCardIndex] = useState(0)
+  const [vectorX, setVectorX] = useState(0);
 
   const handleClickButton = (direction: "left" | "right") => () => {
     if (direction === "left") {
       // left button action 
-
+      setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex + 3);
+      setVectorX((prevVectorX) => prevVectorX - 300 * (firstCardIndex / 3 + 1));
     } else {
       // right button action
+      setVectorX((prevVectorX) => prevVectorX + 300 * (firstCardIndex / 3 + 1));
+      setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex - 3);
     }
 
   }
@@ -75,7 +79,7 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
       <StyledLeftButton onClick={handleClickButton("left")}>{'<'}</StyledLeftButton>
       <StyledRightButton onClick={handleClickButton("right")}>{'>'}</StyledRightButton>
       <StyledContainer>
-        <CreationSlider firstCardIndex={firstCardIndex}>
+        <CreationSlider firstCardIndex={firstCardIndex} vectorX={vectorX}>
           {renderContents()}
         </CreationSlider>
       </StyledContainer>
