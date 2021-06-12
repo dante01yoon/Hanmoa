@@ -57,18 +57,45 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
   const [vectorX, setVectorX] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
   const size = useResize(sliderRef);
+
   const handleClickButton = (direction: "left" | "right") => () => {
+    let stepToMove = 0;
+    let pixelToMove = 300;
+
     if (direction === "left") {
-      // left button action 
-      setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex + 3);
-      setVectorX((prevVectorX) => prevVectorX - 300 * (firstCardIndex / 3 + 1));
-    } else {
-      if (firstCardIndex === 0) {
-        return;
+      // right button action 
+      const remainCounts = contents.length - firstCardIndex;
+      if (remainCounts > 5) {
+        stepToMove = 3;
       }
-      // right button action
-      setVectorX((prevVectorX) => prevVectorX + 300 * (firstCardIndex / 3 + 1));
-      setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex - 3);
+      else if (remainCounts === 5) {
+        stepToMove = 2;
+      }
+      else if (remainCounts === 4) {
+        stepToMove = 1;
+      }
+      else {
+        stepToMove = 0;
+      }
+      setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex + stepToMove);
+      setVectorX((prevVectorX) => prevVectorX - pixelToMove * stepToMove);
+    } else {
+      // left button action
+      const remainCounts = firstCardIndex;
+      if (remainCounts > 2) {
+        stepToMove = 3;
+      }
+      else if (remainCounts === 2) {
+        stepToMove = 2;
+      }
+      else if (remainCounts === 1) {
+        stepToMove = 1;
+      }
+      else {
+        stepToMove = 0;
+      }
+      setVectorX((prevVectorX) => prevVectorX + pixelToMove * stepToMove);
+      setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex - stepToMove);
     }
 
   }
