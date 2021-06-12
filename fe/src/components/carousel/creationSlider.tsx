@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { FC, MutableRefObject, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import styled from "styled-components";
 
@@ -18,16 +18,18 @@ const StyledSliderContainer = styled.div<{
 interface CreationSliderProps {
   firstCardIndex: number;
   vectorX: number;
+  forwardRef: MutableRefObject<HTMLDivElement | null>
 }
 
 const CreationSlider: FC<CreationSliderProps> = ({
   children,
   firstCardIndex,
-  vectorX
+  vectorX,
+  forwardRef,
 }) => {
 
   return (
-    <StyledSliderWrapper>
+    <StyledSliderWrapper ref={forwardRef}>
       <StyledSliderContainer vectorX={vectorX}>
         {children}
       </StyledSliderContainer>

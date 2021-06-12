@@ -1,8 +1,10 @@
 import React, { FC, useRef, useEffect, useState, } from "react";
 import { observer } from "mobx-react-lite";
+import { debounce } from "lodash";
 import styled, { css } from "styled-components";
 import Card from "@components/card";
 import CreationSlider from "./creationSlider";
+import useResize from "@utils/carousel/windowResize";
 
 const breakPoints = [360, 600, 1100];
 
@@ -53,13 +55,17 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
 }) => {
   const [firstCardIndex, setFirstCardIndex] = useState(0)
   const [vectorX, setVectorX] = useState(0);
-
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const size = useResize(sliderRef);
   const handleClickButton = (direction: "left" | "right") => () => {
     if (direction === "left") {
       // left button action 
       setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex + 3);
       setVectorX((prevVectorX) => prevVectorX - 300 * (firstCardIndex / 3 + 1));
     } else {
+      if (firstCardIndex === 0) {
+        return;
+      }
       // right button action
       setVectorX((prevVectorX) => prevVectorX + 300 * (firstCardIndex / 3 + 1));
       setFirstCardIndex((prevFirstCardIndex) => prevFirstCardIndex - 3);
@@ -74,12 +80,23 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
     return null;
   }
 
+  useEffect(() => {
+    window.addEventListener("resize", debounce(() => {
+      setFirstCardIndex(0);
+      setVectorX(0);
+    }, 200));
+  }, []);
+
   return (
     <StyledWrapper>
-      <StyledLeftButton onClick={handleClickButton("left")}>{'<'}</StyledLeftButton>
-      <StyledRightButton onClick={handleClickButton("right")}>{'>'}</StyledRightButton>
+      <StyledLeftButton onClick={handleClickButton("right")}>{'<'}</StyledLeftButton>
+      <StyledRightButton onClick={handleClickButton("left")}>{'>'}</StyledRightButton>
       <StyledContainer>
-        <CreationSlider firstCardIndex={firstCardIndex} vectorX={vectorX}>
+        <CreationSlider
+          forwardRef={sliderRef}
+          firstCardIndex={firstCardIndex}
+          vectorX={vectorX}
+        >
           {renderContents()}
         </CreationSlider>
       </StyledContainer>
