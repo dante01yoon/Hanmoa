@@ -30,10 +30,10 @@ interface CardProps {
   width?: number;
   height?: number;
   room: GetRoomPayload["room"];
-  handleClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
+const Card: FC<CardProps> = ({ width, height, room, onClick }) => {
   const [like, setLike] = useState<boolean>(false);
   const {
     imageUrl,
@@ -64,9 +64,9 @@ const Card: FC<CardProps> = ({ width, height, room, handleClick }) => {
       <GradientBox
         isJoinPossible={joinPossible}
         gradient={gradient}
-        onClick={joinPossible ? handleClick : noop}
+        onClick={joinPossible ? onClick : noop}
       >
-        <ImgBox imgUrl={extractedUrl} onClick={joinPossible ? handleClick : noop} isJoinPossible={joinPossible} />
+        <ImgBox imgUrl={extractedUrl} onClick={joinPossible ? onClick : noop} isJoinPossible={joinPossible} />
       </GradientBox>
       <ContentBox>
         <CategoryBox>

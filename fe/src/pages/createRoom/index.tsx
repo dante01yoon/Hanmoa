@@ -2,12 +2,14 @@ import React, { FC, useReducer, useEffect, useCallback, useRef, useState } from 
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import { useMobxStores } from "@utils/store/useStores";
-import { Topic } from "src/payload";
+import { GetRoomPayload, Topic } from "src/payload";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Field from "@components/form/field";
 import Loading from "@components/loading";
 import CreationCarousel from "@components/carousel/creationCarousel";
+import { useModal } from "src/utils/modal/useModal";
+import { Modal } from "src/components/modal";
 
 interface CreateRoomPageProps {
 
@@ -225,6 +227,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   const [topicState, dispatchTopic] = useReducer(topicReducer, initialTopicState)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null | ArrayBuffer>(null);
   const [imageLoading, setImageLoading] = useState(false);
+  const [isModal, setIsModal] = useModal();
   const imageFormContainerRef = useRef<HTMLDivElement>(null);
   const formSelectorRef = useRef<HTMLLabelElement>(null);
   const handleClickTopicSelector = (topic: Topic) => {
@@ -372,6 +375,19 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
     "joinPossible": true
   }
   const dummyContents = new Array(10).fill(dummy);
+
+  const handleClickCard = (data: GetRoomPayload["room"]) => {
+    return (e: React.MouseEvent<HTMLDivElement>) => {
+      setIsModal({
+        type: "OPEN",
+        payload: {
+          data,
+          visible: true,
+        }
+      })
+    }
+  }
+
   return (
     <StyledSelf>
       <StyledSection>
@@ -480,9 +496,12 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
         <StyledArticle>
           <StyledTitle>'{topicState.category}' 토픽에 대한 멤버를 구하고 있어요!</StyledTitle>
           <StyledCarouselWrapper>
-            <CreationCarousel contents={dummyContents} />
+            <CreationCarousel contents={dummyContents} onClickCard={handleClickCard} />
           </StyledCarouselWrapper>
         </StyledArticle>
+      </StyledSection>
+      <StyledSection>
+        {isModal.visible && <Modal {...isModal.data} />}
       </StyledSection>
     </StyledSelf>
   )

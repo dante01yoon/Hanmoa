@@ -1,10 +1,12 @@
 import React, { FC, useRef, useEffect, useState, } from "react";
 import { observer } from "mobx-react-lite";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
+import noop from "lodash/noop";
 import styled, { css } from "styled-components";
 import Card from "@components/card";
 import CreationSlider from "./creationSlider";
 import useResize from "@utils/carousel/windowResize";
+import { GetRoomPayload } from "src/payload";
 
 const breakPoints = [360, 600, 1100];
 
@@ -48,10 +50,12 @@ const StyledContainer = styled.div`
 
 interface CreationCarouselProps {
   contents?: any;
+  onClickCard?: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const CreationCarousel: FC<CreationCarouselProps> = ({
   contents = [],
+  onClickCard,
 }) => {
   const [firstCardIndex, setFirstCardIndex] = useState(0)
   const [vectorX, setVectorX] = useState(0);
@@ -100,9 +104,23 @@ const CreationCarousel: FC<CreationCarouselProps> = ({
 
   }
 
+  const handleClickSingleCard = (data: GetRoomPayload["room"]) => {
+    if (onClickCard) {
+      return onClickCard(data);
+    }
+    return () => { };
+  }
+
   const renderContents = (): Array<React.ReactNode> | React.ReactNode => {
     if (contents.length > 0) {
-      return contents.map((room: any, idx: number) => <Card key={`$::${idx}`} room={room} handleClick={console.log} />);
+
+      return contents.map((room: any, idx: number) => (
+        <Card
+          key={`$::${idx}`}
+          room={room}
+          onClick={handleClickSingleCard(room)}
+        />
+      ));
     }
     return null;
   }

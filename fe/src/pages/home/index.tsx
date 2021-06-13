@@ -102,7 +102,7 @@ const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
                   <Card
                     room={room}
                     key={room.id}
-                    handleClick={handleClick(room)}
+                    onClick={handleClick(room)}
                   />
                 );
               })}

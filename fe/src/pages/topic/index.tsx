@@ -101,7 +101,7 @@ const TopicPage: FC<TopicPageProps> & TopicPageInitStoreOnServer = ({ match }) =
         <Card
           room={room}
           key={`$::${index}-${category ?? "etc"}`}
-          handleClick={handleClick(room)}
+          onClick={handleClick(room)}
         />
       )
     }
