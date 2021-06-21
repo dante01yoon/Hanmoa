@@ -303,10 +303,10 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   const handleSubmit: FormikConfig<InitialValues>["onSubmit"] = async (values, { setSubmitting }) => {
     const studentNumber: Profile["studentNumber"] = sessionStore.userProfile.studentNumber;
     const fetchPostRoomParam = {
-      studentNumber,
       ...values,
+      studentNumber,
+      category: topicState.category,
     }
-    console.log("values: ", values);
     await roomStore.fetchPostRoom(fetchPostRoomParam);
     setSubmitting(false);
   }
