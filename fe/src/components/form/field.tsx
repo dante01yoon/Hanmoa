@@ -30,9 +30,7 @@ const Field: FC<CustomFieldProps> = ({
   ...restProps
 }) => {
   const { name, touched, errors } = restProps;
-  console.log("name: ", name);
-  console.log("touched: ", touched);
-  console.log("errors: ", errors);
+
   return (
     <StyledFieldWrapper>
       <FormikField {...restProps} as={StyledInput} />

@@ -109,10 +109,9 @@ const ChatCard: FC<IChatModelProps> = ({
   message,
   ...props
 }) => {
-
   const { chatStore } = useMobxStores();
   const { writer: { profile: { name, email, studentNumber, picture } } } = props;
-  console.log("name: ", name, "studentNumber: ", studentNumber);
+
   const processingNumberAndName = useMemo(() => {
     // 학번, 이름
     return [studentNumber.toString().slice(1, 3), name];

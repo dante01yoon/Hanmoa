@@ -2,14 +2,15 @@ import React, { FC, useReducer, useEffect, useCallback, useRef, useState } from 
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import { useMobxStores } from "@utils/store/useStores";
-import { GetRoomPayload, Topic } from "src/payload";
-import { Formik } from "formik";
+import { GetRoomPayload, Profile, Topic } from "src/payload";
+import { Formik, FormikConfig } from "formik";
 import * as yup from "yup";
 import Field from "@components/form/field";
 import Loading from "@components/loading";
 import CreationCarousel from "@components/carousel/creationCarousel";
 import { useModal } from "src/utils/modal/useModal";
 import { Modal } from "src/components/modal";
+import RoomStore from "src/store/RoomStore";
 
 interface CreateRoomPageProps {
 
@@ -182,11 +183,13 @@ const StyledCarouselWrapper = styled.div`
 
 const validationSchema = yup.object().shape({
   title: yup.string()
+    .required("제목을 입력하세요.")
     .min(2, "제목은 최소 2자 이상이어야 합니다.")
     .max(30, "30자 이내로 작성해 주세요."),
-  content: yup.string()
+  subTitle: yup.string()
+    .required("내용을 적어주세요.")
     .max(100, "100자 이내로 작성해 주세요."),
-  member: yup.number()
+  capability: yup.number()
     .min(2)
     .max(100, "2~100 이내에서 적절한 숫자를 입력해주세요.")
 })
@@ -194,14 +197,14 @@ const validationSchema = yup.object().shape({
 interface InitialValues {
   title: string;
   category: string;
-  content: string;
-  member: number,
+  subTitle: string;
+  capability: number,
 }
 
 const CreateRoomPage: FC<CreateRoomPageProps> = ({
 
 }) => {
-  const { topicStore } = useMobxStores();
+  const { topicStore, roomStore, sessionStore } = useMobxStores();
   enum TopicEnum {
     CHANGE_TOPIC = "CHANGE_TOPIC",
   }
@@ -230,14 +233,18 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   const [isModal, setIsModal] = useModal();
   const imageFormContainerRef = useRef<HTMLDivElement>(null);
   const formSelectorRef = useRef<HTMLLabelElement>(null);
+
   const handleClickTopicSelector = (topic: Topic) => {
+    console.log("topic : ", topic);
     dispatchTopic({
       type: TopicEnum.CHANGE_TOPIC,
       payload: topic,
     });
     setImagePreviewUrl(topic.image);
   }
-
+  useEffect(() => {
+    console.log("topicState: ", topicState);
+  })
   const renderTopicSelector = () => {
     const reducedList: Record<string, Array<JSX.Element>> = {};
 
@@ -266,6 +273,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
 
     return jsx;
   };
+
   useEffect(() => {
     if (
       imageFormContainerRef &&
@@ -292,8 +300,15 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
     }
   }
 
-  const handleSubmit = () => {
-
+  const handleSubmit: FormikConfig<InitialValues>["onSubmit"] = async (values, { setSubmitting }) => {
+    const studentNumber: Profile["studentNumber"] = sessionStore.userProfile.studentNumber;
+    const fetchPostRoomParam = {
+      studentNumber,
+      ...values,
+    }
+    console.log("values: ", values);
+    await roomStore.fetchPostRoom(fetchPostRoomParam);
+    setSubmitting(false);
   }
 
   const dummy = {
@@ -432,8 +447,8 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
                 initialValues={{
                   title: "",
                   category: topicState.category,
-                  content: "",
-                  member: 4,
+                  subTitle: "",
+                  capability: 4,
                 }}
                 onSubmit={handleSubmit}
               >{
@@ -463,7 +478,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
                         <StyledFormList>
                           <StyledInputTag>내용:</StyledInputTag>
                           <Field
-                            name="content"
+                            name="subTitle"
                             as={StyledInput}
                             errors={errors}
                             touched={touched}
@@ -472,7 +487,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
                         <StyledFormList>
                           <StyledInputTag>방 인원:</StyledInputTag>
                           <Field
-                            name="member"
+                            name="capability"
                             as={StyledInput}
                             type="number"
                             errors={errors}

@@ -176,8 +176,8 @@ export const onPostLeaveRoom = async (ctx) => {
 
 export const onCreateRoom = async (ctx) => {
   const { request, response } = ctx;
-  const { studentNumber, title, subTitle, imageUrl, category, capability, hasPassword, password } = request.body;
-
+  const { studentNumber, title, subTitle, imageUrl, category, capability, hasPassword, password, member } = request.body;
+  console.log("category: ", category);
   try {
     // 최대 참가 수가 정해져있는 카테고리
     if (["watcha", "netflix"].includes(category)) {
@@ -206,13 +206,17 @@ export const onCreateRoom = async (ctx) => {
     }));
 
     if (!validation.success) {
+
       response.status = 400;
       response.body = {
         statusCode: 400,
         reason: "validate",
         message: "validate error",
+        success: false,
         data: {
           room: null,
+          message: validation.errors,
+          reason: validation.message,
         }
       };
       return;
@@ -233,10 +237,10 @@ export const onCreateRoom = async (ctx) => {
       response.status = 403;
       response.body = {
         statusCode: 403,
-        reason: "shouldBeLimited",
-        message: "user already exist in same category, but another room",
         data: {
           room: null,
+          reason: "should be limited",
+          message: "user already exist in same category, but another room",
         }
       }
       return;

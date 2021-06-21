@@ -1,7 +1,7 @@
 import BasicStore from "@store/BasicStore";
 import { action, observable, makeObservable } from "mobx";
 import RootStore from "@store/RootStore";
-import { GetRoomPayload, GetRoomsPayload } from "@payload/index";
+import { GetRoomPayload, GetRoomsPayload, Profile } from "@payload/index";
 import isNil from "lodash/isNil";
 import { http } from "src/apis/httpModule";
 import { Request } from "express";
@@ -95,6 +95,31 @@ export default class RoomStore extends BasicStore {
     } catch (e) {
       console.error("error in fetchAuthenticate");
       throw Error(e);
+    }
+  }
+
+  // todo studentNumber
+  async fetchPostRoom(values: {
+    studentNumber: Profile["studentNumber"];
+    title: string;
+    subTitle: string;
+    imageUrl?: string;
+    category: string;
+    capability: string;
+    hasPassword?: boolean;
+    password?: string;
+  }) {
+    const [error, response] = await this.api.POST("/room/create", {
+      ...values,
+    });
+    console.log("response: ", response);
+    console.log("error: ", error);
+    if (error) {
+      throw Error(error.error);
+    }
+
+    if (response?.success) {
+      return response.data;
     }
   }
 
