@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { observable } from "mobx";
 import { useLocalStore, } from "mobx-react-lite";
 
-const StyledBlackContainer
+const StyledBlackContainer = styled.div`
+`;
 
 const StyledToastWrapper = styled.div`
   position: fixed;

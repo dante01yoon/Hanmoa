@@ -181,6 +181,13 @@ const StyledCarouselWrapper = styled.div`
   margin-top: 20px;
 `;
 
+const StyledNoTopicText = styled.div`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 16px;
+  line-height: 31px;
+  margin: 0 auto;
+`;
+
 const validationSchema = yup.object().shape({
   title: yup.string()
     .required("제목을 입력하세요.")
@@ -230,21 +237,33 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   const [topicState, dispatchTopic] = useReducer(topicReducer, initialTopicState)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null | ArrayBuffer>(null);
   const [imageLoading, setImageLoading] = useState(false);
+  const [contentsLoading, setContentsLoading] = useState(false);
   const [isModal, setIsModal] = useModal();
   const imageFormContainerRef = useRef<HTMLDivElement>(null);
   const formSelectorRef = useRef<HTMLLabelElement>(null);
 
-  const handleClickTopicSelector = (topic: Topic) => {
-    console.log("topic : ", topic);
+  const handleUpdateFetchRooms = async (category: string) => {
+    try {
+      setContentsLoading(true);
+      await roomStore.fetchRooms(category, 0, true)
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setContentsLoading(false);
+    }
+  }
+
+  const handleClickTopicSelector = async (topic: Topic) => {
+
     dispatchTopic({
       type: TopicEnum.CHANGE_TOPIC,
       payload: topic,
     });
     setImagePreviewUrl(topic.image);
+
+    await handleUpdateFetchRooms(topic.category);
   }
-  useEffect(() => {
-    console.log("topicState: ", topicState);
-  })
+
   const renderTopicSelector = () => {
     const reducedList: Record<string, Array<JSX.Element>> = {};
 
@@ -275,6 +294,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   };
 
   useEffect(() => {
+    handleUpdateFetchRooms(topicState.category);
     if (
       imageFormContainerRef &&
       imageFormContainerRef.current &&
@@ -310,86 +330,6 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
     await roomStore.fetchPostRoom(fetchPostRoomParam);
     setSubmitting(false);
   }
-
-  const dummy = {
-    "imageUrl": "",
-    "join": [
-      {
-        "profile": {
-          "picture": "/static/images/default_profile.png",
-          "name": "RU Who",
-          "studentNumber": "21500492",
-          "email": "21500492@handong.edu",
-          "id": "85ed6"
-        },
-        "joinIn": [
-          "60a64c06d19616367780fe84"
-        ],
-        "hostIn": [],
-        "_id": "60a64bf9d19616367780fe83",
-        "createdAt": "2021-05-20T11:46:01.543Z",
-        "updatedAt": "2021-05-20T11:46:14.750Z",
-        "__v": 1
-      },
-      {
-        "profile": {
-          "picture": "/static/images/default_profile.png",
-          "name": "jaewon Yoon",
-          "studentNumber": "21300492",
-          "email": "21300492@handong.edu",
-          "id": "b6e15"
-        },
-        "joinIn": [
-          "60a64c06d19616367780fe84"
-        ],
-        "hostIn": [],
-        "_id": "60a64a51746f8a341b436b73",
-        "createdAt": "2021-05-20T11:38:57.476Z",
-        "updatedAt": "2021-05-21T13:33:42.013Z",
-        "__v": 1
-      }
-    ],
-    "messages": [
-      "60a64c5fa386e836a1c80d5c",
-      "60a7b1698df759e65ff6140c"
-    ],
-    "hasPassword": true,
-    "_id": "60a64c06d19616367780fe84",
-    "title": "auth 룸 조인 테스트",
-    "subTitle": "3명 구합니다",
-    "host": {
-      "profile": {
-        "picture": "/static/images/default_profile.png",
-        "name": "RU Who",
-        "studentNumber": "21500492",
-        "email": "21500492@handong.edu",
-        "id": "85ed6"
-      },
-      "joinIn": [
-        "60a64c06d19616367780fe84"
-      ],
-      "hostIn": [],
-      "_id": "60a64bf9d19616367780fe83",
-      "createdAt": "2021-05-20T11:46:01.543Z",
-      "updatedAt": "2021-05-20T11:46:14.750Z",
-      "__v": 1
-    },
-    "topic": {
-      "category": "netflix",
-      "url": "netflix"
-    },
-    "createdBy": "60a64bf9d19616367780fe83",
-    "capability": 4,
-    "password": "1234",
-    "gradient": "linear-gradient(90deg, rgba(65,75,75,0.7105217086834734) 0%, rgba(197,206,212,1) 100%)",
-    "id": "32dc0",
-    "time": "2021-05-20T11:46:14.349Z",
-    "__v": 3,
-    "hasJoinedRoom": true,
-    "current": 2,
-    "joinPossible": true
-  }
-  const dummyContents = new Array(10).fill(dummy);
 
   const handleClickCard = (data: GetRoomPayload["room"]) => {
     return (e: React.MouseEvent<HTMLDivElement>) => {
@@ -511,7 +451,17 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
         <StyledArticle>
           <StyledTitle>'{topicState.category}' 토픽에 대한 멤버를 구하고 있어요!</StyledTitle>
           <StyledCarouselWrapper>
-            <CreationCarousel contents={dummyContents} onClickCard={handleClickCard} />
+            {contentsLoading && (
+              <Loading width="30px" height="30px" />
+            )}
+            {
+              !contentsLoading && (
+                roomStore.roomList?.length > 0 ?
+                  <CreationCarousel contents={roomStore.roomList} onClickCard={handleClickCard} /> :
+                  <StyledNoTopicText>콘텐츠가 없습니다.</StyledNoTopicText>
+              )
+            }
+
           </StyledCarouselWrapper>
         </StyledArticle>
       </StyledSection>
