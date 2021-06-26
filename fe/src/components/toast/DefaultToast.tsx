@@ -1,9 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   background-color: #252525;
+  text-align: center;
   padding: 12px;
+  border-radius: 8px;
 `;
 
 const StyledTitleBox = styled.div`
@@ -16,11 +18,12 @@ const StyledTitleBox = styled.div`
 `;
 
 const StyledMessageBox = styled.div`
+  color: ${({ theme }) => theme.colors.gray_100};
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -0.2px;
   line-height: 18px;
-  margin: 2px auto 0;
+  margin: 10px auto 0;
 `;
 
 

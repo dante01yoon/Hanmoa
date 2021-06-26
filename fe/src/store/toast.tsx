@@ -1,7 +1,8 @@
 
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useLocalObservable, observer } from "mobx-react-lite";
+import { nanoid } from "nanoid";
 
 const StyledBlackContainer = styled.div`
   position: fixed;
@@ -33,25 +34,25 @@ const StyledToastRightContainer = styled.div`
 
 const StyledToastBottomContainer = styled.div`
   position: absolute;
-  right: 50%;
   bottom: 0;
+  left: 50%;
   transform: translateX(-50%);
+  transition: all ease-in 0.3s;
 `;
 
 const StyledToastTopContainer = styled.div`
   position: absolute;
   top: 0;
-  right: 50%;
+  left: 50%;
   transform: translateX(-50%);
 `;
 
 const StyledSingleToastWrapper = styled.div<{
-  nth: number;
   position: string;
+  nth: number;
 }>`
-  position: absolute;
+  ${({ position }) => `margin-${position}: 40px;`}
   transition: all ease 0.3s;
-  ${({ position, nth }) => css`${position}: ${(nth * 50)}px`}; 
 `;
 
 type ToastPosition = "top" | "right" | "bottom" | "left";
@@ -59,11 +60,13 @@ type ToastPosition = "top" | "right" | "bottom" | "left";
 interface OpenToastOptions {
   position: ToastPosition;
   hasBlackBackgroud?: boolean;
+  time?: number;
 }
 
 interface ToastElement {
   toastElement: React.ReactElement;
   position: ToastPosition;
+  uuid?: string;
 }
 
 const createToastManager = () => {
@@ -72,11 +75,25 @@ const createToastManager = () => {
   const toastStore = useLocalObservable(() => ({
     toasts,
     openToast(toast: ToastElement["toastElement"], options: OpenToastOptions) {
+      const uuid = nanoid(10);
       this.toasts.push({
         toastElement: toast,
         position: options.position,
+        uuid,
       });
+      setTimeout(() => {
+        this.closeToast(uuid);
+      }, options.time || 3000);
+
+      return uuid;
     },
+    closeToast(uuid?: string, position?: ToastPosition) {
+      const uuidIndex = this.toasts.findIndex((toast: ToastElement) => toast.uuid === uuid);
+
+      if (uuidIndex >= 0) {
+        this.toasts.splice(uuidIndex, 1);
+      }
+    }
   }));
 
   return toastStore;

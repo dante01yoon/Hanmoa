@@ -11,6 +11,7 @@ import { useMobxStores, useToast } from "@utils/store/useStores";
 import { SmartLink } from '@components/smartlink';
 import { Portal } from '@components/portal';
 import LoginModal from '@components/login';
+import { DefaultToast } from "@components/toast"
 import hanmoa_logo from 'src/asset/logo/hanmoa_horizontal.svg';
 import { Topic } from 'src/payload';
 
@@ -93,13 +94,12 @@ const Gnb: FC<GnbProps> = ({
     return topicRowGroup;
   }, [topicList])
   const toast = useToast();
-  console.log("toast.toasts: ", toast.toasts);
   const renderRightNav = () => {
     if (sessionStore.isSignedIn) {
       return (
         <>
           <Item onClick={() => {
-            toast.openToast(<div>토스트!</div>, {
+            toast.openToast(<DefaultToast title="토스트 생성" message="안녕하세요 토스트입니다." />, {
               position: "bottom",
             });
             // const data = await fetch("http://localhost:5001/api/room/roommate?page=0", { credentials: "include" });
