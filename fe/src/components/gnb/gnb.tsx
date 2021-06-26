@@ -6,8 +6,8 @@ import React, {
   useEffect,
 } from 'react';
 import * as Styled from './style';
-import { observer } from "mobx-react";
-import { useMobxStores } from "@utils/store/useStores";
+import { observer } from "mobx-react-lite";
+import { useMobxStores, useToast } from "@utils/store/useStores";
 import { SmartLink } from '@components/smartlink';
 import { Portal } from '@components/portal';
 import LoginModal from '@components/login';
@@ -92,16 +92,20 @@ const Gnb: FC<GnbProps> = ({
 
     return topicRowGroup;
   }, [topicList])
-
+  const toast = useToast();
+  console.log("toast.toasts: ", toast.toasts);
   const renderRightNav = () => {
     if (sessionStore.isSignedIn) {
       return (
         <>
-          <Item onClick={async () => {
+          <Item onClick={() => {
+            toast.openToast(<div>토스트!</div>, {
+              position: "bottom",
+            });
             // const data = await fetch("http://localhost:5001/api/room/roommate?page=0", { credentials: "include" });
-            const data = await roomStore.fetchRooms("ktx");
+            // const data = await roomStore.fetchRooms("ktx");
             // const data = await http.GET("http://localhost:5001/api/room/roommate?page=0");
-            console.log(data)
+            // console.log(data)
           }}>
             테스트
             {/* <SmartLink href="/createRoom">방 만들기</SmartLink> */}

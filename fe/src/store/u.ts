@@ -3,10 +3,13 @@ import BasicStore from "./BasicStore";
 import RootStore from "./RootStore";
 import SessionStore from "./SessionStore";
 import TopicStore from "./TopicStore";
+import ToastProvider from "./toast";
 import ChatStore from "./ChatStore";
 import RoomStore from "./RoomStore";
 import { http } from "@apis/httpModule";
 import isNil from "lodash/isNil";
+
+export { ToastProvider };
 
 export interface ReducedStore {
   sessionStore: SessionStore;

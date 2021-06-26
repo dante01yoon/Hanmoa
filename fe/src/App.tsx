@@ -8,7 +8,7 @@ import { renderRoutes } from '@components/route/route';
 import { Provider as MobxProvider } from "mobx-react";
 import { ModalProvider } from 'src/store/modal';
 import { ReduxProvider, SocketProvider } from '@store/index';
-import { ReducedStore } from "@store/u";
+import { ReducedStore, ToastProvider } from "@store/u";
 import { observer } from "mobx-react";
 
 export interface IRootRouter {
@@ -41,9 +41,11 @@ export const App: FC<AppProps> = ({
         <MobxProvider {...extraModules} {...store}>
           <SocketProvider>
             <ModalProvider>
-              <GlobalLayout>
-                {renderRoutes()}
-              </GlobalLayout>
+              <ToastProvider>
+                <GlobalLayout>
+                  {renderRoutes()}
+                </GlobalLayout>
+              </ToastProvider>
               {
               /* FIXME ssr 향상시킬때 사용하기 */
               /* {renderGrandRouter(router,(

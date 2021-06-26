@@ -1,7 +1,7 @@
 
 import React from "react";
 import styled, { css } from "styled-components";
-import { useLocalStore, } from "mobx-react-lite";
+import { useLocalObservable, observer } from "mobx-react-lite";
 
 const StyledBlackContainer = styled.div`
   position: fixed;
@@ -12,6 +12,7 @@ const StyledBlackContainer = styled.div`
 
 const StyledToastWrapper = styled.div`
   position: fixed;
+  top: 0;
   width: 100%;
   height: 100%;
 `;
@@ -68,32 +69,41 @@ interface ToastElement {
 const createToastManager = () => {
   const toasts: Array<ToastElement> = [];
 
-  const openToast = (toast: ToastElement, options: OpenToastOptions) => {
-    toasts.push(toast);
-  }
-
-  return useLocalStore(() => ({
+  const toastStore = useLocalObservable(() => ({
     toasts,
-    openToast,
-  }))
+    openToast(toast: ToastElement["toastElement"], options: OpenToastOptions) {
+      this.toasts.push({
+        toastElement: toast,
+        position: options.position,
+      });
+    },
+  }));
+
+  return toastStore;
 }
 
 type ToastStore = ReturnType<typeof createToastManager>;
 
-interface ToastManagerProps {
-  value: ToastStore;
-}
-
 const ToastContext = React.createContext<ToastStore | null>(null);
 
-const ToastManager: React.FC<ToastManagerProps> = ({
-  value,
+export const useToast = () => {
+  const toastContext = React.useContext(ToastContext);
+
+  if (!toastContext) {
+    throw Error("ToastProvider not provided");
+  }
+  return toastContext;
+}
+
+const ToastManager: React.FC = ({
+  children,
 }) => {
+  const toastValue = createToastManager();
 
-  const handleToastTransition = (toast, index) => {
+  const handleToastTransition = (toastObject: ToastElement, index: number) => {
     return (
-      <StyledSingleToastWrapper>
-
+      <StyledSingleToastWrapper nth={index} position={toastObject.position}>
+        {toastObject.toastElement}
       </StyledSingleToastWrapper>
     )
   }
@@ -101,29 +111,33 @@ const ToastManager: React.FC<ToastManagerProps> = ({
   const renderToasts = (toasts: ToastElement[], position: ToastPosition) => {
     return React.Children.toArray(
       toasts.filter((toast) => toast.position === position)
-        .map((filteredToast) => React.cloneElement(filteredToast.toastElement))
+        .map((filteredToast, nth) => handleToastTransition({
+          toastElement: React.cloneElement(filteredToast.toastElement),
+          position,
+        }, nth))
     )
   }
-
-
   return (
-    <ToastContext.Provider value={value}>
+    <ToastContext.Provider value={toastValue}>
+      <>
+        {children}
+      </>
       <StyledToastWrapper>
         <StyledToastTopContainer>
-          {renderToasts(value.toasts, "top")}
+          {renderToasts(toastValue.toasts, "top")}
         </StyledToastTopContainer>
         <StyledToastRightContainer>
-          {renderToasts(value.toasts, "right")}
+          {renderToasts(toastValue.toasts, "right")}
         </StyledToastRightContainer>
         <StyledToastBottomContainer>
-          {renderToasts(value.toasts, "bottom")}
+          {renderToasts(toastValue.toasts, "bottom")}
         </StyledToastBottomContainer>
         <StyledToastLeftContainer>
-          {renderToasts(value.toasts, "left")}
+          {renderToasts(toastValue.toasts, "left")}
         </StyledToastLeftContainer>
       </StyledToastWrapper>
     </ToastContext.Provider>
   )
 }
 
-export default ToastManager;
+export default observer(ToastManager);
