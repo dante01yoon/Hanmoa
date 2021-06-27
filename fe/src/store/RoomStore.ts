@@ -120,6 +120,9 @@ export default class RoomStore extends BasicStore {
     if (response?.success) {
       return response.data;
     }
+    else {
+      return error;
+    }
   }
 
   isAuthenticate(id: string) {

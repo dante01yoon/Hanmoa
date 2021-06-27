@@ -1,7 +1,7 @@
 import React, { FC, useReducer, useEffect, useCallback, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import styled from "styled-components";
-import { useMobxStores } from "@utils/store/useStores";
+import { useMobxStores, useToast } from "@utils/store/useStores";
 import { GetRoomPayload, Profile, Topic } from "src/payload";
 import { Formik, FormikConfig } from "formik";
 import * as yup from "yup";
@@ -11,6 +11,7 @@ import CreationCarousel from "@components/carousel/creationCarousel";
 import { useModal } from "src/utils/modal/useModal";
 import { Modal } from "src/components/modal";
 import RoomStore from "src/store/RoomStore";
+import { DefaultToast } from "src/components/toast";
 
 interface CreateRoomPageProps {
 
@@ -320,6 +321,8 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
     }
   }
 
+  const { openToast } = useToast();
+
   const handleSubmit: FormikConfig<InitialValues>["onSubmit"] = async (values, { setSubmitting }) => {
     const studentNumber: Profile["studentNumber"] = sessionStore.userProfile.studentNumber;
     const fetchPostRoomParam = {
@@ -327,8 +330,20 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
       studentNumber,
       category: topicState.category,
     }
-    await roomStore.fetchPostRoom(fetchPostRoomParam);
+    const [error, _] = await roomStore.fetchPostRoom(fetchPostRoomParam);
     setSubmitting(false);
+    if (error) {
+      if (error.status === 403) {
+        openToast(<DefaultToast title="카테고리 중복" message="해당 카테고리는 더 이상 생성할 수 없습니다." />, {
+          position: "bottom",
+        })
+      }
+    }
+    else {
+      openToast(<DefaultToast title="방 생성 성공!" message="홈으로 돌아가 생성된 방에 입장해보세." />, {
+        position: "bottom",
+      })
+    }
   }
 
   const handleClickCard = (data: GetRoomPayload["room"]) => {
