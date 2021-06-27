@@ -19,6 +19,7 @@ const StyledToastWrapper = styled.div`
 `;
 
 const StyledToastLeftContainer = styled.div`
+  display: flex;
   position: absolute;
   top: 50%;
   left: 0;
@@ -26,6 +27,7 @@ const StyledToastLeftContainer = styled.div`
 `;
 
 const StyledToastRightContainer = styled.div`
+  display: flex;
   position: absolute;
   top: 50%;
   right: 0;

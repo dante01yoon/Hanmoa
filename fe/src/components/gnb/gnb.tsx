@@ -100,7 +100,7 @@ const Gnb: FC<GnbProps> = ({
         <>
           <Item onClick={() => {
             toast.openToast(<DefaultToast title="토스트 생성" message="안녕하세요 토스트입니다." />, {
-              position: "bottom",
+              position: "top",
             });
             // const data = await fetch("http://localhost:5001/api/room/roommate?page=0", { credentials: "include" });
             // const data = await roomStore.fetchRooms("ktx");
