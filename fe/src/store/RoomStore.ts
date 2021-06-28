@@ -112,7 +112,7 @@ export default class RoomStore extends BasicStore {
       const [_, response] = await this.api.POST("/room/create", {
         ...values,
       });
-      if (response?.success) {
+      if (response && response.success) {
         return response.data;
       }
     }

@@ -331,7 +331,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
       category: topicState.category,
     }
     try {
-      const [_, response] = await roomStore.fetchPostRoom(fetchPostRoomParam);
+      const response = await roomStore.fetchPostRoom(fetchPostRoomParam);
       if (response) {
         openToast(<DefaultToast title="방 생성 성공!" message="홈으로 돌아가 생성된 방에 입장해보세." />, {
           position: "bottom",
