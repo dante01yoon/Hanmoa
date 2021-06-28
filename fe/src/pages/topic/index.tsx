@@ -68,15 +68,15 @@ const TopicPage: FC<TopicPageProps> & TopicPageInitStoreOnServer = ({ match }) =
     fetchRooms();
 
     // fixme 아래걸로 주석 해제
-    // if (!isNil(roomStore.roomList) || (roomStore.currentTopic !== category)) {
-    //   setIsLoading(true);
-    //   roomStore.fetchRooms(category, 0, true)
-    //     .then(
-    //       (data: any) => {
-    //         console.log(data)
-    //         setIsLoading(false);
-    //       })
-    // }
+    if (!isNil(roomStore.roomList) || (roomStore.currentTopic !== category)) {
+      setIsLoading(true);
+      roomStore.fetchRooms(category, 0, true)
+        .then(
+          (data: any) => {
+            console.log(data)
+            setIsLoading(false);
+          })
+    }
   }, [category])
 
   const handleClick: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void = (data) => (e) => {
