@@ -1,5 +1,5 @@
 import RootStore from "./RootStore";
-import { AxiosRequestConfig } from "axios"; 
+import { AxiosRequestConfig } from "axios";
 import { GET, POST } from "@apis/httpModule";
 
 class ApiStore {
@@ -8,20 +8,20 @@ class ApiStore {
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
   }
-  
-  async getJson<T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<T>{
-    const [error, response] = await GET<T>(url, params, config); 
-    if( error ) {
-      throw new Error(error.error);
-    }    
+
+  async getJson<T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<T> {
+    const [error, response] = await GET<T>(url, params, config);
+    if (error) {
+      throw error
+    }
     // 위에 에러 처리했기 때문에 
     return response!.data
   }
 
-  async postJson<T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<T>{
-    const [error, response] = await POST<T>(url,params, config);
-    if(error){
-      throw new Error(error.error);
+  async postJson<T>(url: string, params?: object, config?: AxiosRequestConfig): Promise<T> {
+    const [error, response] = await POST<T>(url, params, config);
+    if (error) {
+      throw error
     }
     // 위에 에러 처리했기 때문에
     return response!.data;

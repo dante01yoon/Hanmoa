@@ -330,20 +330,23 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
       studentNumber,
       category: topicState.category,
     }
-    const [error, _] = await roomStore.fetchPostRoom(fetchPostRoomParam);
-    setSubmitting(false);
-    if (error) {
+    try {
+      const [_, response] = await roomStore.fetchPostRoom(fetchPostRoomParam);
+      if (response) {
+        openToast(<DefaultToast title="방 생성 성공!" message="홈으로 돌아가 생성된 방에 입장해보세." />, {
+          position: "bottom",
+        })
+      }
+    } catch (error) {
       if (error.status === 403) {
         openToast(<DefaultToast title="카테고리 중복" message="해당 카테고리는 더 이상 생성할 수 없습니다." />, {
           position: "bottom",
         })
       }
+    } finally {
+      setSubmitting(false);
     }
-    else {
-      openToast(<DefaultToast title="방 생성 성공!" message="홈으로 돌아가 생성된 방에 입장해보세." />, {
-        position: "bottom",
-      })
-    }
+
   }
 
   const handleClickCard = (data: GetRoomPayload["room"]) => {

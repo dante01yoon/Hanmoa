@@ -141,7 +141,8 @@ const ToastManager: React.FC = ({
       <>
         {children}
       </>
-      <StyledToastWrapper>
+      {/* <StyledToastWrapper> */}
+      <>
         <StyledToastTopContainer>
           {renderToasts(toastValue.toasts, "top")}
         </StyledToastTopContainer>
@@ -154,7 +155,8 @@ const ToastManager: React.FC = ({
         <StyledToastLeftContainer>
           {renderToasts(toastValue.toasts, "left")}
         </StyledToastLeftContainer>
-      </StyledToastWrapper>
+      </>
+      {/* </StyledToastWrapper> */}
     </ToastContext.Provider>
   )
 }

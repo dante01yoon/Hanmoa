@@ -108,20 +108,16 @@ export default class RoomStore extends BasicStore {
     hasPassword?: boolean;
     password?: string;
   }) {
-    const [error, response] = await this.api.POST("/room/create", {
-      ...values,
-    });
-    console.log("response: ", response);
-    console.log("error: ", error);
-    if (error) {
-      throw Error(error.error);
+    try {
+      const [_, response] = await this.api.POST("/room/create", {
+        ...values,
+      });
+      if (response?.success) {
+        return response.data;
+      }
     }
-
-    if (response?.success) {
-      return response.data;
-    }
-    else {
-      return error;
+    catch (error) {
+      throw error[0];
     }
   }
 
