@@ -119,7 +119,6 @@ export const onGetRoom = async (ctx, next) => {
     }
 
     let hasJoinedRoom = null;
-
     console.log("ctx.request.studentNumber: ", ctx.request.studentNumber);
 
     if (ctx.request.studentNumber) {

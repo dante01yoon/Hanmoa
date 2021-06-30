@@ -29,7 +29,7 @@ export default class RoomStore extends BasicStore {
     const [error, response] = await this.api.GET<GetRoomsPayload>(`/room/${category}?page=${page}`);
 
     if (error) {
-      throw Error(error.error)
+      throw error;
     }
 
     if (response && response.success) {
@@ -125,7 +125,7 @@ export default class RoomStore extends BasicStore {
     if (this.authenticate.hasOwnProperty(id)) {
       return this.authenticate[id];
     }
-    return true;
+    return false;
   }
 
   @action.bound

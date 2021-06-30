@@ -34,6 +34,7 @@ interface GrantValues {
 }
 
 interface ModalProps extends Room {
+  onClickEnter: () => void;
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -47,6 +48,7 @@ export const Modal: FC<ModalProps> = ({
   topic,
   capability,
   hasPassword,
+  onClickEnter,
 }) => {
   const { http, roomStore } = useMobxStores();
   const close = useModalDispatch();
@@ -66,6 +68,18 @@ export const Modal: FC<ModalProps> = ({
     })
   }
 
+  const handleClickEnter = () => {
+    if (onClickEnter) {
+      Promise.resolve(onClickEnter())
+        .then(() => {
+          close({ type: "CLOSE" });
+        });
+    } else {
+      close({ type: "CLOSE" });
+      history.push(`/room/${id}`);
+    }
+  }
+
   const formik = useFormik<GrantValues>({
     validationSchema,
     initialValues: {
@@ -74,6 +88,7 @@ export const Modal: FC<ModalProps> = ({
     },
     onSubmit: handleSubmitPassword,
   })
+
 
   const renderBuildFormik = () => {
     return (
@@ -101,6 +116,7 @@ export const Modal: FC<ModalProps> = ({
             <BaseButton
               type="submit"
               background={"#28D84F"}
+              clickHandler={handleClickEnter}
             >
               입장
           </BaseButton>
@@ -150,10 +166,7 @@ export const Modal: FC<ModalProps> = ({
                   render={({ history }) => (
                     <BaseButton
                       background={"#28D84F"}
-                      clickHandler={() => {
-                        close({ type: "CLOSE" });
-                        history.push(`/room/${id}`);
-                      }}
+                      clickHandler={handleClickEnter}
                     >
                       입장
                     </BaseButton>

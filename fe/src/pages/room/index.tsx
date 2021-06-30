@@ -2,6 +2,7 @@ import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
 import { RouteComponentProps } from "react-router-dom"
+import isNil from "lodash/isNil";
 import styled from "styled-components";
 import ChatCard from "@components/chat/card";
 import EmbedChatRoom from "@components/embed/chatRoom";
@@ -62,16 +63,9 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   const targetRef = useRef<HTMLElement>(null);
   const [isModal, setModal] = useModal();
 
-  // 1. redux - useDispatch fetch method call 어디에다가 모듈화?
-  // 2. response 오면 state 변경 ->
-  // 3. RoomPage Container state propagation
   const { user: { studentId } } = useSelector((state: RootState) => state.user);
 
-  useEffect(() => {
-    if (!chatStore.chatMessages.length) {
-      chatStore.fetchNewChatMessage(roomId);
-    }
-
+  const handleAuthenticate = () => {
     if (!roomStore.isAuthenticate(roomId)) {
       setModal({
         type: "OPEN",
@@ -80,6 +74,21 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
           visible: true,
         }
       })
+    }
+  }
+
+  useEffect(() => {
+    console.log("roomStore: ", roomStore);
+    if (!chatStore.chatMessages.length) {
+      chatStore.fetchNewChatMessage(roomId);
+    }
+
+    if (isNil(roomStore.currentRoom) || roomStore.currentRoom.id !== roomId) {
+      roomStore.fetchRoom(roomId)
+        .then((response: any) => {
+          console.log("response: ", response);
+          handleAuthenticate();
+        })
     }
 
     return () => {
@@ -125,11 +134,7 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
     if (chatStore.status === ChatDataStatus.PENDING) {
       renderDummyChatContent()
     }
-    /* 
-    *  채팅 데이터가 처음 디비에서 전달해주는 값보다 많을 가능 성이 있을 때 
-    *  20개 미만이라는 말은 더 이상 렌더링 할 채팅 데이터가 디비에 없다는 뜻.
-    */
-    // 
+
     return (
       <>
         {chatStore.chatMessages?.map((value: ChatMessage, index: number) => {
@@ -148,10 +153,7 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
       </>
     );
   };
-  useEffect(() => {
-    console.log("roomStore.currentRoom: ", roomStore.currentRoom);
-    console.log(" hasJoinedRoom: ", roomStore.currentRoom?.hasJoinedRoom);
-  }, []);
+
   return (
     <>
       <section>

@@ -1,5 +1,5 @@
 const path = require('path');
-const dotenv = require('dotenv'); 
+const dotenv = require('dotenv');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const LoadablePlugin = require('@loadable/webpack-plugin');
@@ -11,29 +11,29 @@ const styledComponetnsTransformer = createStyledComponentsTransformer();
 const hotMiddlewareScript = `webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true`;
 
 const env = dotenv.config().parsed;
-const envKeys = Object.keys(env).reduce((prev,next) => {
+const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
-}, {}); 
+}, {});
 
 const getEntryPoint = target => {
-  if(target === 'node'){
+  if (target === 'node') {
     return ['./src/App.tsx'];
   }
-  return devMode? ['babel-polyfill',hotMiddlewareScript, './src/index.tsx'] : ['babel-polyfill', './src/index.tsx'];
+  return devMode ? ['babel-polyfill', hotMiddlewareScript, './src/index.tsx'] : ['babel-polyfill', './src/index.tsx'];
 };
 
 const getConfig = target => ({
-  mode: devMode? 'development': 'production',
+  mode: devMode ? 'development' : 'production',
   name: target,
   target,
   entry: getEntryPoint(target),
 
-  output:  {
+  output: {
     path: path.resolve(__dirname, `./dist/${target}`),
     filename: '[name].js',
     publicPath: `/${target}/`,
-    libraryTarget: target=== 'node' ?  'commonjs2' : undefined,
+    libraryTarget: target === 'node' ? 'commonjs2' : undefined,
   },
 
   module: {
@@ -42,15 +42,15 @@ const getConfig = target => ({
         test: /\.tsx?$/,
         use: [
           'babel-loader',
-          { 
+          {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              plugins:['react-hot-loader/babel']
+              plugins: ['react-hot-loader/babel']
             },
             loader: 'ts-loader',
             options: {
-              getCustomTransformers: () => ({before: [styledComponetnsTransformer]}),
+              getCustomTransformers: () => ({ before: [styledComponetnsTransformer] }),
             },
           },
         ],
@@ -75,7 +75,7 @@ const getConfig = target => ({
         use: [
           {
             loader: 'url-loader',
-            options:{
+            options: {
               limit: 10000,
 
             }
@@ -86,9 +86,9 @@ const getConfig = target => ({
   },
 
   resolve: {
-    extensions: ['.js','.jsx','.ts','.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      pages:path.resolve('src/pages/'),
+      pages: path.resolve('src/pages/'),
       components: path.resolve('src/components/'),
       util: path.resolve('src/util/'),
       style: path.resolve('src/style/'),
@@ -99,7 +99,7 @@ const getConfig = target => ({
       ? [new LoadablePlugin(), new MiniCssExtractPlugin(), new webpack.DefinePlugin(envKeys), new webpack.HotModuleReplacementPlugin()]
       : [new LoadablePlugin(), new MiniCssExtractPlugin(), new webpack.DefinePlugin(envKeys)],
 
-    externals: target === 'node' ? ['@loadable/component', nodeExternals()]: undefined, 
+  externals: target === 'node' ? ['@loadable/component', nodeExternals()] : undefined,
 });
 
 
