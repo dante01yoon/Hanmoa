@@ -313,8 +313,8 @@ export const onPutJoinRoom = async (ctx) => {
   const { roomId, studentNumber } = request.body;
 
   try {
-    const room = await Room.joinUser(roomId, studentNumber);
     const user = await User.findByStudentNumber(studentNumber);
+    const room = await Room.joinUser(roomId, studentNumber);
 
     if (user && user.code === 422) {
       response.status = 422;

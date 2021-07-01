@@ -56,7 +56,7 @@ interface RoomPageProps extends RouteComponentProps<{ id: string }> {
 
 const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   const roomId = match.params.id;
-  const { chatStore, roomStore } = useMobxStores();
+  const { chatStore, roomStore, sessionStore } = useMobxStores();
   const codeRef = useRef<string | null>(chatStore.currentCode || roomId)
   const chatRoomRef = useRef<HTMLElement>(null);
   const ioRef = useRef<IntersectionObserver>();
@@ -154,6 +154,13 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
     );
   };
 
+  const handleClickEnter = (roomId: string, studentNumber: string) => {
+    return async () => {
+      const response = await roomStore.fetchJoinRoom({ roomId, studentNumber });
+      console.log("response: ", response);
+    }
+  }
+
   return (
     <>
       <section>
@@ -173,7 +180,7 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
         </StyledSelf>
       </section>
       <section>
-        {isModal.visible && <Modal {...isModal.data} />}
+        {isModal.visible && <Modal {...isModal.data} onClickEnter={handleClickEnter(roomId, sessionStore.userProfile.studentNumber)} />}
       </section>
     </>
   );

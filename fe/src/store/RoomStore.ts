@@ -97,7 +97,6 @@ export default class RoomStore extends BasicStore {
     }
   }
 
-  // todo studentNumber
   async fetchPostRoom(values: {
     studentNumber: Profile["studentNumber"];
     title: string;
@@ -118,6 +117,24 @@ export default class RoomStore extends BasicStore {
     }
     catch (error) {
       throw error[0];
+    }
+  }
+
+  @action.bound
+  async fetchJoinRoom(values: {
+    roomid: string, studentNumber: string
+  }) {
+    const [error, response] = await this.api.PUT<any>("/room/join", values);
+
+    if (error) {
+      console.log("error: ", error);
+      throw error;
+    }
+
+    if (response && response.success) {
+      console.log("response: ", response);
+      this.feedFetchRoom(response.data.room);
+      return response.data;
     }
   }
 
@@ -178,6 +195,9 @@ export default class RoomStore extends BasicStore {
   @action.bound
   feedFetchRoom(room: GetRoomPayload["room"]) {
     this.currentRoom = room;
+    if (room && room.id) {
+      this.setAuthenticate(room?.id, true);
+    }
   }
 
 }
