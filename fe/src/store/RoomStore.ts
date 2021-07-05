@@ -25,8 +25,19 @@ export default class RoomStore extends BasicStore {
     this.authenticate = state?.authenticate ?? {};
   }
 
-  async fetchRooms(category?: string, page: number = 0, clear: boolean = false) {
-    const [error, response] = await this.api.GET<GetRoomsPayload>(`/room/${category}?page=${page}`);
+  async fetchRooms({ category, page = 0, clear = false, req }: {
+    category?: string;
+    page?: number;
+    clear?: boolean;
+    req?: Request<any>,
+  }) {
+    const [error, response] = await this.api.GET<GetRoomsPayload>(
+      `/room/${category}?page=${page}`,
+      {},
+      {
+        headers: req && req.headers,
+      }
+    );
 
     if (error) {
       throw error;
@@ -53,7 +64,7 @@ export default class RoomStore extends BasicStore {
   }
 
   async fetchRoom(id: string, req?: Request<any>) {
-    const [error, response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`, {
+    const [error, response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`, {}, {
       headers: req && req.headers,
     });
     if (error) {

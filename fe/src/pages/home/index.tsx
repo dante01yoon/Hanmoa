@@ -117,9 +117,9 @@ const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
   );
 };
 
-HomePage.initStoreOnServer = (_, { roomStore }) => {
+HomePage.initStoreOnServer = (req, { roomStore }) => {
   return Promise.all([
-    roomStore.fetchRooms(),
+    roomStore.fetchRooms({ req, }),
   ])
 }
 

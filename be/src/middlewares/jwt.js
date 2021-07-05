@@ -59,9 +59,7 @@ export const encode = async (ctx, next) => {
  */
 export const decode = async (ctx, next) => {
   const { response, cookies, request } = ctx;
-  console.log("request.headers in decode", request.headers);
   const accessToken = cookies.get("_hm_guit");
-  console.log("cookies in decode: ", cookies);
   console.log("accessToken in decode: ", accessToken);
   if (isNil(accessToken)) {
     return next();

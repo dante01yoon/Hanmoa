@@ -11,8 +11,6 @@ const hanmoaAxios: AxiosInstance = axios.create({
   withCredentials: true,
 })
 
-// hanmoaAxios.defaults.withCredentials = true;
-
 hanmoaAxios.interceptors.request.use((config: any) => {
   return config;
 }, (error) => {

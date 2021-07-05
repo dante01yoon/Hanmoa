@@ -119,8 +119,8 @@ export const onGetRoom = async (ctx, next) => {
     }
 
     let hasJoinedRoom = null;
-    console.log("ctx.request.studentNumber: ", ctx.request.studentNumber);
 
+    console.log("ctx.request.studentNumber in onGetRoom: ", ctx.request.studentNumber);
     if (ctx.request.studentNumber) {
       hasJoinedRoom = await User.checkHasJoinedRoomById(id, ctx.request.studentNumber);
     }
@@ -176,7 +176,6 @@ export const onPostLeaveRoom = async (ctx) => {
 export const onCreateRoom = async (ctx) => {
   const { request, response } = ctx;
   const { studentNumber, title, subTitle, imageUrl, category, capability, hasPassword, password, member } = request.body;
-  console.log("category: ", category);
   try {
     // 최대 참가 수가 정해져있는 카테고리
     if (["watcha", "netflix"].includes(category)) {
