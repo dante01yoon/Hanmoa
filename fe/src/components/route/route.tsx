@@ -3,6 +3,7 @@ import { Switch, Route, RouteComponentProps } from "react-router";
 import { Dispatch } from "redux";
 import loadable, { } from "@loadable/component";
 import { Request } from "express";
+import { withRouter } from "react-router-dom";
 import {
   HomePage,
   SignUpPage,
@@ -127,4 +128,4 @@ const HanmoaRouter = () => {
   )
 }
 
-export default HanmoaRouter;
+export default withRouter(HanmoaRouter);

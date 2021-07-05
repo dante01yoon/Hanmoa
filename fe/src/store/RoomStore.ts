@@ -5,6 +5,7 @@ import { GetRoomPayload, GetRoomsPayload, Profile } from "@payload/index";
 import isNil from "lodash/isNil";
 import { http } from "src/apis/httpModule";
 import { Request } from "express";
+import room from "src/pages/room";
 
 export default class RoomStore extends BasicStore {
   @observable roomList: GetRoomsPayload["rooms"] | null;
@@ -188,6 +189,7 @@ export default class RoomStore extends BasicStore {
 
   @action.bound
   feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]) {
+    console.log("rooms in feedFetchHomeRooms: ", rooms);
     if (rooms) {
       if (this.homeRoomList) {
         this.homeRoomList = [...this.homeRoomList, ...rooms];
@@ -195,6 +197,12 @@ export default class RoomStore extends BasicStore {
       else {
         this.homeRoomList = rooms;
       }
+      rooms.forEach((room) => {
+
+        if (!room.hasPassword || room.hasJoinedRoom) {
+          this.setAuthenticate(room.id, true);
+        }
+      })
     }
   }
 
@@ -210,6 +218,5 @@ export default class RoomStore extends BasicStore {
       this.setAuthenticate(room?.id, true);
     }
   }
-
 }
 

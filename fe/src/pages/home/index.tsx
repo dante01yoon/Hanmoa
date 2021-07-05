@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, FC, useState, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, RouteComponentProps } from "react-router-dom";
 import * as Styled from "./style";
 import { Carousel } from "@components/carousel";
 import { Slide } from "@components/carousel/slide";
@@ -29,7 +29,7 @@ interface HomePageInitStoreOnServer {
   }>
 }
 
-const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
+const HomePage: FC<RouteComponentProps> & HomePageInitStoreOnServer = ({ history }) => {
   const [isModal, setModal] = useModal();
   const { pathname } = useLocation();
   const homeRef = useRef<HTMLUListElement>(null);
@@ -59,9 +59,8 @@ const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
 
   useEffect(() => {
     if (isNil(roomStore.homeRoomList)) {
-      roomStore.fetchRooms()
+      roomStore.fetchRooms({ clear: true })
         .then(({ rooms }: { rooms: any }) => {
-          console.log("roomStore.fetchRooms called");
           setIsLoading(false);
         })
     }
@@ -69,13 +68,26 @@ const HomePage: FC & HomePageInitStoreOnServer = ({ }) => {
 
   const handleClick: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void = (data) => (e) => {
     console.log("date: ", data);
-    setModal({
-      type: "OPEN",
-      payload: {
-        data,
-        visible: true,
-      },
-    });
+    console.log("roomStore.authenticate: ", roomStore.authenticate);
+    const roomId = data?.id;
+    if (!isNil(roomId)) {
+      if (!roomStore.isAuthenticate(roomId)) {
+        setModal({
+          type: "OPEN",
+          payload: {
+            data,
+            visible: true,
+          }
+        });
+      } else {
+        history.push({
+          pathname: `/room/${roomId}`
+        })
+      }
+    }
+
+
+
   };
 
   return (

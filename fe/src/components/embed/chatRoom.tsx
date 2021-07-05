@@ -145,8 +145,6 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children, disabled }) => {
   const { io } = useSocket();
 
   const handleSubmit = (values: IChatValues, { resetForm }: Pick<FormikHelpers<IChatValues>, "resetForm">) => {
-    console.log("values.chat: ", values.chat);
-    console.log("io.id in handleSubmit: ", io.id);
     io.emit("sendMessage", ({ ioId: io.id, roomId, message: values.chat, time: new Date().toLocaleString() }));
     resetForm({
       values: {

@@ -29,8 +29,8 @@ const StyledArticle = styled.article`
   
   & > div:first-child {
     background-color: ${(p) => p.theme.colors.dark_sky_blue};
-    overflow-y: auto;
     max-height: 75vh;
+    overflow-y: auto;
   }
 `;
 
