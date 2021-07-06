@@ -59,14 +59,8 @@ const TopicPage: FC<TopicPageProps> & TopicPageInitStoreOnServer = ({ match }) =
     cb: handleLoadMore,
   });
 
-  const fetchRooms = async () => {
-    const response = await roomStore.fetchRooms(category);
-    console.log("response: ", response);
-  }
-  useEffect(() => {
-    // roomStore.fetchRooms(category)
-    fetchRooms();
 
+  useEffect(() => {
     // fixme 아래걸로 주석 해제
     if (!isNil(roomStore.roomList) || (roomStore.currentTopic !== category)) {
       setIsLoading(true);

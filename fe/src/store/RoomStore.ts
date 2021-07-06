@@ -1,5 +1,5 @@
 import BasicStore from "@store/BasicStore";
-import { action, observable, makeObservable } from "mobx";
+import { action, observable, makeObservable, runInAction } from "mobx";
 import RootStore from "@store/RootStore";
 import { GetRoomPayload, GetRoomsPayload, Profile } from "@payload/index";
 import isNil from "lodash/isNil";
@@ -26,6 +26,7 @@ export default class RoomStore extends BasicStore {
     this.authenticate = state?.authenticate ?? {};
   }
 
+  @action.bound
   async fetchRooms({ category, page = 0, clear = false, req }: {
     category?: string;
     page?: number;
@@ -56,7 +57,7 @@ export default class RoomStore extends BasicStore {
         if (clear) {
           this.clearRooms();
         }
-        this.feedFetchRooms(data.rooms)
+        runInAction(() => this.feedFetchRooms(data.rooms));
       }
       category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
       return response.data;
@@ -64,6 +65,7 @@ export default class RoomStore extends BasicStore {
     return Promise.resolve();
   }
 
+  @action.bound
   async fetchRoom(id: string, req?: Request<any>) {
     const [error, response] = await this.api.GET<GetRoomPayload>(`/room/only/${id}`, {}, {
       headers: req && req.headers,
@@ -189,7 +191,6 @@ export default class RoomStore extends BasicStore {
 
   @action.bound
   feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]) {
-    console.log("rooms in feedFetchHomeRooms: ", rooms);
     if (rooms) {
       if (this.homeRoomList) {
         this.homeRoomList = [...this.homeRoomList, ...rooms];
@@ -211,7 +212,6 @@ export default class RoomStore extends BasicStore {
     this.homeRoomList = null;
   }
 
-  @action.bound
   feedFetchRoom(room: GetRoomPayload["room"]) {
     this.currentRoom = room;
     if (room && room.id) {

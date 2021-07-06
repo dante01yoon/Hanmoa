@@ -57,7 +57,6 @@ interface RoomPageProps extends RouteComponentProps<{ id: string }> {
 const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   const roomId = match.params.id;
   const { chatStore, roomStore, sessionStore } = useMobxStores();
-  const codeRef = useRef<string | null>(chatStore.currentCode || roomId)
   const chatRoomRef = useRef<HTMLElement>(null);
   const ioRef = useRef<IntersectionObserver>();
   const targetRef = useRef<HTMLElement>(null);
@@ -66,7 +65,8 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   const { user: { studentId } } = useSelector((state: RootState) => state.user);
 
   const handleAuthenticate = () => {
-    if (!roomStore.isAuthenticate(roomId)) {
+    console.log("currentRoom in handleAuthenticate: ", roomStore.currentRoom);
+    if (!roomStore.currentRoom?.hasJoinedRoom) {
       setModal({
         type: "OPEN",
         payload: {
@@ -78,7 +78,6 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   }
 
   useEffect(() => {
-    console.log("roomStore: ", roomStore);
     if (!chatStore.chatMessages.length) {
       chatStore.fetchNewChatMessage(roomId);
     }
@@ -94,7 +93,7 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
     return () => {
       chatStore.resetChatOption();
     }
-  }, []);
+  }, [roomId]);
 
   useEffect(() => {
     ioRef.current = new IntersectionObserver((entries) => {
@@ -160,7 +159,10 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
       console.log("response: ", response);
     }
   }
-
+  useEffect(() => {
+    console.log("roomStore.isAuthenticate: ", roomStore.isAuthenticate);
+    console.log("roomStore.currentRoom: ", roomStore.currentRoom);
+  })
   return (
     <>
       <section>
