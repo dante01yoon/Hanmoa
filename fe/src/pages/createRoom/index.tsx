@@ -246,7 +246,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   const handleUpdateFetchRooms = async (category: string) => {
     try {
       setContentsLoading(true);
-      await roomStore.fetchRooms(category, 0, true)
+      await roomStore.fetchRooms({ category, clear: true })
     } catch (error) {
       console.error(error);
     } finally {
@@ -255,7 +255,6 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   }
 
   const handleClickTopicSelector = async (topic: Topic) => {
-
     dispatchTopic({
       type: TopicEnum.CHANGE_TOPIC,
       payload: topic,
