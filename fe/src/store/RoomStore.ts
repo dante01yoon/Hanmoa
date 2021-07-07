@@ -1,28 +1,32 @@
 import BasicStore from "@store/BasicStore";
-import { action, observable, makeObservable, runInAction } from "mobx";
+import { action, observable, makeAutoObservable, runInAction, makeObservable } from "mobx";
 import RootStore from "@store/RootStore";
 import { GetRoomPayload, GetRoomsPayload, Profile } from "@payload/index";
 import isNil from "lodash/isNil";
 import { http } from "src/apis/httpModule";
 import { Request } from "express";
-import room from "src/pages/room";
 
 export default class RoomStore extends BasicStore {
-  @observable roomList: GetRoomsPayload["rooms"] | null;
-  @observable currentRoom: GetRoomPayload["room"];
-  @observable homeRoomList: GetRoomsPayload["rooms"] | null;
-  @observable currentTopic: string | null;
-  @observable next: boolean = false;
-  @observable authenticate: Record<string, boolean>;
+  roomList: Nullable<GetRoomsPayload["rooms"]> = null;
+  homeRoomList: Nullable<GetRoomsPayload["rooms"]> = null;
+  currentTopic: Nullable<string> = null;
+  next: boolean = false;
+  authenticate: Record<string, boolean> = {};
+  currentRoom: GetRoomPayload["room"] = null;
 
   constructor({ root, state }: { root: RootStore, state: RoomStore }) {
     super({ root, state });
-    makeObservable(this);
+    makeObservable(this, {
+      currentRoom: observable,
+      roomList: observable,
+      currentTopic: observable,
+      next: observable,
+      authenticate: observable,
+    });
     this.homeRoomList = state?.homeRoomList ?? null;
     this.roomList = state?.roomList ?? null;
     this.currentRoom = state?.currentRoom ?? null;
     this.currentTopic = state?.currentTopic ?? null;
-    // 비밀번호가 있는 방인지 해당 필드 확인 
     this.authenticate = state?.authenticate ?? {};
   }
 
@@ -49,15 +53,17 @@ export default class RoomStore extends BasicStore {
       const { data } = response
 
       if (isNil(category)) {
+        console.log("isNil category:", category);
         if (clear) {
           this.clearHomeRooms();
         }
         this.feedFetchHomeRooms(data.rooms);
       } else {
+        console.log("!isNil category: ", category);
         if (clear) {
           this.clearRooms();
         }
-        runInAction(() => this.feedFetchRooms(data.rooms));
+        this.feedFetchRooms(data.rooms);
       }
       category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
       return response.data;
@@ -75,8 +81,7 @@ export default class RoomStore extends BasicStore {
     }
     if (response && response.success) {
       const { data } = response
-      this.feedFetchRoom(data.room);
-
+      runInAction(() => this.feedFetchRoom(data.room));
       if (data.room?.hasPassword && !this.authenticate[id]) {
         this.setAuthenticate(id, false);
       }
@@ -189,7 +194,6 @@ export default class RoomStore extends BasicStore {
     this.roomList = null;
   }
 
-  @action.bound
   feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]) {
     if (rooms) {
       if (this.homeRoomList) {
