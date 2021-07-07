@@ -1,3 +1,4 @@
+import { makeObservable } from "mobx";
 import { http } from "src/apis/httpModule";
 import RootStore from "./RootStore";
 
@@ -9,6 +10,7 @@ class BasicStore {
     root: RootStore;
     state?: any
   }) {
+    makeObservable(this);
     this.api = http;
     this.rootStore = root;
   }
