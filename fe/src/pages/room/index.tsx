@@ -65,7 +65,6 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
   const { user: { studentId } } = useSelector((state: RootState) => state.user);
 
   const handleAuthenticate = () => {
-    console.log("currentRoom in handleAuthenticate: ", roomStore.currentRoom);
     if (!roomStore.currentRoom?.hasJoinedRoom) {
       setModal({
         type: "OPEN",
@@ -85,7 +84,6 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
     if (isNil(roomStore.currentRoom) || roomStore.currentRoom.id !== roomId) {
       roomStore.fetchRoom(roomId)
         .then((response: any) => {
-          console.log("response: ", response);
           handleAuthenticate();
         })
     }
@@ -159,10 +157,7 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
       console.log("response: ", response);
     }
   }
-  useEffect(() => {
-    console.log("roomStore.isAuthenticate: ", roomStore.isAuthenticate);
-    console.log("roomStore.currentRoom: ", roomStore.currentRoom);
-  })
+
   return (
     <>
       <section>

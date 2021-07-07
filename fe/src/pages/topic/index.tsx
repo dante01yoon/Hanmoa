@@ -44,7 +44,7 @@ const TopicPage: FC<TopicPageProps> & TopicPageInitStoreOnServer = ({ match }) =
 
   const throttleFetch = useCallback(throttle(() => {
     setIsScrollLoading(true);
-    roomStore.fetchRooms(category)
+    roomStore.fetchRooms({ category })
       .then(() => {
         setIsScrollLoading(false);
       })
@@ -61,10 +61,9 @@ const TopicPage: FC<TopicPageProps> & TopicPageInitStoreOnServer = ({ match }) =
 
 
   useEffect(() => {
-    // fixme 아래걸로 주석 해제
     if (!isNil(roomStore.roomList) || (roomStore.currentTopic !== category)) {
       setIsLoading(true);
-      roomStore.fetchRooms(category, 0, true)
+      roomStore.fetchRooms({ category, clear: true })
         .then(
           (data: any) => {
             console.log(data)
@@ -121,7 +120,7 @@ const TopicPage: FC<TopicPageProps> & TopicPageInitStoreOnServer = ({ match }) =
 TopicPage.initStoreOnServer = (req, { roomStore }) => {
   const { category } = req.params;
   return Promise.all([
-    roomStore.fetchRooms(category),
+    roomStore.fetchRooms({ category, req }),
   ])
 }
 
