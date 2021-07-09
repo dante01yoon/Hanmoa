@@ -122,7 +122,6 @@ export const onGetRoom = async (ctx, next) => {
 
     let hasJoinedRoom = null;
 
-    console.log("ctx.request.studentNumber in onGetRoom: ", ctx.request.studentNumber);
     if (ctx.request.studentNumber) {
       hasJoinedRoom = await User.checkHasJoinedRoomById(id, ctx.request.studentNumber);
     }

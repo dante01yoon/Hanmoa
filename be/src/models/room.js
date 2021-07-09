@@ -140,10 +140,7 @@ Room.statics.getRooms = async function (args) {
   if (category) {
     topic = await Topic.findTopic({ category });
   }
-
-  const findArgs = topic ? { topic: topic._id } : null;
-
-  if (isNil(findArgs)) { return []; }
+  const findArgs = topic ? { topic: topic._id } : {};
 
   let rooms = await this.find(findArgs)
     .populate("topic join host")

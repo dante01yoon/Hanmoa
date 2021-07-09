@@ -34,9 +34,10 @@ const Topic = new Schema({
 */
 Topic.statics.findTopic = async function (args) {
   const { category } = args;
-  console.log("category in findTopic: ", category)
+
   try {
-    const document = await this.findOne({ category });
+    // todo 로직 개선 필요
+    const document = await this.findOne({ category: category === "ktx" ? "KTX" : category });
     return document;
   } catch (error) {
     console.error("error in room.statics.findTopic");

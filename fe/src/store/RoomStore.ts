@@ -53,7 +53,6 @@ export default class RoomStore extends BasicStore {
       const { data } = response
 
       if (isNil(category)) {
-        console.log("isNil category:", category);
         if (clear) {
           this.clearHomeRooms();
         }

@@ -3,6 +3,7 @@ import Topic from "../../models/topic";
 
 export const onGetTopic = async (ctx, next) => {
   const { request: { query: { category } } } = ctx;
+
   const validation = makeValidation(types => ({
     payload: category,
     checks: {
@@ -22,7 +23,9 @@ export const onGetTopic = async (ctx, next) => {
   }
 
   try {
-    const topic = await Topic.findTopic({ category });
+    // todo 더 나은 로직으로 수정
+    console.log("category in onGetTopic: ", category);
+    const topic = await Topic.findTopic({ category: category === "ktx" ? "KTX" : category });
     ctx.status = 200;
     ctx.body = {
       data: {
