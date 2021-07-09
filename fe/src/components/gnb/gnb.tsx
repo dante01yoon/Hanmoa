@@ -98,18 +98,6 @@ const Gnb: FC<GnbProps> = ({
     if (sessionStore.isSignedIn) {
       return (
         <>
-          <Item onClick={() => {
-            toast.openToast(<DefaultToast title="토스트 생성" message="안녕하세요 토스트입니다." />, {
-              position: "top",
-            });
-            // const data = await fetch("http://localhost:5001/api/room/roommate?page=0", { credentials: "include" });
-            // const data = await roomStore.fetchRooms("ktx");
-            // const data = await http.GET("http://localhost:5001/api/room/roommate?page=0");
-            // console.log(data)
-          }}>
-            테스트
-            {/* <SmartLink href="/createRoom">방 만들기</SmartLink> */}
-          </Item>
           <Item>
             <SmartLink href="/createRoom">방 만들기</SmartLink>
           </Item>
@@ -124,7 +112,7 @@ const Gnb: FC<GnbProps> = ({
           <Item >
             <SmartLink href="login">
               로그인
-              </SmartLink>
+            </SmartLink>
           </Item>
         </>
       )

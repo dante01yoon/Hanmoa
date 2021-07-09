@@ -475,7 +475,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
               !contentsLoading && (
                 roomStore.roomList?.length > 0 ?
                   <CreationCarousel contents={roomStore.roomList} onClickCard={handleClickCard} /> :
-                  <StyledNoTopicText>콘텐츠가 없습니다.</StyledNoTopicText>
+                  <StyledNoTopicText>`{topicState.category}` 토픽 주제의 방이 없습니다. 방 개설의 첫 주인공이 되어보세요!</StyledNoTopicText>
               )
             }
 
