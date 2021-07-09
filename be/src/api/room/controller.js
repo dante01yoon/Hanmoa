@@ -34,23 +34,25 @@ export const onGetRooms = async (ctx) => {
 
   try {
     const rooms = await Room.getRooms({ page, category, studentNumber });
-    const refinedRooms = rooms.map((room) => {
-      const copiedRoom = cloneDeep(room.toObject());
+    const refinedRooms = rooms.length > 0 ?
+      rooms.map((room) => {
+        const copiedRoom = cloneDeep(room.toObject());
 
-      if (room.join.some(joinedUser => joinedUser.profile.studentNumber === studentNumber)) {
-        copiedRoom.hasJoinedRoom = true;
-      } else {
-        copiedRoom.hasJoinedRoom = false;
-      }
+        if (room.join.some(joinedUser => joinedUser.profile.studentNumber === studentNumber)) {
+          copiedRoom.hasJoinedRoom = true;
+        } else {
+          copiedRoom.hasJoinedRoom = false;
+        }
 
-      const refinedTopic = pick(room.topic, ["category", "url"]);
-      return {
-        ...copiedRoom,
-        topic: refinedTopic,
-        current: copiedRoom.join.length,
-        joinPossible: copiedRoom.join.length < copiedRoom.capability,
-      }
-    });
+        const refinedTopic = pick(room.topic, ["category", "url"]);
+        return {
+          ...copiedRoom,
+          topic: refinedTopic,
+          current: copiedRoom.join.length,
+          joinPossible: copiedRoom.join.length < copiedRoom.capability,
+        }
+      }) :
+      rooms;
 
     ctx.status = 200;
     ctx.body = {

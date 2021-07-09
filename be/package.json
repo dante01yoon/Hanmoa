@@ -23,7 +23,8 @@
   },
   "scripts": {
     "start": "NODE_PATH=src nodemon --exec babel-node src/ src/index.js",
-    "start:window": "cross-env NODE_PATH=src nodemon --watch babel-node src/ src/index.js"
+    "start:window": "cross-env NODE_PATH=src nodemon --watch babel-node src/ src/index.js",
+    "build": "build"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.7",

@@ -34,6 +34,7 @@ const Topic = new Schema({
 */
 Topic.statics.findTopic = async function (args) {
   const { category } = args;
+  console.log("category in findTopic: ", category)
   try {
     const document = await this.findOne({ category });
     return document;
