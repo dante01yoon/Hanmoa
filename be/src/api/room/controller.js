@@ -34,7 +34,7 @@ export const onGetRooms = async (ctx) => {
 
   try {
     const rooms = await Room.getRooms({ page, category, studentNumber });
-    const refinedRooms = rooms.length > 0 ?
+    const refinedRooms = (!isNil(rooms) && rooms.length) > 0 ?
       rooms.map((room) => {
         const copiedRoom = cloneDeep(room.toObject());
 
@@ -45,6 +45,7 @@ export const onGetRooms = async (ctx) => {
         }
 
         const refinedTopic = pick(room.topic, ["category", "url"]);
+
         return {
           ...copiedRoom,
           topic: refinedTopic,
@@ -53,12 +54,13 @@ export const onGetRooms = async (ctx) => {
         }
       }) :
       rooms;
-
     ctx.status = 200;
     ctx.body = {
       success: true,
       data: {
         rooms: refinedRooms,
+        loadMore: !rooms.length ? false : true,
+        length: isNil(rooms) ? 0 : rooms.length,
       },
     }
   } catch (error) {

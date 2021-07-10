@@ -148,11 +148,6 @@ Room.statics.getRooms = async function (args) {
     .skip(page * 10)
     .limit(12);
 
-  if (!rooms.length) {
-    roomsCache.set(page, rooms);
-  } else {
-    rooms = page > 0 ? roomsCache.get(page - 1) : rooms;
-  }
   return rooms;
 }
 

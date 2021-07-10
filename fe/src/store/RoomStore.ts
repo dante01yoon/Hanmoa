@@ -13,7 +13,8 @@ export default class RoomStore extends BasicStore {
   next: boolean = false;
   authenticate: Record<string, boolean> = {};
   currentRoom: GetRoomPayload["room"] = null;
-  currentPage: number;
+  private currentPage: number = 0;
+  private loadMore: boolean = true;
 
   constructor({ root, state }: { root: RootStore, state: RoomStore }) {
     super({ root, state });
@@ -23,6 +24,9 @@ export default class RoomStore extends BasicStore {
       currentTopic: observable,
       next: observable,
       authenticate: observable,
+      // @ts-expect-error
+      currentPage: observable,
+      loadMore: observable,
     });
     this.homeRoomList = state?.homeRoomList ?? null;
     this.roomList = state?.roomList ?? null;
@@ -30,6 +34,7 @@ export default class RoomStore extends BasicStore {
     this.currentTopic = state?.currentTopic ?? null;
     this.authenticate = state?.authenticate ?? {};
     this.currentPage = state?.currentPage ?? 0;
+    this.loadMore = state?.loadMore ?? true;
   }
 
   @action.bound
@@ -62,22 +67,42 @@ export default class RoomStore extends BasicStore {
         }
         this.feedFetchHomeRooms(data.rooms);
       } else {
-        console.log("!isNil category: ", category);
         if (clear) {
           this.clearRooms();
         }
         this.feedFetchRooms(data.rooms);
       }
-      this.feedCurrentPage(this.currentPage++);
+      this.updatePagenation(this.currentPage, data.loadMore);
+
       category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
       return response.data;
     }
     return Promise.resolve();
   }
 
+  get roomPage() {
+    return this.currentPage;
+  }
+
+  get canLoadMore() {
+    return this.loadMore;
+  }
+
+  private updatePagenation(page: number, loadMore: boolean) {
+    if (loadMore) {
+      this.feedCurrentPage(++page);
+    }
+    this.feedLoadMore(loadMore);
+  }
+
   @action.bound
-  feedCurrentPage(page: number) {
+  private feedCurrentPage(page: number) {
     this.currentPage = page;
+  }
+
+  @action.bound
+  private feedLoadMore(loadMore: boolean) {
+    this.loadMore = loadMore;
   }
 
   @action.bound
@@ -202,6 +227,7 @@ export default class RoomStore extends BasicStore {
   clearRooms() {
     this.roomList = null;
     this.currentPage = 0;
+    this.loadMore = true;
   }
 
   feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]) {
@@ -225,6 +251,7 @@ export default class RoomStore extends BasicStore {
   clearHomeRooms() {
     this.homeRoomList = null;
     this.currentPage = 0;
+    this.loadMore = true;
   }
 
   feedFetchRoom(room: GetRoomPayload["room"]) {

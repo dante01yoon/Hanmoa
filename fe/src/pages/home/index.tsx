@@ -41,10 +41,9 @@ const HomePage: FC<RouteComponentProps> & HomePageInitStoreOnServer = ({ history
   const [isHandleLoadMoreLoading, setIsHandleLoadMoreLoading] = useState(false);
 
   const throttleFetch = useCallback(throttle(() => {
-    roomStore.fetchRooms()
-      .then((data: any) => {
+    roomStore.fetchRooms({ page: roomStore.roomPage })
+      .then(() => {
         setIsHandleLoadMoreLoading(false);
-        console.log("data: ", data);
       })
   }, 1200), []);
 
@@ -68,7 +67,6 @@ const HomePage: FC<RouteComponentProps> & HomePageInitStoreOnServer = ({ history
   }, []);
 
   const handleClick: (data: GetRoomPayload["room"]) => (e: React.MouseEvent<HTMLDivElement>) => void = (data) => (e) => {
-    console.log("date: ", data);
     console.log("roomStore.authenticate: ", roomStore.authenticate);
     const roomId = data?.id;
     if (!isNil(roomId)) {
@@ -124,7 +122,7 @@ const HomePage: FC<RouteComponentProps> & HomePageInitStoreOnServer = ({ history
             )}
           </StyledRoomContainer>
         </RoomWrapper>
-        <InfiniteScroll targetRef={infiniteScrollTargetRef} />
+        {roomStore.canLoadMore && <InfiniteScroll targetRef={infiniteScrollTargetRef} />}
       </section>
     </>
   );

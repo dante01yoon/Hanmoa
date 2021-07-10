@@ -32,4 +32,6 @@ export interface GetRoomPayload {
 
 export interface GetRoomsPayload {
   rooms: Array<Room> | null;
+  loadMore: boolean;
+  length: number;
 }
