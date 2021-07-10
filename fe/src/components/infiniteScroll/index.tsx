@@ -1,4 +1,4 @@
-import React, { useState, FC, useRef, RefObject } from "react";
+import React, { FC, RefObject } from "react";
 import styled from "styled-components";
 
 const StyledLoadMore = styled.div`
@@ -13,10 +13,10 @@ interface InfiniteScrollProps {
 const InfiniteScroll: FC<InfiniteScrollProps> = ({
   targetRef,
 }) => {
-  
+
 
   return (
-    <StyledLoadMore ref={targetRef}/>
+    <StyledLoadMore ref={targetRef} />
   )
 }
 

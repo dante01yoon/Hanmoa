@@ -13,6 +13,7 @@ export default class RoomStore extends BasicStore {
   next: boolean = false;
   authenticate: Record<string, boolean> = {};
   currentRoom: GetRoomPayload["room"] = null;
+  currentPage: number;
 
   constructor({ root, state }: { root: RootStore, state: RoomStore }) {
     super({ root, state });
@@ -28,6 +29,7 @@ export default class RoomStore extends BasicStore {
     this.currentRoom = state?.currentRoom ?? null;
     this.currentTopic = state?.currentTopic ?? null;
     this.authenticate = state?.authenticate ?? {};
+    this.currentPage = state?.currentPage ?? 0;
   }
 
   @action.bound
@@ -36,7 +38,9 @@ export default class RoomStore extends BasicStore {
     page?: number;
     clear?: boolean;
     req?: Request<any>,
-  }) {
+  } = {
+      page: 0, clear: false,
+    }) {
     const [error, response] = await this.api.GET<GetRoomsPayload>(
       `/room/${category}?page=${page}`,
       {},
@@ -64,10 +68,16 @@ export default class RoomStore extends BasicStore {
         }
         this.feedFetchRooms(data.rooms);
       }
+      this.feedCurrentPage(this.currentPage++);
       category ? this.setCurrentTopic(category) : this.setCurrentTopic(null)
       return response.data;
     }
     return Promise.resolve();
+  }
+
+  @action.bound
+  feedCurrentPage(page: number) {
+    this.currentPage = page;
   }
 
   @action.bound
@@ -191,6 +201,7 @@ export default class RoomStore extends BasicStore {
   @action.bound
   clearRooms() {
     this.roomList = null;
+    this.currentPage = 0;
   }
 
   feedFetchHomeRooms(rooms: GetRoomsPayload["rooms"]) {
@@ -213,6 +224,7 @@ export default class RoomStore extends BasicStore {
   @action.bound
   clearHomeRooms() {
     this.homeRoomList = null;
+    this.currentPage = 0;
   }
 
   feedFetchRoom(room: GetRoomPayload["room"]) {

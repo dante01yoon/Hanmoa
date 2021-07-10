@@ -42,8 +42,9 @@ const HomePage: FC<RouteComponentProps> & HomePageInitStoreOnServer = ({ history
 
   const throttleFetch = useCallback(throttle(() => {
     roomStore.fetchRooms()
-      .then(() => {
+      .then((data: any) => {
         setIsHandleLoadMoreLoading(false);
+        console.log("data: ", data);
       })
   }, 1200), []);
 
