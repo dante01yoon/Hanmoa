@@ -1,12 +1,12 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
-const {merge} = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const path = require("path");
 
-const webpackDefinedServer = require("./helper/convertGlobalEnvToWebpackDefined"); 
+const webpackDefinedServer = require("./helper/convertGlobalEnvToWebpackDefined");
 
-exports.getOverridingClientWebpackConfig = function overrideClientWebpackConfig(overrider){
+exports.getOverridingClientWebpackConfig = function overrideClientWebpackConfig(overrider) {
   const defaultPlugins = [
     ["@babel/proposal-decorators", { legacy: true }],
     "mobx-deep-action", // async await 에서 자동으로 nested 된 함수에 action을 달아주는 녀석 
@@ -37,7 +37,7 @@ exports.getOverridingClientWebpackConfig = function overrideClientWebpackConfig(
           },
         },
         {
-          test: /\.(otf|ttf|woff|woff2)$/,
+          test: /\.(otf|ttf|woff|woff2|ico)$/,
           loader: "file-loader",
           options: {
             name: "fonts/[name].[hash:20].[ext]",
@@ -90,7 +90,7 @@ exports.getOverridingClientWebpackConfig = function overrideClientWebpackConfig(
     ],
   };
 
-  switch(process.env.NODE_ENV) {
+  switch (process.env.NODE_ENV) {
     case "production":
       config = merge(config, {
         mode: "production",
@@ -111,16 +111,16 @@ exports.getOverridingClientWebpackConfig = function overrideClientWebpackConfig(
     default:
       throw new Error("Unknown environment");
   }
-  
+
   return merge(
     config,
-    overrider({nodeEnv: process.env.NODE_ENV}),
+    overrider({ nodeEnv: process.env.NODE_ENV }),
   )
 }
 
 exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
   overrider,
-){
+) {
   const defaultPlugins = [
     ["@babel/proposal-decorators", { legacy: true }],
     "mobx-deep-action", // async await 에서 자동으로 nested 된 함수에 action을 달아주는 녀석 
@@ -131,12 +131,12 @@ exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
 
   let config = {
     mode: "none",
-    target: "node", 
+    target: "node",
     output: {
       filename: "[name].js",
       publicPath: "http://localhost:8080/",
       library: "[name]",
-      libraryTarget: "commonjs2", 
+      libraryTarget: "commonjs2",
     },
     module: {
       rules: [
@@ -190,7 +190,7 @@ exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
     resolve: {
       modules: ["node_modules", path.resolve(__dirname, "../")],
       extensions: [".js", ".json", ".ts", ".tsx"],
-      alias:{
+      alias: {
         "@components": path.resolve(__dirname, "../src/components/"),
         "@pages": path.resolve(__dirname, "../src/pages/"),
         "@store": path.resolve(__dirname, "../src/store/"),
@@ -215,7 +215,7 @@ exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
     ],
   } // end of config 
 
-  switch(process.env.NODE_ENV) {
+  switch (process.env.NODE_ENV) {
     case "production":
       config = merge(config, {
         mode: "production",
@@ -236,7 +236,7 @@ exports.getOverridingServerWebpackConfig = function overrideServerWebpackConfig(
 
   const mergedConfig = merge(
     config,
-    overrider({nodeEnv: process.env.NODE_ENV}),
+    overrider({ nodeEnv: process.env.NODE_ENV }),
   );
   console.log("mergedConfig.output: ", mergedConfig.output);
   return mergedConfig;

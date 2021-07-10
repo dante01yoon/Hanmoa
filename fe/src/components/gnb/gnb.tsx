@@ -11,8 +11,7 @@ import { useMobxStores, useToast } from "@utils/store/useStores";
 import { SmartLink } from '@components/smartlink';
 import { Portal } from '@components/portal';
 import LoginModal from '@components/login';
-import { DefaultToast } from "@components/toast"
-import hanmoa_logo from 'src/asset/logo/hanmoa_horizontal.svg';
+import hanmoa_logo from 'src/asset/logo/logo.png';
 import { Topic } from 'src/payload';
 
 const {
@@ -21,6 +20,7 @@ const {
   ItemContainer,
   RightItemContainer,
   LeftItemContainer,
+  LogoBox,
   ItemList,
   Item,
   ItemBox,
@@ -65,10 +65,6 @@ const Gnb: FC<GnbProps> = ({
 
   const handleLogoutClick = () => {
     sessionStore.fetchSignOut();
-  }
-
-  const handleCreateRoom = () => {
-
   }
 
   const renderTopicList = useCallback(() => {
@@ -125,9 +121,9 @@ const Gnb: FC<GnbProps> = ({
         <ItemContainer>
           <LeftItemContainer>
             <SmartLink href={"/"}>
-              <ItemBox
+              <LogoBox
                 url={hanmoa_logo}
-                width={192}
+                height={63}
               />
             </SmartLink>
             <ItemBox>

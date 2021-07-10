@@ -1,14 +1,14 @@
 import escapeForHtmlAttribute from "@utils/escapeForHtmlAttribute";
 import { ReducedStore } from "@store/u";
 
-export interface WebExtractor{
+export interface WebExtractor {
   helmet: string,
   script: string,
-  style: string, 
+  style: string,
   link: string
 }
 
-type Html = string; 
+type Html = string;
 
 const scopes = 'profile';
 
@@ -27,14 +27,10 @@ interface RenderFullPageParams {
 
 type RenderFullPage = (param: RenderFullPageParams) => Html;
 
-const loadClient = () => {
-  gapi.load('client:auth2', start);
-}
-
 export const renderFullPage: RenderFullPage = ({
-  collectedWeb, 
-  html, 
-  stores 
+  collectedWeb,
+  html,
+  stores
 }) => {
   return (`
   <!DOCTYPE html>
@@ -44,14 +40,15 @@ export const renderFullPage: RenderFullPage = ({
         ${collectedWeb.helmet}
         ${collectedWeb.link}
         ${collectedWeb.style}
+        <link rel="shortcut icon" href="favicon.ico"></link>
         <script src="https://apis.google.com/js/api.js"></script>
       </head>
       <body>
         <div 
           id="root"
           data-initial-state="${escapeForHtmlAttribute(JSON.stringify(
-            {...stores}
-          ))}"
+    { ...stores }
+  ))}"
         >
           ${html}
         </div>
@@ -59,4 +56,5 @@ export const renderFullPage: RenderFullPage = ({
         ${collectedWeb.script}
       </body>
     </html>
-`)}
+`)
+}

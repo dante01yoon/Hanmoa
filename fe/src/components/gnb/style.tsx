@@ -11,17 +11,40 @@ export const Dummy = styled.div`
 `;
 
 export const Header = styled.header`
-  background-color: ${p => p.theme.colors.background_black};
-  z-index: 500; 
   position: fixed;
   top: 0;
+  z-index: 500; 
+  background-color: ${p => p.theme.colors.background_black};
   width:100%;
   ${p => p.theme.typography._16Bold};
 `
 export const Nav = styled.nav`
-  width:100%;
   line-height: 64px;
+  width:100%;
   height: 64px;
+`;
+
+export const LogoBox = styled.div<{
+  url?: string
+  height: number
+}>`
+  position:relative;
+  width: 100px;
+  height: ${({ height }) => height}px;
+  margin: 0 16px;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -6px;
+    background-image: url(${({ url }) => url});
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 126px;
+    height: 64px;
+  }
 `;
 
 export const ItemBox = styled.div<{
@@ -31,14 +54,15 @@ export const ItemBox = styled.div<{
   display:flex;
   align-items:center;
   margin: 0 16px;
-  
+
   &::after {
-    display: block;
     content: "";
-    height:63px;
-    width: ${p => p.width ? p.width + 'px' : '64px'}; 
+    display: block;
     background: center url("${p => p.url}");
+    width: ${p => p.width ? p.width + 'px' : '64px'}; 
+    height:63px;
   }
+
 `;
 
 export const Item = styled.li`
@@ -55,27 +79,26 @@ export const ItemList = styled.ul`
 `;
 
 export const ItemContainer = styled.div`
-  height: 64px;
   max-width: 1280px;
+  height: 64px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray_300}; 
   margin: 0 auto;
 `;
 
 export const LeftItemContainer = styled.div`
   display: inline-flex;
-  margin-left: 64px;
   margin-right:0;
-
+  margin-left: 64px;
 `
 export const RightItemContainer = styled.div`
-  margin-right: 64px; 
   float:right;
+  margin-right: 64px; 
 `
 
 export const MainContainer = styled.div`
+  position:relative;
   max-width: 1280px;
   margin: 0 auto;
-  position:relative;
 `;
 
 export const TopicButton = styled.button`
@@ -94,8 +117,8 @@ export const TopicButton = styled.button`
   }
   
   &::after{
-    display:block;
     content:"";
+    display:block;
     background: center url("${hamburger}");
     width:24px;
     height:32px;
@@ -103,22 +126,22 @@ export const TopicButton = styled.button`
 `;
 
 export const TopicTitle = styled.span`
-  margin-right: 8px;
   font-size: 16px;
   font-weight: 700;
   line-height:40px;
   height:100%;
+  margin-right: 8px;
 `;
 
 export const TopicBox = styled.div<{
 }>`
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: 16px;
   position: absolute;
   top: 56px;
   background-color: ${p => p.theme.colors.white};
   max-width: 528px;
   max-height:216px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 16px;
   overflow-y: auto; 
 `;
 

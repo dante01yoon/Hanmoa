@@ -60,7 +60,7 @@ const getConfig = target => ({
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(svg)$/,
+        test: /\.(svg|ico)$/,
         use: [
           {
             loader: 'file-loader',
@@ -71,7 +71,7 @@ const getConfig = target => ({
         ]
       },
       {
-        test: /\.(jpe?g|png|gif)$/,
+        test: /\.(jpe?g|png|gif|ico)$/,
         use: [
           {
             loader: 'url-loader',

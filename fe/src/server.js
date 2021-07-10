@@ -2,9 +2,10 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const { renderApp } = require("./server/renderJSX.tsx");
+// const favicon = require("serve-favicon");
 const app = express();
 
-if( process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack');
   const webpackConfig = require("../webpack.client.js").map((config) => {
     config.output.path = config.output.path.replace('dist/dist/', 'dist/');
@@ -23,11 +24,13 @@ if( process.env.NODE_ENV !== 'production') {
     }),
   );
   app.use(webpackHotMiddleware(compiler));
+  // app.use(favicon(path.join(__dirname, 'src/asset', 'favicon.ico')));
 }
+
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname)));
 
-app.get('*', async (req,res) => {
+app.get('*', async (req, res) => {
   const nodeStats = path.resolve(__dirname, './node/loadable-stats.json');
   const webStats = path.resolve(__dirname, './web/loadable-stats.json');
   const hanmoaApp = await renderApp(req, res, {
