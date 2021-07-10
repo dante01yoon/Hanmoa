@@ -38,6 +38,7 @@ Please make sure to check current issues whether your report addresses simillar 
 ✅ react  
 ✅ redux   
 ✅ redux-saga   
+✅ mobx 
 ✅ styled-components   
 ✅ typescript  
 ✅ koa  
