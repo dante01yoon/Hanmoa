@@ -10,6 +10,10 @@ export const Main = styled.main`
 
 export const Dummy = styled.div`
   height: 64px;
+
+  @media (max-width: ${smallDevice}px) {
+    height: 128px;
+  }
 `;
 
 export const Header = styled.header`

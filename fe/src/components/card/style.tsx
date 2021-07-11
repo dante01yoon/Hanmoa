@@ -13,6 +13,9 @@ export const Container = styled.li<{
     box-shadow: 0 0 24px 0 #999;
   }
 
+  @media (max-width: 312px) {
+    width: 264px;
+  }  
 `;
 
 export const GradientBox = styled.div<{
@@ -22,8 +25,8 @@ export const GradientBox = styled.div<{
   position: relative;
   background: ${({ isJoinPossible, gradient }) => isJoinPossible ? gradient : "#d4d9d5"};
   width: 100%;
-  border-radius: 8px 8px 0 0;
   height: 168px;
+  border-radius: 8px 8px 0 0;
   cursor: ${({ isJoinPossible }) => isJoinPossible ? "pointer" : "none"};
 `
 
@@ -32,13 +35,13 @@ export const ImgBox = styled.div<{
   isJoinPossible: boolean;
 }>`
   position: absolute;
-  bottom: -36px;
   right: 32px;
+  bottom: -36px;
   background: url(${p => p.imgUrl}) no-repeat center;
   background-size: cover;
   width: 70px;
-  border-radius: 50%;
   height: 70px;
+  border-radius: 50%;
   cursor: ${({ isJoinPossible }) => isJoinPossible ? "pointer" : "none"};
 `;
 
@@ -47,32 +50,32 @@ export const ContentBox = styled.div`
   width: 100%;
   height:120px;
   padding: 16px;
-  margin: 0 auto;
   border-radius: 0 0 8px 8px;
+  margin: 0 auto;
 `
 
 export const CategoryBox = styled.div`
+  display:flex; 
   width: 248px;
   height: 24px;
-  display:flex; 
 `;
 
 export const CategoryIcon = styled.div<{
 }>`
-  width: 24px;
-  height: 100%;
   background: url() no-repeat center;
   background-size: cover; 
+  width: 24px;
+  height: 100%;
 `
 
 export const Category = styled.div`
+  display: -webkit-box;
   color: ${({ theme }) => theme.colors.gray_white};
-  line-height:24px;
   font-size: 18px;
   font-weight: 700;
+  line-height:24px;
   width: 152px;
   margin-right: 40px;
-  display: -webkit-box;
   -webkit-line-clamp: 1;
   
   -webkit-box-orient: vertical;
@@ -84,11 +87,11 @@ export const MemberCount = styled.div<{
   block?: boolean
 }>`
   ${p => p.block && css`color: ${p.theme.colors.gray_400}`};
-  text-align:right;
   float:right;
+  line-height: 24px;
+  text-align:right;
   width: 96px; 
   margin-right: 8px;
-  line-height: 24px;
 `
 
 export const TitleBox = styled.div`
@@ -114,25 +117,25 @@ export const Title = styled.div`
 `
 
 export const TitleIcons = styled.div`
-  width: 64px;
-  height: 100%;
   display: flex;
   justify-content: center; 
   align-items: center;
+  width: 64px;
+  height: 100%;
 `
 
 export const IconBox = styled.div<{
   src: string
 }>`
-  margin-right: 8px;
   line-height: 33px;  /* ugly :( any idea? */
+  margin-right: 8px;
   cursor: pointer;
   &::after {
-    display: block;
     content: ""; 
+    display: block;
+    background: url("${p => p.src}") center;
     width: 24px;
     height: 24px; 
-    background: url("${p => p.src}") center;
     transition: all 0.2s;
   }
 `

@@ -2,17 +2,16 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   position: fixed;
-  z-index: 999;
   top: calc(50% - 32px);
   left: 50%;
-  background-color: ${(p) => p.theme.colors.yellow_white};
+  z-index: 999;
   transform: translate(-50%, -50%);
-  font-weight: 500;
+  background-color: ${(p) => p.theme.colors.yellow_white};
   font-size: 16px;
-  margin: 30px 0;
+  font-weight: 500;
   width: 383px;
   border-radius: 8px;
-  
+  margin: 30px 0;
 `;
 
 export const StyledContainer = styled.div`
@@ -22,6 +21,9 @@ export const StyledContainer = styled.div`
 
   @media (max-width: 344px) {
     width: 296px;
+  }
+  @media (max-width: 312px) {
+    width: 264px;
   }
 `;
 
@@ -40,14 +42,14 @@ export const Name = styled.div`
 
 export const Description = styled.div`
   width: 200px;
-  overflow-y: hidden;
   max-height: 80px;
+  overflow-y: hidden;
 `;
 
 export const MemberList = styled.ul`
-  overflow-y: auto;
   min-height: 24px;
   max-height: 64px;
+  overflow-y: auto;
 `;
 
 export const Member = styled.li`

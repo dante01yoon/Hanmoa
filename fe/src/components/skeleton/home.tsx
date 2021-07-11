@@ -6,43 +6,43 @@ import {
 
 const StyledFigure = styled.figure`
     display:inline-block;
-    margin: 16px 24px;
     width:296px;
-    border: 1px solid ${p=>p.theme.colors.gray_300};
+    border: 1px solid ${p => p.theme.colors.gray_300};
     border-radius:8px;
+    margin: 16px 24px;
 `;
 const StyledP = styled.p`
-    margin: 16px;
+    content: "";
     display: block; 
-    content:"";
+    background-color: ${p => p.theme.colors.gray_200}; 
     width: 264px;
     height: 136px;
-    background-color: ${p=>p.theme.colors.gray_200}; 
     border-radius: 8px;
+    margin: 16px;
     ${createSkeleteonAnimation("64px")}
 `;
 const StyledFigCaption = styled.figcaption`
-    padding:16px;
     width: 296px;
     height: 128px;
+    padding:16px;
 `;
 const StyledFirstUl = styled.ul`
-    height: 24px;
     display: flex;
+    height: 24px;
     margin-bottom: 16px;
     
     & > li:first-child{
-        background-color: ${p=>p.theme.colors.gray_200}; 
+        background-color: ${p => p.theme.colors.gray_200}; 
         width: 152px;
-        margin-left: 32px;
         margin-right: 16px;
+        margin-left: 32px;
         ${createSkeleteonAnimation("40px")}
     }
     & > li:nth-child(2){
-        background-color: ${p=>p.theme.colors.gray_200}; 
+        background-color: ${p => p.theme.colors.gray_200}; 
         width: 40px;
-        margin-left: 16px;
         margin-right: 32px;
+        margin-left: 16px;
         ${createSkeleteonAnimation()}
     }
 `;
@@ -54,14 +54,14 @@ const StyledSecondUl = styled.ul`
     display: flex;
     margin-top: 16px;
      & > li:first-child{
-        background-color: ${p=>p.theme.colors.gray_200}; 
+        background-color: ${p => p.theme.colors.gray_200}; 
         width: 136px;
         margin-left: 32px;
         margin-right: 32px;
         ${createSkeleteonAnimation()}
     }
     & > li:nth-child(2){
-        background-color: ${p=>p.theme.colors.gray_200}; 
+        background-color: ${p => p.theme.colors.gray_200}; 
         width: 64px;
         margin-left: 32px;
         margin-right: 32px;
