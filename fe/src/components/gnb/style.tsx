@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import hamburger from 'src/asset/hamburger.svg';
 import { Link } from "react-router-dom";
 
+const smallDevice = "780";
+
 export const Main = styled.main`
   clear: both;
 `;
@@ -22,6 +24,10 @@ export const Nav = styled.nav`
   line-height: 64px;
   width:100%;
   height: 64px;
+
+  @media (max-width: ${smallDevice}px) {
+    height: 128px;
+  }
 `;
 
 export const LogoBox = styled.div<{
@@ -63,6 +69,11 @@ export const ItemBox = styled.div<{
     height:63px;
   }
 
+  @media (max-width: ${smallDevice}px) {
+    &::after {
+      display: none;
+    }
+  }
 `;
 
 export const Item = styled.li`
@@ -75,6 +86,10 @@ export const Item = styled.li`
 export const ItemList = styled.ul`
   & > ${Item} {
     display: inline-block;    
+  }
+
+  @media (max-width: ${smallDevice}px) {
+    text-align: center;
   }
 `;
 
@@ -89,10 +104,21 @@ export const LeftItemContainer = styled.div`
   display: inline-flex;
   margin-right:0;
   margin-left: 64px;
+
+  @media (max-width: ${smallDevice}px) {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 0;
+  }
 `
 export const RightItemContainer = styled.div`
   float:right;
   margin-right: 64px; 
+
+  @media ( max-width: ${smallDevice}px) {
+    float: initial;
+    margin: 0;
+  }
 `
 
 export const MainContainer = styled.div`
@@ -123,6 +149,11 @@ export const TopicButton = styled.button`
     width:24px;
     height:32px;
   }
+
+  @media (max-width: ${smallDevice}px) {
+    width: 100%;
+    margin-left: 30px;
+  }
 `;
 
 export const TopicTitle = styled.span`
@@ -143,10 +174,19 @@ export const TopicBox = styled.div<{
   border: 1px solid rgba(0,0,0,0.15);
   border-radius: 16px;
   overflow-y: auto; 
+
+  @media (max-width: ${smallDevice}px) {
+    position: fixed;
+    left: 0;
+    width: 100%;
+  }
 `;
 
 export const TopicList = styled.div`
   display:flex;
+
+  @media (max-width: ${smallDevice}px) {
+  }
 `;
 
 export const TopicLink = styled(Link)`
@@ -162,5 +202,9 @@ export const TopicLink = styled(Link)`
   
   &:hover, :focus {
     background-color: ${p => p.theme.colors.gray_100};
+  }
+
+  @media (max-width: ${smallDevice}px) {
+    width: 100%;
   }
 `;
