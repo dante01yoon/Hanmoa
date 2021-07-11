@@ -1,4 +1,3 @@
-import React from "React";
 import type { NextFunction, Request, Response } from "express";
 import { renderToString } from "react-dom/server";
 import escapeForHtmlAttribute from "@utils/escapeForHtmlAttribute";
