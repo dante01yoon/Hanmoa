@@ -5,7 +5,7 @@
   "scripts": {
     "start": "yarn build:dev && node --inspect ./dist/server.js",
     "start:wds": "webpack-dev-server --env=dev --profile --colors",
-    "build": "rm -rf dist/ && cross-env NODE_ENV=production yarn build:client && cross-env NODE_ENV=production yarn build:server",
+    "build": "rm -rf dist/ && cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=4096 yarn build:client && cross-env NODE_ENV=production yarn build:server",
     "build:dev": "rm -rf dist/ && cross-env NODE_ENV=development yarn build:client && cross-env NODE_ENV=development yarn build:server",
     "build:server": "webpack --env=server --progress --profile --colors",
     "build:client": "webpack --env=client --progress --profile --colors"
