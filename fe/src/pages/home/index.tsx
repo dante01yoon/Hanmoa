@@ -9,13 +9,14 @@ import { Modal } from "@components/modal";
 import useInfiniteScroll from "@components/infiniteScroll/InfiniteScroll";
 import InfiniteScroll from "@components/infiniteScroll";
 import PageLoading from "@components/loading/PageLoading";
-import { useModal } from "@utils/modal/useModal";
+import { useModal, useModalDispatch } from "@utils/modal/useModal";
 import { useMobxStores, MobxStores } from "@utils/store/useStores";
 import { observer } from "mobx-react";
 import type { InitStoreOnServer } from "@utils/makeFetchStoreOnServer";
 import { GetRoomPayload } from "@payload/index";
 import isNil from "lodash/isNil";
 import throttle from "lodash/throttle";
+import AlertModal from "src/components/modal/AlertModal";
 
 import adobe from "src/asset/adobe.jpg";
 import netflix_phone from "src/asset/netflix_phone.jpg";
@@ -31,12 +32,14 @@ interface HomePageInitStoreOnServer {
 
 const HomePage: FC<RouteComponentProps> & HomePageInitStoreOnServer = ({ history }) => {
   const [isModal, setModal] = useModal();
+  const closeModal = useModalDispatch();
+
   const { pathname } = useLocation();
   const homeRef = useRef<HTMLUListElement>(null);
   const infiniteScrollTargetRef = useRef<HTMLDivElement>(null);
   // TODO 나중에 Saga 로 roomStore을 교체시 사용 
   // const { data, isLoading } = useSelector((state: RootState) => state.topic);
-  const { roomStore } = useMobxStores();
+  const { roomStore, sessionStore } = useMobxStores();
   const [isLoading, setIsLoading] = useState(isNil(roomStore.homeRoomList));
   const [isHandleLoadMoreLoading, setIsHandleLoadMoreLoading] = useState(false);
 
@@ -98,7 +101,17 @@ const HomePage: FC<RouteComponentProps> & HomePageInitStoreOnServer = ({ history
           <Slide url={netflix_phone} />
         </Carousel>
       </section>
-      <section>{isModal.visible && <Modal {...isModal.data} />}</section>
+      <section>{isModal.visible && (
+        sessionStore.isSignedIn ?
+          <Modal {...isModal.data} /> :
+          <AlertModal
+            message="로그인 후에 사용하실 수 있습니다."
+            onConfirm={() => {
+              closeModal({ type: "CLOSE" });
+              history.push("login")
+            }}
+          />
+      )}</section>
       <section >
         <RoomWrapper>
           <StyledRoomContainer ref={homeRef}>

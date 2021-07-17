@@ -119,7 +119,7 @@ export const Modal: FC<ModalProps> = ({
               clickHandler={handleClickEnter}
             >
               입장
-          </BaseButton>
+            </BaseButton>
             <BaseButton
               type="button"
               background={"#DC3943"}
@@ -145,7 +145,7 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <Wrapper>
-      { !hasPassword || roomStore.authenticate[id]
+      {!hasPassword || roomStore.authenticate[id]
         ? (
           <StyledContainer>
             <Row>
@@ -178,7 +178,7 @@ export const Modal: FC<ModalProps> = ({
                   clickHandler={() => close({ type: "CLOSE" })}
                 >
                   닫기
-            </BaseButton>
+                </BaseButton>
               </ButtonWrapper>
             </Row>
           </StyledContainer>

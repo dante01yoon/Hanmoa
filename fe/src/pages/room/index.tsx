@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
-import { RouteComponentProps } from "react-router-dom"
+import { RouteComponentProps, Redirect } from "react-router-dom"
 import isNil from "lodash/isNil";
 import styled from "styled-components";
 import ChatCard from "@components/chat/card";
@@ -156,6 +156,10 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
       const response = await roomStore.fetchJoinRoom({ roomId, studentNumber });
       console.log("response: ", response);
     }
+  }
+
+  if (!sessionStore.isSignedIn) {
+    return (<Redirect to="/" />)
   }
 
   return (
