@@ -305,18 +305,49 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
     }
   }, [])
 
+  const validateImage = (file: File) => {
+    if (file.size > 300000) {
+      throw Error("size error");
+    }
+    if (!["jpg", "jpeg", "png"].includes(file.type.split("/")[1])) {
+      throw Error("type error")
+    }
+    return true;
+  }
+
   const handleChangeInputImage = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (e.target.files && e.target.files[0]) {
-      setImageLoading(true);
-      const reader = new FileReader();
       const file = e.target.files[0];
-      reader.onloadend = () => {
-        setImagePreviewUrl(reader.result);
+      setImageLoading(true);
+      try {
+        validateImage(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreviewUrl(reader.result);
+          setImageLoading(false);
+        }
+        reader.readAsDataURL(file);
+      } catch (error) {
+        openToast(
+          <DefaultToast
+            title={error === "size error" ?
+              "이미지 크기가 너무 큽니다." :
+              "올바른 형식의 파일이 아닙니다."
+            }
+            message={
+              error === "size error" ?
+                "3mb 미만의 이미지를 입력해주세요" :
+                ".png, .jpeg, .jpg 파일을 올려주세요."
+            }
+          />,
+          {
+            position: "top"
+          },
+        )
         setImageLoading(false);
       }
-      reader.readAsDataURL(file);
     }
   }
 
