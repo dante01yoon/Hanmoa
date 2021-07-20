@@ -306,11 +306,11 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
   }, [])
 
   const validateImage = (file: File) => {
-    if (file.size > 300000) {
-      throw Error("size error");
-    }
-    if (!["jpg", "jpeg", "png"].includes(file.type.split("/")[1])) {
+    if (!["jpg", "jpeg", "png"].includes(file.type.split("/")[1].toLowerCase())) {
       throw Error("type error")
+    }
+    if (file.size > 3000000) {
+      throw Error("size error");
     }
     return true;
   }
@@ -343,7 +343,7 @@ const CreateRoomPage: FC<CreateRoomPageProps> = ({
             }
           />,
           {
-            position: "top"
+            position: "top",
           },
         )
         setImageLoading(false);

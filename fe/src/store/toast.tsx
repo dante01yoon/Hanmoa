@@ -4,16 +4,11 @@ import styled from "styled-components";
 import { useLocalObservable, observer } from "mobx-react-lite";
 import { nanoid } from "nanoid";
 
+const zIndex = 9999;
+
 const StyledBlackContainer = styled.div`
   position: fixed;
   z-index: 1050;
-  width: 100%;
-  height: 100%;
-`;
-
-const StyledToastWrapper = styled.div`
-  position: fixed;
-  top: 0;
   width: 100%;
   height: 100%;
 `;
@@ -23,6 +18,7 @@ const StyledToastLeftContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 0;
+  z-index: ${zIndex};
   transform: translateY(-50%);
 `;
 
@@ -31,6 +27,7 @@ const StyledToastRightContainer = styled.div`
   position: absolute;
   top: 50%;
   right: 0;
+  z-index: ${zIndex};
   transform: translateY(-50%);
 `;
 
@@ -38,6 +35,7 @@ const StyledToastBottomContainer = styled.div`
   position: absolute;
   bottom: 0;
   left: 50%;
+  z-index: ${zIndex};
   transform: translateX(-50%);
   transition: all ease-in 0.3s;
 `;
@@ -46,6 +44,7 @@ const StyledToastTopContainer = styled.div`
   position: absolute;
   top: 0;
   left: 50%;
+  z-index: ${zIndex};
   transform: translateX(-50%);
 `;
 
