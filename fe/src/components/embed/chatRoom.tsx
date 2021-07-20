@@ -16,14 +16,14 @@ const StyledSelf = styled.div`
 `;
 
 const StyledChatContainer = styled.div`
-  padding: 48px;
-  height: 100%;
+  position: relative;
   max-width: 500px;
+  height: 100%;
+  padding: 48px;
   ${(p) => p.theme.media.lb`
       width: 480px;
   `}
 
-  position: relative;
 `;
 
 const StyledEnterContainer = styled.div`
@@ -32,8 +32,8 @@ const StyledEnterContainer = styled.div`
   border-radius: 0 0 8px 8px;
 
   & > form {
-    width: 100%;
     display: flex;
+    width: 100%;
   }
   ${(p) => p.theme.media.lb`
       width: 480px;
@@ -41,8 +41,8 @@ const StyledEnterContainer = styled.div`
 `;
 
 const StyledTextArea = styled.textarea`
-  background-color: ${(p) => p.theme.colors.whiteGray};
   display: block;
+  background-color: ${(p) => p.theme.colors.whiteGray};
   resize: none;
   font-size: 18px;
   width: 100%;
@@ -68,18 +68,18 @@ const StyledImageInput = styled.input`
 
 const iconButtonStyle = (props: any) => css`
   display: flex;
-  background: ${props.clicked ? props.theme.colors.gray_300 : "none"};
   justify-content: center;
   align-items: center;
+  background: ${props.clicked ? props.theme.colors.gray_300 : "none"};
   width: 48px;
 
   &::after{
       content: "";
-      line-height: 48px;
       display: inline-block;
+      background: url(${props.icon}) center/100%;
+      line-height: 48px;
       width: 24px;
       height: 24px;
-      background: url(${props.icon}) center/100%;
   }
 `;
 
