@@ -150,6 +150,26 @@ export default class RoomStore extends BasicStore {
     }
   }
 
+  @action.bound
+  async fetchLeaveRoom(roomId: string, studentNumber: string) {
+    try {
+      const [error, response] = await this.api.POST<any>("/leave", {
+        roomId,
+        studentNumber,
+      });
+
+      if (error) {
+        throw error
+      }
+      else if (response && response.success) {
+        return response.data;
+      }
+    } catch (e) {
+      console.error("error in fetchLeaveRoom");
+      throw Error(e);
+    }
+  }
+
   async fetchPostRoom(values: {
     studentNumber: Profile["studentNumber"];
     title: string;

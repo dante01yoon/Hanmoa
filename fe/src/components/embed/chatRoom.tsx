@@ -3,10 +3,11 @@ import { useFormik, FormikHelpers } from "formik";
 import styled, { css } from "styled-components";
 import { observer } from "mobx-react-lite";
 import * as yup from "yup";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useMobxStores, useSocket } from "@utils/store/useStores";
 import Chat from "src/utils/chat/chatClass";
 import link from "src/asset/link.svg";
+import logout from "src/asset/logout.svg";
 import upload from "src/asset/upload.svg";
 import { nanoid } from "nanoid";
 
@@ -72,6 +73,7 @@ const iconButtonStyle = (props: any) => css`
   align-items: center;
   background: ${props.clicked ? props.theme.colors.gray_300 : "none"};
   width: 48px;
+  cursor: pointer;
 
   &::after{
       content: "";
@@ -89,6 +91,13 @@ const StyledLinkButton = styled.div<{
 }>`
   ${iconButtonStyle}
 `;
+
+const StyledOutButton = styled.div<{
+  icon: string;
+  clicked?: boolean;
+}>`
+  ${iconButtonStyle};
+`
 
 const StyledUploadButton = styled.div<{
   icon: string;
@@ -134,13 +143,14 @@ const validationSchema = yup.object().shape({
 })
 
 const EmbedChatRoom: FC<IEmbedChatProps> = ({ children, disabled }) => {
+  const history = useHistory();
   const [isFocusing, setIsFocusing] = useState(false);
   const [clicked, setClicked] = useState(false);
   const scrollElementScrollBlockRef = useRef(true);
   const inputImageRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const scrollElementRef = useRef<HTMLDivElement>(null);
-  const { chatStore, sessionStore } = useMobxStores();
+  const { chatStore, sessionStore, roomStore } = useMobxStores();
   const { id: roomId } = useParams<{ id: string }>();
   const { io } = useSocket();
 
@@ -301,6 +311,18 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children, disabled }) => {
     };
   }, []);
 
+  const showAlertToast = () => {
+
+  }
+
+  const handleClickOutButton = () => {
+    roomStore.fetchLeaveRoom()
+      .then(() => {
+        showAlertToast();
+        history.replace("/");
+      })
+  }
+
   return (
     <>
       <StyledSelf ref={scrollElementRef}>
@@ -308,12 +330,17 @@ const EmbedChatRoom: FC<IEmbedChatProps> = ({ children, disabled }) => {
       </StyledSelf>
       <StyledToolBox>
         <StyledUploadButton
-          clicked
           icon={upload}
         />
         <StyledLinkButton
           icon={link}
         />
+        {sessionStore.isSignedIn && (
+          <StyledOutButton
+            onClick={handleClickOutButton}
+            icon={logout}
+          />
+        )}
       </StyledToolBox>
       <StyledEnterContainer>
         <form onSubmit={formik.handleSubmit}>

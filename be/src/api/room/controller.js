@@ -160,11 +160,14 @@ export const onPostLeaveRoom = async (ctx) => {
   const { roomId, studentNumber } = request.body;
 
   try {
-    const joinedUsers = Room.leaveUser(roomId, studentNumber);
+    await Room.leaveUser(roomId, studentNumber);
+    const leavedRoom = await Room.findRoomById(roomId);
     response.status = 200;
     response.body = {
       success: true,
-      join: joinedUsers,
+      data: {
+        room: leavedRoom,
+      }
     }
   } catch (error) {
     response.status = 500;

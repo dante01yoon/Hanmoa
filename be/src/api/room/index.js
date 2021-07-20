@@ -10,6 +10,7 @@ const {
   onGetLatestMessages,
   onGetRooms,
   onPostRoomPasswordCheck,
+  onPostLeaveRoom,
   onPutJoinRoom,
   onPutLeaveRoom,
 } = RoomController;
@@ -44,12 +45,17 @@ roomRouter.post("/check/:id",
 
 roomRouter.put("/join",
   jwt.forceGuardDecode,
-  onPutJoinRoom
+  onPutJoinRoom,
 );
+
+roomRouter.post("/leave",
+  jwt.forceGuardDecode,
+  onPostLeaveRoom,
+)
 
 roomRouter.put("/leave",
   jwt.forceGuardDecode,
-  onPutLeaveRoom
+  onPutLeaveRoom,
 )
 
 export default roomRouter;
