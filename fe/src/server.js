@@ -24,7 +24,6 @@ if (process.env.NODE_ENV !== 'production') {
     }),
   );
   app.use(webpackHotMiddleware(compiler));
-  // app.use(favicon(path.join(__dirname, 'src/asset', 'favicon.ico')));
 }
 
 app.use(cookieParser());

@@ -40,7 +40,6 @@ export const renderFullPage: RenderFullPage = ({
         ${collectedWeb.helmet}
         ${collectedWeb.link}
         ${collectedWeb.style}
-        <link rel="shortcut icon" href="favicon.ico"></link>
         <script src="https://apis.google.com/js/api.js"></script>
       </head>
       <body>

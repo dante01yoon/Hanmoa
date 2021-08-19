@@ -82,6 +82,7 @@ const RoomPage: FC<RoomPageProps> & RoomPageInitStoreOnServer = ({ match }) => {
     }
 
     if (isNil(roomStore.currentRoom) || roomStore.currentRoom.id !== roomId) {
+      console.log("roomId: ", roomId);
       roomStore.fetchRoom(roomId)
         .then((response: any) => {
           handleAuthenticate();
@@ -194,6 +195,7 @@ RoomPage.initStoreOnServer = (req: Request<{ id: string }>, {
   chatStore: ChatStore;
   roomStore: RoomStore;
 }) => {
+  console.log("req: ", req);
   const id = reqParser(req, 1);
   const promises: Array<Promise<any>> = [Promise.resolve()];
   promises.push(roomStore.fetchRoom(id, req));

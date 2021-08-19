@@ -2,15 +2,15 @@ import axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
 import { http } from './httpModule';
 
 const googleAuth: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:5001/'
+  baseURL: process.env.BASE_URL || 'http://localhost:5001/'
 })
 
-const request = async(config: AxiosRequestConfig) => {
-  try{
+const request = async (config: AxiosRequestConfig) => {
+  try {
     const { data } = await googleAuth.request(config);
-    return [ undefined, data ]; 
-  } catch(error) {
-    return [ error, undefined ] ;
+    return [undefined, data];
+  } catch (error) {
+    return [error, undefined];
   }
 }
 
@@ -18,15 +18,15 @@ type GoogleAuthParam = {
   client_id: string,
   redirect_uri: string,
   response_type: string,
-  scope: string 
+  scope: string
 }
 
-const GET = (url: string, params: GoogleAuthParam, config?: AxiosRequestConfig) => 
-  request({...config, method: "GET", url, params});
+const GET = (url: string, params: GoogleAuthParam, config?: AxiosRequestConfig) =>
+  request({ ...config, method: "GET", url, params });
 
 export const googleAuthRequest = () => GET('', {
-  client_id : process.env.CLIENT_ID!,
-  redirect_uri: process.env.CLIENT_SECRET!, 
+  client_id: process.env.CLIENT_ID!,
+  redirect_uri: process.env.CLIENT_SECRET!,
   response_type: 'token&',
   scope: 'openid profile email'
 })

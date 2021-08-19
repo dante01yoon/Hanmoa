@@ -127,10 +127,11 @@ export const onGetRoom = async (ctx, next) => {
     if (ctx.request.studentNumber) {
       hasJoinedRoom = await User.checkHasJoinedRoomById(id, ctx.request.studentNumber);
     }
-
+    console.log("id: ", id);
     let room = await Room.findRoomById({ id });
 
     if (!isNil(hasJoinedRoom)) {
+      console.log("room: ", room);
       const refinedRoom = cloneDeep(room.toObject());
       refinedRoom.hasJoinedRoom = hasJoinedRoom;
       room = refinedRoom;
