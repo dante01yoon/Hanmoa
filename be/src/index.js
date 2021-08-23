@@ -63,5 +63,5 @@ initSocket(io);
 const port = process.env.PORT || 5001;
 
 httpServer.listen(port, () => {
-  console.log("hanmoa koa server is listening to port 5001");
+  console.log(`hanmoa koa server is listening to port ${port}`);
 })
