@@ -4,29 +4,52 @@
     "target": "ES2018",
     "module": "esnext",
     "jsx": "preserve",
-      
     /* Strict Type-Checking Options */
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noImplicitThis": false,
-      
+    "noEmitOnError": false,
     /* Module Resolution Options */
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "src/*": ["src/*"],
-      "@components/*":   ["./src/components/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@store/*": ["./src/store/*"],
-      "@reducers/*": ["./src/store/reducers/*"],
-      "@theme/*": ["./src/theme/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@modules/*": ["./src/modules/*"],
-      "@apis/*": ["./src/apis/*"],
-      "@models/*": ["./src/models/*"],
-      "@sagas/*": ["./src/sagas/*"],
-      "@payload/*": ["./src/payload/*"]
+      "src/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ],
+      "@store/*": [
+        "./src/store/*"
+      ],
+      "@reducers/*": [
+        "./src/store/reducers/*"
+      ],
+      "@theme/*": [
+        "./src/theme/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@apis/*": [
+        "./src/apis/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@sagas/*": [
+        "./src/sagas/*"
+      ],
+      "@payload/*": [
+        "./src/payload/*"
+      ]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true
