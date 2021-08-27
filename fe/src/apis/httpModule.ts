@@ -8,6 +8,7 @@ const baseURL = process.env.BASE_URL ?
 const hanmoaAxios: AxiosInstance = axios.create({
   baseURL,
   headers: {
+    "Content-type": "application/json",
     "Accept": "application/json",
   },
   withCredentials: true,
