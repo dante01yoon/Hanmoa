@@ -18,8 +18,7 @@ hanmoaMongoDB.run();
 
 const app = new Koa();
 const router = new Router();
-// socket io 
-const httpServer = createServer(app.callback());
+
 
 app.use(bodyParser());
 
@@ -44,7 +43,7 @@ app.use(cors({
   credentials: true,
 }));
 
-const io = new Server(httpServer, config);
+
 
 // ctx 는 웹 요청과 응답에 대한 정보를 가지고 있음
 // next는 다음 미들웨어를 실행시키는 함수
@@ -59,6 +58,9 @@ router.use('/api',
 
 app.use(router.routes()).use(router.allowedMethods());
 
+// socket io 
+const httpServer = createServer(app.callback());
+const io = new Server(httpServer, config);
 initSocket(io);
 
 const port = process.env.PORT || 5001;
