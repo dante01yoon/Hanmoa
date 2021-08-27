@@ -28,7 +28,7 @@ app.use(jwtMiddleware);
 // cors 
 function verifyOrigin(ctx) {
   const origin = ctx.headers.origin;
-  const allowedOrigins = ["http://localhost:5000", "http://localhost:3000"];
+  const allowedOrigins = ["http://localhost:5000", "http://localhost:3000", "http://ec2-54-180-31-163.ap-northeast-2.compute.amazonaws.com"];
 
   if (!allowedOrigins.includes(origin)) {
     return false;
@@ -41,6 +41,7 @@ function verifyOrigin(ctx) {
 app.use(cors({
   origin: "http://localhost:5000",
   credentials: true,
+
 }));
 
 
