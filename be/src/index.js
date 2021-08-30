@@ -28,7 +28,7 @@ app.use(jwtMiddleware);
 // cors 
 function verifyOrigin(ctx) {
   const origin = ctx.headers.origin;
-  const allowedOrigins = ["http://localhost:5000", "http://localhost:3000", "http://ec2-54-180-31-163.ap-northeast-2.compute.amazonaws.com"];
+  const allowedOrigins = ["http://localhost:5000", "http://localhost:3000", "https://hanmoa.kro.kr"];
 
   if (!allowedOrigins.includes(origin)) {
     return false;
@@ -39,7 +39,7 @@ function verifyOrigin(ctx) {
 
 // cors 세팅
 app.use(cors({
-  origin: "http://localhost:5000",
+  origin: verifyOrigin,
   credentials: true,
 
 }));
