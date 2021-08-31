@@ -1,6 +1,7 @@
 export const config = {
+  path: process.env.SOCKET_URL,
   cors: {
-    origin: ["http://localhost:5000", "http://localhost:3000", "https://hanmoa.kro.kr/"],
+    origin: ["http://localhost:5000", "http://localhost:3000", process.env.CLIENT_URL],
   },
 }
 
