@@ -1,5 +1,5 @@
 export const config = {
-  path: process.env.SOCKET_URL,
+  path: process.env.SOCKET_PATH || "/ws",
   cors: {
     origin: ["http://localhost:5000", "http://localhost:3000", process.env.CLIENT_URL],
   },

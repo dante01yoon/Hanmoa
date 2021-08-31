@@ -63,7 +63,6 @@ app.use(router.routes()).use(router.allowedMethods());
 const httpServer = createServer(app.callback());
 const io = new Server(httpServer, config);
 initSocket(io);
-
 const port = process.env.PORT || 5001;
 
 httpServer.listen(port, () => {

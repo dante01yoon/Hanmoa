@@ -1,8 +1,10 @@
 import React, { useContext, FC, createContext } from "react";
 
 import { io } from "socket.io-client";
-
-const socket = io(process.env.SOCKET_URL || "ws://localhost:5001")
+console.log("process.env.SOCKET_URL: ", process.env.SOCKET_URL,)
+const socket = io(process.env.SOCKET_URL || "ws://localhost:5001", {
+  path: process.env.SOCKET_PATH || "/ws"
+})
 const socketContext = createContext<{ io: typeof socket } | null>(null);
 
 export const useSocketContext = () => {
