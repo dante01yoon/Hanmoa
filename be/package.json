@@ -7,7 +7,7 @@
     "@koa/cors": "^3.1.0",
     "@withvoid/make-validation": "^1.0.5",
     "cross-env": "^7.0.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-compose": "^4.1.0",
